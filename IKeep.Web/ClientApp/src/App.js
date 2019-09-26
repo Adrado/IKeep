@@ -4,7 +4,8 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
-import UserViewModel from './views/UserViewModel';
+import UserViewModel from './views/User/UserViewModel';
+import RoleViewModel from './views/Role/RoleViewModel';
 
 export default () => (
   <Layout>
@@ -12,5 +13,6 @@ export default () => (
     <Route path='/counter' component={Counter} />
     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     <Route path='/users' component={UserViewModel}/>
+    <Route path='/roles' component={RoleViewModel}/>
   </Layout>
 );

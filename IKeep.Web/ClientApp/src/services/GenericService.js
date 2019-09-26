@@ -25,6 +25,11 @@ class GenericService
         return await axios.get(this.Url)
     }
 
+    async Post(entity)
+    {
+        return await axios.post(this.Url, entity)
+    }
+
     /* async getDataAxios(){
         const response =
           await axios.get("api/users")

@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 /* import axios from 'axios'; */
 import UserView from'./UserView';
 //import User from '../../../index';
-import User from '../models/User';
-import UsersService from '../services/UsersService';
+import User from '../../models/User';
+import UsersService from '../../services/UsersService';
+
+let UserService = new UsersService();
 
 class UserViewModel extends Component
 {
@@ -31,7 +33,7 @@ class UserViewModel extends Component
         this.handleSubmit = this.handleSubmit.bind(this);
         this.AddNewUser = this.AddNewUser.bind(this);
 
-        this.UsersService = UsersService;
+        this.UsersService = UserService;
     }
 
     handleChange(e)
@@ -59,20 +61,23 @@ class UserViewModel extends Component
         user.City = this.state.City;
         user.Address = this.state.Address;
 
-        alert("K");
-        this.GetAllUsers();
+        this.CreateUser(user)
     }
-
-    /* async getDataAxios(){
-        const response =
-          await axios.get("api/users")
-        console.log(response.data)
-    } */
 
     GetAllUsers()
     {
         this.UsersService.GetAllAsync()
             .then((response) =>
+            {
+                console.log(response);
+                //this.OnGetData(response);
+            });
+    }
+
+    CreateUser(user)
+    {
+        this.UsersService.AddAsync(user)
+        .then((response) =>
             {
                 console.log(response);
                 //this.OnGetData(response);
