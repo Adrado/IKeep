@@ -2,11 +2,19 @@
 
 class Role extends Entity
 {
-    constructor()
+    constructor(json)
     {
-        super();
-        this.Name = "";
-        this.RolesIds = [];
+        super(json);
+        if(json)
+        {
+            this.Name = json.name;
+            this.RolesIds = json.rolesIds;
+        }
+        else
+        {
+            this.Name = "";
+            this.RolesIds = [];
+        }
     }
 }
 

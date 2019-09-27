@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import RoleView from './RoleView';
-import Role from '../../models/Role'
-import RolesService from '../../services/RolesService'
+import CreateRoleView from './CreateRoleView';
+import Role from '../../models/Role';
+import RolesService from '../../services/RolesService';
+import RoleTable from './RoleTable';
 
 let RoleService = new RolesService();
 
@@ -15,11 +16,13 @@ class RoleViewModel extends Component
             Name : ''
         };
 
+        this.Roles = [];
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.AddNewRole = this.AddNewRole.bind(this);
 
         this.RolesService = RoleService;
+        this.GetAllRoles();
     }
 
     handleChange(e)
@@ -31,12 +34,20 @@ class RoleViewModel extends Component
     {
         alert("A name was submited: " + this.state.Name + " " + this.state.FirstSurname);
     }
-
+        
     AddNewRole()
     {
         let role = new Role();
         role.name = this.state.Name;
-        this.CreateRole(role)
+        this.CreateRole(role);
+        this.CleanForm();
+    }
+
+    CleanForm()
+    {
+        this.setState({
+            Name: ''
+          });
     }
 
     GetAllRoles()
@@ -45,8 +56,19 @@ class RoleViewModel extends Component
         .then((response) =>
             {
                 console.log(response);
-                //this.OnGetData(response);
+                this.OnGetData(response);
             });
+    }
+
+    OnGetData(response)
+    {
+        this.Roles.length = 0;
+        for (let i in response.data)
+        {
+            let role = new Role(response.data[i]);
+            this.Roles.push(role);
+        }
+        console.log(this.Roles)
     }
 
     CreateRole(role)
@@ -55,17 +77,23 @@ class RoleViewModel extends Component
             .then((response) =>
             {
                 console.log(response);
+                alert("K");
             });
     }
 
     render()
     {
         return(
-            <RoleView
-            onClick = {this.AddNewRole}
-            onChange = {this.handleChange}
-            State = {this.state}
-            />
+            <React.Fragment>
+                <CreateRoleView
+                    onClick = {this.AddNewRole}
+                    onChange = {this.handleChange}
+                    State = {this.state}
+                />
+                <RoleTable
+                    Roles = {this.Roles}
+                />
+            </React.Fragment>
         )
     }
 }
