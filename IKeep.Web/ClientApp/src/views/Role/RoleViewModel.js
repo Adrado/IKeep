@@ -4,6 +4,7 @@ import Role from '../../models/Role';
 import RolesService from '../../services/RolesService';
 import RoleTable from './RoleTable';
 
+
 let RoleService = new RolesService();
 
 class RoleViewModel extends Component
@@ -18,10 +19,12 @@ class RoleViewModel extends Component
 
         this.Roles = [];
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.AddNewRole = this.AddNewRole.bind(this);
+        this.EditRole = this.EditRole.bind(this);
 
         this.RolesService = RoleService;
+        this.GetAllRoles();
+        this.render();
         this.GetAllRoles();
     }
 
@@ -29,18 +32,22 @@ class RoleViewModel extends Component
     {
         this.setState({[e.target.id] : e.target.value});
     }
-
-    handleSubmit()
-    {
-        alert("A name was submited: " + this.state.Name + " " + this.state.FirstSurname);
-    }
         
     AddNewRole()
     {
         let role = new Role();
         role.name = this.state.Name;
-        this.CreateRole(role);
+        
+        this.RolesService.AddAsync(role)
+            .then((response) => { this.OnAddedRole(response); });
+
         this.CleanForm();
+    }
+
+    OnAddedRole(response)
+    {
+        let role = new Role (response.data);
+        this.Roles.push(role);
     }
 
     CleanForm()
@@ -71,15 +78,22 @@ class RoleViewModel extends Component
         console.log(this.Roles)
     }
 
-    CreateRole(role)
+    EditRole(newData, oldData)
     {
-        this.RolesService.AddAsync(role)
-            .then((response) =>
-            {
-                console.log(response);
-                alert("K");
-            });
+        this.RolesService.UpdateAsync(newData)
+        .then((response) =>
+        {
+            //this.OnUpdateRole(response);
+            console.log(response);
+        });
     }
+
+    /* OnUpdateRole(response)
+    {
+        let role = new Role(response.data)
+        let index = this.Roles.findIndex(x => x.Id == this.SelectedClient.Id);
+        this.Clients[index] = client;
+    } */
 
     render()
     {
@@ -92,6 +106,7 @@ class RoleViewModel extends Component
                 />
                 <RoleTable
                     Roles = {this.Roles}
+                    OnEdit = {this.EditRole}
                 />
             </React.Fragment>
         )

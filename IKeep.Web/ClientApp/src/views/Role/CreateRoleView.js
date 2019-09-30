@@ -32,7 +32,7 @@ let CreateRoleView = props =>
     
     return(
         <React.Fragment>
-            <form className={classes.container}>  
+            <Grid className={classes.container}>  
                 <Grid item xs={12}>
                     <h2>Crear Rol</h2>
                 </Grid> 
@@ -46,7 +46,7 @@ let CreateRoleView = props =>
                 <Grid item xs={12}>
                     <Button className={classes.button} size="small" onClick = {onClick} variant="outlined">Añadir</Button>
                 </Grid>
-            </form>
+            </Grid>
         </React.Fragment>
     )
 }

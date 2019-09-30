@@ -3,8 +3,7 @@ import MaterialTable from 'material-table';
 
 let RoleTable = props =>
 {
-    let {Roles} = props;
-    console.log({Roles});
+    let {Roles, OnEdit} = props;
 
     const [state, setState] = React.useState({
         columns: 
@@ -16,26 +15,15 @@ let RoleTable = props =>
     
     return (
         <MaterialTable
-          title="Editable Example"
+          title="Roles"
           columns={state.columns}
           data={state.data}
           editable={{
-            onRowAdd: newData =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  resolve();
-                  const data = [...state.data];
-                  data.push(newData);
-                  setState({ ...state, data });
-                }, 600);
-              }),
             onRowUpdate: (newData, oldData) =>
               new Promise(resolve => {
                 setTimeout(() => {
+                  {OnEdit(newData, oldData)}
                   resolve();
-                  const data = [...state.data];
-                  data[data.indexOf(oldData)] = newData;
-                  setState({ ...state, data });
                 }, 600);
               }),
             onRowDelete: oldData =>
@@ -47,6 +35,9 @@ let RoleTable = props =>
                   setState({ ...state, data });
                 }, 600);
               }),
+          }}
+          options={{
+            actionsColumnIndex: -1
           }}
         />
       );

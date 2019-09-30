@@ -46,7 +46,7 @@ namespace IKeep.Web.Controllers
         }
 
         // PUT: api/Roles/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult<Role>> PutRole(Role role)
         {
             return await Task.Run(() =>

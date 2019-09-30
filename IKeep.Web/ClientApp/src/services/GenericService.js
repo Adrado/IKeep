@@ -22,36 +22,24 @@ class GenericService
 
     async Get()
     {
-        return await axios.get(this.Url)
+        return await axios.get(this.Url);
     }
 
     async Post(entity)
     {
-        return await axios.post(this.Url, entity)
+        return await axios.post(this.Url, entity);
     }
 
-    /* async getDataAxios(){
-        const response =
-          await axios.get("api/users")
-        console.log(response.data)
-    } */
-
-    /* Post(entity)
+    async Put(entity)
     {
-        return this.Http.post(this.Url, entity, this.Config);
+        return await axios.put(this.Url, entity);
     }
 
-    Put(entity)
+    async Delete(entity)
     {
-        let urlID = this.Url + entity.Id;
-        return this.Http.put(this.Url, entity, this.Config);
+        let urlId = this.Url + entity.Id;
+        return await axios.delete(urlId);
     }
-
-    Delete(entity)
-    {
-        let urlID = this.Url + entity.Id;
-        return this.Http.delete(urlID);
-    } */
 }
 
 export default GenericService;

@@ -8,12 +8,12 @@ class Role extends Entity
         if(json)
         {
             this.Name = json.name;
-            this.RolesIds = json.rolesIds;
+            this.UsersIds = json.usersIds;
         }
         else
         {
             this.Name = "";
-            this.RolesIds = [];
+            this.UsersIds = [];
         }
     }
 }
