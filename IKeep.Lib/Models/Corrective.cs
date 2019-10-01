@@ -16,9 +16,9 @@ namespace IKeep.Lib.Models
         public string ClosedBy { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid GenericElementId { get; set; }
-        // Vigilar si se logrará el match con la property Name de User
-        public string UserName { get; set; }
-        public string SupplierName { get; set; }
+        // Vigilar si será nullable
+        public Guid? UserId { get; set; }
+        public Guid? SupplierId { get; set; }
     }
 
     public enum CorrectiveStatus

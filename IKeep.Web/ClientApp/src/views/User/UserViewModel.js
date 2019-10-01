@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 /* import axios from 'axios'; */
-import UserView from'./UserView';
+import CreateUserForm from'./CreateUserForm';
 //import User from '../../../index';
 import User from '../../models/User';
 import UsersService from '../../services/UsersService';
@@ -86,7 +86,7 @@ class UserViewModel extends Component
 
     render() {
         return (
-          <UserView
+          <CreateUserForm
             onClick = {this.AddNewUser}
             onChange = {this.handleChange}
             State = {this.state}

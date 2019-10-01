@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-let CreateRoleView = props =>
+let CreateInstallationForm = props =>
 {
     const classes = useStyles();
     let {onClick, onChange, State} = props;
@@ -34,7 +34,7 @@ let CreateRoleView = props =>
         <React.Fragment>
             <Grid className={classes.container}>  
                 <Grid item xs={12}>
-                    <h2>Crear Rol</h2>
+                    <h3>Crear Rol</h3>
                 </Grid> 
                 <Grid item xs={12}>
                     <TextField
@@ -51,4 +51,4 @@ let CreateRoleView = props =>
     )
 }
 
-export default CreateRoleView;
+export default CreateInstallationForm;

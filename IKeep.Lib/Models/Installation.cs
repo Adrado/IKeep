@@ -49,5 +49,15 @@ namespace IKeep.Lib.Models
                 return Inspections == null ? new List<Guid>() : Inspections.Select(x => x.Id).ToList();
             }
         }
+
+        [JsonIgnore]
+        public ICollection<InstallationUser> InstallationUsers { get; set; }
+        public List<Guid> InstallationUsersIds
+        {
+            get
+            {
+                return InstallationUsers == null ? new List<Guid>() : InstallationUsers.Select(x => x.Id).ToList();
+            }
+        }
     }
 }

@@ -37,12 +37,12 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Observation> Observations { get; set; }
-        public List<Guid> ObservationsIds
+        public ICollection<ElementObservation> ElementObservations { get; set; }
+        public List<Guid> ElementObservationsIds
         {
             get
             {
-                return Observations == null ? new List<Guid>() : Observations.Select(x => x.Id).ToList();
+                return ElementObservations == null ? new List<Guid>() : ElementObservations.Select(x => x.Id).ToList();
             }
         }
     }

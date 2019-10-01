@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CreateRoleView from './CreateRoleView';
+import CreateRoleForm from './CreateRoleForm';
 import Role from '../../models/Role';
 import RolesService from '../../services/RolesService';
 import RoleTable from './RoleTable';
@@ -21,6 +21,7 @@ class RoleViewModel extends Component
         this.handleChange = this.handleChange.bind(this);
         this.AddNewRole = this.AddNewRole.bind(this);
         this.EditRole = this.EditRole.bind(this);
+        this.DesactiveRole = this.DesactiveRole.bind(this);
 
         this.RolesService = RoleService;
         this.GetAllRoles();
@@ -73,9 +74,10 @@ class RoleViewModel extends Component
         for (let i in response.data)
         {
             let role = new Role(response.data[i]);
-            this.Roles.push(role);
+            
+            if(role.EntityStatus !== 0)  
+                this.Roles.push(role);
         }
-        console.log(this.Roles)
     }
 
     EditRole(newData, oldData)
@@ -83,23 +85,39 @@ class RoleViewModel extends Component
         this.RolesService.UpdateAsync(newData)
         .then((response) =>
         {
-            //this.OnUpdateRole(response);
+            this.OnUpdateRole(response);
+        });
+    }
+
+    OnUpdateRole(response)
+    {
+        let role = new Role(response.data)
+        let index = this.Roles.findIndex(x => x.Id === role.Id);
+        this.Roles[index] = role;
+    }
+    
+    DesactiveRole(entity)
+    {
+        entity.EntityStatus = 0;
+        this.RolesService.UpdateAsync(entity)
+        .then((response) =>
+        {
+            this.OnDesactiveRole(entity);
             console.log(response);
         });
     }
 
-    /* OnUpdateRole(response)
+    OnDesactiveRole(entity)
     {
-        let role = new Role(response.data)
-        let index = this.Roles.findIndex(x => x.Id == this.SelectedClient.Id);
-        this.Clients[index] = client;
-    } */
+        let index = this.Roles.findIndex(x => x.Id === entity.Id);
+        this.Roles.splice(index, 1);
+    }
 
     render()
     {
         return(
             <React.Fragment>
-                <CreateRoleView
+                <CreateRoleForm
                     onClick = {this.AddNewRole}
                     onChange = {this.handleChange}
                     State = {this.state}
@@ -107,6 +125,7 @@ class RoleViewModel extends Component
                 <RoleTable
                     Roles = {this.Roles}
                     OnEdit = {this.EditRole}
+                    OnDelete = {this.DesactiveRole}
                 />
             </React.Fragment>
         )

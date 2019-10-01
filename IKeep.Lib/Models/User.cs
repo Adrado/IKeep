@@ -50,12 +50,22 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Category> Categories { get; set; }
-        public List<Guid> CategoriesIds
+        public ICollection<UserCategory> UserCategories { get; set; }
+        public List<Guid> UserCategoriesIds
         {
             get
             {
-                return Categories == null ? new List<Guid>() : Categories.Select(x => x.Id).ToList();
+                return UserCategories == null ? new List<Guid>() : UserCategories.Select(x => x.Id).ToList();
+            }
+        }
+
+        [JsonIgnore]
+        public ICollection<InstallationUser> InstallationUsers { get; set; }
+        public List<Guid> InstallationUsersIds
+        {
+            get
+            {
+                return InstallationUsers == null ? new List<Guid>() : InstallationUsers.Select(x => x.Id).ToList();
             }
         }
     }

@@ -7,6 +7,7 @@ namespace IKeep.Lib.Core
     public class Entity
     {
         public Guid Id { get; set; }
+        public EntityStatus EntityStatus { get; set; }
         public string EntityType
         {
             get
@@ -14,5 +15,11 @@ namespace IKeep.Lib.Core
                 return GetType().Name;
             }
         }
+    }
+
+    public enum EntityStatus
+    {
+        Inactive,
+        Active
     }
 }

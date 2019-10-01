@@ -3,12 +3,12 @@ import MaterialTable from 'material-table';
 
 let RoleTable = props =>
 {
-    let {Roles, OnEdit} = props;
+    let {Roles, OnEdit, OnDelete} = props;
 
-    const [state, setState] = React.useState({
+    const [state] = React.useState({
         columns: 
         [
-          { title: 'Name', field: 'Name' },
+          { title: 'Nombre', field: 'Name' },
         ],
         data: Roles
       });
@@ -22,17 +22,15 @@ let RoleTable = props =>
             onRowUpdate: (newData, oldData) =>
               new Promise(resolve => {
                 setTimeout(() => {
-                  {OnEdit(newData, oldData)}
+                  OnEdit(newData, oldData)
                   resolve();
                 }, 600);
               }),
             onRowDelete: oldData =>
               new Promise(resolve => {
                 setTimeout(() => {
+                  OnDelete(oldData)
                   resolve();
-                  const data = [...state.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  setState({ ...state, data });
                 }, 600);
               }),
           }}
