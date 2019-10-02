@@ -18,18 +18,22 @@ class RoleViewModel extends Component
         };
 
         this.Roles = [];
-        this.handleChange = this.handleChange.bind(this);
+        this.HandleChange = this.HandleChange.bind(this);
         this.AddNewRole = this.AddNewRole.bind(this);
         this.EditRole = this.EditRole.bind(this);
         this.DesactiveRole = this.DesactiveRole.bind(this);
+        // Cuándo es necesario¿?
+        this.GetAllRoles = this.GetAllRoles.bind(this);
 
         this.RolesService = RoleService;
-        this.GetAllRoles();
-        this.render();
+
+        this.ColumnsTable = [
+            { title: 'Nombre', field: 'Name' },
+          ];
         this.GetAllRoles();
     }
 
-    handleChange(e)
+    HandleChange(e)
     {
         this.setState({[e.target.id] : e.target.value});
     }
@@ -37,7 +41,7 @@ class RoleViewModel extends Component
     AddNewRole()
     {
         let role = new Role();
-        role.name = this.state.Name;
+        role.Name = this.state.Name;
         
         this.RolesService.AddAsync(role)
             .then((response) => { this.OnAddedRole(response); });
@@ -119,13 +123,14 @@ class RoleViewModel extends Component
             <React.Fragment>
                 <CreateRoleForm
                     onClick = {this.AddNewRole}
-                    onChange = {this.handleChange}
+                    onChange = {this.HandleChange}
                     State = {this.state}
                 />
                 <RoleTable
                     Roles = {this.Roles}
                     OnEdit = {this.EditRole}
                     OnDelete = {this.DesactiveRole}
+                    Columns = {this.ColumnsTable}
                 />
             </React.Fragment>
         )

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import  Container  from '@material-ui/core/Container';
 import NavMenu from './NavMenu';
 
 export default props => (
   <div>
     <NavMenu />
-    <Container>
+    <Container fixed>
       {props.children}
     </Container>
   </div>

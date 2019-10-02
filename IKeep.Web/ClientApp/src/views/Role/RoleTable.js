@@ -3,13 +3,10 @@ import MaterialTable from 'material-table';
 
 let RoleTable = props =>
 {
-    let {Roles, OnEdit, OnDelete} = props;
+    let {Roles, OnEdit, OnDelete, Columns} = props;
 
     const [state] = React.useState({
-        columns: 
-        [
-          { title: 'Nombre', field: 'Name' },
-        ],
+        columns: Columns,
         data: Roles
       });
     
