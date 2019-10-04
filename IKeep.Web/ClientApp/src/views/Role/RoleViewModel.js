@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import CreateRoleForm from './CreateRoleForm';
 import Role from '../../models/Role';
 import RolesService from '../../services/RolesService';
-import RoleTable from './RoleTable';
+import DataTable from '../../components/DataTable';
 
 
-let RoleService = new RolesService();
+//let RoleService = new RolesService();
 
 class RoleViewModel extends Component
 {
@@ -14,7 +14,7 @@ class RoleViewModel extends Component
         super(props);
         this.state =
         {
-            Name : ''
+            Name : '',
         };
 
         this.Roles = [];
@@ -25,8 +25,8 @@ class RoleViewModel extends Component
         // Cuándo es necesario¿?
         this.GetAllRoles = this.GetAllRoles.bind(this);
 
-        this.RolesService = RoleService;
-
+        //this.RolesService = RoleService;
+        this.RolesService = new RolesService();
         this.ColumnsTable = [
             { title: 'Nombre', field: 'Name' },
           ];
@@ -82,6 +82,8 @@ class RoleViewModel extends Component
             if(role.EntityStatus !== 0)  
                 this.Roles.push(role);
         }
+
+        //this.setState({Count: '1'});
     }
 
     EditRole(newData, oldData)
@@ -126,8 +128,9 @@ class RoleViewModel extends Component
                     onChange = {this.HandleChange}
                     State = {this.state}
                 />
-                <RoleTable
-                    Roles = {this.Roles}
+                <DataTable
+                    Title = "Roles"
+                    Data = {this.Roles}
                     OnEdit = {this.EditRole}
                     OnDelete = {this.DesactiveRole}
                     Columns = {this.ColumnsTable}

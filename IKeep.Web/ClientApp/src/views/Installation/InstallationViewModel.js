@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CreateInstallationForm from './CreateInstallationForm';
-import InstallationTreeView from './InstallationTreeView';
+/* import InstallationTreeView from './InstallationTreeView'; */
 import Installation from '../../models/Installation';
 import InstallationsService from '../../services/InstallationsService';
 import { Grid } from '@material-ui/core';
@@ -151,7 +151,7 @@ class InstallationViewModel extends Component
                 <Grid container>
                     <Grid item xs={4}>
                         <Grid item xs = {12}>
-                            <InstallationTreeView/>
+                            {/* <InstallationTreeView/> */}
                         </Grid>
                     </Grid>
 

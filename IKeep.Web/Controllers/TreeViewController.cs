@@ -2,42 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IKeep.Lib.Core;
-using IKeep.Lib.Services;
-using IKeep.Lib.Services.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using IKeep.Lib.DA.EFCore;
+using IKeep.Lib.Models;
 
 namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreeViewController : ControllerBase
+    public class TreeView : ControllerBase
     {
-        ITreeViewService _treeViewService { get; set; }
+        private readonly IKeepContext _context;
 
-        public TreeViewController(ITreeViewService treeViewService)
+        public TreeView(IKeepContext context)
         {
-            _treeViewService = treeViewService;
+            _context = context;
         }
 
-        // POST: api/Login
+        // GET: api/Buildings
         [HttpGet]
-        public async Task<User> Post([FromBody] LoginRequest loginRequest)
+        public async Task<ActionResult<IEnumerable<Object>>> GetBuildings()
         {
-            return await Task.Run(() =>
+            return await _context.Installations.ToListAsync();
+        }
+
+        // GET: api/Buildings/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Building>> GetBuilding(Guid id)
+        {
+            var building = await _context.Buildings.FindAsync(id);
+
+            if (building == null)
             {
-                return _loginService.Authenticate(loginRequest);
-            });
-        }
+                return NotFound();
+            }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
-        {
-            return await _rolesService.GetAll().ToListAsync();
+            return building;
         }
     }
 }
-
-
-//https://codereview.stackexchange.com/questions/166762/a-complex-selection-linq-query
