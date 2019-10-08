@@ -25,7 +25,24 @@ namespace IKeep.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Object>>> GetBuildings()
         {
-            return await _context.Installations.ToListAsync();
+
+            //var qry = from b in dc.Blobs orderby b.RowVersion descending select new { b.Id, b.Size, b.Signature, b.RowVersion }; return qry.ToList();
+
+            //var query = _context.Installations.AsQueryable();
+            //var treeView = query.Select(w => new { w.Id, w.Name}).ToList();
+
+
+            return await _context.Installations.Select(i => new { i.Id, i.Name, i.Buildings }).ToListAsync();
+
+            //var treeView = _context.Installations.
+            //return await _context.Installations.ToListAsync();
+
+
+            //return _context.Installations.Select(w => new Installation()
+            //   {
+            //    Id = w.Id,
+            //    Name = w.Name
+            //}).ToListAsync(); ; 
         }
 
         // GET: api/Buildings/5

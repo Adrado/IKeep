@@ -3,7 +3,6 @@ import CreateInstallationForm from './CreateInstallationForm';
 /* import InstallationTreeView from './InstallationTreeView'; */
 import Installation from '../../models/Installation';
 import InstallationsService from '../../services/InstallationsService';
-import { Grid } from '@material-ui/core';
 /* import InstallationTable from './InstallationTable'; */
 
 
@@ -20,7 +19,7 @@ class InstallationViewModel extends Component
             Name : '',
             CIF : '',
             CP : '',
-            Addres :'',
+            Address :'',
             City : '',
             Phone : '',
             Phone2 : '',
@@ -35,9 +34,9 @@ class InstallationViewModel extends Component
         this.DesactiveInstallation = this.DesactiveInstallation.bind(this);
 
         this.InstallationsService = InstallationService;
-        this.GetAllInstallations();
+        /* this.GetAllInstallations();
         this.render();
-        this.GetAllInstallations();
+        this.GetAllInstallations(); */
     }
 
     HandleChange(e)
@@ -52,7 +51,7 @@ class InstallationViewModel extends Component
         installation.Name = this.state.Name;
         installation.CIF = this.state.CIF;
         installation.CP = this.state.CP;
-        installation.Address = this.state.Addres;
+        installation.Address = this.state.Address;
         installation.City = this.state.City;
         installation.Phone = this.state.Phone;
         installation.Phone2 = this.state.Phone2;
@@ -70,6 +69,7 @@ class InstallationViewModel extends Component
         let installation = new Installation (response.data);
         this.Installations.push(installation);
         console.log(response);
+        alert("K");
     }
 
     CleanForm()
@@ -80,7 +80,7 @@ class InstallationViewModel extends Component
             Name : '',
             CIF : '',
             CP : '',
-            Addres :'',
+            Address :'',
             City : '',
             Phone : '',
             Phone2 : '',
@@ -147,28 +147,11 @@ class InstallationViewModel extends Component
     render()
     {
         return(
-            <React.Fragment>
-                <Grid container>
-                    <Grid item xs={4}>
-                        <Grid item xs = {12}>
-                            {/* <InstallationTreeView/> */}
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={8}>
-                        <CreateInstallationForm
-                            onClick = {this.AddNewInstallation}
-                            onChange = {this.HandleChange}
-                            State = {this.state}
-                        />
-                    </Grid>
-                </Grid>
-                {/* <InstallationTable
-                    Installations = {this.Installations}
-                    OnEdit = {this.EditInstallation}
-                    OnDelete = {this.DesactiveInstallation}
-                /> */}
-            </React.Fragment>
+                <CreateInstallationForm
+                    onClick = {this.AddNewInstallation}
+                    onChange = {this.HandleChange}
+                    State = {this.state}
+                />
         )
     }
 }

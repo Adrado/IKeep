@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IKeep.Lib.DA.EFCore\IKeep.Lib.DA.EFCore.csproj" />
     <ProjectReference Include="..\IKeep.Lib\IKeep.Lib.csproj" />
   </ItemGroup>
 

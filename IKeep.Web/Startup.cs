@@ -4,6 +4,8 @@ using IKeep.Lib.DAL;
 using IKeep.Lib.Models;
 using IKeep.Lib.Server.Services;
 using IKeep.Lib.Services;
+using IKeep.Lib.Services.Dtos;
+using IKeep.Lib.Services.Interfaces;
 using IKeep.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -133,6 +135,9 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Role>, GenericCrudService<Role>>();
             services.AddScoped<ICrudService<Supplier>, GenericCrudService<Supplier>>();
             services.AddScoped<ICrudService<Task>, GenericCrudService<Task>>();
+
+            services.AddScoped<ITreeViewService, TreeViewService>();
+
 
             // Other Services
             //services.AddScoped<IRegisterService, RegisterService>();

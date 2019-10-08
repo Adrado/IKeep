@@ -5,8 +5,6 @@ import RolesService from '../../services/RolesService';
 import DataTable from '../../components/DataTable';
 
 
-//let RoleService = new RolesService();
-
 class RoleViewModel extends Component
 {
     constructor(props)
@@ -83,7 +81,7 @@ class RoleViewModel extends Component
                 this.Roles.push(role);
         }
 
-        //this.setState({Count: '1'});
+        this.CleanForm();
     }
 
     EditRole(newData, oldData)
@@ -100,6 +98,7 @@ class RoleViewModel extends Component
         let role = new Role(response.data)
         let index = this.Roles.findIndex(x => x.Id === role.Id);
         this.Roles[index] = role;
+        this.CleanForm();
     }
     
     DesactiveRole(entity)
@@ -117,6 +116,7 @@ class RoleViewModel extends Component
     {
         let index = this.Roles.findIndex(x => x.Id === entity.Id);
         this.Roles.splice(index, 1);
+        this.CleanForm();
     }
 
     render()

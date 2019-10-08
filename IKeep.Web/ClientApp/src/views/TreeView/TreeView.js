@@ -4,8 +4,8 @@ import TreeMenu from 'react-simple-tree-menu'
 
 let InstallationTreeView = props =>
 {
-    /* const classes = useStyles();
-    let {onClick, onChange, State} = props; */
+    //const classes = useStyles();
+    let {Data} = props;
     const treeData = {
         'first-level-node-1': {               // key
           label: 'Node 1 at the first level',
@@ -32,7 +32,7 @@ let InstallationTreeView = props =>
       };
 
     return(
-        <TreeMenu data={treeData} />
+        <TreeMenu data={Data} />
     );
 }
 
