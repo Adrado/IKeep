@@ -1,10 +1,13 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Text;
+﻿using IKeep.Lib.Core;
+using IKeep.Lib.Services.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-//namespace IKeep.Lib.Services.Interfaces
-//{
-//    public interface ITreeViewService
-//    {
-//    }
-//}
+namespace IKeep.Lib.Services.Interfaces
+{
+    public interface ITreeViewService : IGenericService
+    {
+        Tree GetTreeView();
+    }
+}

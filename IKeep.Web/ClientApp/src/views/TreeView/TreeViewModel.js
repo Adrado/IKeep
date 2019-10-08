@@ -21,7 +21,7 @@ class TreeViewModel extends Component
         this.AreasService = new AreasService();
 
         this.Data = {};
-        /* this.GetTreeView(); */
+        this.GetTreeView();
         this.TreeViewData = [];
         this.InstallationsData
         /* this.
@@ -29,14 +29,15 @@ class TreeViewModel extends Component
         } */
     }
 
-    /* GetTreeView()
+    GetTreeView()
     {
         this.TreeViewService.GetAllAsync()
         .then((response) =>
             {
-                this.OnGetData(response);
+                console.log(response)
+               // this.OnGetData(response);
             });
-    } */
+    } 
 
     /* OnGetData(response)
     {

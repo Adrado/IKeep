@@ -7,56 +7,88 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IKeep.Lib.DA.EFCore;
 using IKeep.Lib.Models;
+using IKeep.Lib.Core;
+using Task = System.Threading.Tasks.Task;
+using IKeep.Lib.Server.Services;
+using IKeep.Lib.Services.Dtos;
+using IKeep.Lib.Services.Interfaces;
 
 namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreeView : ControllerBase
+    public class TreeViewController : ControllerBase
     {
-        private readonly IKeepContext _context;
+        private readonly ITreeViewService _treeViewService;
 
-        public TreeView(IKeepContext context)
+        public TreeViewController(ITreeViewService treeViewService)
         {
-            _context = context;
+            _treeViewService = treeViewService;
         }
 
-        // GET: api/Buildings
+        // GET: api/TreeView
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Object>>> GetBuildings()
+        public async Task<ActionResult<Tree>> GetTreeView()
         {
-
-            //var qry = from b in dc.Blobs orderby b.RowVersion descending select new { b.Id, b.Size, b.Signature, b.RowVersion }; return qry.ToList();
-
-            //var query = _context.Installations.AsQueryable();
-            //var treeView = query.Select(w => new { w.Id, w.Name}).ToList();
-
-
-            return await _context.Installations.Select(i => new { i.Id, i.Name, i.Buildings }).ToListAsync();
-
-            //var treeView = _context.Installations.
-            //return await _context.Installations.ToListAsync();
-
-
-            //return _context.Installations.Select(w => new Installation()
-            //   {
-            //    Id = w.Id,
-            //    Name = w.Name
-            //}).ToListAsync(); ; 
-        }
-
-        // GET: api/Buildings/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Building>> GetBuilding(Guid id)
-        {
-            var building = await _context.Buildings.FindAsync(id);
-
-            if (building == null)
+            return await Task.Run(() =>
             {
-                return NotFound();
-            }
+                var treeView = _treeViewService.GetTreeView();
 
-            return building;
+                if (treeView == null)
+                {
+                    return NotFound();
+                }
+
+                return new ActionResult<Tree>(treeView);
+            });
         }
+
+        //// GET: api/TreeView/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<TreeView>> GetTreeView(Guid id)
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        var role = _treeViewService.GetAll().FirstOrDefault(x => x.Id == id);
+        //        if (role == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return new ActionResult<TreeView>(role);
+        //    });
+        //}
+
+        //// PUT: api/TreeView/5
+        //[HttpPut]
+        //public async Task<ActionResult<TreeView>> PutTreeView(TreeView role)
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        var output = _treeViewService.Update(role);
+        //        return new ActionResult<TreeView>(output);
+        //    });
+        //}
+
+        //// POST: api/TreeView
+        //[HttpPost]
+        //public async Task<ActionResult<TreeView>> PostTreeView(TreeView role)
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        var output = _treeViewService.Add(role);
+        //        return new ActionResult<TreeView>(output);
+        //    });
+        //}
+
+        //// DELETE: api/TreeView/5
+        //[HttpDelete("{id}")]
+        //public async Task<bool> DeleteTreeView(Guid id)
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        return _treeViewService.Delete(id);
+        //    });
+        //}
     }
 }
+

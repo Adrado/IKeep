@@ -2,6 +2,7 @@
 using IKeep.Lib.DA.EFCore;
 using IKeep.Lib.Models;
 using IKeep.Lib.Services.Dtos;
+using IKeep.Lib.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace IKeep.Lib.Server.Services
 {
-    public class TreeViewService
+    public class TreeViewService : ITreeViewService
     {
         private readonly IKeepContext _context;
 
@@ -39,39 +40,11 @@ namespace IKeep.Lib.Server.Services
             return tree;
         }
 
-        public ActionResult Index()
+        public Tree GetTreeView()
         {
             var model = GetData();
             return model;
         }
-
-        //private readonly IKeepContext _context;
-        //public TreeViewService(IKeepContext context)
-        //{
-        //    _context = context;
-        //}
-
-        //public Installation[] GetData()
-        //{
-        //    List<Installation> items = new List<Installation>();
-        //    items.AddRange(from node in _context.Installations.OfType<Building>().Where((x) => x.Id == Installation.Id)
-        //                   select node.Tag as Installation);
-
-        //    tvData.Nodes.OfType<TreeNode>()
-        //                .ForEach((x => items.AddRange(from item in x.Nodes.OfType<TreeNode>()
-        //                                                            .Where((y) => y.Checked)
-        //                                              select item.Tag as MyClass)));
-
-        //    return items.ToArray();
-        //}
-
-
-
-        //public override IQueryable<Installation> GetAll()
-        //{
-
-        //    return base.GetAll();
-        //}
 
         //https://ole.michelsen.dk/blog/mapping-relational-table-data-to-a-tree-structure-in-mvc.html
     }

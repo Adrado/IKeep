@@ -137,6 +137,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Task>, GenericCrudService<Task>>();
 
             services.AddScoped<ITreeViewService, TreeViewService>();
+            
 
 
             // Other Services
