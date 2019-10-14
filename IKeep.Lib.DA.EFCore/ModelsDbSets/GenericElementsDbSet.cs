@@ -10,7 +10,7 @@ namespace IKeep.Lib.DA.EFCore
         public GenericElementsDbset(IKeepContext dbContext)
         {
             DbContext = dbContext;
-            DbSet = dbContext.GemericElements;
+            DbSet = dbContext.GenericElements;
         }
     }
 }

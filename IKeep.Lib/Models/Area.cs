@@ -14,12 +14,12 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public Guid FloorId { get; set; }
         [JsonIgnore]
-        public ICollection<GenericElement> GenericElements { get; set; }
-        public List<Guid> GenericElementsIds
+        public ICollection<Element> Elements { get; set; }
+        public List<Guid> ElementsIds
         {
             get
             {
-                return GenericElements == null ? new List<Guid>() : GenericElements.Select(x => x.Id).ToList();
+                return Elements == null ? new List<Guid>() : Elements.Select(x => x.Id).ToList();
             }
         }
         //¿Es necesario?

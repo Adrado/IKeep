@@ -15,7 +15,7 @@ namespace IKeep.Lib.Models
         public DateTime ClosingDate { get; set; }
         public string ClosedBy { get; set; }
         public TimeSpan Duration { get; set; }
-        public Guid GenericElementId { get; set; }
+        public Guid ElementId { get; set; }
         // Vigilar si será nullable
         public Guid? UserId { get; set; }
         public Guid? SupplierId { get; set; }

@@ -3,15 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IKeep.Web.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigrationA5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "ElementTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -25,6 +39,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -37,11 +52,12 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     CIF = table.Column<string>(nullable: true),
                     CP = table.Column<int>(nullable: false),
-                    Addres = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Phone = table.Column<int>(nullable: false),
                     Phone2 = table.Column<int>(nullable: false),
@@ -54,10 +70,25 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Observations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Observations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Priorities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -70,6 +101,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -82,6 +114,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
@@ -97,6 +130,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -118,6 +152,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Result = table.Column<string>(nullable: true),
                     InstallationId = table.Column<Guid>(nullable: false)
@@ -138,6 +173,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     PDF = table.Column<string>(nullable: true),
                     InstallationId = table.Column<Guid>(nullable: false)
                 },
@@ -157,6 +193,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     LoginName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -192,6 +229,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     BuildingId = table.Column<Guid>(nullable: false)
@@ -208,29 +246,11 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "InstallationUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     InstallationId = table.Column<Guid>(nullable: false)
                 },
@@ -252,32 +272,11 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Maps",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    ImageId = table.Column<string>(nullable: true),
-                    FloorId = table.Column<Guid>(nullable: false),
-                    AreaRef = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Maps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Maps_Floors_FloorId",
-                        column: x => x.FloorId,
-                        principalTable: "Floors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserCategories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     CategoryId = table.Column<Guid>(nullable: false)
                 },
@@ -299,10 +298,34 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Maps",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    ImageId = table.Column<string>(nullable: true),
+                    FloorId = table.Column<Guid>(nullable: false),
+                    AreaRef = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Maps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Maps_Floors_FloorId",
+                        column: x => x.FloorId,
+                        principalTable: "Floors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Areas",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -327,23 +350,31 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GemericElements",
+                name: "GenericElements",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Ref = table.Column<string>(nullable: true),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     ElementTypeId = table.Column<Guid>(nullable: false),
-                    AreaId = table.Column<Guid>(nullable: false)
+                    Discriminator = table.Column<string>(nullable: false),
+                    AreaId = table.Column<Guid>(nullable: true),
+                    GenericElementId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GemericElements", x => x.Id);
+                    table.PrimaryKey("PK_GenericElements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GemericElements_Areas_AreaId",
+                        name: "FK_GenericElements_Areas_AreaId",
                         column: x => x.AreaId,
                         principalTable: "Areas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenericElements_GenericElements_GenericElementId",
+                        column: x => x.GenericElementId,
+                        principalTable: "GenericElements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,6 +384,7 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     OpeningDescription = table.Column<string>(nullable: true),
                     OpeningDate = table.Column<DateTime>(nullable: false),
@@ -361,18 +393,17 @@ namespace IKeep.Web.Migrations
                     ClosingDate = table.Column<DateTime>(nullable: false),
                     ClosedBy = table.Column<string>(nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
-                    GenericElementId = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    SupplierName = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: true)
+                    ElementId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: true),
+                    SupplierId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Correctives", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Correctives_GemericElements_GenericElementId",
-                        column: x => x.GenericElementId,
-                        principalTable: "GemericElements",
+                        name: "FK_Correctives_GenericElements_ElementId",
+                        column: x => x.ElementId,
+                        principalTable: "GenericElements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -384,58 +415,24 @@ namespace IKeep.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Observations",
+                name: "ElementImages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    ElementId = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false),
-                    GenericElementId = table.Column<Guid>(nullable: true)
+                    Image = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Observations", x => x.Id);
+                    table.PrimaryKey("PK_ElementImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Observations_GemericElements_GenericElementId",
-                        column: x => x.GenericElementId,
-                        principalTable: "GemericElements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tasks",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Ref = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Duration = table.Column<TimeSpan>(nullable: false),
-                    Period = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    GenericElementId = table.Column<Guid>(nullable: false),
-                    PriorityId = table.Column<Guid>(nullable: false),
-                    FormatId = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: false),
-                    SupplierName = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tasks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tasks_GemericElements_GenericElementId",
-                        column: x => x.GenericElementId,
-                        principalTable: "GemericElements",
+                        name: "FK_ElementImages_GenericElements_ElementId",
+                        column: x => x.ElementId,
+                        principalTable: "GenericElements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tasks_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -443,16 +440,17 @@ namespace IKeep.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    GenericElementId = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    ElementId = table.Column<Guid>(nullable: false),
                     ObservationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ElementObservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ElementObservations_GemericElements_GenericElementId",
-                        column: x => x.GenericElementId,
-                        principalTable: "GemericElements",
+                        name: "FK_ElementObservations_GenericElements_ElementId",
+                        column: x => x.ElementId,
+                        principalTable: "GenericElements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -461,6 +459,56 @@ namespace IKeep.Web.Migrations
                         principalTable: "Observations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GenericTasks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EntityStatus = table.Column<int>(nullable: false),
+                    Ref = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Duration = table.Column<TimeSpan>(nullable: false),
+                    Period = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    PriorityId = table.Column<Guid>(nullable: false),
+                    FormatId = table.Column<Guid>(nullable: false),
+                    CategoryId = table.Column<Guid>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    ElementId = table.Column<Guid>(nullable: true),
+                    SupplierId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenericTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GenericTasks_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenericTasks_Priorities_PriorityId",
+                        column: x => x.PriorityId,
+                        principalTable: "Priorities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenericTasks_GenericElements_ElementId",
+                        column: x => x.ElementId,
+                        principalTable: "GenericElements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenericTasks_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -479,14 +527,9 @@ namespace IKeep.Web.Migrations
                 column: "InstallationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_UserId",
-                table: "Categories",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Correctives_GenericElementId",
+                name: "IX_Correctives_ElementId",
                 table: "Correctives",
-                column: "GenericElementId");
+                column: "ElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Correctives_UserId",
@@ -494,9 +537,14 @@ namespace IKeep.Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElementObservations_GenericElementId",
+                name: "IX_ElementImages_ElementId",
+                table: "ElementImages",
+                column: "ElementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ElementObservations_ElementId",
                 table: "ElementObservations",
-                column: "GenericElementId");
+                column: "ElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ElementObservations_ObservationId",
@@ -509,9 +557,34 @@ namespace IKeep.Web.Migrations
                 column: "BuildingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GemericElements_AreaId",
-                table: "GemericElements",
+                name: "IX_GenericElements_AreaId",
+                table: "GenericElements",
                 column: "AreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenericElements_GenericElementId",
+                table: "GenericElements",
+                column: "GenericElementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenericTasks_CategoryId",
+                table: "GenericTasks",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenericTasks_PriorityId",
+                table: "GenericTasks",
+                column: "PriorityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenericTasks_ElementId",
+                table: "GenericTasks",
+                column: "ElementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenericTasks_UserId",
+                table: "GenericTasks",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inspections_InstallationId",
@@ -534,24 +607,9 @@ namespace IKeep.Web.Migrations
                 column: "FloorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Observations_GenericElementId",
-                table: "Observations",
-                column: "GenericElementId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reports_InstallationId",
                 table: "Reports",
                 column: "InstallationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_GenericElementId",
-                table: "Tasks",
-                column: "GenericElementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_UserId",
-                table: "Tasks",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCategories_CategoryId",
@@ -575,6 +633,9 @@ namespace IKeep.Web.Migrations
                 name: "Correctives");
 
             migrationBuilder.DropTable(
+                name: "ElementImages");
+
+            migrationBuilder.DropTable(
                 name: "ElementObservations");
 
             migrationBuilder.DropTable(
@@ -584,13 +645,13 @@ namespace IKeep.Web.Migrations
                 name: "Formats");
 
             migrationBuilder.DropTable(
+                name: "GenericTasks");
+
+            migrationBuilder.DropTable(
                 name: "Inspections");
 
             migrationBuilder.DropTable(
                 name: "InstallationUsers");
-
-            migrationBuilder.DropTable(
-                name: "Priorities");
 
             migrationBuilder.DropTable(
                 name: "Reports");
@@ -599,19 +660,19 @@ namespace IKeep.Web.Migrations
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
-
-            migrationBuilder.DropTable(
                 name: "UserCategories");
 
             migrationBuilder.DropTable(
                 name: "Observations");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Priorities");
 
             migrationBuilder.DropTable(
-                name: "GemericElements");
+                name: "GenericElements");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Users");

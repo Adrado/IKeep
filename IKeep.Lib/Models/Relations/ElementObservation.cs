@@ -7,8 +7,8 @@ namespace IKeep.Lib.Models
 {
     public class ElementObservation : Entity
     {
-        public Guid GenericElementId { get; set; }
-        public GenericElement GenericElement { get; set; }
+        public Guid ElementId { get; set; }
+        public Element Element { get; set; }
         public Guid ObservationId { get; set; }
         public Observation Observation { get; set; }
     }

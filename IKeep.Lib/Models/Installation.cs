@@ -13,7 +13,7 @@ namespace IKeep.Lib.Models
         public string Name { get; set; }
         public string CIF { get; set; }
         public int CP { get; set; }
-        public string Addres { get; set; }
+        public string Address { get; set; }
         public string City { get; set; }
         public int Phone { get; set; }
         public int Phone2 { get; set; }

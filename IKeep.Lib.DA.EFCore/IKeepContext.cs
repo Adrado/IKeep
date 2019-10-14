@@ -24,7 +24,8 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<ElementType> ElementTypes { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Format> Formats { get; set; }
-        public DbSet<GenericElement> GemericElements { get; set; }
+        public DbSet<Element> Elements { get; set; }
+        public DbSet<GenericElement> GenericElements { get; set; }
         public DbSet<Inspection> Inspections { get; set; }
         public DbSet<Installation> Installations { get; set; }
         public DbSet<Map> Maps { get; set; }
@@ -34,9 +35,11 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<Role> Roles { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<GenericTask> GenericTasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ElementObservation> ElementObservations { get; set; }
         public DbSet<InstallationUser> InstallationUsers { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
+        public DbSet<ElementImage> ElementImages { get; set; }
     }
 }
