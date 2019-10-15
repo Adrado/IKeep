@@ -119,6 +119,32 @@ namespace IKeep.Web.Migrations
                     b.ToTable("Correctives");
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.Element", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AreaId");
+
+                    b.Property<Guid>("ElementTypeId");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<Guid>("GenericElementId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("GenericElementId");
+
+                    b.ToTable("Elements");
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.ElementImage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -214,22 +240,15 @@ namespace IKeep.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<Guid>("ElementTypeId");
 
                     b.Property<int>("EntityStatus");
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Status");
-
                     b.HasKey("Id");
 
                     b.ToTable("GenericElements");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("GenericElement");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.GenericTask", b =>
@@ -240,9 +259,6 @@ namespace IKeep.Web.Migrations
                     b.Property<Guid>("CategoryId");
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
 
                     b.Property<TimeSpan>("Duration");
 
@@ -256,8 +272,6 @@ namespace IKeep.Web.Migrations
 
                     b.Property<string>("Ref");
 
-                    b.Property<int>("Status");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -265,8 +279,6 @@ namespace IKeep.Web.Migrations
                     b.HasIndex("PriorityId");
 
                     b.ToTable("GenericTasks");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("GenericTask");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.Inspection", b =>
@@ -447,6 +459,50 @@ namespace IKeep.Web.Migrations
                     b.ToTable("Suppliers");
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.Task", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CategoryId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<TimeSpan>("Duration");
+
+                    b.Property<Guid>("ElementId");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<Guid>("FormatId");
+
+                    b.Property<Guid>("GenericTaskId");
+
+                    b.Property<int>("Period");
+
+                    b.Property<Guid>("PriorityId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("Status");
+
+                    b.Property<Guid?>("SupplierId");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ElementId");
+
+                    b.HasIndex("GenericTaskId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -517,42 +573,6 @@ namespace IKeep.Web.Migrations
                     b.ToTable("UserCategories");
                 });
 
-            modelBuilder.Entity("IKeep.Lib.Models.Element", b =>
-                {
-                    b.HasBaseType("IKeep.Lib.Models.GenericElement");
-
-                    b.Property<Guid>("AreaId");
-
-                    b.Property<Guid>("GenericElementId");
-
-                    b.HasIndex("AreaId");
-
-                    b.HasIndex("GenericElementId");
-
-                    b.HasDiscriminator().HasValue("Element");
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.Task", b =>
-                {
-                    b.HasBaseType("IKeep.Lib.Models.GenericTask");
-
-                    b.Property<Guid>("ElementId");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.Property<Guid?>("SupplierId");
-
-                    b.Property<Guid?>("UserId");
-
-                    b.HasIndex("ElementId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasDiscriminator().HasValue("Task");
-                });
-
             modelBuilder.Entity("IKeep.Lib.Models.Area", b =>
                 {
                     b.HasOne("IKeep.Lib.Models.Floor")
@@ -583,6 +603,19 @@ namespace IKeep.Web.Migrations
                     b.HasOne("IKeep.Lib.Models.User")
                         .WithMany("Correctives")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("IKeep.Lib.Models.Element", b =>
+                {
+                    b.HasOne("IKeep.Lib.Models.Area")
+                        .WithMany("Elements")
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.GenericElement")
+                        .WithMany("Elements")
+                        .HasForeignKey("GenericElementId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.ElementImage", b =>
@@ -664,6 +697,23 @@ namespace IKeep.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.Task", b =>
+                {
+                    b.HasOne("IKeep.Lib.Models.Element")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ElementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.GenericTask")
+                        .WithMany("Tasks")
+                        .HasForeignKey("GenericTaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.User")
+                        .WithMany("Tasks")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.User", b =>
                 {
                     b.HasOne("IKeep.Lib.Models.Role")
@@ -683,31 +733,6 @@ namespace IKeep.Web.Migrations
                         .WithMany("UserCategories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.Element", b =>
-                {
-                    b.HasOne("IKeep.Lib.Models.Area")
-                        .WithMany("Elements")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IKeep.Lib.Models.GenericElement")
-                        .WithMany("Elements")
-                        .HasForeignKey("GenericElementId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.Task", b =>
-                {
-                    b.HasOne("IKeep.Lib.Models.Element")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ElementId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IKeep.Lib.Models.User")
-                        .WithMany("Tasks")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

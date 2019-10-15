@@ -1,6 +1,8 @@
 ﻿using IKeep.Lib.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IKeep.Lib.Models
@@ -11,10 +13,18 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public TimeSpan Duration { get; set; }
         public Period Period { get; set; }
-        public TaskStatus Status { get; set; }
         public Guid PriorityId { get; set; }
         public Guid FormatId { get; set; }
         public Guid CategoryId { get; set; }
+        [JsonIgnore]
+        public ICollection<Task> Tasks { get; set; }
+        public List<Guid> TasksIds
+        {
+            get
+            {
+                return Tasks == null ? new List<Guid>() : Tasks.Select(x => x.Id).ToList();
+            }
+        }
     }
 
     public enum Period
@@ -28,11 +38,5 @@ namespace IKeep.Lib.Models
         Yearly,
         TwoYearly,
         FourYearly
-    }
-
-    public enum TaskStatus
-    {
-        Inactive,
-        Active
     }
 }
