@@ -101,29 +101,29 @@ class InstallationViewModel extends Component
         this.InstallationsService.GetAllAsync()
         .then((response) =>
             {
-                console.log(response);
-                this.OnGetData(response);
+                //console.log(response);
+                //this.OnGetData(response);
             });
 
         this.BuildingsService.GetAllAsync()
         .then((response) =>
             {
-                console.log(response);
-                this.OnGetData(response);
+               // console.log(response);
+               // this.OnGetData(response);
             });
 
         this.FloorsService.GetAllAsync()
         .then((response) =>
             {
-                console.log(response);
-                this.OnGetData(response);
+                //console.log(response);
+               // this.OnGetData(response);
             });
 
         this.AreasService.GetAllAsync()
         .then((response) =>
             {
-                console.log(response);
-                this.OnGetData(response);
+                //console.log(response);
+                //this.OnGetData(response);
             });
     }
 

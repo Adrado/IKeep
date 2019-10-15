@@ -59,8 +59,8 @@ namespace IKeep.Web.Controllers
                     Fax = 1234,
                     Email = "Ma@Ja.com"
                 };
-                //_installationsService.Add(a);
-                _installationsService.Add(b);
+                _installationsService.Add(a);
+                //_installationsService.Add(b);
             }
 
             return await _installationsService.GetAll().ToListAsync();

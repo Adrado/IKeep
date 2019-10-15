@@ -1,41 +1,73 @@
-import React from 'react';
-import TreeMenu from 'react-simple-tree-menu'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import {Treebeard} from 'react-treebeard';
 
+const data = {
+    name: 'root',
+    toggled: true,
+    children: [
+        {
+            name: 'parent',
+            children: [
+                { name: 'child1' },
+                { name: 'child2' }
+            ]
+        },
+        {
+            name: 'loading parent',
+            loading: true,
+            children: []
+        },
+        {
+            name: 'parent',
+            children: [
+                {
+                    name: 'nested parent',
+                    children: [
+                        { name: 'nested child 1' },
+                        { name: 'nested child 2' }
+                    ]
+                }
+            ]
+        }
+    ]
+};
 
-let InstallationTreeView = props =>
+class TreeExample extends Component 
 {
-    //const classes = useStyles();
-    let {Data} = props;
-    const treeData = {
-        'first-level-node-1': {               // key
-          label: 'Node 1 at the first level',
-          index: 0, // decide the rendering order on the same level
-            // any other props you need, e.g. url
-          nodes: {
-            'second-level-node-1': {
-              label: 'Node 1 at the second level',
-              index: 0,
-              nodes: {
-                'third-level-node-1': {
-                  label: 'Node 1 at the third level',
-                  index: 0,
-                  nodes: {} // you can remove the nodes property or leave it as an empty array
-                },
-              },
-            },
-          },
-        },
-        'first-level-node-2': {
-          label: 'Node 2 at the first level',
-          index: 1,
-        },
-      };
-
-    return(
-        <TreeMenu data={Data} />
-    );
+    constructor(props)
+    {
+        super(props);
+        this.state = this.props.Data;
+        this.Data = this.props.Data;
+        this.onToggle = this.onToggle.bind(this);
+        console.log(this.props)
+    }
+    
+    onToggle(node, toggled){
+        const {cursor, data} = this.state;
+        if (cursor) {
+            this.setState(() => ({cursor, active: false}));
+        }
+        node.active = true;
+        if (node.children) { 
+            node.toggled = toggled; 
+        }
+        this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
+    }
+    
+    render()
+    {
+        //const {data} = this.state;
+        return (
+            <Treebeard
+                data={this.Data}
+                /* onToggle={this.onToggle} */
+            />
+        );
+    }
 }
-
-export default InstallationTreeView;
-
+export default TreeExample;
+/* const content = document.getElementById('content');
+ReactDOM.render(<TreeExample/>, content); */
 //https://github.com/storybookjs/react-treebeard

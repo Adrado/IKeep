@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 let CreateInstallationForm = props =>
 {
     const classes = useStyles();
-    let {onClick, onChange, State} = props;
+    const {onClick, onChange, State} = props;
     
     return(
         <React.Fragment>

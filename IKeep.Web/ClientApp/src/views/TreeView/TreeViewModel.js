@@ -7,6 +7,7 @@ import FloorsService from '../../services/FloorsService'
 import AreasService from '../../services/AreasService'
 //import InstallationManagerModel from '../InstallationManager/InstallationManagerModel';
 import Installation from '../../models/Installation'
+import TreeExample from './TreeView'
 
 class TreeViewModel extends Component
 {
@@ -24,9 +25,13 @@ class TreeViewModel extends Component
         this.GetTreeView();
         this.TreeViewData = [];
         this.InstallationsData
-        /* this.
+        this.state =
+        {
+            vocal: ''
+        }
+        
 
-        } */
+        
     }
 
     GetTreeView()
@@ -42,7 +47,9 @@ class TreeViewModel extends Component
     {
         this.Data = response.data.rootNode;
         console.log(response);
+        console.log("Ahora?")
         console.log(this.Data);
+        this.setState({vocal : 'b'})
         //this.CleanForm();
     } 
 
@@ -70,9 +77,11 @@ class TreeViewModel extends Component
 
     render()
     {
+        console.log("x");
+        console.log(this.Data);
         return(
-            <TreeView
-                Data = {this.Data}
+            <TreeExample
+            Data = {this.Data}
             />
         );
     }
