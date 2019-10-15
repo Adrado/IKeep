@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IKeep.Lib.DA.EFCore;
 using IKeep.Lib.Models;
+using IKeep.Lib.Core;
+using Task = System.Threading.Tasks.Task;
 
 namespace IKeep.Web.Controllers
 {
@@ -14,93 +16,101 @@ namespace IKeep.Web.Controllers
     [ApiController]
     public class InstallationsController : ControllerBase
     {
-        private readonly IKeepContext _context;
+        private readonly ICrudService<Installation> _installationsService;
 
-        public InstallationsController(IKeepContext context)
+        public InstallationsController(ICrudService<Installation> installationsService)
         {
-            _context = context;
+            _installationsService = installationsService;
         }
 
-        // GET: api/Installations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Installation>>> GetInstallations()
         {
-            return await _context.Installations.ToListAsync();
+            var x = _installationsService.GetAll().ToList().Count();
+
+            if (x == 1)
+            {
+                var a = new Installation
+                {
+                    Id = Guid.Parse("d24ab749-87e9-43a9-9c7f-70d7021e5c83"),
+                    Ref = "I1",
+                    Name = "MT-BCN",
+                    CIF = "XXXXXX",
+                    CP = 1234,
+                    Address = "c/Bolivia",
+                    City = "Barcelona",
+                    Phone = 123456789,
+                    Phone2 = 987654321,
+                    Fax = 1234,
+                    Email = "mt@bcn.com"
+                };
+
+                var b = new Installation
+                {
+                    Id = Guid.Parse("ce7fa284-7452-4c0a-acd4-ffa9f2360803"),
+                    Ref = "I2",
+                    Name = "MA",
+                    CIF = "XXXXXX",
+                    CP = 45645,
+                    Address = "c/Alcalá",
+                    City = "Madrid",
+                    Phone = 123456789,
+                    Phone2 = 987654321,
+                    Fax = 1234,
+                    Email = "Ma@Ja.com"
+                };
+                //_installationsService.Add(a);
+                _installationsService.Add(b);
+            }
+
+            return await _installationsService.GetAll().ToListAsync();
         }
 
         // GET: api/Installations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Installation>> GetInstallation(Guid id)
         {
-            var installation = await _context.Installations.FindAsync(id);
-
-            if (installation == null)
+            return await Task.Run(() =>
             {
-                return NotFound();
-            }
-
-            return installation;
-        }
-
-        // PUT: api/Installations/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutInstallation(Guid id, Installation installation)
-        {
-            if (id != installation.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(installation).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InstallationExists(id))
+                var installation = _installationsService.GetAll().FirstOrDefault(x => x.Id == id);
+                if (installation == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
+                return new ActionResult<Installation>(installation);
+            });
+        }
 
-            return NoContent();
+        // PUT: api/Installations/5
+        [HttpPut]
+        public async Task<ActionResult<Installation>> PutInstallation(Installation installation)
+        {
+            return await Task.Run(() =>
+            {
+                var output = _installationsService.Update(installation);
+                return new ActionResult<Installation>(output);
+            });
         }
 
         // POST: api/Installations
         [HttpPost]
         public async Task<ActionResult<Installation>> PostInstallation(Installation installation)
         {
-            _context.Installations.Add(installation);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetInstallation", new { id = installation.Id }, installation);
+            return await Task.Run(() =>
+            {
+                var output = _installationsService.Add(installation);
+                return new ActionResult<Installation>(output);
+            });
         }
 
         // DELETE: api/Installations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Installation>> DeleteInstallation(Guid id)
+        public async Task<bool> DeleteInstallation(Guid id)
         {
-            var installation = await _context.Installations.FindAsync(id);
-            if (installation == null)
+            return await Task.Run(() =>
             {
-                return NotFound();
-            }
-
-            _context.Installations.Remove(installation);
-            await _context.SaveChangesAsync();
-
-            return installation;
-        }
-
-        private bool InstallationExists(Guid id)
-        {
-            return _context.Installations.Any(e => e.Id == id);
+                return _installationsService.Delete(id);
+            });
         }
     }
 }

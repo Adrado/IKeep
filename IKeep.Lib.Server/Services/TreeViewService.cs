@@ -25,14 +25,32 @@ namespace IKeep.Lib.Server.Services
 
             using (var db = _context)
             {
-                // Add each element as a tree node
-                tree.Nodes = db.Buildings
-                    .Select(t => new TreeNode { Id = t.Id, ParentId = t.InstallationId, Name = t.Name })
+                var installations = db.Installations
+                    .Select(t => new TreeNode { Id = t.Id, ParentId = Guid.Parse("ccf9fd7d-4d91-4599-b156-4e6e3f4b1e22"), Name = t.Name, Type = t.EntityType })
                     .ToDictionary(t => t.Id);
 
+                var buildings = db.Buildings
+                    .Select(t => new TreeNode { Id = t.Id, ParentId = t.InstallationId, Name = t.Name, Type = t.EntityType })
+                    .ToDictionary(t => t.Id);
+                
+                var floors = db.Floors
+                    .Select(t => new TreeNode { Id = t.Id, ParentId = t.BuildingId, Name = t.Name, Type = t.EntityType })
+                    .ToDictionary(t => t.Id);
+                
+                var areas = db.Areas
+                    .Select(t => new TreeNode { Id = t.Id, ParentId = t.FloorId, Name = t.Name, Type = t.EntityType })
+                    .ToDictionary(t => t.Id);
 
-                // Create a new root node
-                tree.RootNode = new TreeNode { Id = Guid.NewGuid(), Name = "Root" };
+                tree.Nodes = installations.Union(buildings).Union(floors).Union(areas).ToDictionary(k => k.Key, v => v.Value);
+                //tree.Nodes = installations.Concat(buildings).Concat(floors).Concat(areas).GroupBy(d = d.Key)
+                //            .ToDictionary(d => d.Key, d => d.First().Value);
+
+                // Add each element as a tree node
+                //tree.Nodes = db.Buildings
+                //    .Select(t => new TreeNode { Id = t.Id, ParentId = t.InstallationId, Name = t.Name })
+                //    .ToDictionary(t => t.Id);
+
+                tree.RootNode = new TreeNode { Id = Guid.Parse("ccf9fd7d-4d91-4599-b156-4e6e3f4b1e22"), Name = "Root" };
 
                 // Build the tree, setting parent and children references for all elements
                 tree.BuildTree();

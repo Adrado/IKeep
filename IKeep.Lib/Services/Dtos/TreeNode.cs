@@ -17,9 +17,10 @@ namespace IKeep.Lib.Services.Dtos
 
         [JsonIgnore]
         public TreeNode Parent;
+        public string Type;
 
         public string Name;
 
-        public List<TreeNode> Children;
+        public List<TreeNode> Children = new List<TreeNode>();
     }
 }

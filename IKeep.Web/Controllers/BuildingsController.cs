@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IKeep.Lib.DA.EFCore;
 using IKeep.Lib.Models;
+using IKeep.Lib.Core;
+using Task = System.Threading.Tasks.Task;
 
 namespace IKeep.Web.Controllers
 {
@@ -14,93 +16,90 @@ namespace IKeep.Web.Controllers
     [ApiController]
     public class BuildingsController : ControllerBase
     {
-        private readonly IKeepContext _context;
+        private readonly ICrudService<Building> _buildingsService;
 
-        public BuildingsController(IKeepContext context)
+        public BuildingsController(ICrudService<Building> buildingsService)
         {
-            _context = context;
+            _buildingsService = buildingsService;
         }
 
-        // GET: api/Buildings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Building>>> GetBuildings()
         {
-            return await _context.Buildings.ToListAsync();
+            var x = _buildingsService.GetAll().ToList().Count();
+
+            if (x == 0)
+            {
+                var a = new Building
+                {
+                    Id = Guid.Parse("a0b03150-18b2-4c80-aea0-d615983d8dd6"),
+                    InstallationId = Guid.Parse("d24ab749-87e9-43a9-9c7f-70d7021e5c83"),
+                    Ref = "B1",
+                    Name = "Oficinas",
+                    Description = "qwerty",
+                };
+
+                var b = new Building
+                {
+                    Id = Guid.Parse("a23fdd96-9fd3-4e28-b48a-ee4f237d2fef"),
+                    InstallationId = Guid.Parse("ce7fa284-7452-4c0a-acd4-ffa9f2360803"),
+                    Ref = "B1",
+                    Name = "Paz",
+                    Description = "Lorem ipsum"
+
+                };
+                _buildingsService.Add(a);
+                _buildingsService.Add(b);
+            }
+
+            return await _buildingsService.GetAll().ToListAsync();
         }
 
         // GET: api/Buildings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Building>> GetBuilding(Guid id)
         {
-            var building = await _context.Buildings.FindAsync(id);
-
-            if (building == null)
+            return await Task.Run(() =>
             {
-                return NotFound();
-            }
-
-            return building;
-        }
-
-        // PUT: api/Buildings/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBuilding(Guid id, Building building)
-        {
-            if (id != building.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(building).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BuildingExists(id))
+                var building = _buildingsService.GetAll().FirstOrDefault(x => x.Id == id);
+                if (building == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
+                return new ActionResult<Building>(building);
+            });
+        }
 
-            return NoContent();
+        // PUT: api/Buildings/5
+        [HttpPut]
+        public async Task<ActionResult<Building>> PutBuilding(Building building)
+        {
+            return await Task.Run(() =>
+            {
+                var output = _buildingsService.Update(building);
+                return new ActionResult<Building>(output);
+            });
         }
 
         // POST: api/Buildings
         [HttpPost]
         public async Task<ActionResult<Building>> PostBuilding(Building building)
         {
-            _context.Buildings.Add(building);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBuilding", new { id = building.Id }, building);
+            return await Task.Run(() =>
+            {
+                var output = _buildingsService.Add(building);
+                return new ActionResult<Building>(output);
+            });
         }
 
         // DELETE: api/Buildings/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Building>> DeleteBuilding(Guid id)
+        public async Task<bool> DeleteBuilding(Guid id)
         {
-            var building = await _context.Buildings.FindAsync(id);
-            if (building == null)
+            return await Task.Run(() =>
             {
-                return NotFound();
-            }
-
-            _context.Buildings.Remove(building);
-            await _context.SaveChangesAsync();
-
-            return building;
-        }
-
-        private bool BuildingExists(Guid id)
-        {
-            return _context.Buildings.Any(e => e.Id == id);
+                return _buildingsService.Delete(id);
+            });
         }
     }
 }

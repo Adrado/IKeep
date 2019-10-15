@@ -3,16 +3,13 @@ import CreateInstallationForm from './CreateInstallationForm';
 /* import InstallationTreeView from './InstallationTreeView'; */
 import Installation from '../../models/Installation';
 import InstallationsService from '../../services/InstallationsService';
-import BuildingsService from '../../services/BuildingsService';
+import BuildingssService from '../../services/BuildingssService';
 import FloorsService from '../../services/FloorsService';
 import AreasService from '../../services/AreasService';
 /* import InstallationTable from './InstallationTable'; */
 
 
 let InstallationService = new InstallationsService();
-let BuildingService = new BuildingsService();
-let FloorService = new FloorsService();
-let AreaService = new AreasService();
 
 class InstallationViewModel extends Component
 {
@@ -40,9 +37,9 @@ class InstallationViewModel extends Component
         this.DesactiveInstallation = this.DesactiveInstallation.bind(this);
 
         this.InstallationsService = InstallationService;
-        this.BuildingsService = BuildingService;
-        this.FloorsService = FloorService;
-        this.AreasService = AreaService;
+        this.BuildingssService = BuildingssService;
+        this.FloorsService = FloorsService;
+        this.AreasService = AreasService;
         this.GetAllInstallations();
     }
 
@@ -105,7 +102,7 @@ class InstallationViewModel extends Component
                 this.OnGetData(response);
             });
 
-        this.BuildingsService.GetAllAsync()
+        this.BuildingssService.GetAllAsync()
         .then((response) =>
             {
                 console.log(response);

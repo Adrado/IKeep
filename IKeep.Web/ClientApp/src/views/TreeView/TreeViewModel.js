@@ -34,26 +34,17 @@ class TreeViewModel extends Component
         this.TreeViewService.GetAllAsync()
         .then((response) =>
             {
-                console.log(response)
-               // this.OnGetData(response);
+                this.OnGetData(response);
             });
     } 
 
-    /* OnGetData(response)
+    OnGetData(response)
     {
-        this.Roles.length = 0;
-        for (let i in response.data)
-        {
-            let role = new Role(response.data[i]);
-            
-            if(role.EntityStatus !== 0)  
-                this.Roles.push(role);
-        } 
-        this.Data = response.data;
+        this.Data = response.data.rootNode;
         console.log(response);
         console.log(this.Data);
         //this.CleanForm();
-    } */
+    } 
 
     /* GetAllInstallations()
     {
