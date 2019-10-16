@@ -181,4 +181,4 @@ class BuildingViewModel extends Component
     }
 }
 
-export default BuildingViewModel; */
+export default BuildingViewModel; 

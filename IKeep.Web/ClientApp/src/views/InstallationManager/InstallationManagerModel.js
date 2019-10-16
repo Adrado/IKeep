@@ -5,6 +5,8 @@ import TreeViewModel from '../TreeView/TreeViewModel';
 
 class InstallationManagerModel extends Component
 {
+    
+
     render()
     {
         return(

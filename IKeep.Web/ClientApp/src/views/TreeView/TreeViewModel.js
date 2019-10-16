@@ -42,9 +42,62 @@ class TreeViewModel extends Component
     OnGetData(response)
     {
         this.Data = response.data.rootNode;
-        this.setState({vocal : 'b'})
+        this.setState({vocal : 'b'});
+        console.log(this.Data);
         //this.CleanForm();
+       this.ModifiedData(response.data.rootNode)
     } 
+
+    ModifiedData(data)
+    {
+        let installations = data.children;
+        for(let i in installations)
+        {
+            let installation = installations[i];
+            let Buildings = installation.children
+            for (let k in Buildings)
+            {
+                let Building = Buildings[k];
+                let Floors = Building.children;
+                for(let j in Floors)
+                {
+                    let Floor = Floors[j];
+                    let Areas = Floor.children
+                    let newArea =
+                    {
+                        name: "Añadir Nuevo Espacio",
+                        id: Floor
+                    }
+                    Areas.push(newArea)
+                }
+                let newFloor =
+                {
+                    name: "Añadir Nueva Planta",
+                    id: Building.id
+                }
+                Floors.push(newFloor)
+            } 
+            let newBuilding = 
+            {
+                name: "Añadir Nuevo Edificio",
+                id: installation.id
+            }
+            Buildings.push(newBuilding);
+            console.log();
+        }
+
+        var newInstallation =
+        {
+            name: "Añadir Nueva Instalación"
+        }
+        installations.push(newInstallation);
+        console.log(installations.children);
+    }
+
+    AddNew()
+    {
+        alert("Se ha llamado a un callback");
+    }
 
     onToggle(node, toggled){
         const {cursor, data} = this.state;
