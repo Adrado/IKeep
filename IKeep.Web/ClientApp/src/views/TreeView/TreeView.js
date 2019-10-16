@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import {Treebeard} from 'react-treebeard'
 
 
-
 let TreeView = props =>
 {
-    //const classes = useStyles();
     const {Data, onToggle} = props;
+    const treeStyle = _default
     
     return(
         <Treebeard
+            style={treeStyle}
             data = {Data}
             onToggle = {onToggle}
         />
@@ -19,30 +19,82 @@ let TreeView = props =>
 
 export default TreeView;
 
-/* class TreeExample extends Component 
-{
-    constructor(props)
-    {
-        super(props);
-        this.state = this.props.Data;
-        this.Data = this.props.Data;
-        this.onToggle = this.onToggle.bind(this);
-        console.log(this.props)
+
+
+var _default = {
+    tree: {
+      base: {
+        listStyle: 'none',
+        backgroundColor: '#ffffff', //#21252B
+        margin: 0,
+        padding: 0,
+        color: '#9DA5AB',
+        fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
+        fontSize: '14px'
+      },
+      node: {
+        base: {
+          position: 'relative'
+        },
+        link: {
+          cursor: 'pointer',
+          position: 'relative',
+          padding: '0px 5px',
+          display: 'block'
+        },
+        activeLink: {
+          background: '#ffffff'
+        },
+        toggle: {
+          base: {
+            position: 'relative',
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginLeft: '-5px',
+            height: '24px',
+            width: '24px'
+          },
+          wrapper: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            margin: '-7px 0 0 -7px',
+            height: '14px'
+          },
+          height: 14,
+          width: 14,
+          arrow: {
+            fill: '#9DA5AB',
+            strokeWidth: 0
+          }
+        },
+        header: {
+          base: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            color: '#2e2f30'// #9DA5AB
+          },
+          connector: {
+            width: '2px',
+            height: '12px',
+            borderLeft: 'solid 2px black',
+            borderBottom: 'solid 2px black',
+            position: 'absolute',
+            top: '0px',
+            left: '-21px'
+          },
+          title: {
+            lineHeight: '24px',
+            verticalAlign: 'middle'
+          }
+        },
+        subtree: {
+          listStyle: 'none',
+          paddingLeft: '19px'
+        },
+        loading: {
+          color: '#E2C089'
+        }
+      }
     }
-    
-    
-    render()
-    {
-        //const {data} = this.state;
-        return (
-            <Treebeard
-                data={this.Data}
-                onToggle={this.onToggle} 
-            />
-        );
-    }
-}
-export default TreeExample; */
-/* const content = document.getElementById('content');
-ReactDOM.render(<TreeExample/>, content); */
-//https://github.com/storybookjs/react-treebeard
+  };
