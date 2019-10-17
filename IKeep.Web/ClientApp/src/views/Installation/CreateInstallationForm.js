@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 let CreateInstallationForm = props =>
 {
     const classes = useStyles();
-    const {onClick, onChange, State} = props;
+    const {onClickSave, onClickDelete, onClickAdd, onChange, State} = props;
     
     return(
         <React.Fragment>
@@ -110,9 +110,17 @@ let CreateInstallationForm = props =>
                         margin="normal"
                         variant="filled"/>
                     </Grid>
+                    <Grid item xs={6} sm = {4}></Grid>
+                    <Grid item xs={6} sm = {4}></Grid>
 
-                    <Grid item xs={12}>
-                        <Button className={classes.button} size="small" onClick = {onClick} variant="outlined">Añadir</Button>
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickAdd} variant="outlined">Añadir</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickSave} variant="outlined">Guardar</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickDelete} variant="outlined">Borrar</Button>
                     </Grid>
                 
             </Grid>

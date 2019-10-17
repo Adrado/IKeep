@@ -1,9 +1,9 @@
 ﻿import GenericService from'./GenericService'
 class CRUDService extends GenericService
 {
-    constructor(url)
+    constructor(model)
     {
-        super(url);
+        super(model);
     }
 
     GetAllAsync()
@@ -11,19 +11,24 @@ class CRUDService extends GenericService
         return this.Get();
     }
 
-    AddAsync(entity)
+    GetByIdAsync(id)
     {
-        return this.Post(entity);
+        return this.GetById(id)
     }
 
-    UpdateAsync(entity)
+    AddAsync(dto)
     {
-        return this.Put(entity);
+        return this.Post(dto);
     }
 
-    DeleteAsync(entity)
+    UpdateAsync(dto)
     {
-        return this.Delete(entity);
+        return this.Put(dto);
+    }
+
+    DeleteAsync(id)
+    {
+        return this.Delete(id);
     }
 }
 

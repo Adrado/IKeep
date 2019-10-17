@@ -5,8 +5,17 @@ import TreeViewModel from '../TreeView/TreeViewModel';
 
 class InstallationManagerModel extends Component
 {
-    
+    constructor()
+    {
+        super()
+        /* this.getNodeId = this.getNodeId.bind(this);
+        this.onToggle = this.onToggle.bind(this); */
+    }
 
+    GetNodeId()
+    {
+        
+    }
     render()
     {
         return(

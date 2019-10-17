@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import CreateInstallationForm from './CreateInstallationForm';
-/* import InstallationTreeView from './InstallationTreeView'; */
 import Installation from '../../models/Installation';
+
+//Temporalmente hasta resolver la inyección de dependencias
 import InstallationsService from '../../services/InstallationsService';
+
+//Terminar el TreeViewComponent
 import BuildingsService from '../../services/BuildingsService';
 import FloorsService from '../../services/FloorsService';
 import AreasService from '../../services/AreasService';
-/* import InstallationTable from './InstallationTable'; */
 
 
+//Temporalmente hasta resolver la inyección de dependencias
 let InstallationService = new InstallationsService();
 let BuildingService = new BuildingsService();
 let FloorService = new FloorsService();
@@ -34,19 +37,22 @@ class InstallationViewModel extends Component
         };
 
         this.Installations = [];
-        this.HandleChange = this.HandleChange.bind(this);
+        this.SelectedInstallation = null;
+        this.HandleInputChange = this.HandleInputChange.bind(this);
+        //Funciones
         this.AddNewInstallation = this.AddNewInstallation.bind(this);
-        this.EditInstallation = this.EditInstallation.bind(this);
+        this.SaveInstallationChanges = this.SaveInstallationChanges.bind(this);
         this.DesactiveInstallation = this.DesactiveInstallation.bind(this);
-
+        //Servicios
         this.InstallationsService = InstallationService;
         this.BuildingsService = BuildingService;
         this.FloorsService = FloorService;
         this.AreasService = AreaService;
+
         this.GetAllInstallations();
     }
 
-    HandleChange(e)
+    HandleInputChange(e)
     {
         this.setState({[e.target.id] : e.target.value});
     }
@@ -75,14 +81,11 @@ class InstallationViewModel extends Component
     {
         let installation = new Installation (response.data);
         this.Installations.push(installation);
-        console.log(response);
-        alert("K");
     }
 
     CleanForm()
     {
         this.setState({
-            Name: '',
             Ref : '',
             Name : '',
             CIF : '',
@@ -96,52 +99,47 @@ class InstallationViewModel extends Component
           });
     }
 
-    GetAllInstallations()
+    GetInstallation(id)
     {
-        this.InstallationsService.GetAllAsync()
+        this.InstallationsService.GetByIdAsync(id)
         .then((response) =>
-            {
-                //console.log(response);
-                //this.OnGetData(response);
-            });
-
-        this.BuildingsService.GetAllAsync()
-        .then((response) =>
-            {
-               // console.log(response);
-               // this.OnGetData(response);
-            });
-
-        this.FloorsService.GetAllAsync()
-        .then((response) =>
-            {
-                //console.log(response);
-               // this.OnGetData(response);
-            });
-
-        this.AreasService.GetAllAsync()
-        .then((response) =>
-            {
-                //console.log(response);
-                //this.OnGetData(response);
-            });
-    }
-
-    OnGetData(response)
-    {
-        this.Installations.length = 0;
-        for (let i in response.data)
         {
-            let installation = new Installation(response.data[i]);
-            
-            if(installation.EntityStatus !== 0)  
-                this.Installations.push(installation);
-        }
+            this.OnGetInstallation(response);
+        })
     }
 
-    EditInstallation(newData, oldData)
+    OnGetInstallation(response)
     {
-        this.InstallationsService.UpdateAsync(newData)
+        let installation = new Installation(response.data)
+        this.SelectedInstallation = installation;
+        this.setState({
+            Name: installation.Name,
+            Ref :installation.Ref,
+            CIF : installation.CIF,
+            CP : installation.CP,
+            Address : installation.Address,
+            City : installation.City,
+            Phone : installation.Phone,
+            Phone2 : installation.Phone2,
+            Fax : installation.Fax,
+            Email : installation.Email
+          });
+    }
+
+    SaveInstallationChanges()
+    {
+        this.SelectedInstallation.Name = this.state.Name;
+        this.SelectedInstallation.Ref = this.state.Ref;
+        this.SelectedInstallation.CIF = this.state.CIF;
+        this.SelectedInstallation.CP = this.state.CP;
+        this.SelectedInstallation.Address = this.state.Address;
+        this.SelectedInstallation.City = this.state.City;
+        this.SelectedInstallation.Phone = this.state.Phone;
+        this.SelectedInstallation.Phone2 = this.sate.Phone2;
+        this.SelectedInstallation.Fax = this.state.Fax;
+        this.SelectedInstallation.Email = this.state.Email;
+
+        this.InstallationsService.UpdateAsync(this.SelectedInstallation)
         .then((response) =>
         {
             this.OnUpdateInstallation(response);
@@ -150,34 +148,31 @@ class InstallationViewModel extends Component
 
     OnUpdateInstallation(response)
     {
-        let installation = new Installation(response.data)
-        let index = this.Installations.findIndex(x => x.Id === installation.Id);
-        this.Installations[index] = installation;
+        //Mandar info a installation manager
     }
     
-    DesactiveInstallation(entity)
+    DesactiveInstallation()
     {
-        entity.EntityStatus = 0;
-        this.InstallationsService.UpdateAsync(entity)
+        this.InstallationsService.DeleteAsync(this.SelectedInstallation.Id)
         .then((response) =>
         {
-            this.OnDesactiveInstallation(entity);
-            console.log(response);
+            this.OnDesactiveInstallation(response);
         });
     }
 
-    OnDesactiveInstallation(entity)
+    OnDesactiveInstallation(response)
     {
-        let index = this.Installations.findIndex(x => x.Id === entity.Id);
-        this.Installations.splice(index, 1);
+       // Mandar info a installation manager
     }
 
     render()
     {
         return(
                 <CreateInstallationForm
-                    onClick = {this.AddNewInstallation}
-                    onChange = {this.HandleChange}
+                    onClickAdd = {this.AddNew}
+                    onClickSave = {this.SaveChanges}
+                    onClickDelete = {this.Delete}
+                    onChange = {this.HandleInputChange}
                     State = {this.state}
                 />
         )

@@ -14,31 +14,35 @@ class GenericService
         return config;
     }
 
-    constructor(url)
+    constructor(dtoName)
     {
-        this.Url = url;
+        this.ApiUrl = "api/" + dtoName;
         //this.Token = $window.Token;
     }
 
     async Get()
     {
-        return await axios.get(this.Url);
+        return await axios.get(this.ApiUrl);
+    }
+    
+    async GetById(id)
+    {
+        return await axios.get(this.ApiUrl + "/"+ id)
     }
 
     async Post(entity)
     {
-        return await axios.post(this.Url, entity);
+        return await axios.post(this.ApiUrl, entity);
     }
 
     async Put(entity)
     {
-        return await axios.put(this.Url, entity);
+        return await axios.put(this.ApiUrl, entity);
     }
 
-    async Delete(entity)
+    async Delete(id)
     {
-        let urlId = this.Url + entity.Id;
-        return await axios.delete(urlId);
+        return await axios.delete(this.ApiUrl + "/" + id);
     }
 }
 

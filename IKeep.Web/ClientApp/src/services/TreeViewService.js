@@ -3,7 +3,7 @@ class TreeViewService extends CRUDService
 {
     constructor()
     {
-        super("api/TreeView/");
+        super("TreeView");
     }
 }
 

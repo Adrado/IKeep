@@ -3,7 +3,7 @@ class UsersService extends CRUDService
 {
     constructor()
     {
-        super("api/users/");
+        super("users");
     }
 }
 

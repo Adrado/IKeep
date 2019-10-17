@@ -66,21 +66,24 @@ class TreeViewModel extends Component
                     let newArea =
                     {
                         name: "Añadir Nuevo Espacio",
-                        id: Floor
+                        id: Floor,
+                        type: "Area"
                     }
                     Areas.push(newArea)
                 }
                 let newFloor =
                 {
                     name: "Añadir Nueva Planta",
-                    id: Building.id
+                    id: Building.id,
+                    type: "Floor"
                 }
                 Floors.push(newFloor)
             } 
             let newBuilding = 
             {
                 name: "Añadir Nuevo Edificio",
-                id: installation.id
+                id: installation.id,
+                type: "Building"
             }
             Buildings.push(newBuilding);
             console.log();
@@ -88,7 +91,8 @@ class TreeViewModel extends Component
 
         var newInstallation =
         {
-            name: "Añadir Nueva Instalación"
+            name: "Añadir Nueva Instalación",
+            type: "Installation"
         }
         installations.push(newInstallation);
         console.log(installations.children);

@@ -3,7 +3,7 @@ class AreasService extends CRUDService
 {
     constructor()
     {
-        super("api/areas/");
+        super("areas");
     }
 }
 

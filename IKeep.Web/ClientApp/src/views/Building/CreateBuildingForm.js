@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 
 import { TextField, Button, Grid  } from '@material-ui/core' 
 
@@ -25,17 +25,17 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-let CreateInstallationForm = props =>
+let CreateBuildingForm = props =>
 {
     const classes = useStyles();
-    let {onClick, onChange, State} = props;
+    let {onClickSave, onClickDelete, onClickAdd, onChange, State} = props;
     
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
 
                 <Grid item xs={12}>
-                    <h3>Instalación</h3>
+                    <h3>Edificio</h3>
                 </Grid>
                    
                     <Grid item xs={6} sm = {4}>
@@ -55,64 +55,20 @@ let CreateInstallationForm = props =>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="CIF" type="text" onChange = {onChange} value = {State.CIF}
-                        label="CIF"
+                        id="Description" type="text" onChange = {onChange} value = {State.Description}
+                        label="Description"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="CP" type="number" onChange = {onChange} value = {State.CP}
-                        label="CP"
-                        margin="normal"
-                        variant="filled"/>
+                    
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickAdd} variant="outlined">Añadir</Button>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Address" type="text" onChange = {onChange} value = {State.Address}
-                        label="Dirección"
-                        margin="normal"
-                        variant="filled"/>
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickSave} variant="outlined">Guardar</Button>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="City" type="text" onChange = {onChange} value = {State.City}
-                        label="Ciudad"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Phone" type="number" onChange = {onChange} value = {State.Phone}
-                        label="Teléfono"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Phone2" type="number" onChange = {onChange} value = {State.Phone2}
-                        label="Teléfono secundario"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Fax" type="text" onChange = {onChange} value = {State.Fax}
-                        label="Fax"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Email" type="email" onChange = {onChange} value = {State.Email}
-                        label="Correo electrónico"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <Button className={classes.button} size="small" onClick = {onClick} variant="outlined">Añadir</Button>
+                    <Grid item xs={2}>
+                        <Button className={classes.button} size="small" onClick = {onClickDelete} variant="outlined">Borrar</Button>
                     </Grid>
                 
             </Grid>
@@ -120,4 +76,4 @@ let CreateInstallationForm = props =>
     )
 }
 
-export default CreateInstallationForm; */
+export default CreateBuildingForm; 
