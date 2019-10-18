@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import InstallationViewModel from '../Installation/InstallationViewModel';
+//import InstallationViewModel from '../Installation/InstallationViewModel';
 import {Grid} from '@material-ui/core' 
 import TreeViewModel from '../TreeView/TreeViewModel';
+import InstallationSvc from '../../providers/Providers'
+import CreateInstallationForm from '../Installation/CreateInstallationForm'
 
 class InstallationManagerModel extends Component
 {
@@ -28,7 +30,9 @@ class InstallationManagerModel extends Component
                     </Grid>
 
                     <Grid item xs={8}>
-                        <InstallationViewModel/>
+                        <InstallationSvc.Provider>
+                            <CreateInstallationForm/>
+                        </InstallationSvc.Provider>
                     </Grid>
                 </Grid>
             </React.Fragment>

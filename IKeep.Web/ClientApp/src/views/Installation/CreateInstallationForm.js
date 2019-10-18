@@ -4,6 +4,8 @@ import { TextField, Button, Grid  } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import useInstallationViewModel from './InstallationViewModel'
+
 const useStyles = makeStyles(theme => ({
     container: {
       display: 'flex',
@@ -25,10 +27,10 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-let CreateInstallationForm = props =>
+const CreateInstallationForm = () =>
 {
     const classes = useStyles();
-    const {onClickSave, onClickDelete, onClickAdd, onChange, State} = props;
+    const {onClickAdd, onClickSave, onClickDelete, onChange, Form} = useInstallationViewModel();
     
     return(
         <React.Fragment>
@@ -40,14 +42,14 @@ let CreateInstallationForm = props =>
                    
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Ref" type="text" onChange = {onChange} value = {State.Ref}
+                        id="Ref" type="text" onChange = {onChange} value = {Form.Ref}
                         label="Ref"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Name" type="text" onChange = {onChange} value = {State.Name}
+                        id="Name" type="text" onChange = {onChange} value = {Form.Name}
                         label="Nombre"
                         margin="normal"
                         variant="filled"
@@ -55,49 +57,49 @@ let CreateInstallationForm = props =>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="CIF" type="text" onChange = {onChange} value = {State.CIF}
+                        id="CIF" type="text" onChange = {onChange} value = {Form.CIF}
                         label="CIF"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="CP" type="number" onChange = {onChange} value = {State.CP}
+                        id="CP" type="number" onChange = {onChange} value = {Form.CP}
                         label="CP"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Address" type="text" onChange = {onChange} value = {State.Address}
+                        id="Address" type="text" onChange = {onChange} value = {Form.Address}
                         label="Dirección"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="City" type="text" onChange = {onChange} value = {State.City}
+                        id="City" type="text" onChange = {onChange} value = {Form.City}
                         label="Ciudad"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Phone" type="number" onChange = {onChange} value = {State.Phone}
+                        id="Phone" type="number" onChange = {onChange} value = {Form.Phone}
                         label="Teléfono"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Phone2" type="number" onChange = {onChange} value = {State.Phone2}
+                        id="Phone2" type="number" onChange = {onChange} value = {Form.Phone2}
                         label="Teléfono secundario"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Fax" type="text" onChange = {onChange} value = {State.Fax}
+                        id="Fax" type="text" onChange = {onChange} value = {Form.Fax}
                         label="Fax"
                         margin="normal"
                         variant="filled"/>
@@ -105,7 +107,7 @@ let CreateInstallationForm = props =>
 
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Email" type="email" onChange = {onChange} value = {State.Email}
+                        id="Email" type="email" onChange = {onChange} value = {Form.Email}
                         label="Correo electrónico"
                         margin="normal"
                         variant="filled"/>

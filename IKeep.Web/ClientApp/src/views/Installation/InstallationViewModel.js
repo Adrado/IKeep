@@ -1,25 +1,170 @@
-import React, {Component} from 'react';
-import CreateInstallationForm from './CreateInstallationForm';
+import React, {useState, useContext, useCallback} from 'react';
+//import CreateInstallationForm from './CreateInstallationForm';
 import Installation from '../../models/Installation';
-
-//Temporalmente hasta resolver la inyección de dependencias
-import InstallationsService from '../../services/InstallationsService';
-
-//Terminar el TreeViewComponent
-import BuildingsService from '../../services/BuildingsService';
-import FloorsService from '../../services/FloorsService';
-import AreasService from '../../services/AreasService';
+import InstallationSvc from '../../providers/Providers';
 
 
-//Temporalmente hasta resolver la inyección de dependencias
-let InstallationService = new InstallationsService();
-let BuildingService = new BuildingsService();
-let FloorService = new FloorsService();
-let AreaService = new AreasService();
+export const useInstallationViewModel = (callback) =>
+{
+    const [Form, setForm] = useState(
+        {
+            Ref : '2',
+            Name : '',
+            CIF : '',
+            CP : '',
+            Address :'',
+            City : '',
+            Phone : '',
+            Phone2 : '',
+            Fax : '',
+            Email : ''
+        }
+    )
+    const [SelectedInstallation, setSelectedInstallation] = useState({})
 
+    const IS = useContext(InstallationSvc)
+
+    //
+    const HandleInputChange = useCallback((e) =>
+    {
+        setForm(Form => ({ ...Form,[e.target.id] : e.target.value}));
+    });
+        
+    function AddNewInstallation()
+    {
+        let installation = new Installation();
+        installation.Ref = Form.Ref
+        installation.Name = Form.Name;
+        installation.CIF = Form.CIF;
+        installation.CP = Form.CP;
+        installation.Address = Form.Address;
+        installation.City = Form.City;
+        installation.Phone = Form.Phone;
+        installation.Phone2 = Form.Phone2;
+        installation.Fax = Form.Fax;
+        installation.Email = Form.Email;
+
+        
+        IS.AddAsync(installation)
+            .then((response) => { OnAddedInstallation(response); });
+
+        CleanForm();
+    }
+
+    function OnAddedInstallation(response)
+    {
+        alert("Eureka!!");
+        let installation = new Installation (response.data);
+        //Mandar info a installation Manager
+    }
+
+    function CleanForm()
+    {
+        setForm({
+            Ref : '',
+            Name : '',
+            CIF : '',
+            CP : '',
+            Address :'',
+            City : '',
+            Phone : '',
+            Phone2 : '',
+            Fax : '',
+            Email : ''
+          });
+    }
+
+    function GetInstallation(id)
+    {
+        IS.GetByIdAsync(id)
+        .then((response) =>
+        {
+            OnGetInstallation(response);
+        })
+    }
+
+    function OnGetInstallation(response)
+    {
+        let installation = new Installation(response.data)
+        setSelectedInstallation(installation)
+        setForm({
+            Name: installation.Name,
+            Ref :installation.Ref,
+            CIF : installation.CIF,
+            CP : installation.CP,
+            Address : installation.Address,
+            City : installation.City,
+            Phone : installation.Phone,
+            Phone2 : installation.Phone2,
+            Fax : installation.Fax,
+            Email : installation.Email
+          });
+    }
+
+    function SaveInstallationChanges()
+    {
+        SelectedInstallation.Name = Form.Name;
+        SelectedInstallation.Ref = Form.Ref;
+        SelectedInstallation.CIF = Form.CIF;
+        SelectedInstallation.CP = Form.CP;
+        SelectedInstallation.Address = Form.Address;
+        SelectedInstallation.City = Form.City;
+        SelectedInstallation.Phone = Form.Phone;
+        SelectedInstallation.Phone2 = Form.Phone2;
+        SelectedInstallation.Fax = Form.Fax;
+        SelectedInstallation.Email = Form.Email;
+
+        this.InstallationsService.UpdateAsync(this.SelectedInstallation)
+        .then((response) =>
+        {
+            this.OnUpdateInstallation(response);
+        });
+    }
+
+    function OnUpdateInstallation(response)
+    {
+        //Mandar info a installation manager
+    }
+    
+    function DesactiveInstallation()
+    {
+        this.InstallationsService.DeleteAsync(this.SelectedInstallation.Id)
+        .then((response) =>
+        {
+            this.OnDesactiveInstallation(response);
+        });
+    }
+
+    function OnDesactiveInstallation(response)
+    {
+       // Mandar info a installation manager
+    }
+
+    return{
+        AddNewInstallation,
+        SaveInstallationChanges,
+        DesactiveInstallation,
+        HandleInputChange,
+        Form
+    };
+
+    /* return(
+        <CreateInstallationForm
+            onClickAdd = {AddNewInstallation}
+            onClickSave = {SaveInstallationChanges}
+            onClickDelete = {DesactiveInstallation}
+            onChange = {HandleInputChange}
+            Form = {Form}
+        />
+        ) */
+
+}
+export default useInstallationViewModel;
+
+/* 
 class InstallationViewModel extends Component
 {
-    constructor(props)
+    constructor(props, contextType)
     {
         super(props);
         this.state =
@@ -36,7 +181,6 @@ class InstallationViewModel extends Component
             Email : ''
         };
 
-        this.Installations = [];
         this.SelectedInstallation = null;
         this.HandleInputChange = this.HandleInputChange.bind(this);
         //Funciones
@@ -44,14 +188,14 @@ class InstallationViewModel extends Component
         this.SaveInstallationChanges = this.SaveInstallationChanges.bind(this);
         this.DesactiveInstallation = this.DesactiveInstallation.bind(this);
         //Servicios
-        this.InstallationsService = InstallationService;
+         this.InstallationsService = InstallationService;
         this.BuildingsService = BuildingService;
         this.FloorsService = FloorService;
         this.AreasService = AreaService;
-
-        this.GetAllInstallations();
+        alert("Gato");
     }
-
+    
+    
     HandleInputChange(e)
     {
         this.setState({[e.target.id] : e.target.value});
@@ -71,7 +215,7 @@ class InstallationViewModel extends Component
         installation.Fax = this.state.Fax;
         installation.Email = this.state.Email;
 
-        this.InstallationsService.AddAsync(installation)
+        IntallationService.AddAsync(installation)
             .then((response) => { this.OnAddedInstallation(response); });
 
         this.CleanForm();
@@ -101,7 +245,7 @@ class InstallationViewModel extends Component
 
     GetInstallation(id)
     {
-        this.InstallationsService.GetByIdAsync(id)
+        InstallationsService.GetByIdAsync(id)
         .then((response) =>
         {
             this.OnGetInstallation(response);
@@ -169,7 +313,7 @@ class InstallationViewModel extends Component
     {
         return(
                 <CreateInstallationForm
-                    onClickAdd = {this.AddNew}
+                    onClickAdd = {this.AddNewInstallation}
                     onClickSave = {this.SaveChanges}
                     onClickDelete = {this.Delete}
                     onChange = {this.HandleInputChange}
@@ -178,5 +322,5 @@ class InstallationViewModel extends Component
         )
     }
 }
+InstallationViewModel.contextType = InstallationSvc; */
 
-export default InstallationViewModel;
