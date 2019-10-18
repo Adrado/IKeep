@@ -1,5 +1,4 @@
 import CRUDService from './CRUDService';
-import { action, decorate } from "mobx";
 
 class InstallationsService extends CRUDService
 {

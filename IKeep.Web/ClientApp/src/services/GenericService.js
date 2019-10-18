@@ -30,14 +30,14 @@ class GenericService
         return await axios.get(this.ApiUrl + "/"+ id)
     }
 
-    async Post(entity)
+    async Post(dto)
     {
-        return await axios.post(this.ApiUrl, entity);
+        return await axios.post(this.ApiUrl, dto);
     }
 
-    async Put(entity)
+    async Put(dto)
     {
-        return await axios.put(this.ApiUrl, entity);
+        return await axios.put(this.ApiUrl, dto);
     }
 
     async Delete(id)

@@ -1,14 +1,14 @@
-import React, {useState, useContext, useCallback} from 'react';
+import {useState, useContext, useCallback} from 'react';
 //import CreateInstallationForm from './CreateInstallationForm';
 import Installation from '../../models/Installation';
-import InstallationSvc from '../../providers/Providers';
+import {Services} from '../../providers/Providers';
 
 
-export const useInstallationViewModel = (callback) =>
+const useInstallationViewModel = (callback) =>
 {
     const [Form, setForm] = useState(
         {
-            Ref : '2',
+            Ref : '',
             Name : '',
             CIF : '',
             CP : '',
@@ -21,14 +21,21 @@ export const useInstallationViewModel = (callback) =>
         }
     )
     const [SelectedInstallation, setSelectedInstallation] = useState({})
-
-    const IS = useContext(InstallationSvc)
-
-    //
-    const HandleInputChange = useCallback((e) =>
+    
+    const InstallationsService = useContext(Services)
+    
+    
+    const HandleInputChange = useCallback((event) =>
     {
-        setForm(Form => ({ ...Form,[e.target.id] : e.target.value}));
+        const name = event.target.name;
+        const value = event.target.value;
+        setForm(prevForm =>({ ...prevForm,[name] : value}));
     });
+
+    /* function HandleInputChange(e)
+    {
+        setForm(Form => {Form[e.target.id] = e.target.value});
+    } */
         
     function AddNewInstallation()
     {
@@ -45,8 +52,9 @@ export const useInstallationViewModel = (callback) =>
         installation.Email = Form.Email;
 
         
-        IS.AddAsync(installation)
+        InstallationsService.AddAsync(installation)
             .then((response) => { OnAddedInstallation(response); });
+
 
         CleanForm();
     }
@@ -76,7 +84,7 @@ export const useInstallationViewModel = (callback) =>
 
     function GetInstallation(id)
     {
-        IS.GetByIdAsync(id)
+        InstallationsService.GetByIdAsync(id)
         .then((response) =>
         {
             OnGetInstallation(response);
