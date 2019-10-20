@@ -22,8 +22,7 @@ const useInstallationViewModel = (callback) =>
     )
     const [SelectedInstallation, setSelectedInstallation] = useState({})
     
-    const InstallationsService = useContext(Services)
-    
+    const InstallationsService = useContext(Services);
     
     const HandleInputChange = useCallback((event) =>
     {

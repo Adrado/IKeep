@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const CreateInstallationForm = () =>
+const InstallationForm = () =>
 {
     const classes = useStyles();
     const {AddNewInstallation, SaveInstallationChanges, DesactiveInstallation, HandleInputChange, Form} = useInstallationViewModel();
@@ -130,4 +130,4 @@ const CreateInstallationForm = () =>
     )
 }
 
-export default CreateInstallationForm;
+export default InstallationForm;
