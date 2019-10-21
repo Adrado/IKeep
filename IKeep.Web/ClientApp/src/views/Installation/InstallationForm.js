@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 
 import { TextField, Button, Grid  } from '@material-ui/core' 
 
@@ -139,7 +139,7 @@ const InstallationForm = () =>
     }
     
     const classes = useStyles();
-    const {} = useInstallationForm();
+    
     const {AddNewInstallation, SaveInstallationChanges, DesactiveInstallation, HandleInputChange, Form} = useInstallationViewModel(
         stateSchema,
         stateValidatorSchema,
@@ -246,4 +246,4 @@ const InstallationForm = () =>
     )
 }
 
-export default InstallationForm;
+export default InstallationForm; */

@@ -28,19 +28,13 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const FloorForm = (id) => {
+const FloorForm = (props) => {
 
     const classes = useStyles();
 
-    const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = useFloorViewModel(id);
+    //const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = useFloorViewModel(props.id);
 
-    const {values, errors, handleOnChange, handleOnSubmit, disable } = useForm(
-        stateSchema,
-        stateValidatorSchema,
-        onAdd,
-        onSave,
-        onDelete
-    );
+    const {values, errors, handleOnChange, handleOnSubmit, disable } = useForm(useFloorViewModel(props.id));
     
     const {Ref, Name} = values
     
@@ -54,14 +48,14 @@ const FloorForm = (id) => {
                    
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Ref" type="text" onChange = {onChange} value = {Ref}
+                        id="Ref" type="text" onChange = {handleOnChange} value = {Ref}
                         label="Ref"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        id="Name" type="text" onChange = {onChange} value = {Name}
+                        id="Name" type="text" onChange = {handleOnChange} value = {Name}
                         label="Nombre"
                         margin="normal"
                         variant="filled"
@@ -69,7 +63,7 @@ const FloorForm = (id) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Button className={classes.button} size="small" onClick = {onClick} variant="outlined">Añadir</Button>
+                        <Button className={classes.button} size="small" onClick = {handleOnSubmit} variant="outlined">Añadir</Button>
                     </Grid>
                 
             </Grid>

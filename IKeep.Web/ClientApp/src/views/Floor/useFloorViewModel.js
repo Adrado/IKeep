@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import Floor from '../../models/Floor';
+import {Services} from '../../providers/Providers'
 
 const stateValidatorSchema = 
 {
@@ -54,10 +55,9 @@ const useFloorViewModel = (id) =>
     {
         let floor = new Floor(response.data)
         setSelectedFloor(floor)
-        setStateSchema({
-            Ref.value : floor.Ref,
-            Name.value : floor.Name,
-          });
+        setStateSchema(prevState => 
+            ({ ...prevState.Ref, value : floor.Ref },
+            {...prevState.Name, value : floor.Name}));
     }
 
     return

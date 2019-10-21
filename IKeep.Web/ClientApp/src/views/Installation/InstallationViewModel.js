@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext, useCallback} from 'react';
+/* import {useState, useEffect, useContext, useCallback} from 'react';
 import Installation from '../../models/Installation';
 import {Services} from '../../providers/Providers';
 
@@ -192,4 +192,4 @@ const useInstallationViewModel = (stateSchema = {}, stateValidatorSchema = {}) =
         Form
     };
 }
-export default useInstallationViewModel;
+export default useInstallationViewModel; */

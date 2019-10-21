@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Grid} from '@material-ui/core' 
 import TreeViewModel from '../TreeView/TreeViewModel';
 import {Services, CRUD} from '../../providers/Providers';
-import InstallationForm from '../Installation/InstallationForm'
+import FloorForm from '../Floor/FloorForm'
 
 class InstallationManagerModel extends Component
 {
@@ -31,7 +31,7 @@ class InstallationManagerModel extends Component
 
                     <Grid item xs={8}>
                         <Services.Provider value={CRUD.Installation}>
-                            <InstallationForm/>
+                            <FloorForm id="2"/>
                         </Services.Provider>
                     </Grid>
                 </Grid>
