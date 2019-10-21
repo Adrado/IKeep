@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useForm = (callback) => {
+const UseInstallationForm = (callback) => {
 
   const [values, setValues] = useState({});
 
