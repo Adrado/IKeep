@@ -13,11 +13,14 @@ class Floor extends Entity
             this.AreasIds = json.areasIds;
             this.MapsIds = json.mapsIds;
         }
-        this.Ref = ""; 
-        this.Name = "";
-        this.BuildingId = "";
-        this.AreasIds = [];
-        this.MapsIds = [];
+        else
+        {
+            this.Ref = ""; 
+            this.Name = "";
+            this.BuildingId = "";
+            this.AreasIds = [];
+            this.MapsIds = [];
+        }
     }
 }
 

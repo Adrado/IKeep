@@ -95,7 +95,7 @@ class TreeViewModel extends Component
             type: "Installation"
         }
         installations.push(newInstallation);
-        console.log(installations.children);
+       // console.log(installations.children);
     }
 
     AddNew()

@@ -30,11 +30,20 @@ const useStyles = makeStyles(theme => ({
 
 function FloorForm(){
 
-    const id = undefined;
+    const id = "de579db4-6927-479c-824a-a3fb20031f39";
     const classes = useStyles();
 
-    const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(useFloorViewModel, id);
+    const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = useFloorViewModel(id);
     
+   /*  const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(stateSchema, stateValidatorSchema, onAdd, onSave, onDelete, id); */
+    let SS = stateSchema;
+    let SV = stateValidatorSchema;
+    let OA = onAdd;
+    let OS = onSave;
+    let OD = onDelete;
+    /* const {SS, SV, OA, OS, OD} = useFloorViewModel(id); */
+    const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(SS, SV, OA, OS, OD, id);
+
     const {Ref, Name} = values
     
     return(
@@ -68,12 +77,12 @@ function FloorForm(){
                   </Grid>
                   }
                 
-                  { id === 1 &&
+                  { id !== 1 &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {handleOnSave} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
-                  { id === 1 &&
+                  { id !== 1 &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {handleOnDelete} variant="outlined" >Eliminar</Button>
                     </Grid>

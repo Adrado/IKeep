@@ -43,12 +43,9 @@ function isRequiredField(value, isRequired) {
  * @param {object} stateValidatorSchema model your validation.
  * @param {function} submitFormCallback function to be execute during form submission.
  */
-function useForm(
-    ViewModel, id
-    ) {
-
+function useForm(stateSchema, stateValidatorSchema, onAdd, onSave, onDelete, id) {
   
-  const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = ViewModel(id);
+  //const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = ViewModel(id);
 
   const [state, setStateSchema] = useState(stateSchema);
 
