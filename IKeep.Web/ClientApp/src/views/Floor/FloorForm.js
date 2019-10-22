@@ -28,44 +28,57 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const FloorForm = (props) => {
+function FloorForm(){
 
+    const id = undefined;
     const classes = useStyles();
 
-    //const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = useFloorViewModel(props.id);
-
-    const {values, errors, handleOnChange, handleOnSubmit, disable } = useForm(useFloorViewModel(props.id));
+    const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(useFloorViewModel, id);
     
     const {Ref, Name} = values
     
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
+              <Grid item xs={12}>
+                  <h3>Planta</h3>
+              </Grid>
+                  
+                  <Grid item xs={6} sm = {4}>
+                      <TextField
+                      name="Ref" type="text" onChange = {handleOnChange} value = {Ref}
+                      label="Ref"
+                      margin="normal"
+                      variant="filled"/>
+                  </Grid>
+                  <Grid item xs={6} sm = {4}>
+                      <TextField
+                      name="Name" type="text" onChange = {handleOnChange} value = {Name}
+                      label="Nombre"
+                      margin="normal"
+                      variant="filled"
+                      />
+                  </Grid>
 
-                <Grid item xs={12}>
-                    <h3>Instalación</h3>
-                </Grid>
-                   
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Ref" type="text" onChange = {handleOnChange} value = {Ref}
-                        label="Ref"
-                        margin="normal"
-                        variant="filled"/>
-                    </Grid>
-                    <Grid item xs={6} sm = {4}>
-                        <TextField
-                        id="Name" type="text" onChange = {handleOnChange} value = {Name}
-                        label="Nombre"
-                        margin="normal"
-                        variant="filled"
-                        required/>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <Button className={classes.button} size="small" onClick = {handleOnSubmit} variant="outlined">Añadir</Button>
-                    </Grid>
+                  <Grid item xs={6} sm = {4}/>
+                  
+                  { id === undefined &&
+                  <Grid item xs={3}>
+                      <Button className={classes.button} size="small" onClick = {handleOnAdd} variant="outlined" disabled={disable}>Añadir</Button>
+                  </Grid>
+                  }
                 
+                  { id === 1 &&
+                    <Grid item xs={3}>
+                        <Button className={classes.button} size="small" onClick = {handleOnSave} variant="outlined" >Guardar</Button>
+                    </Grid>
+                  }
+                  { id === 1 &&
+                    <Grid item xs={3}>
+                        <Button className={classes.button} size="small" onClick = {handleOnDelete} variant="outlined" >Eliminar</Button>
+                    </Grid>
+                  }
+                  
             </Grid>
         </React.Fragment>
     )

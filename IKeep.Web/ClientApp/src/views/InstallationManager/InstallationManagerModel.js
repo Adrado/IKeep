@@ -30,8 +30,8 @@ class InstallationManagerModel extends Component
                     </Grid>
 
                     <Grid item xs={8}>
-                        <Services.Provider value={CRUD.Installation}>
-                            <FloorForm id="2"/>
+                        <Services.Provider value={CRUD.Floor}>
+                            <FloorForm/>
                         </Services.Provider>
                     </Grid>
                 </Grid>

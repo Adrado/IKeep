@@ -118,7 +118,7 @@ class TreeViewModel extends Component
     render()
     {
         return(
-            <TreeExample
+            <TreeView
             Data = {this.Data}
             onToggle = {this.onToggle}
             />

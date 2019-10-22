@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Treebeard} from 'react-treebeard'
 
 
-let TreeView = props =>
+const TreeView = props =>
 {
     const {Data, onToggle} = props;
     const treeStyle = _default

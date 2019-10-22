@@ -44,12 +44,10 @@ function isRequiredField(value, isRequired) {
  * @param {function} submitFormCallback function to be execute during form submission.
  */
 function useForm(
-    ViewModel, id
-    ) {
-
-  
-  const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = ViewModel(id);
-
+  stateSchema = {},
+  stateValidatorSchema = {},
+  submitFormCallback
+) {
   const [state, setStateSchema] = useState(stateSchema);
 
   const [values, setValues] = useState(getPropValues(state, VALUE));
@@ -117,50 +115,22 @@ function useForm(
     [stateValidatorSchema, values]
   );
 
-  const handleOnAdd = useCallback(
+  const handleOnSubmit = useCallback(
     event => {
       event.preventDefault();
 
       // Making sure that there's no error in the state
       // before calling the submit callback function
       if (!validateErrorState()) {
-        onAdd(values);
+        submitFormCallback(values);
       }
     },
-    [validateErrorState, onAdd, values]
-  );
-
-  const handleOnSave = useCallback(
-    event => {
-      event.preventDefault();
-
-      // Making sure that there's no error in the state
-      // before calling the submit callback function
-      if (!validateErrorState()) {
-        onSave(values);
-      }
-    },
-    [validateErrorState, onSave, values]
-  );
-
-  const handleOnDelete = useCallback(
-    event => {
-      event.preventDefault();
-
-      // Making sure that there's no error in the state
-      // before calling the submit callback function
-      if (!validateErrorState()) {
-        onDelete(id);
-      }
-    },
-    [validateErrorState, onDelete, values]
+    [validateErrorState, submitFormCallback, values]
   );
 
   return {
     handleOnChange,
-    handleOnAdd,
-    handleOnSave,
-    handleOnDelete,
+    handleOnSubmit,
     values,
     errors,
     disable,
