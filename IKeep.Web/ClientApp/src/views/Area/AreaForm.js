@@ -4,7 +4,6 @@ import { TextField, Button, Grid  } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import useForm  from '../../components/useForm';
 import useAreaViewModel from './useAreaViewModel'
 
 const useStyles = makeStyles(theme => ({
@@ -69,12 +68,12 @@ function AreaForm(){
                   </Grid>
                   }
                 
-                  { id !== 1 &&
+                  { id !== undefined &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
-                  { id !== 1 &&
+                  { id !== undefined &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined" >Eliminar</Button>
                     </Grid>

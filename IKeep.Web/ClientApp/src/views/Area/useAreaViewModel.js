@@ -21,31 +21,7 @@ const useAreaViewModel = (id) =>
         setValues(values => ({...values, [name] : value}));
     })
     
-    const  GetArea = async (id) =>
-    {
-        await AreasService.GetByIdAsync(id)
-        .then((response) =>
-        {
-            OnGetArea(response);
-        })
-
-       // const response = await AreasService.GetByIdAsync(id)
-    }
-
-    function OnGetArea(response)
-    {
-        let area = new Area(response.data);
-        console.log(area);
-
-        setValues(values => (Object.assign(values, area)));
-        setValues(selectedArea => (Object.assign(selectedArea, area)));
-
-        setSelectedArea(values => ({ ...values, Name : area.Name }));
-       /*  setSelectedArea(selectedArea => ({ ...selectedArea, Name : area.Name }));
-        setSelectedArea(selectedArea => ({ ...selectedArea, Ref : area.Ref }));  */
-
-        //setSelectedArea(area);
-    } 
+   
 
     function AddNewArea()
     {
@@ -61,14 +37,14 @@ const useAreaViewModel = (id) =>
 
     function SaveArea()
     {
-        setSelectedArea(prevState =>
+        /* setSelectedArea(prevState =>
             ({...prevState, Ref : values.Ref},
              {...prevState, Name : values.Name}));
 
         AreasService.UpdateAsync(selectedArea)
             .then((response) => {
                 console.log(response)
-            })
+            }) */
 
         alert(selectedArea.Name);
     }
@@ -88,7 +64,31 @@ const useAreaViewModel = (id) =>
     const onDelete = useCallback( () => { DeleteArea();}, []);
 
     useEffect(()=>{
-        
+        const GetArea = async (id) =>
+        {
+            try{
+                const response = await AreasService.GetByIdAsync(id);
+                let area = new Area(response.data);
+                for (const prop in values)
+                {
+                    setValues(values => ({...values, [prop] : "area.prop" }));
+                }
+                setSelectedArea(selectedArea => (Object.assign(selectedArea, area)));
+                console.log(selectedArea);
+                console.log(values);
+            }
+            catch (error){} 
+           // const response = await AreasService.GetByIdAsync(id)
+        }
+    
+        /* function OnGetArea(response)
+        {
+            setSelectedArea(values => ({ ...values, Name : area.Name }));
+            setSelectedArea(selectedArea => ({ ...selectedArea, Name : area.Name }));
+            setSelectedArea(selectedArea => ({ ...selectedArea, Ref : area.Ref })); 
+            setSelectedArea(area);
+        }  */
+
         if(id !== null)
         {
             GetArea(id);
