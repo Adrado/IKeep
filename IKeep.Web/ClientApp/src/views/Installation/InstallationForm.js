@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 
 import { TextField, Button, Grid  } from '@material-ui/core' 
 
@@ -29,124 +29,13 @@ const useStyles = makeStyles(theme => ({
 
 const InstallationForm = () =>
 {
-    const stateSchema = 
-    {
-        Ref : {value:'', error: ''},
-        Name : {value:'', error: ''},
-        CIF : {value:'', error: ''},
-        CP : {value:'', error: ''},
-        Address : {value:'', error: ''},
-        City : {value:'', error: ''},
-        Phone : {value:'', error: ''},
-        Phone2 : {value:'', error: ''},
-        Fax : {value:'', error: ''},
-        Email : {value:'', error: ''}
-    }
-
-    const stateValidatorSchema =
-    {
-        Ref : 
-            {
-                required: false,
-                validator: 
-                {
-                    //func: value => /^[A-Za-z0-9\s]+$/.test(value),
-                    func: true,
-                    error: 'Invalid Ref format.',
-                }
-            },
-        Name : 
-            {
-                required: true,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Name format.',
-                }
-            },
-        CIF : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid CIF format.',
-                }
-            },
-        CP : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: value => /^[0-9]+$/.test(value),
-                    error: 'Invalid CP format.',
-                }
-            },
-        Address : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Address format.',
-                }
-            },
-        City : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid City format.',
-                }
-            },
-        Phone : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Phone format.',
-                }
-            },
-        Phone2 : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Phone2 format.',
-                }
-            },
-        Fax : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Fax format.',
-                }
-            },
-        Email : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: true,
-                    error: 'Invalid Email format.',
-                }
-            }
-    }
-    
     const classes = useStyles();
-    
-    const {AddNewInstallation, SaveInstallationChanges, DesactiveInstallation, HandleInputChange, Form} = useInstallationViewModel(
-        stateSchema,
-        stateValidatorSchema,
 
-    );
+    let id = "d24ab749-87e9-43a9-9c7f-70d7021e5c83";
     
-    const { Ref, Name, CIF, CP, Address, City, Phone, Phone2, Fax, Email} = Form;
+    const {values, handleOnChange, onAdd, onSave, onDelete} = useInstallationViewModel(id);
+    
+    const { Ref, Name, CIF, CP, Address, City, Phone, Phone2, Fax, Email} = values;
 
     return(
         <React.Fragment>
@@ -158,14 +47,14 @@ const InstallationForm = () =>
                    
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Ref" type="text" onChange = {HandleInputChange} value = {Ref}
+                        name="Ref" type="text" onChange = {handleOnChange} value = {Ref}
                         label="Ref"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Name" type="text" onChange = {HandleInputChange} value = {Name}
+                        name="Name" type="text" onChange = {handleOnChange} value = {Name}
                         label="Nombre"
                         margin="normal"
                         variant="filled"
@@ -173,49 +62,49 @@ const InstallationForm = () =>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="CIF" type="text" onChange = {HandleInputChange} value = {CIF}
+                        name="CIF" type="text" onChange = {handleOnChange} value = {CIF}
                         label="CIF"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="CP" type="number" onChange = {HandleInputChange} value = {CP}
+                        name="CP" type="number" onChange = {handleOnChange} value = {CP}
                         label="CP"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Address" type="text" onChange = {HandleInputChange} value = {Address}
+                        name="Address" type="text" onChange = {handleOnChange} value = {Address}
                         label="Dirección"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="City" type="text" onChange = {HandleInputChange} value = {City}
+                        name="City" type="text" onChange = {handleOnChange} value = {City}
                         label="Ciudad"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Phone" type="number" onChange = {HandleInputChange} value = {Phone}
+                        name="Phone" type="number" onChange = {handleOnChange} value = {Phone}
                         label="Teléfono"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Phone2" type="number" onChange = {HandleInputChange} value = {Phone2}
+                        name="Phone2" type="number" onChange = {handleOnChange} value = {Phone2}
                         label="Teléfono secundario"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Fax" type="text" onChange = {HandleInputChange} value = {Fax}
+                        name="Fax" type="text" onChange = {handleOnChange} value = {Fax}
                         label="Fax"
                         margin="normal"
                         variant="filled"/>
@@ -223,7 +112,7 @@ const InstallationForm = () =>
 
                     <Grid item xs={6} sm = {4}>
                         <TextField
-                        name="Email" type="email" onChange = {HandleInputChange} value = {Email}
+                        name="Email" type="email" onChange = {handleOnChange} value = {Email}
                         label="Correo electrónico"
                         margin="normal"
                         variant="filled"/>
@@ -232,13 +121,13 @@ const InstallationForm = () =>
                     <Grid item xs={6} sm = {4}></Grid>
 
                     <Grid item xs={2}>
-                        <Button className={classes.button} size="small" onClick = {AddNewInstallation} variant="outlined">Añadir</Button>
+                        <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button className={classes.button} size="small" onClick = {SaveInstallationChanges} variant="outlined">Guardar</Button>
+                        <Button className={classes.button} size="small" onClick = {onSave} variant="outlined">Guardar</Button>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button className={classes.button} size="small" onClick = {DesactiveInstallation} variant="outlined">Borrar</Button>
+                        <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                     </Grid>
                 
             </Grid>
@@ -246,4 +135,4 @@ const InstallationForm = () =>
     )
 }
 
-export default InstallationForm; */
+export default InstallationForm;

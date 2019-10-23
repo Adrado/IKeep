@@ -5,50 +5,21 @@ import {Services} from '../../providers/Providers'
 
 const useFloorViewModel = (id) =>
 {
-    let stateValidatorSchema = 
-    {
-        Ref : 
-            {
-                required: false,
-                validator: 
-                {
-                    func: value => /^[A-Za-z0-9\s]+$/.test(value),
-                    error: 'Invalid Ref format.',
-                }
-            },
-        Name : 
-            {
-                required: true,
-                validator: 
-                {
-                    func: value => /^[A-Za-z0-9\s]+$/.test(value),
-                    error: 'Invalid Name format.',
-                }
-            }
-    }
-
     const FloorsService = useContext(Services);
-     
-    /* if(id !== null)
+
+    const [values, setValues] = useState({
+        Name : "",
+        Ref : ""
+    });
+
+    const [selectedFloor, setSelectedFloor] = useState(new Floor());
+
+    const handleOnChange = useCallback( event =>
     {
-        GetFloor(id);
-    } */
-
-    
-    
-
-    let floorSchema = 
-    {
-        Ref: { value: 'Odioso', error: '' },
-        Name: { value: 'Nya', error: '' },
-    };
-
-
-    const [stateSchema, setStateSchema] = useState(floorSchema);
-    const [selectedFloor, setSelectedFloor] = useState({});
-
-    
-
+        const name = event.target.name
+        const value = event.target.values
+        setValues(values => ({...values, [name] : value}));
+    })
     
     function GetFloor(id)
     {
@@ -61,20 +32,24 @@ const useFloorViewModel = (id) =>
 
     function OnGetFloor(response)
     {
-        let floor = new Floor(response.data)
-        alert(floor.Name);
-        setSelectedFloor(floor);
-        setStateSchema(stateSchema => 
-            ({ ...stateSchema.Ref, value : floor.Ref },
-            {...stateSchema.Name, value : floor.Name}));
-        console.log(selectedFloor);
-    }
+        let floor = new Floor(response.data);
+        console.log(floor);
 
-    function AddNewFloor(model)
+        setValues(values =>  ({ ...values, Ref : floor.Ref }))
+        setValues(values =>  ({ ...values, Name : floor.Name }))
+
+        setSelectedFloor(selectedFloor => ({ ...selectedFloor, Id : floor.Id }));
+        setSelectedFloor(selectedFloor => ({ ...selectedFloor, Name : floor.Name }));
+        setSelectedFloor(selectedFloor => ({ ...selectedFloor, Ref : floor.Ref }));
+
+        //setSelectedFloor(floor);
+    } 
+
+    function AddNewFloor()
     {
         let floor = new Floor();
-        floor.Ref = model.Ref;
-        floor.Name = model.Name;
+        floor.Ref = values.Ref;
+        floor.Name = values.Name;
         
         FloorsService.AddAsync(floor)
             .then((response) => { 
@@ -82,16 +57,16 @@ const useFloorViewModel = (id) =>
             });
     }
 
-    function SaveFloor(model)
+    function SaveFloor()
     {
         setSelectedFloor(prevState =>
-            ({...prevState, Ref : model.Ref},
-             {...prevState, Name : model.Name}));
+            ({...prevState, Ref : values.Ref},
+             {...prevState, Name : values.Name}));
 
-        /*FloorsService.UpdateAsync(selectedFloor)
+        FloorsService.UpdateAsync(selectedFloor)
             .then((response) => {
                 console.log(response)
-            }) */
+            })
 
         alert(selectedFloor.Name);
     }
@@ -104,34 +79,35 @@ const useFloorViewModel = (id) =>
             })
     }
 
-    const onAdd = useCallback( e => {AddNewFloor(e);}, []);
+    const onAdd = useCallback( () => {AddNewFloor();}, []);
 
-    const onSave = useCallback( e => {SaveFloor(e);}, []);
+    const onSave = useCallback( () => {SaveFloor();}, []);
 
-    const onDelete = useCallback( e => { DeleteFloor(e);}, []);
+    const onDelete = useCallback( () => { DeleteFloor();}, []);
 
     useEffect(()=>{
         
         if(id !== null)
         {
-            FloorsService.GetByIdAsync(id)
-            .then((response) =>
-            {
-                let floor = new Floor(response.data);
-                setSelectedFloor(floor);
-                setStateSchema(stateSchema => 
-                    ({ ...stateSchema.Ref, value : floor.Ref },
-                    {...stateSchema.Name, value : floor.Name}));
-            })
+            GetFloor(id);
         }
+
     },[])
 
+    /* useEffect(() => {
+        const interval = setInterval(() => {
+          console.log(selectedFloor);
+          console.log(values);
+        }, 5000);
+        return () => clearInterval(interval);
+      }, []); */
+
     return {
-       stateSchema,
-       stateValidatorSchema,
+       values,
+       handleOnChange,
        onAdd,
        onSave,
-       onDelete,
+       onDelete
     };
 }
 

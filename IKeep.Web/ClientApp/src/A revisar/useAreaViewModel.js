@@ -8,8 +8,8 @@ const useAreaViewModel = (id) =>
     const AreasService = useContext(Services);
 
     const [values, setValues] = useState({
-        Ref: "",
         Name: "",
+        Ref: ""
     });
 
     const [selectedArea, setSelectedArea] = useState(new Area());
@@ -21,15 +21,13 @@ const useAreaViewModel = (id) =>
         setValues(values => ({...values, [name] : value}));
     })
     
-    const  GetArea = async (id) =>
+    function GetArea(id)
     {
-        await AreasService.GetByIdAsync(id)
+        AreasService.GetByIdAsync(id)
         .then((response) =>
         {
             OnGetArea(response);
         })
-
-       // const response = await AreasService.GetByIdAsync(id)
     }
 
     function OnGetArea(response)
@@ -37,12 +35,12 @@ const useAreaViewModel = (id) =>
         let area = new Area(response.data);
         console.log(area);
 
-        setValues(values => (Object.assign(values, area)));
-        setValues(selectedArea => (Object.assign(selectedArea, area)));
+        setValues(values =>  ({ ...values, Ref : area.Ref }))
+        setValues(values =>  ({ ...values, Name : area.Name }))
 
-        setSelectedArea(values => ({ ...values, Name : area.Name }));
-       /*  setSelectedArea(selectedArea => ({ ...selectedArea, Name : area.Name }));
-        setSelectedArea(selectedArea => ({ ...selectedArea, Ref : area.Ref }));  */
+        setSelectedArea(selectedArea => ({ ...selectedArea, Id : area.Id }));
+        setSelectedArea(selectedArea => ({ ...selectedArea, Name : area.Name }));
+        setSelectedArea(selectedArea => ({ ...selectedArea, Ref : area.Ref }));
 
         //setSelectedArea(area);
     } 

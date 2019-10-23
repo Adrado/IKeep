@@ -1,4 +1,6 @@
-﻿class Area extends Entity
+﻿import Entity from './Entity'
+
+class Area extends Entity
 {
     constructor(json)
     {
@@ -24,3 +26,5 @@
         
     }
 }
+
+export default Area;

@@ -31,11 +31,19 @@ const useStyles = makeStyles(theme => ({
 function FloorForm(){
 
     const id = "de579db4-6927-479c-824a-a3fb20031f39";
-
     const classes = useStyles();
 
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useFloorViewModel(id);
+    const {stateSchema, stateValidatorSchema, onAdd, onSave, onDelete} = useFloorViewModel(id);
     
+   /*  const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(stateSchema, stateValidatorSchema, onAdd, onSave, onDelete, id); */
+    let SS = stateSchema;
+    let SV = stateValidatorSchema;
+    let OA = onAdd;
+    let OS = onSave;
+    let OD = onDelete;
+    /* const {SS, SV, OA, OS, OD} = useFloorViewModel(id); */
+    const {values, errors, handleOnChange, handleOnAdd, handleOnSave, handleOnDelete, disable } = useForm(SS, SV, OA, OS, OD, id);
+
     const {Ref, Name} = values
     
     return(
@@ -47,14 +55,14 @@ function FloorForm(){
                   
                   <Grid item xs={6} sm = {4}>
                       <TextField
-                      name="Ref" type="text" onChange={handleOnChange} value = {Ref}
+                      name="Ref" type="text" onChange = {handleOnChange} value = {Ref}
                       label="Ref"
                       margin="normal"
                       variant="filled"/>
                   </Grid>
                   <Grid item xs={6} sm = {4}>
                       <TextField
-                      name="Name" type="text" onChange={handleOnChange} value = {Name}
+                      name="Name" type="text" onChange = {handleOnChange} value = {Name}
                       label="Nombre"
                       margin="normal"
                       variant="filled"
@@ -65,18 +73,18 @@ function FloorForm(){
                   
                   { id === undefined &&
                   <Grid item xs={3}>
-                      <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined" >Añadir</Button>
+                      <Button className={classes.button} size="small" onClick = {handleOnAdd} variant="outlined" disabled={disable}>Añadir</Button>
                   </Grid>
                   }
                 
                   { id !== 1 &&
                     <Grid item xs={3}>
-                        <Button className={classes.button} size="small" onClick = {onSave} variant="outlined" >Guardar</Button>
+                        <Button className={classes.button} size="small" onClick = {handleOnSave} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
                   { id !== 1 &&
                     <Grid item xs={3}>
-                        <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined" >Eliminar</Button>
+                        <Button className={classes.button} size="small" onClick = {handleOnDelete} variant="outlined" >Eliminar</Button>
                     </Grid>
                   }
                   

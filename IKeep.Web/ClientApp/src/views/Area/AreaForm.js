@@ -5,7 +5,7 @@ import { TextField, Button, Grid  } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import useForm  from '../../components/useForm';
-import useFloorViewModel from './useFloorViewModel'
+import useAreaViewModel from './useAreaViewModel'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -28,21 +28,21 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function FloorForm(){
+function AreaForm(){
 
-    const id = "de579db4-6927-479c-824a-a3fb20031f39";
+    let id = "60e7806c-dc43-4ff9-8f7b-b18b97d0ec0f"
 
     const classes = useStyles();
 
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useFloorViewModel(id);
+    const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaViewModel(id);
     
-    const {Ref, Name} = values
+    const {Ref, Name} = values;
     
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
               <Grid item xs={12}>
-                  <h3>Planta</h3>
+                  <h3>Espacio</h3>
               </Grid>
                   
                   <Grid item xs={6} sm = {4}>
@@ -85,4 +85,4 @@ function FloorForm(){
     )
 }
 
-export default FloorForm;
+export default AreaForm;
