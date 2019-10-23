@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import useAreaViewModel from './useAreaViewModel'
 
+/* import useGetValues from './useGetValues'; */
+
 const useStyles = makeStyles(theme => ({
     container: {
       display: 'flex',
@@ -27,15 +29,18 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function AreaForm(){
+const AreaForm = () => 
+{
 
     let id = "60e7806c-dc43-4ff9-8f7b-b18b97d0ec0f"
 
     const classes = useStyles();
 
+    /* const {model} = useGetValues(id); */
+
     const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaViewModel(id);
     
-    const {Ref, Name} = values;
+   // const {Ref, Name} = values;
     
     return(
         <React.Fragment>
@@ -46,14 +51,14 @@ function AreaForm(){
                   
                   <Grid item xs={6} sm = {4}>
                       <TextField
-                      name="Ref" type="text" onChange={handleOnChange} value = {Ref}
+                      name="Ref" type="text" onChange={handleOnChange} value = {values.Ref}
                       label="Ref"
                       margin="normal"
                       variant="filled"/>
                   </Grid>
                   <Grid item xs={6} sm = {4}>
                       <TextField
-                      name="Name" type="text" onChange={handleOnChange} value = {Name}
+                      name="Name" type="text" onChange={handleOnChange} value = {values.Name}
                       label="Nombre"
                       margin="normal"
                       variant="filled"

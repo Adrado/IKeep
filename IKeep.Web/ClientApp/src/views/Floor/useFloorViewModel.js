@@ -17,7 +17,7 @@ const useFloorViewModel = (id) =>
     const handleOnChange = useCallback( event =>
     {
         const name = event.target.name
-        const value = event.target.values
+        const value = event.target.value
         setValues(values => ({...values, [name] : value}));
     })
     

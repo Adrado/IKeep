@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import Area from '../../models/Area';
 import {Services} from '../../providers/Providers'
+import { set } from 'date-fns';
 
 
 const useAreaViewModel = (id) =>
@@ -14,15 +15,17 @@ const useAreaViewModel = (id) =>
 
     const [selectedArea, setSelectedArea] = useState(new Area());
 
+    const [ready, setReady] = useState(false);
+    const [save, setSave] = useState(false)
+
     const handleOnChange = useCallback( event =>
     {
-        const name = event.target.name
-        const value = event.target.values
-        setValues(values => ({...values, [name] : value}));
+        let name = event.target.name;
+        let value = event.target.value;
+
+        setValues(prevState => ({ ...prevState, [name] : value}));
     })
     
-   
-
     function AddNewArea()
     {
         let area = new Area();
@@ -37,16 +40,7 @@ const useAreaViewModel = (id) =>
 
     function SaveArea()
     {
-        /* setSelectedArea(prevState =>
-            ({...prevState, Ref : values.Ref},
-             {...prevState, Name : values.Name}));
-
-        AreasService.UpdateAsync(selectedArea)
-            .then((response) => {
-                console.log(response)
-            }) */
-
-        alert(selectedArea.Name);
+        setReady(true);
     }
 
     function DeleteArea(id)
@@ -69,40 +63,54 @@ const useAreaViewModel = (id) =>
             try{
                 const response = await AreasService.GetByIdAsync(id);
                 let area = new Area(response.data);
-                for (const prop in values)
-                {
-                    setValues(values => ({...values, [prop] : "area.prop" }));
-                }
+
                 setSelectedArea(selectedArea => (Object.assign(selectedArea, area)));
+
+                setValues(values => ({...values, Ref : area.Ref }));
+                setValues(values => ({...values, Name : area.Name }));
+
+                
                 console.log(selectedArea);
                 console.log(values);
             }
             catch (error){} 
-           // const response = await AreasService.GetByIdAsync(id)
         }
-    
-        /* function OnGetArea(response)
-        {
-            setSelectedArea(values => ({ ...values, Name : area.Name }));
-            setSelectedArea(selectedArea => ({ ...selectedArea, Name : area.Name }));
-            setSelectedArea(selectedArea => ({ ...selectedArea, Ref : area.Ref })); 
-            setSelectedArea(area);
-        }  */
-
+        
         if(id !== null)
         {
             GetArea(id);
         }
-
     },[])
 
-    /* useEffect(() => {
-        const interval = setInterval(() => {
-          console.log(selectedArea);
-          console.log(values);
-        }, 5000);
-        return () => clearInterval(interval);
-      }, []); */
+    useEffect(() => 
+    {
+        console.log(values);
+        if(ready === true)
+        {
+            setSelectedArea(prevState =>
+            ({...prevState, Ref : values.Ref},
+            {...prevState, Name : values.Name}));
+            setSave(true);
+        }
+        
+    });
+
+    useEffect(() => 
+    {
+        if(ready !== false && save !== false)
+        {
+            alert(values.Name)
+            AreasService.UpdateAsync(selectedArea)
+                .then((response) => {
+                    console.log(response)
+                })
+            alert("guardado" + selectedArea.Name + " " + selectedArea.Id);
+        }
+        setReady(false);
+        setSave(false);
+
+    }, [save])
+   
 
     return {
        values,
