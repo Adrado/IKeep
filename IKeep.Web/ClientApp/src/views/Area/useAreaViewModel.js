@@ -43,12 +43,13 @@ const useAreaViewModel = (id) =>
         setReady(true);
     }
 
-    function DeleteArea(id)
+    function DeleteArea()
     {
-        AreasService.DeleteAsync(id)
+        alert(id + "eliminado")
+        /* AreasService.DeleteAsync(id)
             .then((response) => {
             console.log(response)
-            })
+            }) */
     }
 
     const onAdd = useCallback( () => {AddNewArea();}, []);
@@ -56,6 +57,7 @@ const useAreaViewModel = (id) =>
     const onSave = useCallback( () => {SaveArea();}, []);
 
     const onDelete = useCallback( () => { DeleteArea();}, []);
+
 
     useEffect(()=>{
         const GetArea = async (id) =>
