@@ -1,101 +1,31 @@
 import React from 'react';
-import {Treebeard} from 'react-treebeard'
-import useTreeView from './useTreeViewModel'
+import useFetchData from './useFechData'
+import Tree from './Tree'
 
 const TreeView = () =>
 {
-
-    const {data, onToggle} = useTreeView()
-
-    const treeStyle = _default
+  const {fetchedData, error} = useFetchData() 
+  console.log("En treeView " + fetchedData)
+    if(fetchedData === null)
+    {
+      return(
+        <h1>Loading...</h1>
+      )
+    }
     
-    return(
-        <Treebeard
-            style={treeStyle}
-            data = {data}
-            onToggle = {onToggle}
-        />
-    );
+    if(error === true)
+    {return(
+      <h1>Error...</h1>
+    )}
+    if(fetchedData !== null)
+    {
+      return(
+        //<h1>{fetchedData.Name}</h1>
+        <Tree treeData = {fetchedData}/>
+      );
+    }
 }
 
 export default TreeView;
 
 
-
-var _default = {
-    tree: {
-      base: {
-        listStyle: 'none',
-        backgroundColor: '#21252B', //#21252B //#fffffff
-        margin: 0,
-        padding: 0,
-        color: '#9DA5AB',
-        fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
-        fontSize: '14px'
-      },
-      node: {
-        base: {
-          position: 'relative'
-        },
-        link: {
-          cursor: 'pointer',
-          position: 'relative',
-          padding: '0px 5px',
-          display: 'block'
-        },
-        activeLink: {
-          background: '#ffffff'
-        },
-        toggle: {
-          base: {
-            position: 'relative',
-            display: 'inline-block',
-            verticalAlign: 'top',
-            marginLeft: '-5px',
-            height: '24px',
-            width: '24px'
-          },
-          wrapper: {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            margin: '-7px 0 0 -7px',
-            height: '14px'
-          },
-          height: 14,
-          width: 14,
-          arrow: {
-            fill: '#9DA5AB',
-            strokeWidth: 0
-          }
-        },
-        header: {
-          base: {
-            display: 'inline-block',
-            verticalAlign: 'top',
-            color: '#9DA5AB'// #9DA5AB //#2e2f30
-          },
-          connector: {
-            width: '2px',
-            height: '12px',
-            borderLeft: 'solid 2px black',
-            borderBottom: 'solid 2px black',
-            position: 'absolute',
-            top: '0px',
-            left: '-21px'
-          },
-          title: {
-            lineHeight: '24px',
-            verticalAlign: 'middle'
-          }
-        },
-        subtree: {
-          listStyle: 'none',
-          paddingLeft: '19px'
-        },
-        loading: {
-          color: '#E2C089'
-        }
-      }
-    }
-  };

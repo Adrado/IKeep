@@ -10,13 +10,13 @@
     "ajv-keywords": "^3.4.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
-    "date-fns": "^2.5.0",
+    "date-fns": "^2.6.0",
     "jquery": "^3.4.1",
-    "material-table": "^1.52.0",
+    "material-table": "^1.53.0",
     "popper.js": "^1.16.0",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "react-redux": "^5.1.2",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
@@ -38,7 +38,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.2.0"
+    "eslint-plugin-react-hooks": "0.0.0-f6b8d31a7"
   },
   "eslintConfig": {
     "extends": "react-app"
