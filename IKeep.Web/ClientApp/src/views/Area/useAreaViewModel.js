@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import Area from '../../models/Area';
 import {Services} from '../../providers/Providers'
-import { set } from 'date-fns';
+//import { set } from 'date-fns';
 
 
 const useAreaViewModel = (id) =>
@@ -59,7 +59,8 @@ const useAreaViewModel = (id) =>
     const onDelete = useCallback( () => { DeleteArea();}, []);
 
 
-    useEffect(()=>{
+    useEffect(()=>
+    {
         const GetArea = async (id) =>
         {
             try{

@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import {Treebeard} from 'react-treebeard'
+import useTreeView from './useTreeViewModel'
 
-
-const TreeView = props =>
+const TreeView = () =>
 {
-    const {Data, onToggle} = props;
+
+    const {data, onToggle} = useTreeView()
+
     const treeStyle = _default
     
     return(
         <Treebeard
             style={treeStyle}
-            data = {Data}
+            data = {data}
             onToggle = {onToggle}
         />
     );
@@ -25,7 +26,7 @@ var _default = {
     tree: {
       base: {
         listStyle: 'none',
-        backgroundColor: '#ffffff', //#21252B
+        backgroundColor: '#21252B', //#21252B //#fffffff
         margin: 0,
         padding: 0,
         color: '#9DA5AB',
@@ -72,7 +73,7 @@ var _default = {
           base: {
             display: 'inline-block',
             verticalAlign: 'top',
-            color: '#2e2f30'// #9DA5AB
+            color: '#9DA5AB'// #9DA5AB //#2e2f30
           },
           connector: {
             width: '2px',
