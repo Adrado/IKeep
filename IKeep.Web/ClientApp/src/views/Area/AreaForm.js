@@ -29,10 +29,10 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const AreaForm = () => 
+const AreaForm = ({model}) => 
 {
 
-    let id = "60e7806c-dc43-4ff9-8f7b-b18b97d0ec0f"
+    let id = model.Id;
 
     const classes = useStyles();
 

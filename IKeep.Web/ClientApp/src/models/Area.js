@@ -11,7 +11,7 @@ class Area extends Entity
             this.Name = json.name;
             this.Description = json.description;
             this.FloorId = json.floorId;
-            this.GenericElementsIds = json.genericElementsIds;
+            this.ElementsIds = json.elementsIds;
             this.Map = json.map;
         }
         else
@@ -20,7 +20,7 @@ class Area extends Entity
             this.Name = "";
             this.Description = "";
             this.FloorId = "00000000-0000-0000-0000-000000000000";
-            this.GenericElementsIds = [];
+            this.ElementsIds = [];
             this.Map = "";
         }
         

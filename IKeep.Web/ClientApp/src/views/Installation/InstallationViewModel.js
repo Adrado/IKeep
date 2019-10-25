@@ -3,14 +3,13 @@ import Installation from '../../models/Installation';
 import {Services} from '../../providers/Providers'
 
 
-const useInstallationViewModel = (id) =>
+const useInstallationViewModel = (model) =>
 {
     const InstallationsService = useContext(Services);
 
     const [values, setValues] = useState({
         Id : "",
         Name : "",
-        Ref : "",
         Ref : "",
         CIF : "",
         CP : "",
@@ -98,12 +97,12 @@ const useInstallationViewModel = (id) =>
 
     useEffect(()=>{
         
-        if(id !== null)
+        if(model.Id !== null)
         {
-            GetInstallation(id);
+            GetInstallation(model.Id);
         }
 
-    },[])
+    },[model])
 
     useEffect(()=>{
         console.log("Hola");

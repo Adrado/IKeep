@@ -31,6 +31,7 @@ const useAreaViewModel = (id) =>
         let area = new Area();
         area.Ref = values.Ref;
         area.Name = values.Name;
+        //area.FloorId = model.ParentId;
         
         AreasService.AddAsync(area)
             .then((response) => { 

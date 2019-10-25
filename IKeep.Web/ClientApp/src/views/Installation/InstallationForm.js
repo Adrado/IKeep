@@ -5,6 +5,7 @@ import { TextField, Button, Grid  } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import useInstallationViewModel from './InstallationViewModel'
+import TreeNode from '../../services/dtos/TreeNode';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -27,13 +28,14 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const InstallationForm = () =>
+const InstallationForm = ({model}) =>
 {
+    console.log(model);
     const classes = useStyles();
 
-    let id = "d24ab749-87e9-43a9-9c7f-70d7021e5c83";
+    //let id = model.Id; //"d24ab749-87e9-43a9-9c7f-70d7021e5c83";
     
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useInstallationViewModel(id);
+    const {values, handleOnChange, onAdd, onSave, onDelete} = useInstallationViewModel(model);
     
     const { Ref, Name, CIF, CP, Address, City, Phone, Phone2, Fax, Email} = values;
 
@@ -120,15 +122,20 @@ const InstallationForm = () =>
                     <Grid item xs={6} sm = {4}></Grid>
                     <Grid item xs={6} sm = {4}></Grid>
 
+                    { model.Id === null  &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
-                    </Grid>
+                    </Grid>}
+
+                    {model.Id !== null  &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined">Guardar</Button>
-                    </Grid>
+                    </Grid>}
+
+                    {model.Id !== null  &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
-                    </Grid>
+                    </Grid>}
                 
             </Grid>
         </React.Fragment>

@@ -1,15 +1,19 @@
 import React from 'react';
-import useFetchData from './useFechData'
+import useFetchTreeData from './useFetchTreeData'
 import Tree from './Tree'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const TreeView = () =>
 {
-  const {fetchedData, error} = useFetchData() 
-  console.log("En treeView " + fetchedData)
+  const classes = useStyles();
+  const {fetchedData, error} = useFetchTreeData() 
+  
     if(fetchedData === null)
     {
       return(
-        <h1>Loading...</h1>
+        <CircularProgress className={classes.progress}/>
       )
     }
     
@@ -21,7 +25,9 @@ const TreeView = () =>
     {
       return(
         //<h1>{fetchedData.Name}</h1>
-        <Tree treeData = {fetchedData}/>
+        <Tree 
+          treeData = {fetchedData}
+        />
       );
     }
 }
@@ -29,3 +35,8 @@ const TreeView = () =>
 export default TreeView;
 
 
+const useStyles = makeStyles(theme => ({
+  progress: {
+    margin: theme.spacing(2),
+  },
+}));

@@ -1,13 +1,10 @@
 import React from 'react';
 import {Treebeard} from 'react-treebeard'
-import useTreeView from './useTreeViewModel'
+import useHandleTree from './useHandleTree'
 
 const Tree = ({treeData}) =>
 {
-    /* const gato = treeData;
-    alert(gato); */
-    console.log(treeData);
-    const {data, onToggle} = useTreeView(treeData)
+    const {data, onToggle} = useHandleTree(treeData)
     const treeStyle = _default;
     return(
         <Treebeard
@@ -26,7 +23,7 @@ var _default = {
     tree: {
       base: {
         listStyle: 'none',
-        backgroundColor: '#21252B', //#21252B //#fffffff
+        backgroundColor: '#fffffff', //#21252B //#fffffff
         margin: 0,
         padding: 0,
         color: '#9DA5AB',
@@ -73,7 +70,7 @@ var _default = {
           base: {
             display: 'inline-block',
             verticalAlign: 'top',
-            color: '#9DA5AB'// #9DA5AB //#2e2f30
+            color: '#2e2f30'// #9DA5AB //#2e2f30
           },
           connector: {
             width: '2px',

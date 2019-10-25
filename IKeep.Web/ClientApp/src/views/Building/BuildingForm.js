@@ -27,13 +27,13 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function BuildingForm(){
+function BuildingForm(model){
 
-    const id = "a0b03150-18b2-4c80-aea0-d615983d8dd6";
+    //const id = "a0b03150-18b2-4c80-aea0-d615983d8dd6";
 
     const classes = useStyles();
 
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useBuildingViewModel(id);
+    const {values, handleOnChange, onAdd, onSave, onDelete} = useBuildingViewModel(model);
     
     const {Ref, Name} = values
     
@@ -62,18 +62,18 @@ function BuildingForm(){
 
                   <Grid item xs={6} sm = {4}/>
                   
-                  { id === undefined &&
+                  { model.Id === null  &&
                   <Grid item xs={3}>
                       <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined" >Añadir</Button>
                   </Grid>
                   }
                 
-                  { id !== 1 &&
+                  { model.Id !== null &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
-                  { id !== 1 &&
+                  { model.Id !== null &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined" >Eliminar</Button>
                     </Grid>

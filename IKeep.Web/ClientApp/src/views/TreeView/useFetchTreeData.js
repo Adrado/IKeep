@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import {Services} from '../../providers/Providers'
-const useFetchData = () =>
+import {Services} from '../../providers/Providers';
+
+
+const useFetchTreeData = () =>
 {
     const [fetchedData, setFetchedData] = useState(null)
     const [error, setError] = useState(false)
@@ -14,46 +16,61 @@ const useFetchData = () =>
         {
             let installation = installations[i];
             let Buildings = installation.children
-            for (let k in Buildings)
+            for (let j in Buildings)
             {
-                let Building = Buildings[k];
+                let Building = Buildings[j];
                 let Floors = Building.children;
-                for(let j in Floors)
+                for(let k in Floors)
                 {
-                    let Floor = Floors[j];
+                    let Floor = Floors[k];
                     let Areas = Floor.children
+                    for(let m in Areas)
+                    {
+                        let Area = Areas[m];
+                        delete Area.children;
+                    }
                     let newArea =
                     {
+                        id : null,
                         name: "Añadir Nuevo Espacio",
-                        id: Floor,
-                        type: "Area"
+                        parentId: Floor.id,
+                        type: "Area",
+                        new : true
                     }
                     Areas.push(newArea)
                 }
                 let newFloor =
                 {
+                    id : null,
                     name: "Añadir Nueva Planta",
-                    id: Building.id,
-                    type: "Floor"
+                    parentId: Building.id,
+                    type: "Floor",
+                    new : true
                 }
                 Floors.push(newFloor)
             } 
             let newBuilding = 
             {
+                id : null,
                 name: "Añadir Nuevo Edificio",
-                id: installation.id,
-                type: "Building"
+                parentId: installation.id,
+                type: "Building",
+                new : true
             }
             Buildings.push(newBuilding);
         }
 
         var newInstallation =
         {
+            id: null,
             name: "Añadir Nueva Instalación",
-            type: "Installation"
+            type: "Installation",
+            new : true
         }
         installations.push(newInstallation);
-        return installations;
+        data.name = "Instalaciones";
+        data.children = installations;
+        return data;
     }
 
     useEffect(() =>
@@ -61,13 +78,12 @@ const useFetchData = () =>
         const GetTreeView = async () =>
         {
             try{
-                const response = await TreeViewService.GetAllAsync();
-                console.log(response);  
+                const response = await TreeViewService.GetAllAsync(); 
                 const data = response.data.rootNode;
-                //const dataUpdate = ModifiedData(response.data.rootNode)
-                setFetchedData(data);
-                console.log(data);
-                //console.log(fetchedData)
+                const dataUpdated = ModifiedData(data);
+                setFetchedData(dataUpdated);
+                console.log(response);
+                console.log(dataUpdated)
             }
             catch (error){
                 setError(true)
@@ -82,4 +98,4 @@ const useFetchData = () =>
         error
     }
 }
-export default useFetchData;
+export default useFetchTreeData;

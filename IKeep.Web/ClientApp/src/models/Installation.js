@@ -20,6 +20,7 @@ class Installation extends Entity
             this.BuildingsIds = json.buildingsIds;
             this.ReportsIds = json.reportsIds;
             this.InspectionsIds = json.inspectionsIds;
+            this.InstallationUsers = json.installationUsers;
         }
         else
         {
@@ -36,6 +37,7 @@ class Installation extends Entity
             this.BuildingsIds = [];
             this.ReportsIds = [];
             this.InspectionsIds = [];
+            this.InstallationUsers = [];
         }
     }
 }

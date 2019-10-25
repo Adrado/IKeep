@@ -22,3 +22,4 @@ export const CRUD =
 //export const InsSvc = new InstallationsService();
 export const Services = React.createContext();
 
+export const Functions = React.createContext();

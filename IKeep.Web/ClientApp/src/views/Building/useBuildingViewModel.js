@@ -3,7 +3,7 @@ import Building from '../../models/Building';
 import {Services} from '../../providers/Providers'
 
 
-const useBuildingViewModel = (id) =>
+const useBuildingViewModel = (model) =>
 {
     const BuildingsService = useContext(Services);
 
@@ -50,6 +50,7 @@ const useBuildingViewModel = (id) =>
         let building = new Building();
         building.Ref = values.Ref;
         building.Name = values.Name;
+        building.InstallationId = model.ParentId;
         
         BuildingsService.AddAsync(building)
             .then((response) => { 
@@ -87,12 +88,12 @@ const useBuildingViewModel = (id) =>
 
     useEffect(()=>{
         
-        if(id !== null)
+        if(model.Id !== null)
         {
-            GetBuilding(id);
+            GetBuilding(model.Id);
         }
 
-    },[])
+    },[model])
 
     /* useEffect(() => {
         const interval = setInterval(() => {

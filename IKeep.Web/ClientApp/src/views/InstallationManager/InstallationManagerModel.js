@@ -1,57 +1,56 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Grid} from '@material-ui/core' 
-import {Services, CRUD} from '../../providers/Providers';
+import {Functions, Services, CRUD} from '../../providers/Providers';
 
 import TreeView from '../TreeView/TreeView';
 import InstallationForm from '../Installation/InstallationForm';
 import BuildingForm from '../Building/BuildingForm';
 import FloorForm from '../Floor/FloorForm';
 import AreaForm from '../Area/AreaForm';
+import useInstallationManager from './useInstallationManager';
 
-class InstallationManagerModel extends Component
+const InstallationManagerModel =() =>
 {
-    /* constructor()
-    {
-        super()
-         this.getNodeId = this.getNodeId.bind(this);
-        this.onToggle = this.onToggle.bind(this); 
-    } */
-
-    GetNodeId()
-    {
-        
-    }
-    render()
-    {
-        return(
-            <React.Fragment>
-                <Grid container>
-                    <Grid item xs={4}>
-                        <Grid item xs = {12}>
+    const {node, onSelectNode} = useInstallationManager()
+    
+    return(
+        <React.Fragment>
+            <Grid container>
+                <Grid item xs={4}>
+                    <Grid item xs = {12}>
+                        <Functions.Provider value = {onSelectNode}>
                             <Services.Provider value={CRUD.TreeView}>
                                 <TreeView/>
                             </Services.Provider>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={8}>
-                        <Services.Provider value={CRUD.Installation}>
-                            <InstallationForm/>
-                        </Services.Provider>
-                        <Services.Provider value={CRUD.Building}>
-                            <BuildingForm/>
-                        </Services.Provider>
-                        <Services.Provider value={CRUD.Floor}>
-                            <FloorForm/>
-                        </Services.Provider>
-                        <Services.Provider value={CRUD.Area}>
-                            <AreaForm/>
-                        </Services.Provider>
+                        </Functions.Provider>
                     </Grid>
                 </Grid>
-            </React.Fragment>
-        )
-    }
+
+                { node !== null &&
+                <Grid item xs={8}>
+                    { node.Type === "Installation" &&
+                    <Services.Provider value={CRUD.Installation}>
+                        <InstallationForm model = {node}/>
+                    </Services.Provider>}
+
+                    {node.Type === "Building" &&
+                    <Services.Provider value={CRUD.Building}>
+                        <BuildingForm model = {node}/>
+                    </Services.Provider>}
+
+                    {node.Type === "Floor" &&
+                    <Services.Provider value={CRUD.Floor}>
+                        <FloorForm model = {node}/>
+                    </Services.Provider>}
+
+                    {node.Type === "Area" &&
+                    <Services.Provider value={CRUD.Area}>
+                        <AreaForm model = {node}/>
+                    </Services.Provider>}
+                </Grid>}
+            </Grid>
+        </React.Fragment>
+    )
 }
 
 export default InstallationManagerModel;
