@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import {Services} from '../../providers/Providers';
 
 
-const useFetchTreeData = () =>
+const useFetchTreeData = (update) =>
 {
     const [fetchedData, setFetchedData] = useState(null)
     const [error, setError] = useState(false)
@@ -82,16 +82,13 @@ const useFetchTreeData = () =>
                 const data = response.data.rootNode;
                 const dataUpdated = ModifiedData(data);
                 setFetchedData(dataUpdated);
-                console.log(response);
-                console.log(dataUpdated)
             }
             catch (error){
                 setError(true)
             } 
         }
-
         GetTreeView();
-    },[]);
+    },[update]);
 
     return{
         fetchedData,

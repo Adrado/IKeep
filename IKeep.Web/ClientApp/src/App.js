@@ -6,7 +6,7 @@ import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import UserViewModel from './views/User/UserViewModel';
 import RoleViewModel from './views/Role/RoleViewModel';
-import InstallationManagerModel from './views/InstallationManager/InstallationManagerModel';
+import InstallationManagerView from './views/InstallationManager/InstallationManagerView';
 
 export default () => (
   <Layout>
@@ -15,6 +15,6 @@ export default () => (
     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     <Route path='/users' component={UserViewModel}/>
     <Route path='/roles' component={RoleViewModel}/>
-    <Route path='/installations' component={InstallationManagerModel}/>
+    <Route path='/installations' component={InstallationManagerView}/>
   </Layout>
 );
