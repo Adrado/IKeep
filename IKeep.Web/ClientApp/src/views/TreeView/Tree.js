@@ -4,6 +4,8 @@ import useHandleTree from './useHandleTree'
 
 const Tree = ({treeData}) =>
 {
+    /* console.log("Llega esto a Tree")  
+    console.log(treeData); */
     const {data, onToggle} = useHandleTree(treeData)
     const treeStyle = _default;
     return(
@@ -14,6 +16,7 @@ const Tree = ({treeData}) =>
         />
     );
 } 
+
 
 
 export default Tree;

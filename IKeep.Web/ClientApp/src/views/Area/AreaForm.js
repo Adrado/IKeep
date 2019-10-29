@@ -40,18 +40,18 @@ const AreaForm = ({areaData = Area}) =>
 
                   <Grid item xs={6} sm = {4}/>
                   
-                  { areaData.Name === "" && areaData.Ref === "" &&
+                  { areaData.Id === "00000000-0000-0000-0000-000000000000" &&
                   <Grid item xs={3}>
                       <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined" >Añadir</Button>
                   </Grid>
                   }
                 
-                  { areaData.Name !== "" && areaData.Ref !== "" &&
+                  { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
-                  { areaData.Name !== "" && areaData.Ref !== "" &&
+                  { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={3}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined" >Eliminar</Button>
                     </Grid>

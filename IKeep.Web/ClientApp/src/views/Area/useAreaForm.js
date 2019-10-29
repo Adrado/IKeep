@@ -24,7 +24,7 @@ const useAreaForm = (model) =>
         let value = event.target.value;
 
         setValues(prevState => ({ ...prevState, [name] : value}));
-    })
+    }, [])
     
 
     const onAdd = useCallback( () => {setAdd(true);}, []);
@@ -32,6 +32,12 @@ const useAreaForm = (model) =>
     const onSave = useCallback( () => {setSave(true);}, []);
 
     const onDelete = useCallback( () => {setErase(true);}, []);
+
+    const CleanForm = () =>
+    {
+        setValues(prevState => ({ ...prevState, Ref : ""}));
+        setValues(prevState => ({ ...prevState, Name : ""}));
+    }
 
     useEffect(() =>
     {
@@ -72,7 +78,11 @@ const useAreaForm = (model) =>
                 .then((response) => { 
                     console.log(response); 
                 });
-            OnModified(model.Id);
+
+            OnModified(model.Ref);
+            CleanForm();
+            //alert(model.Ref)
+            //alert(model.Id)
         }
         if(add === true)
         {
@@ -90,6 +100,8 @@ const useAreaForm = (model) =>
                 .then((response) => {
                 console.log(response)
                 })
+            OnModified(model.Id);
+            CleanForm();
         }
 
         if(erase === true)

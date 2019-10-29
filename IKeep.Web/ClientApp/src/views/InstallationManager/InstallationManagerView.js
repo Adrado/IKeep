@@ -22,7 +22,10 @@ const InstallationManagerView =() =>
                     <Grid item xs = {12}>
                         <Functions.Provider value = {onSelectNode}>
                             <Services.Provider value={CRUD.TreeView}>
-                                <TreeView update = {modify}/>
+                                <TreeView 
+                                    update = {modify}
+                                    selectedNode = {node}
+                                    />
                             </Services.Provider>
                         </Functions.Provider>
                     </Grid>

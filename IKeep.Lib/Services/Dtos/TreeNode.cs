@@ -12,7 +12,6 @@ namespace IKeep.Lib.Services.Dtos
 
         public Guid Id;
 
-        [JsonIgnore]
         public Guid ParentId;
 
         [JsonIgnore]

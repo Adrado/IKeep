@@ -2,28 +2,60 @@ import { useState, useEffect, useContext } from 'react';
 import {Services} from '../../providers/Providers';
 
 
-const useFetchTreeData = (update) =>
+const useFetchTreeData = (update, selectedNode) =>
 {
-    const [fetchedData, setFetchedData] = useState(null)
-    const [error, setError] = useState(false)
+    const [fetchedData, setFetchedData] = useState(null);
+    const [error, setError] = useState(false);
     const TreeViewService = useContext(Services);
+    const ParentId = selectedNode !== null ? selectedNode.ParentId : null;
     
 
-    const ModifiedData = (data) =>
+    function compare( a, b ) {
+        if ( a.name < b.name ){
+          return -1;
+        }
+        if ( a.name > b.name ){
+          return 1;
+        }
+        return 0;
+      }
+      
+     // objs.sort( compare );
+
+    const ModifiedData = (data, parentId) =>
     {
         let installations = data.children;
+        installations.sort( compare );
         for(let i in installations)
         {
             let installation = installations[i];
-            let Buildings = installation.children
+            if(installation.id === parentId)
+            {
+                installation.toggled = true;
+            }
+            let Buildings = installation.children;
+            Buildings.sort( compare );
             for (let j in Buildings)
             {
                 let Building = Buildings[j];
+                if(Building.id === parentId)
+                {
+                    Building.toggled = true;
+                    installation.toggled = true;
+                }
                 let Floors = Building.children;
+                Floors.sort( compare );
                 for(let k in Floors)
                 {
                     let Floor = Floors[k];
-                    let Areas = Floor.children
+                    if(Floor.id === parentId)
+                    {
+                        Floor.toggled = true;
+                        Building.toggled = true;
+                        installation.toggled = true;
+                    }
+                    let Areas = Floor.children;
+                    Areas.sort( compare );
                     for(let m in Areas)
                     {
                         let Area = Areas[m];
@@ -37,7 +69,7 @@ const useFetchTreeData = (update) =>
                         type: "Area",
                         new : true
                     }
-                    Areas.push(newArea)
+                    Areas.push(newArea);
                 }
                 let newFloor =
                 {
@@ -47,7 +79,7 @@ const useFetchTreeData = (update) =>
                     type: "Floor",
                     new : true
                 }
-                Floors.push(newFloor)
+                Floors.push(newFloor);
             } 
             let newBuilding = 
             {
@@ -70,6 +102,7 @@ const useFetchTreeData = (update) =>
         installations.push(newInstallation);
         data.name = "Instalaciones";
         data.children = installations;
+        data.toggled = true;
         return data;
     }
 
@@ -80,14 +113,17 @@ const useFetchTreeData = (update) =>
             try{
                 const response = await TreeViewService.GetAllAsync(); 
                 const data = response.data.rootNode;
-                const dataUpdated = ModifiedData(data);
+                console.log(data);
+                const dataUpdated = ModifiedData(data, ParentId);
                 setFetchedData(dataUpdated);
+                //alert("here we go");
             }
             catch (error){
-                setError(true)
+                setError(true);
             } 
         }
         GetTreeView();
+
     },[update]);
 
     return{

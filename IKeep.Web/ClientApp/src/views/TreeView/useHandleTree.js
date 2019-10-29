@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import {Functions} from '../../providers/Providers'
 
 const useHandleTree = (treeData) =>
@@ -7,7 +7,6 @@ const useHandleTree = (treeData) =>
     const [data, setData] = useState(treeData);
 
     const [cursor, setCursor] = useState(null);
-    //const [nodeSelected, setNodeSelected] = useState(null);
 
     const onToggle = (node, toggled) => {
         if (cursor) {
@@ -20,8 +19,13 @@ const useHandleTree = (treeData) =>
         setCursor(node);
         setData(Object.assign({}, data))
         onSelectNode(node);
-        
     }
+
+    useEffect(() =>
+    {
+        setData(treeData);
+        //alert("Data?");
+    },[treeData])
     
     return{
         data,

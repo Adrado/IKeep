@@ -25,6 +25,7 @@ namespace IKeep.Lib.DA.EFCore
                 return false;
 
             DbSet.Remove(entityToRemove);
+            DbContext.SaveChanges();
             return true;
         }
 
