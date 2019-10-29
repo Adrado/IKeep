@@ -2,7 +2,9 @@ import React from 'react';
 import {Treebeard} from 'react-treebeard'
 import useHandleTree from './useHandleTree'
 
-const Tree = ({treeData}) =>
+import PropTypes from 'prop-types';
+
+const Tree = ({treeData = {}}) =>
 {
     /* console.log("Llega esto a Tree")  
     console.log(treeData); */
@@ -20,6 +22,11 @@ const Tree = ({treeData}) =>
 
 
 export default Tree;
+
+Tree.propTypes = 
+  {
+  treeData: PropTypes.object.isRequired,
+}
 
 
 var _default = {
