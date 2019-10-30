@@ -42,53 +42,6 @@ namespace IKeep.Web.Controllers
                 return new ActionResult<Tree>(treeView);
             });
         }
-
-        //// GET: api/TreeView/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<TreeView>> GetTreeView(Guid id)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        var role = _treeViewService.GetAll().FirstOrDefault(x => x.Id == id);
-        //        if (role == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return new ActionResult<TreeView>(role);
-        //    });
-        //}
-
-        //// PUT: api/TreeView/5
-        //[HttpPut]
-        //public async Task<ActionResult<TreeView>> PutTreeView(TreeView role)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        var output = _treeViewService.Update(role);
-        //        return new ActionResult<TreeView>(output);
-        //    });
-        //}
-
-        //// POST: api/TreeView
-        //[HttpPost]
-        //public async Task<ActionResult<TreeView>> PostTreeView(TreeView role)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        var output = _treeViewService.Add(role);
-        //        return new ActionResult<TreeView>(output);
-        //    });
-        //}
-
-        //// DELETE: api/TreeView/5
-        //[HttpDelete("{id}")]
-        //public async Task<bool> DeleteTreeView(Guid id)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        return _treeViewService.Delete(id);
-        //    });
-        //}
     }
 }
 
