@@ -9,8 +9,7 @@ const useFetchTreeData = (update, selectedNode) =>
     const TreeViewService = useContext(Services);
     const ParentId = selectedNode !== null ? selectedNode.ParentId : null;
     
-
-    function compare( a, b ) {
+    const compare = async ( a, b ) => {
     if ( a.name < b.name ){
         return -1;
     }
@@ -20,12 +19,13 @@ const useFetchTreeData = (update, selectedNode) =>
     return 0;
     }
       
-
     const ModifiedData = (data, parentId) =>
     {
-        alert("Arrives here");
+        //alert("Arrives here");
         let installations = data.children;
+        console.log(installations);
         installations.sort( compare );
+        //console.log(installations);
         for(let i in installations)
         {
             let installation = installations[i];
@@ -34,7 +34,9 @@ const useFetchTreeData = (update, selectedNode) =>
                 installation.toggled = true;
             }
             let Buildings = installation.children;
+            //console.log(Buildings);
             Buildings.sort( compare );
+            //console.log(Buildings);
             for (let j in Buildings)
             {
                 let Building = Buildings[j];
@@ -55,7 +57,12 @@ const useFetchTreeData = (update, selectedNode) =>
                         installation.toggled = true;
                     }
                     let Areas = Floor.children;
-                    Areas.sort( compare );
+                    console.log(Areas);
+                    
+                    Areas.sort(compare);
+                    console.log(Areas);
+                    let gato = Areas.sort( compare );
+                    console.log(gato);
                     for(let m in Areas)
                     {
                         let Area = Areas[m];
@@ -69,8 +76,10 @@ const useFetchTreeData = (update, selectedNode) =>
                         type: "Area",
                         new : true
                     }
+                    Areas.sort(compare);
                     Areas.push(newArea);
                 }
+
                 let newFloor =
                 {
                     id : null,
@@ -81,6 +90,7 @@ const useFetchTreeData = (update, selectedNode) =>
                 }
                 Floors.push(newFloor);
             } 
+            
             let newBuilding = 
             {
                 id : null,
@@ -99,6 +109,7 @@ const useFetchTreeData = (update, selectedNode) =>
             type: "Installation",
             new : true
         }
+
         installations.push(newInstallation);
         data.name = "Instalaciones";
         data.children = installations;

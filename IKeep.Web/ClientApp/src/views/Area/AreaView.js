@@ -9,14 +9,7 @@ const AreaView = ({treeNode}) =>
     //alert("Renderizando AreaView " + treeNode.Id)
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
-
     
-   /*  if(fetchedArea !== null)
-      alert("fetchedData " + fetchedArea.Id + "Nombre" + fetchedArea.Name)
-    else
-      alert("fetchedData " + fetchedArea) */
-    
-
     if(fetchedArea === null)
     {
         return(

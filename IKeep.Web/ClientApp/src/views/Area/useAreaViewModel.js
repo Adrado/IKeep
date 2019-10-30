@@ -15,7 +15,7 @@ const useAreaViewModel = (model) =>
                 console.log(response)
             });
 
-    },[]);
+    },[model]);
         
 
     const AddNewArea = useCallback (values =>
@@ -27,7 +27,7 @@ const useAreaViewModel = (model) =>
             .then((response) => { 
                 console.log(response); 
             });
-    },[]);
+    },[model]);
  
     const DeleteArea = useCallback ( () =>
     {
@@ -36,7 +36,7 @@ const useAreaViewModel = (model) =>
             console.log(response)
             })
 
-    },[]);
+    },[model]);
 
 
     return{
@@ -44,6 +44,9 @@ const useAreaViewModel = (model) =>
         SaveArea,
         DeleteArea
     }
+        
+        
+    
 }
 
 export default useAreaViewModel;

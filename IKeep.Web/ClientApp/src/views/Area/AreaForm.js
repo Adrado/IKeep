@@ -14,9 +14,9 @@ import useAreaViewModel from './useAreaViewModel';
 const AreaForm = ({areaData = Area}) => 
 {
   const classes = useStyles();
-  //const {} = useAreaViewModel(areaData)
-  const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaForm(areaData, useAreaViewModel);
-    
+  const {AddNewArea, SaveArea, DeleteArea} = useAreaViewModel(areaData)
+  const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaForm(areaData, AddNewArea, SaveArea, DeleteArea);
+  
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
