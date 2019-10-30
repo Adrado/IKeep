@@ -1,25 +1,30 @@
-import {useCallback, useContext } from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import { Services } from '../../providers/Providers';
 
-const useAreaViewModel = (model) =>
+const useAreaViewModel = () =>
 {
     const AreasService = useContext(Services);
 
-    const SaveArea = useCallback ((values) =>
+    const SaveArea = useCallback((model, values) =>
     {
+        alert("Save")
         model.Ref = values.Ref;
         model.Name = values.Name;
-
-        AreasService.UpdateAsync(model)
+        
+        if(model !== undefined || model!== null)
+        {
+            AreasService.UpdateAsync(model)
             .then((response) => {
                 console.log(response)
             });
+        }
 
-    },[model]);
+    },[]);
         
 
-    const AddNewArea = useCallback (values =>
+    const AddNewArea = useCallback ((model, values) =>
     {
+        alert("Add")
         model.Ref = values.Ref;
         model.Name = values.Name;
         
@@ -27,26 +32,28 @@ const useAreaViewModel = (model) =>
             .then((response) => { 
                 console.log(response); 
             });
-    },[model]);
+    },[]);
  
-    const DeleteArea = useCallback ( () =>
+    const DeleteArea = useCallback ( (model) =>
     {
+        alert("Delete")
         AreasService.DeleteAsync(model.Id)
             .then((response) => {
             console.log(response)
             })
 
-    },[model]);
+    },[]);
 
+ /*    useEffect(() =>
+    {
+        
+    },[]) */
 
     return{
         AddNewArea,
         SaveArea,
         DeleteArea
     }
-        
-        
-    
 }
 
 export default useAreaViewModel;

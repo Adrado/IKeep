@@ -2,30 +2,16 @@ import { useState, useEffect, useContext } from 'react';
 import {Services} from '../../providers/Providers';
 
 
-const useFetchTreeData = (update, selectedNode) =>
+const useFetchTreeData = (selectedNode) =>
 {
     const [fetchedData, setFetchedData] = useState(null);
     const [error, setError] = useState(false);
     const TreeViewService = useContext(Services);
     const ParentId = selectedNode !== null ? selectedNode.ParentId : null;
     
-    const compare = async ( a, b ) => {
-    if ( a.name < b.name ){
-        return -1;
-    }
-    if ( a.name > b.name ){
-        return 1;
-    }
-    return 0;
-    }
-      
     const ModifiedData = (data, parentId) =>
     {
-        //alert("Arrives here");
         let installations = data.children;
-        console.log(installations);
-        installations.sort( compare );
-        //console.log(installations);
         for(let i in installations)
         {
             let installation = installations[i];
@@ -34,19 +20,19 @@ const useFetchTreeData = (update, selectedNode) =>
                 installation.toggled = true;
             }
             let Buildings = installation.children;
-            //console.log(Buildings);
-            Buildings.sort( compare );
-            //console.log(Buildings);
+
             for (let j in Buildings)
             {
                 let Building = Buildings[j];
+
                 if(Building.id === parentId)
                 {
                     Building.toggled = true;
                     installation.toggled = true;
                 }
+
                 let Floors = Building.children;
-                Floors.sort( compare );
+
                 for(let k in Floors)
                 {
                     let Floor = Floors[k];
@@ -56,13 +42,8 @@ const useFetchTreeData = (update, selectedNode) =>
                         Building.toggled = true;
                         installation.toggled = true;
                     }
-                    let Areas = Floor.children;
-                    console.log(Areas);
-                    
-                    Areas.sort(compare);
-                    console.log(Areas);
-                    let gato = Areas.sort( compare );
-                    console.log(gato);
+
+                    let Areas = Floor.children
                     for(let m in Areas)
                     {
                         let Area = Areas[m];
@@ -76,7 +57,6 @@ const useFetchTreeData = (update, selectedNode) =>
                         type: "Area",
                         new : true
                     }
-                    Areas.sort(compare);
                     Areas.push(newArea);
                 }
 
@@ -124,8 +104,9 @@ const useFetchTreeData = (update, selectedNode) =>
             try{
                 const response = await TreeViewService.GetAllAsync(); 
                 const data = response.data.rootNode;
-                console.log(data);
+                //console.log(data);
                 const dataUpdated = ModifiedData(data, ParentId);
+                console.log(dataUpdated)
                 setFetchedData(dataUpdated);
                 //alert("here we go");
             }
@@ -135,7 +116,7 @@ const useFetchTreeData = (update, selectedNode) =>
         }
         GetTreeView();
 
-    },[update]);
+    },[]);
 
     return{
         fetchedData,

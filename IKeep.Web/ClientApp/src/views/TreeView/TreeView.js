@@ -5,10 +5,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-const TreeView = ({update, selectedNode}) =>
+const TreeView = ({selectedNode}) =>
 {
   const classes = useStyles();
-  const {fetchedData, error} = useFetchTreeData(update, selectedNode) 
+  const {fetchedData, error} = useFetchTreeData(selectedNode) 
   //console.log(fetchedData);
   
     if(fetchedData === null)

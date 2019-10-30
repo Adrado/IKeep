@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from 'react';
-//import {Services} from '../../providers/Providers'
 //import {Functions} from '../../providers/Providers'
 
 const useAreaForm = (model, AddNew, Save, Delete) =>
@@ -9,7 +8,7 @@ const useAreaForm = (model, AddNew, Save, Delete) =>
         Ref: model.Ref,
         Name: model.Name,
     });
-
+    
     const handleOnChange = useCallback( event =>
     {
         let name = event.target.name;
@@ -18,26 +17,25 @@ const useAreaForm = (model, AddNew, Save, Delete) =>
         setValues(prevState => ({ ...prevState, [name] : value}));
     }, [])
     
-
     const onAdd = useCallback( () => {
         AddNew(values);
-        CleanForm();
-    }, [values]);
+       // CleanForm();
+    },[]);
 
     const onSave = useCallback( () => {
         Save(values);
-    }, [values]);
+    },[]);
 
     const onDelete = useCallback( () => {
         Delete();
-        CleanForm();
-    }, [values]);
+       // CleanForm();
+    },[]);
 
-    const CleanForm = () =>
+    /* const CleanForm = () =>
     {
         setValues(prevState => ({ ...prevState, Ref : ""}));
         setValues(prevState => ({ ...prevState, Name : ""}));
-    }
+    } */
 
     useEffect(() =>
     {

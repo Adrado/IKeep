@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IKeep.Lib.Services.Dtos
@@ -21,7 +23,7 @@ namespace IKeep.Lib.Services.Dtos
             }
         }
 
-        //Antes era una clase Dictionary
+        [JsonIgnore]
         public Dictionary<Guid, TreeNode> Nodes { get; set; }
 
         public Tree()
@@ -40,6 +42,13 @@ namespace IKeep.Lib.Services.Dtos
                     parent.Children.Add(node);
                 }
             }
+        }
+
+        public void SortTree()
+        {
+            var myList = Nodes.ToList();
+            myList.Sort((pair1, pair2) => pair1.Value.Name.CompareTo(pair2.Value.Name));
+            Nodes = myList.ToDictionary(k => k.Key, v => v.Value);
         }
     }
 }

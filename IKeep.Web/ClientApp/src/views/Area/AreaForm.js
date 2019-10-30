@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { TextField, Button, Grid  } from '@material-ui/core' 
-
 import { makeStyles } from '@material-ui/core/styles';
-
 import useAreaForm from './useAreaForm'
-
 import PropTypes from 'prop-types';
 import Area from '../../models/Area';
 import useAreaViewModel from './useAreaViewModel';
+
 
 
 const AreaForm = ({areaData = Area}) => 
@@ -44,18 +42,18 @@ const AreaForm = ({areaData = Area}) =>
                   
                   { areaData.Id === "00000000-0000-0000-0000-000000000000" &&
                   <Grid item xs={3}>
-                      <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined" >Añadir</Button>
+                      <Button className={classes.button} size="small" onClick = {onAdd(values)} variant="outlined" >Añadir</Button>
                   </Grid>
                   }
                 
                   { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={3}>
-                        <Button className={classes.button} size="small" onClick = {onSave} variant="outlined" >Guardar</Button>
+                        <Button className={classes.button} size="small" onClick = {onSave(values)} variant="outlined" >Guardar</Button>
                     </Grid>
                   }
                   { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={3}>
-                        <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined" >Eliminar</Button>
+                        <Button className={classes.button} size="small" onClick = {onDelete(values)} variant="outlined" >Eliminar</Button>
                     </Grid>
                   }
                   
