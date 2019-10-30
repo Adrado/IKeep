@@ -19,15 +19,12 @@ const Tree = ({treeData = {}}) =>
     );
 } 
 
-
-
 export default Tree;
 
 Tree.propTypes = 
   {
   treeData: PropTypes.object.isRequired,
 }
-
 
 var _default = {
     tree: {

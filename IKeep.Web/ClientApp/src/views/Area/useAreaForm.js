@@ -1,13 +1,12 @@
 import { useState, useCallback, useContext, useEffect } from 'react';
 import {Services} from '../../providers/Providers'
-import {Functions} from '../../providers/Providers'
+//import {Functions} from '../../providers/Providers'
 
 
 const useAreaForm = (model) =>
 {
-
     const AreasService = useContext(Services);
-    const OnModified = useContext(Functions);
+   // const OnModified = useContext(Functions);
 
     const [values, setValues] = useState({
         Ref: model.Ref,
@@ -58,7 +57,7 @@ const useAreaForm = (model) =>
                         console.log(response)
                     })
             
-            OnModified(model.Id);
+          //  OnModified(model.Id);
         }
         if(save === true)
         {
@@ -79,7 +78,7 @@ const useAreaForm = (model) =>
                     console.log(response); 
                 });
 
-            OnModified(model.Ref);
+            //OnModified(model.Ref);
             CleanForm();
             //alert(model.Ref)
             //alert(model.Id)
@@ -95,12 +94,12 @@ const useAreaForm = (model) =>
     {
         const DeleteArea = async () =>
         {
-            alert(model.Id);
+            //alert(model.Id);
             AreasService.DeleteAsync(model.Id)
                 .then((response) => {
                 console.log(response)
                 })
-            OnModified(model.Id);
+          //  OnModified(model.Id);
             CleanForm();
         }
 

@@ -1,12 +1,12 @@
-import { useState, useCallback } from 'react';
+/* import { useState, useCallback } from 'react';
 
 const useInstallationManager = () =>
 {
     const[modify, setModify] = useState(null)
-
-    const onModified = useCallback((e) =>
+    const onModified = useCallback(() =>
     {
-        setModify(e);
+        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
+        setModify(x);
     }, []);
 
     return{
@@ -15,4 +15,4 @@ const useInstallationManager = () =>
     }
 }
 
-export default useInstallationManager
+export default useInstallationManager */
