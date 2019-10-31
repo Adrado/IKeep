@@ -1,13 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import {Services} from '../../providers/Providers';
 
-
-const useFetchTreeData = (selectedNode) =>
+const useFetchTreeData = (Update, ParentId) =>
 {
     const [fetchedData, setFetchedData] = useState(null);
     const [error, setError] = useState(false);
     const TreeViewService = useContext(Services);
-    const ParentId = selectedNode !== null ? selectedNode.ParentId : null;
     
     const ModifiedData = (data, parentId) =>
     {
@@ -94,6 +92,7 @@ const useFetchTreeData = (selectedNode) =>
         data.name = "Instalaciones";
         data.children = installations;
         data.toggled = true;
+        data.update = Update;
         return data;
     }
 
@@ -106,7 +105,7 @@ const useFetchTreeData = (selectedNode) =>
                 const data = response.data.rootNode;
                 //console.log(data);
                 const dataUpdated = ModifiedData(data, ParentId);
-                console.log(dataUpdated)
+                //console.log(dataUpdated)
                 setFetchedData(dataUpdated);
                 //alert("here we go");
             }
@@ -114,9 +113,10 @@ const useFetchTreeData = (selectedNode) =>
                 setError(true);
             } 
         }
+        //setFetchedData(null);
         GetTreeView();
-
-    },[]);
+        alert(Update);
+    },[Update]);
 
     return{
         fetchedData,

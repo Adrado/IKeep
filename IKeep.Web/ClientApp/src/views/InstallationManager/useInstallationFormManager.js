@@ -1,4 +1,4 @@
-/* import { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 const useInstallationManager = () =>
 {
@@ -15,4 +15,4 @@ const useInstallationManager = () =>
     }
 }
 
-export default useInstallationManager */
+export default useInstallationManager;

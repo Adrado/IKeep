@@ -8,12 +8,12 @@ import BuildingForm from '../Building/BuildingForm';
 import FloorForm from '../Floor/FloorForm';
 import AreaView from '../Area/AreaView';
 import useInstallationManager from './useInstallationManager';
-//import useInstallationFormManager from './useInstallationFormManager';
+import useInstallationFormManager from './useInstallationFormManager';
 
 const InstallationManagerView =() =>
 {
     const {node, onSelectNode} = useInstallationManager();
-    //const {modify, onModified} = useInstallationFormManager();
+    const {modify, onModified} = useInstallationFormManager();
     
     /* useEffect(() =>
     {
@@ -28,8 +28,8 @@ const InstallationManagerView =() =>
                         <Functions.Provider value = {onSelectNode}>
                             <Services.Provider value={CRUD.TreeView}>
                                 <TreeView 
-                                    //update = {modify}
-                                    selectedNode = {node}
+                                    Update = {modify}
+                                    ParentId = {node.ParentId}
                                     />
                             </Services.Provider>
                         </Functions.Provider>
@@ -37,7 +37,7 @@ const InstallationManagerView =() =>
                 </Grid>
 
                 { node !== null &&
-               // <Functions.Provider value= {onModified}>
+               <Functions.Provider value= {onModified}>
                     <Grid item xs={8}>
                         { node.Type === "Installation" &&
                         <Services.Provider value={CRUD.Installation}>
@@ -59,7 +59,7 @@ const InstallationManagerView =() =>
                             <AreaView treeNode = {node}/>
                         </Services.Provider>}
                     </Grid>
-              // </Functions.Provider>
+              </Functions.Provider>
                 }
             </Grid>
         </React.Fragment>

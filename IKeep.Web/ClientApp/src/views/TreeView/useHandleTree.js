@@ -23,8 +23,9 @@ const useHandleTree = (treeData) =>
 
     useEffect(() =>
     {
-        setData(treeData);
-        //alert("Data?");
+        //setData(treeData);
+        console.log("Esto llega a HandleTree")
+        console.log(treeData);
     },[treeData])
     
     return{

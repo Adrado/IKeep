@@ -1,12 +1,10 @@
 import React from 'react';
-
 import { TextField, Button, Grid  } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
 import useAreaForm from './useAreaForm'
 import PropTypes from 'prop-types';
 import Area from '../../models/Area';
 import useAreaViewModel from './useAreaViewModel';
-
 
 
 const AreaForm = ({areaData = Area}) => 
@@ -84,7 +82,6 @@ const useStyles = makeStyles(theme => ({
     width: 200,
   },
 }));
-
 
 AreaForm.propTypes = {
   areaData: PropTypes.shape({

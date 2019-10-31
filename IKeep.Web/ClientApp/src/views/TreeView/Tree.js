@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 
 const Tree = ({treeData = {}}) =>
 {
-    /* console.log("Llega esto a Tree")  
-    console.log(treeData); */
     const {data, onToggle} = useHandleTree(treeData)
+    console.log("esto llega a Treebeard")
+    console.log(data)
     const treeStyle = _default;
     return(
         <Treebeard
