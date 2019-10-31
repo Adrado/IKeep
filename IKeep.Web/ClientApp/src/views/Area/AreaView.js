@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const AreaView = ({treeNode}) =>
 {
-    //alert("Renderizando AreaView " + treeNode.Id)
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
     

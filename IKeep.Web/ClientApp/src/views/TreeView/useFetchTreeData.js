@@ -103,11 +103,8 @@ const useFetchTreeData = (Update, ParentId) =>
             try{
                 const response = await TreeViewService.GetAllAsync(); 
                 const data = response.data.rootNode;
-                //console.log(data);
                 const dataUpdated = ModifiedData(data, ParentId);
-                //console.log(dataUpdated)
                 setFetchedData(dataUpdated);
-                //alert("here we go");
             }
             catch (error){
                 setError(true);
@@ -115,7 +112,6 @@ const useFetchTreeData = (Update, ParentId) =>
         }
         //setFetchedData(null);
         GetTreeView();
-        alert(Update);
     },[Update]);
 
     return{

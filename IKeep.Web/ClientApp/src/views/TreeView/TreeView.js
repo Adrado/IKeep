@@ -9,8 +9,6 @@ const TreeView = ({Update, ParentId}) =>
 {
   const classes = useStyles();
   const {fetchedData, error} = useFetchTreeData(Update, ParentId) 
-  /* console.log("lo que sale de fetchedData");
-  console.log(fetchedData); */
   
     if(fetchedData === null || fetchedData.update !== Update)
     {
@@ -27,10 +25,6 @@ const TreeView = ({Update, ParentId}) =>
     if(fetchedData !== null )
     {
       return(
-        console.log("lo que sale de fetchedData"),
-        console.log(fetchedData),
-        console.log(Update),
-        //<h1>{fetchedData.Name}</h1>
         <Tree 
           treeData = {fetchedData}
         />

@@ -1,12 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 
-const useAreaForm = (model, AddNew, Save, Delete) =>
+const useAreaForm = (modelState, model, AddNew, Save, Delete) =>
 {
 
-    const [values, setValues] = useState({
-        Ref: model.Ref,
-        Name: model.Name,
-    });
+    const [values, setValues] = useState(modelState);
     
     const handleOnChange = useCallback( event =>
     {
@@ -20,7 +17,7 @@ const useAreaForm = (model, AddNew, Save, Delete) =>
     {
        AddNew(model, values)
        CleanForm();
-    }, [AddNew, values, model]) 
+    }, [AddNew, values, model, CleanForm]) 
 
     const onSave = useCallback(() => 
     {
@@ -31,18 +28,18 @@ const useAreaForm = (model, AddNew, Save, Delete) =>
     {
        Delete(model);
        CleanForm();
-    },[Delete, model])
+    },[Delete, model, CleanForm])
      
-    const CleanForm = () =>
+    const CleanForm = useCallback(() =>
     {
-        setValues(prevState => ({ ...prevState, Ref : ""}));
-        setValues(prevState => ({ ...prevState, Name : ""}));
-    } 
+        setValues(modelState);
+    }, [modelState]) 
 
     useEffect(() =>
     {
-        setValues(prevState => ({ ...prevState, Ref : model.Ref}));
-        setValues(prevState => ({ ...prevState, Name : model.Name}));
+        setValues(prevState => ({...prevState, ...model}))
+        /* setValues(prevState => ({ ...prevState, Ref : model.Ref}));
+        setValues(prevState => ({ ...prevState, Name : model.Name}));  */
 
     },[model])
 

@@ -7,11 +7,18 @@ import Area from '../../models/Area';
 import useAreaViewModel from './useAreaViewModel';
 
 
+
 const AreaForm = ({areaData = Area}) => 
 {
+  const AreaState = 
+  {
+    Ref: areaData.Ref,
+    Name: areaData.Name,
+    Description: areaData.Description
+  }
   const classes = useStyles();
   const [Add, Save, Delete] = useAreaViewModel()
-  const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaForm(areaData, Add, Save, Delete);
+  const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaForm(AreaState, areaData, Add, Save, Delete);
   
     return(
         <React.Fragment>

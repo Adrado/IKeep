@@ -14,11 +14,6 @@ const InstallationManagerView =() =>
 {
     const {node, onSelectNode} = useInstallationManager();
     const {modify, onModified} = useInstallationFormManager();
-    
-    /* useEffect(() =>
-    {
-        
-    }, [modify]) */
 
     return(
         <React.Fragment>
