@@ -17,25 +17,30 @@ const useAreaForm = (model, AddNew, Save, Delete) =>
         setValues(prevState => ({ ...prevState, [name] : value}));
     }, [])
     
-    const onAdd = useCallback( () => {
-        AddNew(values);
-       // CleanForm();
-    },[]);
-
-    const onSave = useCallback( () => {
-        Save(values);
-    },[]);
-
-    const onDelete = useCallback( () => {
-        Delete();
-       // CleanForm();
-    },[]);
-
-    /* const CleanForm = () =>
+    const onAdd = useCallback((value) => 
     {
+       alert("Llaman en useAreaForm" + value.Ref)
+       AddNew(model, values);
+       CleanForm();
+    }, [AddNew, values, model]) 
+
+    const onSave = useCallback(() => 
+    {
+        Save(model, values);
+    },[Save, model, values])
+
+    const onDelete = useCallback(() => 
+    {
+       Delete(model);
+       CleanForm();
+    },[Delete, model])
+     
+    const CleanForm = () =>
+    {
+        alert("Llaman al Clean")
         setValues(prevState => ({ ...prevState, Ref : ""}));
         setValues(prevState => ({ ...prevState, Name : ""}));
-    } */
+    } 
 
     useEffect(() =>
     {

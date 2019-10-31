@@ -1,11 +1,11 @@
-import {useCallback, useContext, useEffect} from 'react';
+import { useContext, useEffect} from 'react';
 import { Services } from '../../providers/Providers';
 
 const useAreaViewModel = () =>
 {
     const AreasService = useContext(Services);
 
-    const SaveArea = useCallback((model, values) =>
+    const SaveArea = (model, values) =>
     {
         alert("Save")
         model.Ref = values.Ref;
@@ -13,47 +13,56 @@ const useAreaViewModel = () =>
         
         if(model !== undefined || model!== null)
         {
+            alert("Save2")
             AreasService.UpdateAsync(model)
             .then((response) => {
                 console.log(response)
             });
         }
-
-    },[]);
+    }
         
-
-    const AddNewArea = useCallback ((model, values) =>
+    const AddNewArea = (model, values) =>
     {
         alert("Add")
         model.Ref = values.Ref;
         model.Name = values.Name;
-        
-        AreasService.AddAsync(model)
-            .then((response) => { 
-                console.log(response); 
-            });
-    },[]);
+        if(model !== undefined || model!== null)
+        {
+            alert("Add2")
+            AreasService.AddAsync(model)
+                .then((response) => { 
+                    console.log(response); 
+                });
+        }
+    }
  
-    const DeleteArea = useCallback ( (model) =>
+    const DeleteArea = (model) =>
     {
         alert("Delete")
-        AreasService.DeleteAsync(model.Id)
-            .then((response) => {
-            console.log(response)
-            })
 
-    },[]);
-
- /*    useEffect(() =>
+        if(model !== undefined || model!== null)
+        {
+            alert("Delete2")
+            AreasService.DeleteAsync(model.Id)
+                .then((response) => {
+                console.log(response)
+                })
+        }
+    }
+    useEffect(() =>
     {
         
-    },[]) */
+    },[])
 
-    return{
-        AddNewArea,
-        SaveArea,
-        DeleteArea
-    }
+    return(
+        [
+            AddNewArea,
+            SaveArea,
+            DeleteArea
+        ]
+    )
+        
+    
 }
 
 export default useAreaViewModel;
