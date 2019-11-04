@@ -1,9 +1,9 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-let DataTable = props =>
+const DataTable = props =>
 {
-    let {Title, Data, OnEdit, OnDelete, Columns} = props;
+    const {Title, Data, OnEdit, OnDelete, Columns} = props;
 
     const [state] = React.useState({
         columns: Columns,
