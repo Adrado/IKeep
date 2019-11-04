@@ -1,6 +1,6 @@
 import  { useState, useEffect, useContext } from 'react';
-import {Services} from '../../providers/Providers';
-import Area from '../../models/Area';
+import {Services} from '../../../providers/Providers';
+import Area from '../../../models/Area';
 
 const useFetchArea = (treeNode) =>
 {

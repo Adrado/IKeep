@@ -1,24 +1,22 @@
 import React from 'react';
 import { TextField, Button, Grid  } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
-import useAreaForm from './useAreaForm'
+import useForm from '../../../components/useForm'
 import PropTypes from 'prop-types';
-import Area from '../../models/Area';
+import Area from '../../../models/Area';
 import useAreaViewModel from './useAreaViewModel';
-
-
 
 const AreaForm = ({areaData = Area}) => 
 {
   const AreaState = 
   {
-    Ref: areaData.Ref,
-    Name: areaData.Name,
-    Description: areaData.Description
+    Ref: "", 
+    Name: "", 
+    Description: "", 
   }
   const classes = useStyles();
   const [Add, Save, Delete] = useAreaViewModel()
-  const {values, handleOnChange, onAdd, onSave, onDelete} = useAreaForm(AreaState, areaData, Add, Save, Delete);
+  const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(AreaState, areaData, Add, Save, Delete);
   
     return(
         <React.Fragment>
@@ -42,8 +40,15 @@ const AreaForm = ({areaData = Area}) =>
                       variant="filled"
                       />
                   </Grid>
-
-                  <Grid item xs={6} sm = {4}/>
+                  
+                  <Grid item xs={6} sm = {4}>
+                    <TextField
+                        name="Description" type="text" onChange={handleOnChange} value = {values.Description}
+                        label="Descripción"
+                        margin="normal"
+                        variant="filled"
+                        />
+                  </Grid>
                   
                   { areaData.Id === "00000000-0000-0000-0000-000000000000" &&
                   <Grid item xs={3}>
@@ -61,7 +66,6 @@ const AreaForm = ({areaData = Area}) =>
                         <Button className={classes.button} size="small" onClick={onDelete} variant="outlined" >Eliminar</Button>
                     </Grid>
                   }
-                  
             </Grid>
         </React.Fragment>
     )

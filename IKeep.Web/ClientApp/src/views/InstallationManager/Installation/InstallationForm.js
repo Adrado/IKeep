@@ -1,41 +1,29 @@
 import React from 'react';
-
 import { TextField, Button, Grid  } from '@material-ui/core' 
-
 import { makeStyles } from '@material-ui/core/styles';
+import useForm from '../../../components/useForm'
+import PropTypes from 'prop-types';
+import Installation from '../../../models/Installation';
+import useInstallationViewModel from './useInstallationViewModel';
 
-import useInstallationViewModel from './InstallationViewModel'
-import TreeNode from '../../services/dtos/TreeNode';
-
-const useStyles = makeStyles(theme => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    button: {
-        margin: theme.spacing(1),
-      },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-  }));
-
-const InstallationForm = ({model}) =>
+const InstallationForm = ({installationData = Installation}) => 
 {
-    console.log(model);
-    const classes = useStyles();
-
-    //let id = model.Id; //"d24ab749-87e9-43a9-9c7f-70d7021e5c83";
-    
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useInstallationViewModel(model);
+  const InstallationState = 
+  {
+    Ref: "",
+    Name: "",
+    CIF: "",
+    CP: "",
+    Address: "",
+    City: "",
+    Phone: "",
+    Phone2: "",
+    Fax: "",
+    Email: "",
+  }
+  const classes = useStyles();
+  const [Add, Save, Delete] = useInstallationViewModel()
+  const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(InstallationState, installationData, Add, Save, Delete);
     
     const { Ref, Name, CIF, CP, Address, City, Phone, Phone2, Fax, Email} = values;
 
@@ -122,17 +110,17 @@ const InstallationForm = ({model}) =>
                     <Grid item xs={6} sm = {4}></Grid>
                     <Grid item xs={6} sm = {4}></Grid>
 
-                    { model.Id === null  &&
+                    { installationData.Id === "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
                     </Grid>}
 
-                    {model.Id !== null  &&
+                    { installationData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined">Guardar</Button>
                     </Grid>}
 
-                    {model.Id !== null  &&
+                    { installationData.Id !== "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={2}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                     </Grid>}
@@ -143,3 +131,31 @@ const InstallationForm = ({model}) =>
 }
 
 export default InstallationForm;
+
+const useStyles = makeStyles(theme => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    button: {
+        margin: theme.spacing(1),
+      },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+    dense: {
+      marginTop: 19,
+    },
+    menu: {
+      width: 200,
+    },
+  }));
+  
+  InstallationForm.propTypes = {
+    installationData: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Ref: PropTypes.string.isRequired,
+    }).isRequired,
+  };

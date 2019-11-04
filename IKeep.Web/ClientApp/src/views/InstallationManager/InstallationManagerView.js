@@ -2,11 +2,11 @@ import React from 'react';
 import {Grid} from '@material-ui/core' 
 import {Functions, Services, CRUD} from '../../providers/Providers';
 
-import TreeView from '../TreeView/TreeView';
-import InstallationForm from '../Installation/InstallationForm';
-import BuildingForm from '../Building/BuildingForm';
-import FloorForm from '../Floor/FloorForm';
-import AreaView from '../Area/AreaView';
+import TreeView from './TreeView/TreeView';
+import InstallationView from './Installation/InstallationView';
+import BuildingView from './Building/BuildingView';
+import FloorView from './Floor/FloorView';
+import AreaView from './Area/AreaView';
 import useInstallationManager from './useInstallationManager';
 import useInstallationFormManager from './useInstallationFormManager';
 
@@ -36,17 +36,17 @@ const InstallationManagerView =() =>
                     <Grid item xs={8}>
                         { node.Type === "Installation" &&
                         <Services.Provider value={CRUD.Installation}>
-                            <InstallationForm model = {node}/>
+                            <InstallationView treeNode = {node}/>
                         </Services.Provider>}
 
                         {node.Type === "Building" &&
                         <Services.Provider value={CRUD.Building}>
-                            <BuildingForm model = {node}/>
+                            <BuildingView treeNode = {node}/>
                         </Services.Provider>}
 
                         {node.Type === "Floor" &&
                         <Services.Provider value={CRUD.Floor}>
-                            <FloorForm model = {node}/>
+                            <FloorView treeNode = {node}/>
                         </Services.Provider>}
 
                         {node.Type === "Area" &&

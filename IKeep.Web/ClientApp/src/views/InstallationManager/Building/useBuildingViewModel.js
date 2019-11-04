@@ -1,44 +1,45 @@
 import { useContext, useEffect} from 'react';
-import { Services } from '../../providers/Providers';
+import { Services } from '../../../providers/Providers';
+import {Functions} from '../../../providers/Providers';
 
-import {Functions} from '../../providers/Providers'
-
-const useAreaViewModel = () =>
+const useBuildingViewModel = () =>
 {
-    const AreasService = useContext(Services);
+    const BuildingsService = useContext(Services);
     const OnModified = useContext(Functions);
-    const SaveArea = (model, values) =>
+    const SaveBuilding = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.Description = values.Description;
         
         if(model !== undefined || model!== null)
         {
-            AreasService.UpdateAsync(model)
+            BuildingsService.UpdateAsync(model)
             .then((response) => {
                 OnModified();
             });
         }
     }
         
-    const AddNewArea = (model, values) =>
+    const AddNewBuilding = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.Description = values.Description;
         if(model !== undefined || model!== null)
         {
-            AreasService.AddAsync(model)
+            BuildingsService.AddAsync(model)
                 .then((response) => { 
                     OnModified();
                 });
         }
     }
  
-    const DeleteArea = (model) =>
+    const DeleteBuilding = (model) =>
     {
         if(model !== undefined || model!== null)
         {
-            AreasService.DeleteAsync(model.Id)
+            BuildingsService.DeleteAsync(model.Id)
                 .then((response) => {
                     OnModified();
                 })
@@ -49,11 +50,11 @@ const useAreaViewModel = () =>
 
     return(
         [
-            AddNewArea,
-            SaveArea,
-            DeleteArea
+            AddNewBuilding,
+            SaveBuilding,
+            DeleteBuilding
         ]
     )
 }
 
-export default useAreaViewModel;
+export default useBuildingViewModel;
