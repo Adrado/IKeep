@@ -2,45 +2,43 @@ import { useContext, useEffect} from 'react';
 import { Services } from '../../providers/Providers';
 import {Functions} from '../../providers/Providers';
 
-const useGenericElementViewModel = () =>
+const useElementTypeViewModel = () =>
 {
-    const GenericElementsService = useContext(Services);
+    const ElementTypesService = useContext(Services);
     const OnModified = useContext(Functions);
-    
-    const SaveGenericElement = (model, values) =>
+    const SaveElementType = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
-        model.ElementTypeId = values.ElementTypeId;
         
         if(model !== undefined || model!== null)
         {
-            GenericElementsService.UpdateAsync(model)
+            ElementTypesService.UpdateAsync(model)
             .then((response) => {
                 OnModified();
             });
         }
     }
         
-    const AddNewGenericElement = (model, values) =>
+    const AddNewElementType = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
-        model.ElementTypeId = values.ElementTypeId;
+        
         if(model !== undefined || model!== null)
         {
-            GenericElementsService.AddAsync(model)
+            ElementTypesService.AddAsync(model)
                 .then((response) => { 
                     OnModified();
                 });
         }
     }
  
-    const DeleteGenericElement = (model) =>
+    const DeleteElementType = (model) =>
     {
         if(model !== undefined || model!== null)
         {
-            GenericElementsService.DeleteAsync(model.Id)
+            ElementTypesService.DeleteAsync(model.Id)
                 .then((response) => {
                     OnModified();
                 })
@@ -51,11 +49,11 @@ const useGenericElementViewModel = () =>
 
     return(
         [
-            AddNewGenericElement,
-            SaveGenericElement,
-            DeleteGenericElement
+            AddNewElementType,
+            SaveElementType,
+            DeleteElementType
         ]
     )
 }
 
-export default useGenericElementViewModel;
+export default useElementTypeViewModel;

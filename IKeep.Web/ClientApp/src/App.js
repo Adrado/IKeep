@@ -6,6 +6,7 @@ import UserViewModel from './views/User/UserViewModel';
 import RoleViewModel from './views/Role/RoleViewModel';
 import InstallationManagerView from './views/InstallationManager/InstallationManagerView';
 import GenericElementView from './views/GenericElement/GenericElementView'
+import ElementTypeView from './views/ElementType/ElementTypeView'
 
 const App = () => (
   <Layout>
@@ -14,6 +15,7 @@ const App = () => (
     <Route path='/roles' component={RoleViewModel}/>
     <Route path='/installations' component={InstallationManagerView}/>
     <Route path='/genericElements' component={GenericElementView}/>
+    <Route path='/elementTypes' component={ElementTypeView}/>
   </Layout>
 );
 

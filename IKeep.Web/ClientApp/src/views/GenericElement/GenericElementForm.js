@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextField, Button, Grid  } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
-import useForm from '../../../components/useForm'
+import useForm from '../../components/useForm'
 import PropTypes from 'prop-types';
-import GenericElement from '../../../models/GenericElement';
+import GenericElement from '../../models/GenericElement';
 import useGenericElementViewModel from './useGenericElementViewModel';
 
 const GenericElementForm = () => 
