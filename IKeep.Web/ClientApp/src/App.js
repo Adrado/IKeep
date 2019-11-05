@@ -8,14 +8,18 @@ import InstallationManagerView from './views/InstallationManager/InstallationMan
 import GenericElementView from './views/GenericElement/GenericElementView'
 import ElementTypeView from './views/ElementType/ElementTypeView'
 
+import {Services, CRUD} from './providers/Providers';
+
 const App = () => (
   <Layout>
     <Route exact path='/' component={Home} />
     <Route path='/users' component={UserViewModel}/>
     <Route path='/roles' component={RoleViewModel}/>
     <Route path='/installations' component={InstallationManagerView}/>
-    <Route path='/genericElements' component={GenericElementView}/>
-    <Route path='/elementTypes' component={ElementTypeView}/>
+    {/* <Route path='/genericElements' component={GenericElementView}/> */}
+    <Services.Provider value={CRUD.ElementType}>
+      <Route path='/elementTypes' component={ElementTypeView}/>
+    </Services.Provider>
   </Layout>
 );
 

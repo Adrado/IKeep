@@ -8,7 +8,7 @@ class ElementType extends Entity
         if(json)
         {
             this.Ref = json.ref;
-            this.Name = json.Name;
+            this.Name = json.name;
             this.GenericElementsIds = json.genericElementsIds;
         }
         else

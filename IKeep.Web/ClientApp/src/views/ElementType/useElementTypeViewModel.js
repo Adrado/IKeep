@@ -1,37 +1,40 @@
 import { useContext, useEffect} from 'react';
 import { Services } from '../../providers/Providers';
-import {Functions} from '../../providers/Providers';
+//import {Functions} from '../../providers/Providers';
+import ElementType from '../../models/ElementType';
 
 const useElementTypeViewModel = () =>
 {
     const ElementTypesService = useContext(Services);
-    const OnModified = useContext(Functions);
-    const SaveElementType = (model, values) =>
+    //const OnModified = useContext(Functions);
+    const SaveElementType = (event, rowData) =>
     {
-        model.Ref = values.Ref;
+        console.log(event)
+        console.log(rowData)
+
+        /* model.Ref = values.Ref;
         model.Name = values.Name;
         
         if(model !== undefined || model!== null)
         {
             ElementTypesService.UpdateAsync(model)
             .then((response) => {
-                OnModified();
+                //OnModified();
             });
-        }
+        } */
     }
         
-    const AddNewElementType = (model, values) =>
+    const AddNewElementType = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
-        
-        if(model !== undefined || model!== null)
-        {
-            ElementTypesService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                });
-        }
+        console.log(values)
+        let elementType = new ElementType()
+        elementType.Ref = values.Ref;
+        elementType.Name = values.Name;
+        ElementTypesService.AddAsync(elementType)
+            .then((response) => { 
+                    //OnModified();
+            });
+
     }
  
     const DeleteElementType = (model) =>
@@ -40,7 +43,7 @@ const useElementTypeViewModel = () =>
         {
             ElementTypesService.DeleteAsync(model.Id)
                 .then((response) => {
-                    OnModified();
+                   // OnModified();
                 })
         }
     }

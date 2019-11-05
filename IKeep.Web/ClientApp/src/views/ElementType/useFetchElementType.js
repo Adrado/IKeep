@@ -8,21 +8,27 @@ const useFetchElementType = () =>
     const [error, setError] = useState(false);
     const ElementTypesService = useContext(Services);
 
+    const UpdateData = (data) =>
+    {
+        let elementTypes = []; 
+        for (let i in data)
+        {
+            let elementType = new ElementType(data[i]);
+            
+            //if(elementType.EntityStatus !== 0)  
+            elementTypes.push(elementType);
+        }
+        data = elementTypes;
+        return data;
+    }
     useEffect(() =>
     {
         const GetAllElementTypes = async () =>
         {
             try{
                 const response = await ElementTypesService.GetAllAsync();
-                let elementTypes = []; 
-                for (let i in response.data)
-                {
-                    let elementType = new ElementType(response.data[i]);
-                    
-                    if(elementType.EntityStatus !== 0)  
-                        elementTypes.push(elementType);
-                }
-                setFetchedElementType(elementTypes);
+                const dataUpdated = UpdateData(response.data)
+                setFetchedElementType(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -31,7 +37,7 @@ const useFetchElementType = () =>
 
         GetAllElementTypes();
 
-    },[ElementTypesService]);
+    },[]);
 
     return{
         fetchedElementType,

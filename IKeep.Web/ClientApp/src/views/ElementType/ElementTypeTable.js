@@ -2,7 +2,7 @@ import React from 'react';
 import useElementTypeViewModel from './useElementTypeViewModel';
 import DataTable from '../../components/DataTable';
 
-const ElementTypeTable = ({elementTypeData = []}) => 
+const ElementTypeTable = ({elementTypeData}) => 
 {
   const [Add, Save, Delete] = useElementTypeViewModel();
   const ColumnsTable = [
@@ -12,7 +12,7 @@ const ElementTypeTable = ({elementTypeData = []}) =>
 
     return(
         <DataTable
-            Title = "Roles"
+            Title = "Tipos de Elementos"
             Data = {elementTypeData}
             OnEdit = {Save}
             OnDelete = {Delete}

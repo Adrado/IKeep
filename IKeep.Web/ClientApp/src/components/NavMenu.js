@@ -1,5 +1,6 @@
 import React from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap'; //Collapse,
+//import { Collapse, Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
@@ -35,9 +36,9 @@ export default class NavMenu extends React.Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/roles">Roles</NavLink>
                 </NavItem> */}
-                <NavItem>
+                {/* <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/genericElements">Elementos Genéricos</NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/elementTypes">Tipos de elementos</NavLink>
                 </NavItem>
