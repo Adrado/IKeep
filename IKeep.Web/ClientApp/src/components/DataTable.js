@@ -3,7 +3,7 @@ import MaterialTable from 'material-table';
 
 const DataTable = (props) =>
 {
-    const {Title, Data, OnEdit, OnDelete, OnAdd, Columns} = props;
+    const {Title, Data, SetData, OnEdit, OnDelete, OnAdd, Columns} = props;
 
     const [state] = useState({
         columns: Columns,
@@ -22,7 +22,11 @@ const DataTable = (props) =>
                 new Promise((resolve, reject) => {
                     setTimeout(() => {
                         {
-                            OnAdd(newData);  
+                            const newModel = OnAdd(newData);
+                            const data = Data;
+                            data.push(newModel);
+                            SetData(data);
+                              
                           /* const data = this.state.data;
                             data.push(newData);
                             this.setState({ data }, () => resolve()); */

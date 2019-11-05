@@ -32,7 +32,8 @@ const useElementTypeViewModel = () =>
         elementType.Name = values.Name;
         ElementTypesService.AddAsync(elementType)
             .then((response) => { 
-                    //OnModified();
+                    let model = new ElementType(response.data)
+                    return model;
             });
 
     }
