@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Grid} from '@material-ui/core' 
 import {Functions, Services, CRUD} from '../../providers/Providers';
 
@@ -16,7 +16,7 @@ const InstallationManagerView =() =>
     const {modify, onModified} = useInstallationFormManager();
 
     return(
-        <React.Fragment>
+        <Fragment>
             <Grid container>
                 <Grid item xs={4}>
                     <Grid item xs = {12}>
@@ -57,7 +57,7 @@ const InstallationManagerView =() =>
               </Functions.Provider>
                 }
             </Grid>
-        </React.Fragment>
+        </Fragment>
     )
 }
 

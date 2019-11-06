@@ -7,6 +7,7 @@ const useFetchElementType = () =>
     const [fetchedElementType, setFetchedElementType] = useState(null);
     const [error, setError] = useState(false);
     const ElementTypesService = useContext(Services);
+    const [update, setUpdate] = useState(null);
 
     const UpdateData = (data) =>
     {
@@ -21,6 +22,13 @@ const useFetchElementType = () =>
         data = elementTypes;
         return data;
     }
+
+    const onModify = () =>
+    {
+        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
+        setUpdate(x);
+    }
+
     useEffect(() =>
     {
         const GetAllElementTypes = async () =>
@@ -37,11 +45,12 @@ const useFetchElementType = () =>
 
         GetAllElementTypes();
 
-    },[]);
+    },[update]);
 
     return{
         fetchedElementType,
-        error
+        error,
+        onModify
     }
 }
 

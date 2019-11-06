@@ -1,33 +1,48 @@
-import React from 'react';
-import useFetchElementType from './useFetchElementType'
-import ElementTypeTable from './ElementTypeTable';
+import React, {Fragment, useState} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import useFetchElementType from './useFetchElementType';
+import ElementTypeForm from './ElementTypeForm';
+import DataTable from '../../components/DataTable';
 import { makeStyles } from '@material-ui/core/styles';
+import ElementType from '../../models/ElementType';
 
 const ElementTypeView = () =>
 {
     const classes = useStyles();
-    const {fetchedElementType, error} = useFetchElementType();
-    
-    if(fetchedElementType === null)
+    const {fetchedElementType, error, onModify} = useFetchElementType();
+    const [selectedRow, setSelectedRow] = useState(new ElementType);
+    const columns = [
+      { title: 'Ref', field: 'Ref' },
+      { title: 'Nombre', field: 'Name' }
+    ] 
+
+    const SelectRow = (event, rowData) =>
     {
-        return(
-            <CircularProgress className={classes.progress}/>
-          )
+      setSelectedRow(rowData);
     }
 
-    if(error === true)
-    {return(
-      <h1>Error...</h1>
-    )}
-
-    if(fetchedElementType !== null)
-    {
-        return(
-            <ElementTypeTable
-                elementTypeData = {fetchedElementType}/>
-        )
-    }
+    return(
+      <Fragment>
+        <ElementTypeForm
+          elementTypeData = {selectedRow}
+          onModify = {onModify}/>
+        
+        { fetchedElementType === null &&
+          <CircularProgress className={classes.progress}/>
+        }
+        { error == true &&
+          <h1>Error...</h1>
+        }
+        { fetchedElementType !== null &&
+          <DataTable
+            Data = {fetchedElementType}
+            Columns = {columns}
+            Select = {SelectRow}
+            />  
+        }
+      </Fragment>
+    )
 }
 
 export default ElementTypeView;

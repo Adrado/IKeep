@@ -5,7 +5,7 @@ import Home from './components/Home';
 import UserViewModel from './views/User/UserViewModel';
 import RoleViewModel from './views/Role/RoleViewModel';
 import InstallationManagerView from './views/InstallationManager/InstallationManagerView';
-import GenericElementView from './views/GenericElement/GenericElementView'
+//import GenericElementView from './views/GenericElement/GenericElementView'
 import ElementTypeView from './views/ElementType/ElementTypeView'
 
 import {Services, CRUD} from './providers/Providers';

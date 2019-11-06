@@ -1,28 +1,28 @@
 import React from 'react';
 import { TextField, Button, Grid  } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
-import useForm from '../../../components/useForm'
+import useForm from '../../components/useForm'
 import PropTypes from 'prop-types';
-import Area from '../../../models/Area';
-import useAreaViewModel from './useAreaViewModel';
+import ElementType from '../../models/ElementType';
+import useElementTypeViewModel from './useElementTypeViewModel';
 
-const AreaForm = ({areaData = Area}) => 
+const ElementTypeForm = ({elementTypeData = ElementType, onModify}) => 
 {
-  const AreaState = 
+  const ElementTypeState = 
   {
     Ref: "", 
     Name: "", 
     Description: "", 
   }
   const classes = useStyles();
-  const [Add, Save, Delete] = useAreaViewModel();
-  const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(AreaState, areaData, Add, Save, Delete);
+  const [Add, Save, Delete] = useElementTypeViewModel(onModify)
+  const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(ElementTypeState, elementTypeData, Add, Save, Delete);
   
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
               <Grid item xs={12}>
-                  <h3>Espacio</h3>
+                  <h3>Tipos de Elementos</h3>
               </Grid>
                   
                   <Grid item xs={6} sm = {4}>
@@ -40,40 +40,33 @@ const AreaForm = ({areaData = Area}) =>
                       variant="filled"
                       />
                   </Grid>
-                  
-                  <Grid item xs={6} sm = {4}>
-                    <TextField
-                        name="Description" type="text" onChange={handleOnChange} value = {values.Description}
-                        label="Descripción"
-                        margin="normal"
-                        variant="filled"
-                        />
-                  </Grid>
-
-                  <Grid/>
-                  
-                  { areaData.Id === "00000000-0000-0000-0000-000000000000" &&
-                  <Grid item xs={6} sm = {3}>
-                      <Button className={classes.button} size="small" onClick={onAdd} variant="outlined" >Añadir</Button>
-                  </Grid>
-                  }
                 
-                  { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
+                  
+                  <Grid container>
+                  
+                    { elementTypeData.Id === "00000000-0000-0000-0000-000000000000" &&
                     <Grid item xs={6} sm = {3}>
-                        <Button className={classes.button} size="small" onClick={onSave} variant="outlined" >Guardar</Button>
+                        <Button className={classes.button} size="small" onClick={onAdd} variant="outlined" >Añadir</Button>
                     </Grid>
-                  }
-                  { areaData.Id !== "00000000-0000-0000-0000-000000000000" &&
-                    <Grid item xs={6} sm = {3}>
-                        <Button className={classes.button} size="small" onClick={onDelete} variant="outlined" >Eliminar</Button>
-                    </Grid>
-                  }
+                    }
+                  
+                    { elementTypeData.Id !== "00000000-0000-0000-0000-000000000000" &&
+                      <Grid item xs={6} sm = {3}>
+                          <Button className={classes.button} size="small" onClick={onSave} variant="outlined" >Guardar</Button>
+                      </Grid>
+                    }
+                    { elementTypeData.Id !== "00000000-0000-0000-0000-000000000000" &&
+                      <Grid item xs={6} sm = {3}>
+                          <Button className={classes.button} size="small" onClick={onDelete} variant="outlined" >Eliminar</Button>
+                      </Grid>
+                    }
+                  </Grid>
             </Grid>
         </React.Fragment>
     )
 }
 
-export default AreaForm;
+export default ElementTypeForm;
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -96,8 +89,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-AreaForm.propTypes = {
-  areaData: PropTypes.shape({
+ElementTypeForm.propTypes = {
+  elementTypeData: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Ref: PropTypes.string.isRequired,
   }).isRequired,
