@@ -15,7 +15,6 @@ function reducer(state, action) {
               selectedRow: action.data
           };
 
-
       default:
           return initialState;
   }

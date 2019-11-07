@@ -11,6 +11,10 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         public Guid ElementTypeId { get; set; }
+
+        [JsonIgnore]
+        public ElementType ElementType { get; set; }
+
         [JsonIgnore]
         public ICollection<Element> Elements { get; set; }
         public List<Guid> ElementsIds

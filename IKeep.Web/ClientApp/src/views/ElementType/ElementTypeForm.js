@@ -96,9 +96,3 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/* ElementTypeForm.propTypes = {
-  elementTypeData: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Ref: PropTypes.string.isRequired,
-  }).isRequired,
-}; */

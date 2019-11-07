@@ -7,15 +7,15 @@ class GenericElement extends Entity
         super(json);
         if(json)
         {
-            this.Ref = json.ref;
             this.Name = json.name;
             this.ElementTypeId = json.elementTypeId;
+            this.ElementsIds = json.elementsIds;
         }
         else
         {
-            this.Ref = "";
             this.Name = "";
             this.ElementTypeId = "";
+            this.ElementsIds = [];
         }
     }
 }

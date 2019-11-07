@@ -1,4 +1,5 @@
 ﻿using IKeep.Lib.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,9 +17,14 @@ namespace IKeep.Lib.Models
         public string ClosedBy { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid ElementId { get; set; }
-        // Vigilar si será nullable
+        [JsonIgnore]
+        public Element Element { get; set; }
         public Guid? UserId { get; set; }
+        [JsonIgnore]
+        public User User { get; set; }
         public Guid? SupplierId { get; set; }
+        [JsonIgnore]
+        public Supplier Supplier { get; set; }
     }
 
     public enum CorrectiveStatus

@@ -11,5 +11,6 @@ namespace IKeep.Lib.Models
         //vigilar el tipo del campo Result
         public string Result { get; set; }
         public Guid InstallationId { get; set; }
+        public Installation Installation { get; set; }
     }
 }

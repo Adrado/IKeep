@@ -8,6 +8,7 @@ import RolesService from '../services/RolesService';
 import TreeViewService from '../services/TreeViewService';
 import UsersService from '../services/UsersService';
 import ElementTypesService from '../services/ElementTypesService';
+import GenericElementsService from '../services/GenericElementsService';
 
 
 export const CRUD =
@@ -19,9 +20,10 @@ export const CRUD =
     Role : new RolesService(),
     TreeView : new TreeViewService(),
     User : new UsersService(),
-    ElementType : new ElementTypesService()
+    ElementType : new ElementTypesService(),
+    GenericElement : new GenericElementsService(),
 }
-//export const InsSvc = new InstallationsService();
+
 export const Services = React.createContext();
 
 export const Functions = React.createContext();
