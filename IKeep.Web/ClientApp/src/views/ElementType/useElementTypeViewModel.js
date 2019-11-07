@@ -2,7 +2,7 @@ import { useContext, useEffect} from 'react';
 import { Services } from '../../providers/Providers';
 //import {Functions} from '../../providers/Providers';
 
-const useElementTypeViewModel = (OnModified) =>
+const useElementTypeViewModel = (OnModified, Select) =>
 {
     const ElementTypesService = useContext(Services);
     //const OnModified = useContext(Functions);
@@ -17,6 +17,7 @@ const useElementTypeViewModel = (OnModified) =>
             ElementTypesService.UpdateAsync(model)
             .then((response) => {
                 OnModified();
+                Select();
             });
         }
     }
@@ -31,17 +32,20 @@ const useElementTypeViewModel = (OnModified) =>
             ElementTypesService.AddAsync(model)
                 .then((response) => { 
                     OnModified();
+                    Select();
                 });
         }
     }
  
     const DeleteElementType = (model) =>
     {
+        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
             ElementTypesService.DeleteAsync(model.Id)
                 .then((response) => {
                     OnModified();
+                    Select();
                 })
         }
     }
