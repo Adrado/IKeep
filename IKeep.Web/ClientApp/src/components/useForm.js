@@ -5,6 +5,11 @@ const useForm = (modelState, model, AddNew, Save, Delete) =>
 
     const [values, setValues] = useState(modelState);
     
+    const CleanForm = useCallback(() =>
+    {
+        setValues(modelState);
+    }, [modelState]) 
+
     const handleOnChange = useCallback( event =>
     {
         let name = event.target.name;
@@ -30,11 +35,6 @@ const useForm = (modelState, model, AddNew, Save, Delete) =>
        CleanForm();
     },[Delete, model, CleanForm])
      
-    const CleanForm = useCallback(() =>
-    {
-        setValues(modelState);
-    }, [modelState]) 
-
     useEffect(() =>
     {
         setValues(prevState => ({...prevState, ...model}))
