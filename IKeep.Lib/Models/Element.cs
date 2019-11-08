@@ -10,13 +10,13 @@ namespace IKeep.Lib.Models
     public class Element : Entity
     {
         public string Name { get; set; }
-        public Guid ElementTypeId { get; set; }
+        public Guid? ElementTypeId { get; set; }
         [JsonIgnore]
         public ElementType ElementType { get; set; }
         // Vigilar las posibilidades del campo Status
         public StatusElement Status { get; set; }
         public Guid AreaId { get; set; }
-        public Guid GenericElementId { get; set; }
+        public Guid? GenericElementId { get; set; }
         [JsonIgnore]
         public GenericElement GenericElement { get; set; }
 

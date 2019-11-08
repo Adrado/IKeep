@@ -13,7 +13,8 @@ const useFetchInstallation = (treeNode) =>
         const GetInstallation = async () =>
         {
             try{
-                const response = await InstallationsService.GetByIdAsync(treeNode.Id); 
+                const response = await InstallationsService.GetByIdAsync(treeNode.Id);
+                console.log(response);
                 const installation = new Installation(response.data);
                 setFetchedInstallation(installation);
             }

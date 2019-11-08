@@ -29,7 +29,9 @@ namespace IKeep.Lib.Models
         public User User { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid GenericTaskId { get; set; }
+        public Guid? GenericTaskId { get; set; }
+        [JsonIgnore]
+        public GenericTask GenericTask { get; set; }
         public TaskStatus Status { get; set; }
     }
     public enum TaskStatus

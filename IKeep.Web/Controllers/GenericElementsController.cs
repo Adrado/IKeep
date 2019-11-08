@@ -34,15 +34,15 @@ namespace IKeep.Web.Controllers
                 var a = new GenericElement
                 {
                     Id = Guid.Parse("72589b7d-8434-4891-a26f-8df530a3e913"),
-                    ElementTypeId = Guid.Parse("6c43d040-366b-4b59-9002-137766065632"),
-                    Name = "Elemento",
+                    ElementTypeId = Guid.Parse("c57057d2-0802-4522-95a2-0b20cabfcaeb"),
+                    Name = "Caldera",
                 };
 
                 var b = new GenericElement
                 {
                     Id = Guid.Parse("0112a310-89ca-49aa-b57b-3236b51d0cc4"),
-                    ElementTypeId = Guid.Parse("65a98a08-d37d-40b3-b36b-14be08456b7f"),
-                    Name = "Legionela",
+                    ElementTypeId = Guid.Parse("9cdbc1c0-a419-4117-af42-30b289c50a67"),
+                    Name = "Ordenador",
                 };
                 _genericElementsService.Add(a);
                 _genericElementsService.Add(b);

@@ -35,6 +35,7 @@ const useFetchElementType = () =>
         {
             try{
                 const response = await ElementTypesService.GetAllAsync();
+                console.log(response);
                 const dataUpdated = UpdateData(response.data)
                 setFetchedElementType(dataUpdated);
             }

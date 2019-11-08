@@ -14,7 +14,25 @@ namespace IKeep.Lib.DA.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GenericElement>()
+             .HasMany(p => p.Elements)
+             .WithOne(t => t.GenericElement)
+             .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Element>()
+            .HasOne(b => b.GenericElement)
+            .WithMany(a => a.Elements)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GenericTask>()
+             .HasMany(p => p.Tasks)
+             .WithOne(t => t.GenericTask)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Task>()
+            .HasOne(b => b.GenericTask)
+            .WithMany(a => a.Tasks)
+            .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Area> Areas { get; set; }

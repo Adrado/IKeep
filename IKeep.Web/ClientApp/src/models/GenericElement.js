@@ -10,11 +10,13 @@ class GenericElement extends Entity
             this.Name = json.name;
             this.ElementTypeId = json.elementTypeId;
             this.ElementsIds = json.elementsIds;
+            this.ElementTypeName = json.elementTypeName;
         }
         else
         {
             this.Name = "";
             this.ElementTypeId = "";
+            this.ElementTypeName = "";
             this.ElementsIds = [];
         }
     }

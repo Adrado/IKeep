@@ -30,5 +30,15 @@ namespace IKeep.Lib.Models
                 return GenericTasks == null ? new List<Guid>() : GenericTasks.Select(x => x.Id).ToList();
             }
         }
+
+        [JsonIgnore]
+        public ICollection<Task> Tasks { get; set; }
+        public List<Guid> TasksIds
+        {
+            get
+            {
+                return Tasks == null ? new List<Guid>() : Tasks.Select(x => x.Id).ToList();
+            }
+        }
     }
 }

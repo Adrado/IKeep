@@ -21,5 +21,15 @@ namespace IKeep.Lib.Models
                 return GenericElements == null ? new List<Guid>() : GenericElements.Select(x => x.Id).ToList();
             }
         }
+
+        [JsonIgnore]
+        public ICollection<Element> Elements { get; set; }
+        public List<Guid> ElementsIds
+        {
+            get
+            {
+                return Elements == null ? new List<Guid>() : Elements.Select(x => x.Id).ToList();
+            }
+        }
     }
 }
