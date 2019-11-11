@@ -12,7 +12,7 @@ namespace IKeep.Lib.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<UserCategory> UserCategories { get; set; }
+        public virtual ICollection<UserCategory> UserCategories { get; set; }
         public List<Guid> UserCategoriesIds
         {
             get
@@ -22,7 +22,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<GenericTask> GenericTasks { get; set; }
+        public virtual ICollection<GenericTask> GenericTasks { get; set; }
         public List<Guid> GenericTasksIds
         {
             get
@@ -32,7 +32,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds
         {
             get

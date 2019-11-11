@@ -14,7 +14,7 @@ namespace IKeep.Lib.Models
         public Guid BuildingId { get; set; }
 
         [JsonIgnore]
-        public ICollection<Area> Areas { get; set; }
+        public virtual ICollection<Area> Areas { get; set; }
         public List<Guid> AreasIds
         {
             get
@@ -24,7 +24,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Map> Maps { get; set; }
+        public virtual ICollection<Map> Maps { get; set; }
         public List<Guid> MapsIds
         {
             get

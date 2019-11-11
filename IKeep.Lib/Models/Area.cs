@@ -14,7 +14,7 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public Guid FloorId { get; set; }
         [JsonIgnore]
-        public ICollection<Element> Elements { get; set; }
+        public virtual ICollection<Element> Elements { get; set; }
         public List<Guid> ElementsIds
         {
             get
@@ -23,6 +23,6 @@ namespace IKeep.Lib.Models
             }
         }
         //¿Es necesario?
-        public Map Map { get; set; }
+        public virtual Map Map { get; set; }
     }
 }

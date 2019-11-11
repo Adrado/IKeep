@@ -13,25 +13,27 @@ namespace IKeep.Lib.Models
         public Period Period { get; set; }
         public Guid PriorityId { get; set; }
         [JsonIgnore]
-        public Priority Priority { get; set; }
+        public virtual Priority Priority { get; set; }
         public Guid FormatId { get; set; }
         [JsonIgnore]
-        public Format Format { get; set; }
+        public virtual Format Format { get; set; }
         public Guid CategoryId { get; set; }
         [JsonIgnore]
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
         public Guid ElementId { get; set; }
         [JsonIgnore]
-        public Element Element { get; set; }
+        public virtual Element Element { get; set; }
         public Guid? SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        [JsonIgnore]
+        public virtual Supplier Supplier { get; set; }
         public Guid? UserId { get; set; }
-        public User User { get; set; }
+        [JsonIgnore]
+        public virtual User User { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Guid? GenericTaskId { get; set; }
         [JsonIgnore]
-        public GenericTask GenericTask { get; set; }
+        public virtual GenericTask GenericTask { get; set; }
         public TaskStatus Status { get; set; }
     }
     public enum TaskStatus

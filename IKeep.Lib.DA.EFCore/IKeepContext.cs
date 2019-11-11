@@ -10,7 +10,9 @@ namespace IKeep.Lib.DA.EFCore
     {
         public IKeepContext(DbContextOptions<IKeepContext> options)
             : base (options)
-        { }
+        {
+           // Configuration.ProxyCreationEnabled = true;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

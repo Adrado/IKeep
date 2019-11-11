@@ -21,7 +21,7 @@ namespace IKeep.Lib.Models
         public string Email { get; set; }
 
         [JsonIgnore]
-        public ICollection<Building> Buildings { get; set; }
+        public virtual ICollection<Building> Buildings { get; set; }
         public List<Guid> BuildingsIds
         {
             get
@@ -31,7 +31,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Report> Reports { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
         public List<Guid> ReportsIds
         {
             get
@@ -41,7 +41,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Inspection> Inspections { get; set; }
+        public virtual ICollection<Inspection> Inspections { get; set; }
         public List<Guid> InspectionsIds
         {
             get
@@ -51,7 +51,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<InstallationUser> InstallationUsers { get; set; }
+        public virtual ICollection<InstallationUser> InstallationUsers { get; set; }
         public List<Guid> InstallationUsersIds
         {
             get

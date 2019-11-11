@@ -11,7 +11,7 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public ICollection<GenericTask> GenericTasks { get; set; }
+        public virtual ICollection<GenericTask> GenericTasks { get; set; }
         public List<Guid> GenericTasksIds
         {
             get

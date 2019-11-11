@@ -13,7 +13,7 @@ namespace IKeep.Lib.Models
         public Type Type { get; set; }
 
         [JsonIgnore]
-        public ICollection<ElementObservation> ElementObservations { get; set; }
+        public virtual ICollection<ElementObservation> ElementObservations { get; set; }
         public List<Guid> ElementObservationsIds
         {
             get

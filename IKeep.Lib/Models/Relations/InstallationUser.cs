@@ -8,8 +8,8 @@ namespace IKeep.Lib.Models
     public class InstallationUser : Entity
     {
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public Guid InstallationId { get; set; }
-        public Installation Installation { get; set; }
+        public virtual Installation Installation { get; set; }
     }
 }

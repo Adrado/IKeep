@@ -8,8 +8,8 @@ namespace IKeep.Lib.Models
     public class ElementObservation : Entity
     {
         public Guid ElementId { get; set; }
-        public Element Element { get; set; }
+        public virtual Element Element { get; set; }
         public Guid ObservationId { get; set; }
-        public Observation Observation { get; set; }
+        public virtual Observation Observation { get; set; }
     }
 }

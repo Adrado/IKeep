@@ -13,7 +13,7 @@ namespace IKeep.Lib.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<GenericElement> GenericElements { get; set; }
+        public virtual ICollection<GenericElement> GenericElements { get; set; }
         public List<Guid> GenericElementsIds
         {
             get
@@ -23,7 +23,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Element> Elements { get; set; }
+        public virtual ICollection<Element> Elements { get; set; }
         public List<Guid> ElementsIds
         {
             get

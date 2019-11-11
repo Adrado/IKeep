@@ -39,7 +39,8 @@ namespace IKeep.Web
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
 
-            services.AddDbContext<IKeepContext>(options => options.UseSqlServer(appSettings.DbConnection,
+            services.AddDbContext<IKeepContext>(options => options.UseLazyLoadingProxies()
+            .UseSqlServer(appSettings.DbConnection,
                 b => b.MigrationsAssembly("IKeep.Web")));
 
             InjectDependencies(services);

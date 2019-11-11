@@ -15,15 +15,15 @@ namespace IKeep.Lib.Models
         public Period Period { get; set; }
         public Guid PriorityId { get; set; }
         [JsonIgnore]
-        public Priority Priority { get; set; }
+        public virtual Priority Priority { get; set; }
         public Guid FormatId { get; set; }
         [JsonIgnore]
-        public Format Format { get; set; }
+        public virtual Format Format { get; set; }
         public Guid CategoryId { get; set; }
         [JsonIgnore]
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
         [JsonIgnore]
-        public ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds
         {
             get

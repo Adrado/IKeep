@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { TextField, Button, Grid  } from '@material-ui/core' 
+import { TextField, Button, Grid, Select, InputLabel, FormControl } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
 import useForm from '../../components/useForm'
 //import PropTypes from 'prop-types';
@@ -7,14 +7,22 @@ import GenericElement from '../../models/GenericElement';
 import useGenericElementViewModel from './useGenericElementViewModel';
 import {Functions} from '../../providers/Providers'
 
+/* import useFetchElementType from '../../views/ElementType/useFetchElementType' */
+
+/* import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText'; */
+
+
 const GenericElementForm = ({onModify}) => 
 {
   const {state, dispatch} = useContext(Functions)
 
-  const Select = () =>
+  const SelectRow = () =>
   {
     dispatch({ type: 'SELECT_ROW', data: new GenericElement()});
   }
+
+/*   const {fetchedElementType} = useFetchElementType(); */
   
   const GenericElementState = 
   {
@@ -23,9 +31,10 @@ const GenericElementForm = ({onModify}) =>
     Description: "", 
   }
   const classes = useStyles();
-  const [Add, Save, Delete] = useGenericElementViewModel(onModify, Select)
+  const [Add, Save, Delete] = useGenericElementViewModel(onModify, SelectRow)
   const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(GenericElementState, state.selectedRow, Add, Save, Delete);
-  
+
+
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
@@ -41,6 +50,14 @@ const GenericElementForm = ({onModify}) =>
                       variant="filled"
                       />
                   </Grid>
+
+                  <FormControl variant="filled" className={classes.formControl} xs={6} sm = {4}>
+                    <InputLabel id="demo-simple-select-label">Tipo de Elemento</InputLabel>
+                    <Select
+                      value={fetchedElementType}>
+
+                    </Select>
+                  </FormControl>
                 
                   <Grid container>
                   
@@ -63,7 +80,7 @@ const GenericElementForm = ({onModify}) =>
                   </Grid>
             </Grid>
         </React.Fragment>
-    )
+    );
 }
 
 export default GenericElementForm;
@@ -87,5 +104,9 @@ const useStyles = makeStyles(theme => ({
   menu: {
     width: 200,
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  }
 }));
 

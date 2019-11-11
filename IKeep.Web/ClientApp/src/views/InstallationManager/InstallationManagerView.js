@@ -34,22 +34,22 @@ const InstallationManagerView =() =>
                 { node !== null &&
                <Functions.Provider value= {onModified}>
                     <Grid item xs={8}>
-                        { node.Type === "Installation" &&
+                        { node.Type === "InstallationProxy" &&
                         <Services.Provider value={CRUD.Installation}>
                             <InstallationView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Building" &&
+                        {node.Type === "BuildingProxy" &&
                         <Services.Provider value={CRUD.Building}>
                             <BuildingView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Floor" &&
+                        {node.Type === "FloorProxy" &&
                         <Services.Provider value={CRUD.Floor}>
                             <FloorView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Area" &&
+                        {node.Type === "AreaProxy" &&
                         <Services.Provider value={CRUD.Area}>
                             <AreaView treeNode = {node}/>
                         </Services.Provider>}

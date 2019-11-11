@@ -18,13 +18,13 @@ namespace IKeep.Lib.Models
         public TimeSpan Duration { get; set; }
         public Guid ElementId { get; set; }
         [JsonIgnore]
-        public Element Element { get; set; }
+        public virtual Element Element { get; set; }
         public Guid? UserId { get; set; }
         [JsonIgnore]
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public Guid? SupplierId { get; set; }
         [JsonIgnore]
-        public Supplier Supplier { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 
     public enum CorrectiveStatus

@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Functions} from '../../providers/Providers'
 import GenericElement from '../../models/GenericElement';
 
+import useFetchElementType from '../../views/ElementType/useFetchElementType'
+
 function reducer(state, action) {
   switch (action.type) {
       case 'SELECT_ROW':
@@ -28,9 +30,10 @@ const GenericElementView = () =>
 {
     const classes = useStyles();
     const {fetchedGenericElement, error, onModify} = useFetchGenericElement();
+    const {fetchedElementType} = useFetchElementType();
     const columns = [
       { title: 'Nombre', field: 'Name' },
-      { title: 'Tipo', field: 'ElementType'}
+      { title: 'Tipo', field: 'ElementTypeName'}
     ] 
     const title = "Tipos de Elementos"
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -41,8 +44,8 @@ const GenericElementView = () =>
       <Fragment>
         <Functions.Provider value={{ state, dispatch }}>
           <GenericElementForm
-            //elementTypeData = {selectedRow}
-            onModify = {onModify}/>
+            onModify = {onModify}
+            />
           
           { fetchedGenericElement === null &&
             <CircularProgress className={classes.progress}/>
