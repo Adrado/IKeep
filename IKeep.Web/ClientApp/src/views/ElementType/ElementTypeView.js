@@ -35,8 +35,6 @@ const ElementTypeView = () =>
     const title = "Tipos de Elementos"
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    
-
     return(
       <Fragment>
         <Functions.Provider value={{ state, dispatch }}>

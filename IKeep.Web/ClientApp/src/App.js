@@ -8,7 +8,7 @@ import InstallationManagerView from './views/InstallationManager/InstallationMan
 import GenericElementView from './views/GenericElement/GenericElementView'
 import ElementTypeView from './views/ElementType/ElementTypeView'
 
-import {Services, CRUD} from './providers/Providers';
+import {Services, ElementTypeService , CRUD} from './providers/Providers';
 
 const App = () => (
   <Layout>
@@ -18,12 +18,14 @@ const App = () => (
 
     <Route path='/installations' component={InstallationManagerView}/>
     <Services.Provider value={CRUD.GenericElement}>
-      <Route path='/genericElements' component={GenericElementView}/>
+      <ElementTypeService.Provider value={CRUD.ElementType}>
+        <Route path='/genericElements' component={GenericElementView}/>
+      </ElementTypeService.Provider>
     </Services.Provider>
 
-    <Services.Provider value={CRUD.ElementType}>
+    <ElementTypeService.Provider value={CRUD.ElementType}>
       <Route path='/elementTypes' component={ElementTypeView}/>
-    </Services.Provider>
+    </ElementTypeService.Provider>
   </Layout>
 );
 

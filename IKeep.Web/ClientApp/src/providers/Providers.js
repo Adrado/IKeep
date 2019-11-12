@@ -25,5 +25,7 @@ export const CRUD =
 }
 
 export const Services = React.createContext();
-
+export const ElementTypeService = React.createContext(CRUD.ElementType);
 export const Functions = React.createContext();
+
+export const AuxiliarServices = React.createContext();

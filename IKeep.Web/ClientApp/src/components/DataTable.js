@@ -26,7 +26,7 @@ const DataTable = ({Title, Data, Columns}) =>
         options={{
           actionsColumnIndex: -1,
           filtering: true,
-          toolbar: false,
+          toolbar: true,
           pageSize: 10,
           pageSizeOptions: [10, 20]
         }}

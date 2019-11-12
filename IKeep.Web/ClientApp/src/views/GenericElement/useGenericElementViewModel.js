@@ -6,12 +6,12 @@ const useGenericElementViewModel = (OnModified, Select) =>
 {
     const GenericElementsService = useContext(Services);
     //const OnModified = useContext(Functions);
-    const SaveGenericElement = (model, values) =>
+    const SaveGenericElement = (model, values, elementTypeId) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = elementTypeId; 
 
-        
         if(model !== undefined || model!== null)
         {
             GenericElementsService.UpdateAsync(model)
@@ -22,10 +22,11 @@ const useGenericElementViewModel = (OnModified, Select) =>
         }
     }
         
-    const AddNewGenericElement = (model, values) =>
+    const AddNewGenericElement = (model, values, elementTypeId) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = elementTypeId; 
  
         if(model !== undefined || model!== null)
         {

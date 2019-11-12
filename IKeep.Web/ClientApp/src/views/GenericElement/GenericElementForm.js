@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import { TextField, Button, Grid, Select, InputLabel, FormControl } from '@material-ui/core' 
+import React, {Fragment, useContext, useState} from 'react';
+import { TextField, Button, Grid, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
 import useForm from '../../components/useForm'
 //import PropTypes from 'prop-types';
@@ -7,13 +7,19 @@ import GenericElement from '../../models/GenericElement';
 import useGenericElementViewModel from './useGenericElementViewModel';
 import {Functions} from '../../providers/Providers'
 
-/* import useFetchElementType from '../../views/ElementType/useFetchElementType' */
+//import FormHelperText from '@material-ui/core/FormHelperText';
 
-/* import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText'; */
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-const GenericElementForm = ({onModify}) => 
+const GenericElementState = 
+{
+  Ref: "", 
+  Name: "", 
+  ElementTypeId: "", 
+}
+
+const GenericElementForm = ({onModify, selectorData}) => 
 {
   const {state, dispatch} = useContext(Functions)
 
@@ -22,24 +28,15 @@ const GenericElementForm = ({onModify}) =>
     dispatch({ type: 'SELECT_ROW', data: new GenericElement()});
   }
 
-/*   const {fetchedElementType} = useFetchElementType(); */
-  
-  const GenericElementState = 
-  {
-    Ref: "", 
-    Name: "", 
-    Description: "", 
-  }
   const classes = useStyles();
-  const [Add, Save, Delete] = useGenericElementViewModel(onModify, SelectRow)
-  const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(GenericElementState, state.selectedRow, Add, Save, Delete);
-
+  const [Add, Save, Delete] = useGenericElementViewModel(onModify, SelectRow);
+  const {values, handleOnChange, onAdd, onSave, onDelete, handleSelectorChange, renderOptions, selected} = useForm(GenericElementState, state.selectedRow, Add, Save, Delete, selectorData, state.selectedRow.ElementTypeId);
 
     return(
-        <React.Fragment>
+        <Fragment>
             <Grid container className={classes.container} spacing={1}>  
               <Grid item xs={12}>
-                  <h3>Elementos Genéricos</h3>
+                  <h3>{values.Name}</h3>
               </Grid>
                   
                   <Grid item xs={6} sm = {4}>
@@ -50,13 +47,16 @@ const GenericElementForm = ({onModify}) =>
                       variant="filled"
                       />
                   </Grid>
-
+                
                   <FormControl variant="filled" className={classes.formControl} xs={6} sm = {4}>
+                  
                     <InputLabel id="demo-simple-select-label">Tipo de Elemento</InputLabel>
-                    <Select
-                      value={fetchedElementType}>
-
-                    </Select>
+              
+                      <Select
+                        className="width50" value={selected} onChange={handleSelectorChange}>
+                        {renderOptions()}
+                      </Select>
+                  
                   </FormControl>
                 
                   <Grid container>
@@ -79,7 +79,7 @@ const GenericElementForm = ({onModify}) =>
                     }
                   </Grid>
             </Grid>
-        </React.Fragment>
+        </Fragment>
     );
 }
 
@@ -107,6 +107,9 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200,
-  }
+  },
+  progress: {
+    margin: theme.spacing(2),
+  },
 }));
 

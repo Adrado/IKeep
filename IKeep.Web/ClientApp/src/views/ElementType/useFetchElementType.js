@@ -1,12 +1,12 @@
 import  { useState, useEffect, useContext } from 'react';
-import {Services} from '../../providers/Providers';
+import {ElementTypeService} from '../../providers/Providers';
 import ElementType from '../../models/ElementType';
 
 const useFetchElementType = () =>
 {
     const [fetchedElementType, setFetchedElementType] = useState(null);
     const [error, setError] = useState(false);
-    const ElementTypesService = useContext(Services);
+    const ElementTypesService = useContext(ElementTypeService);
     const [update, setUpdate] = useState(null);
 
     const UpdateData = (data) =>
@@ -35,8 +35,8 @@ const useFetchElementType = () =>
         {
             try{
                 const response = await ElementTypesService.GetAllAsync();
-                console.log(response);
-                const dataUpdated = UpdateData(response.data)
+                const dataUpdated = UpdateData(response.data);
+                console.log(dataUpdated);
                 setFetchedElementType(dataUpdated);
             }
             catch (error){
