@@ -30,7 +30,7 @@ namespace IKeep.Lib.Models
         public Guid RoleId { get; set; }
 
         [JsonIgnore]
-        public ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds
         {
             get
@@ -40,7 +40,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Corrective> Correctives { get; set; }
+        public virtual ICollection<Corrective> Correctives { get; set; }
         public List<Guid> CorrectivesIds
         {
             get
@@ -50,7 +50,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<UserCategory> UserCategories { get; set; }
+        public virtual ICollection<UserCategory> UserCategories { get; set; }
         public List<Guid> UserCategoriesIds
         {
             get
@@ -60,7 +60,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<InstallationUser> InstallationUsers { get; set; }
+        public virtual ICollection<InstallationUser> InstallationUsers { get; set; }
         public List<Guid> InstallationUsersIds
         {
             get

@@ -1,14 +1,25 @@
-﻿class GenericElement extends Entity
+﻿import Entity from './Entity'
+
+class GenericElement extends Entity
 {
-    constructor()
+    constructor(json)
     {
-        this.Ref = "";
-        this.Name = "";
-        this.Status = "";
-        this.ElementTypeId = ""
-        this.AreaId = "";
-        this.TasksIds = [];
-        this.CorrectivesIds = [];
-        this.ObservationsIds = [];
+        super(json);
+        if(json)
+        {
+            this.Name = json.name;
+            this.ElementTypeId = json.elementTypeId;
+            this.ElementsIds = json.elementsIds;
+            this.ElementTypeName = json.elementTypeName;
+        }
+        else
+        {
+            this.Name = "";
+            this.ElementTypeId = "";
+            this.ElementTypeName = "";
+            this.ElementsIds = [];
+        }
     }
 }
+
+export default GenericElement;

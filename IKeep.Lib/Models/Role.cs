@@ -11,7 +11,7 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
         public List<Guid> UsersIds
         {
             get

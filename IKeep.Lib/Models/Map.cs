@@ -15,6 +15,6 @@ namespace IKeep.Lib.Models
         public Guid FloorId { get; set; }
 
         //Vigilar que pueda coincidir con el campo Ref de la clase Area
-        public string AreaRef { get; set; }
+        public Guid? AreaId { get; set; }
     }
 }

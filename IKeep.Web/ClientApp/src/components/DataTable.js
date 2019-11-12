@@ -1,41 +1,62 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import MaterialTable from 'material-table';
+import {Functions} from '../providers/Providers'
 
-let DataTable = props =>
+const DataTable = ({Title, Data, Columns}) =>
 {
-    let {Title, Data, OnEdit, OnDelete, Columns} = props;
+  const {state, dispatch} = useContext(Functions)
+  const Select = (e, rowData) =>
+  {
+    dispatch({ type: 'SELECT_ROW', data: rowData,});
+  }
+  
+  return (
+      <MaterialTable
+        title = {Title}
+        columns={Columns}
+        data={Data}
+        actions={[
+          {
+            icon: 'edit',
+            tooltip: 'Editar',
+            onClick: (event, rowData) => {Select(event, rowData)}
+          }
+        ]}
 
-    const [state] = React.useState({
-        columns: Columns,
-        data: Data
-      });
-    
-    return (
-        <MaterialTable
-          title={Title}
-          columns={state.columns}
-          data={state.data}
-          editable={{
-            onRowUpdate: (newData, oldData) =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  OnEdit(newData, oldData)
-                  resolve();
-                }, 600);
-              }),
-            onRowDelete: oldData =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  OnDelete(oldData)
-                  resolve();
-                }, 600);
-              }),
-          }}
-          options={{
-            actionsColumnIndex: -1
-          }}
-        />
-      );
+        options={{
+          actionsColumnIndex: -1,
+          filtering: true,
+          toolbar: true,
+          pageSize: 10,
+          pageSizeOptions: [10, 20]
+        }}
+
+        localization={{
+          header: {
+            actions: ' '
+          },
+          body: {
+            emptyDataSourceMessage: 'Guherandinên ku tiştek tune',
+            filterRow:{
+              filterTooltip: 'Filtrar'
+            }
+          },
+          toolbar: {
+            searchTooltip: 'Buscar',
+            searchPlaceholder: 'Buscar'
+          },
+          pagination: {
+            labelRowsSelect: 'Filas',
+            labelDisplayedRows: ' {from}-{to} de {count}',
+            firstTooltip: 'Primera página',
+            previousTooltip: 'Anterior página',
+            nextTooltip: 'Siguiente página',
+            lastTooltip: 'Última página'
+          }
+        }}
+
+      />
+    );
 }
 
 export default DataTable;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import useFetchArea from './useFetchArea'
 import AreaForm from './AreaForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -8,26 +8,21 @@ const AreaView = ({treeNode}) =>
 {
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
-    
-    if(fetchedArea === null)
-    {
-        return(
-            <CircularProgress className={classes.progress}/>
-          )
-    }
 
-    if(error === true)
-    {return(
-      <h1>Error...</h1>
-    )}
-
-    if(fetchedArea !== null)
-    {
-        return(
-            <AreaForm
-                areaData = {fetchedArea}/>
-        )
-    }
+    return(
+      <Fragment>
+        {fetchedArea === null &&
+          <CircularProgress className={classes.progress}/>
+        }
+        {error === true &&
+          <h1>Error...</h1>
+        }
+        {fetchedArea !== null &&
+          <AreaForm
+            areaData = {fetchedArea}/>
+        }
+      </Fragment>
+    )    
 }
 
 export default AreaView;

@@ -52,7 +52,7 @@ const useFetchTreeData = (Update, ParentId) =>
                         id : null,
                         name: "Añadir Nuevo Espacio",
                         parentId: Floor.id,
-                        type: "Area",
+                        type: "AreaProxy",
                         new : true
                     }
                     Areas.push(newArea);
@@ -63,7 +63,7 @@ const useFetchTreeData = (Update, ParentId) =>
                     id : null,
                     name: "Añadir Nueva Planta",
                     parentId: Building.id,
-                    type: "Floor",
+                    type: "FloorProxy",
                     new : true
                 }
                 Floors.push(newFloor);
@@ -74,7 +74,7 @@ const useFetchTreeData = (Update, ParentId) =>
                 id : null,
                 name: "Añadir Nuevo Edificio",
                 parentId: installation.id,
-                type: "Building",
+                type: "BuildingProxy",
                 new : true
             }
             Buildings.push(newBuilding);
@@ -84,7 +84,7 @@ const useFetchTreeData = (Update, ParentId) =>
         {
             id: null,
             name: "Añadir Nueva Instalación",
-            type: "Installation",
+            type: "InstallationProxy",
             new : true
         }
 

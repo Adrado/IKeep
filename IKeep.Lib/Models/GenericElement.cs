@@ -11,8 +11,20 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         public Guid ElementTypeId { get; set; }
+        
         [JsonIgnore]
-        public ICollection<Element> Elements { get; set; }
+        public virtual ElementType ElementType { get; set; }
+
+        public string ElementTypeName
+        {
+            get
+            {
+                return ElementType.Name;
+            }
+        }
+
+        [JsonIgnore]
+        public virtual ICollection<Element> Elements { get; set; }
         public List<Guid> ElementsIds
         {
             get

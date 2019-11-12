@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Grid} from '@material-ui/core' 
 import {Functions, Services, CRUD} from '../../providers/Providers';
 
@@ -16,7 +16,7 @@ const InstallationManagerView =() =>
     const {modify, onModified} = useInstallationFormManager();
 
     return(
-        <React.Fragment>
+        <Fragment>
             <Grid container>
                 <Grid item xs={4}>
                     <Grid item xs = {12}>
@@ -34,22 +34,22 @@ const InstallationManagerView =() =>
                 { node !== null &&
                <Functions.Provider value= {onModified}>
                     <Grid item xs={8}>
-                        { node.Type === "Installation" &&
+                        { node.Type === "InstallationProxy" &&
                         <Services.Provider value={CRUD.Installation}>
                             <InstallationView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Building" &&
+                        {node.Type === "BuildingProxy" &&
                         <Services.Provider value={CRUD.Building}>
                             <BuildingView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Floor" &&
+                        {node.Type === "FloorProxy" &&
                         <Services.Provider value={CRUD.Floor}>
                             <FloorView treeNode = {node}/>
                         </Services.Provider>}
 
-                        {node.Type === "Area" &&
+                        {node.Type === "AreaProxy" &&
                         <Services.Provider value={CRUD.Area}>
                             <AreaView treeNode = {node}/>
                         </Services.Provider>}
@@ -57,7 +57,7 @@ const InstallationManagerView =() =>
               </Functions.Provider>
                 }
             </Grid>
-        </React.Fragment>
+        </Fragment>
     )
 }
 

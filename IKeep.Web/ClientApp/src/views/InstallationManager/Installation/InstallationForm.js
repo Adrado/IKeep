@@ -111,17 +111,17 @@ const InstallationForm = ({installationData = Installation}) =>
                     <Grid item xs={6} sm = {4}></Grid>
 
                     { installationData.Id === "00000000-0000-0000-0000-000000000000" &&
-                    <Grid item xs={2}>
+                    <Grid item xs={6} sm = {3}>
                         <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
                     </Grid>}
 
                     { installationData.Id !== "00000000-0000-0000-0000-000000000000" &&
-                    <Grid item xs={2}>
+                    <Grid item xs={6} sm = {3}>
                         <Button className={classes.button} size="small" onClick = {onSave} variant="outlined">Guardar</Button>
                     </Grid>}
 
                     { installationData.Id !== "00000000-0000-0000-0000-000000000000" &&
-                    <Grid item xs={2}>
+                    <Grid item xs={6} sm = {3}>
                         <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                     </Grid>}
                 

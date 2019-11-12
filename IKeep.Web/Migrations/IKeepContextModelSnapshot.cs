@@ -30,8 +30,6 @@ namespace IKeep.Web.Migrations
 
                     b.Property<Guid>("FloorId");
 
-                    b.Property<Guid?>("MapId");
-
                     b.Property<string>("Name");
 
                     b.Property<string>("Ref");
@@ -39,8 +37,6 @@ namespace IKeep.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FloorId");
-
-                    b.HasIndex("MapId");
 
                     b.ToTable("Areas");
                 });
@@ -114,6 +110,8 @@ namespace IKeep.Web.Migrations
 
                     b.HasIndex("ElementId");
 
+                    b.HasIndex("SupplierId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Correctives");
@@ -126,11 +124,11 @@ namespace IKeep.Web.Migrations
 
                     b.Property<Guid>("AreaId");
 
-                    b.Property<Guid>("ElementTypeId");
+                    b.Property<Guid?>("ElementTypeId");
 
                     b.Property<int>("EntityStatus");
 
-                    b.Property<Guid>("GenericElementId");
+                    b.Property<Guid?>("GenericElementId");
 
                     b.Property<string>("Name");
 
@@ -139,6 +137,8 @@ namespace IKeep.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AreaId");
+
+                    b.HasIndex("ElementTypeId");
 
                     b.HasIndex("GenericElementId");
 
@@ -248,6 +248,8 @@ namespace IKeep.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ElementTypeId");
+
                     b.ToTable("GenericElements");
                 });
 
@@ -275,6 +277,8 @@ namespace IKeep.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("FormatId");
 
                     b.HasIndex("PriorityId");
 
@@ -358,7 +362,7 @@ namespace IKeep.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AreaRef");
+                    b.Property<Guid?>("AreaId");
 
                     b.Property<string>("Description");
 
@@ -371,6 +375,10 @@ namespace IKeep.Web.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AreaId")
+                        .IsUnique()
+                        .HasFilter("[AreaId] IS NOT NULL");
 
                     b.HasIndex("FloorId");
 
@@ -478,7 +486,7 @@ namespace IKeep.Web.Migrations
 
                     b.Property<Guid>("FormatId");
 
-                    b.Property<Guid>("GenericTaskId");
+                    b.Property<Guid?>("GenericTaskId");
 
                     b.Property<int>("Period");
 
@@ -494,9 +502,17 @@ namespace IKeep.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("ElementId");
 
+                    b.HasIndex("FormatId");
+
                     b.HasIndex("GenericTaskId");
+
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("SupplierId");
 
                     b.HasIndex("UserId");
 
@@ -579,10 +595,6 @@ namespace IKeep.Web.Migrations
                         .WithMany("Areas")
                         .HasForeignKey("FloorId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IKeep.Lib.Models.Map", "Map")
-                        .WithMany()
-                        .HasForeignKey("MapId");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.Building", b =>
@@ -595,12 +607,16 @@ namespace IKeep.Web.Migrations
 
             modelBuilder.Entity("IKeep.Lib.Models.Corrective", b =>
                 {
-                    b.HasOne("IKeep.Lib.Models.Element")
+                    b.HasOne("IKeep.Lib.Models.Element", "Element")
                         .WithMany("Correctives")
                         .HasForeignKey("ElementId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.User")
+                    b.HasOne("IKeep.Lib.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId");
+
+                    b.HasOne("IKeep.Lib.Models.User", "User")
                         .WithMany("Correctives")
                         .HasForeignKey("UserId");
                 });
@@ -612,15 +628,19 @@ namespace IKeep.Web.Migrations
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.GenericElement")
+                    b.HasOne("IKeep.Lib.Models.ElementType", "ElementType")
+                        .WithMany("Elements")
+                        .HasForeignKey("ElementTypeId");
+
+                    b.HasOne("IKeep.Lib.Models.GenericElement", "GenericElement")
                         .WithMany("Elements")
                         .HasForeignKey("GenericElementId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.ElementImage", b =>
                 {
-                    b.HasOne("IKeep.Lib.Models.Element")
+                    b.HasOne("IKeep.Lib.Models.Element", "Element")
                         .WithMany("ElementImages")
                         .HasForeignKey("ElementId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -647,14 +667,27 @@ namespace IKeep.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.GenericElement", b =>
+                {
+                    b.HasOne("IKeep.Lib.Models.ElementType", "ElementType")
+                        .WithMany("GenericElements")
+                        .HasForeignKey("ElementTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.GenericTask", b =>
                 {
-                    b.HasOne("IKeep.Lib.Models.Category")
+                    b.HasOne("IKeep.Lib.Models.Category", "Category")
                         .WithMany("GenericTasks")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.Priority")
+                    b.HasOne("IKeep.Lib.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.Priority", "Priority")
                         .WithMany("GenericTasks")
                         .HasForeignKey("PriorityId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -662,7 +695,7 @@ namespace IKeep.Web.Migrations
 
             modelBuilder.Entity("IKeep.Lib.Models.Inspection", b =>
                 {
-                    b.HasOne("IKeep.Lib.Models.Installation")
+                    b.HasOne("IKeep.Lib.Models.Installation", "Installation")
                         .WithMany("Inspections")
                         .HasForeignKey("InstallationId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -683,6 +716,10 @@ namespace IKeep.Web.Migrations
 
             modelBuilder.Entity("IKeep.Lib.Models.Map", b =>
                 {
+                    b.HasOne("IKeep.Lib.Models.Area")
+                        .WithOne("Map")
+                        .HasForeignKey("IKeep.Lib.Models.Map", "AreaId");
+
                     b.HasOne("IKeep.Lib.Models.Floor")
                         .WithMany("Maps")
                         .HasForeignKey("FloorId")
@@ -699,17 +736,36 @@ namespace IKeep.Web.Migrations
 
             modelBuilder.Entity("IKeep.Lib.Models.Task", b =>
                 {
-                    b.HasOne("IKeep.Lib.Models.Element")
+                    b.HasOne("IKeep.Lib.Models.Category", "Category")
+                        .WithMany("Tasks")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.Element", "Element")
                         .WithMany("Tasks")
                         .HasForeignKey("ElementId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.GenericTask")
-                        .WithMany("Tasks")
-                        .HasForeignKey("GenericTaskId")
+                    b.HasOne("IKeep.Lib.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.User")
+                    b.HasOne("IKeep.Lib.Models.GenericTask", "GenericTask")
+                        .WithMany("Tasks")
+                        .HasForeignKey("GenericTaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("IKeep.Lib.Models.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId");
+
+                    b.HasOne("IKeep.Lib.Models.User", "User")
                         .WithMany("Tasks")
                         .HasForeignKey("UserId");
                 });

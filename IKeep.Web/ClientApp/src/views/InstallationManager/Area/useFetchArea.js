@@ -4,7 +4,7 @@ import Area from '../../../models/Area';
 
 const useFetchArea = (treeNode) =>
 {
-    const [fetchedArea, setFetchedArea] = useState(null)
+    const [fetchedArea, setFetchedArea] = useState(null);
     const [error, setError] = useState(false);
     const AreasService = useContext(Services);
 

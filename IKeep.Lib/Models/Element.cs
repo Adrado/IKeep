@@ -10,14 +10,18 @@ namespace IKeep.Lib.Models
     public class Element : Entity
     {
         public string Name { get; set; }
-        public Guid ElementTypeId { get; set; }
+        public Guid? ElementTypeId { get; set; }
+        [JsonIgnore]
+        public virtual ElementType ElementType { get; set; }
         // Vigilar las posibilidades del campo Status
         public StatusElement Status { get; set; }
         public Guid AreaId { get; set; }
-        public Guid GenericElementId { get; set; }
+        public Guid? GenericElementId { get; set; }
+        [JsonIgnore]
+        public virtual GenericElement GenericElement { get; set; }
 
         [JsonIgnore]
-        public ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds
         {
             get
@@ -27,7 +31,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<Corrective> Correctives { get; set; }
+        public virtual ICollection<Corrective> Correctives { get; set; }
         public List<Guid> CorrectivesIds
         {
             get
@@ -37,7 +41,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<ElementObservation> ElementObservations { get; set; }
+        public virtual ICollection<ElementObservation> ElementObservations { get; set; }
         public List<Guid> ElementObservationsIds
         {
             get
@@ -47,7 +51,7 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public ICollection<ElementImage> ElementImages { get; set; }
+        public virtual ICollection<ElementImage> ElementImages { get; set; }
         public List<Guid> ElementImagesIds
         {
             get
