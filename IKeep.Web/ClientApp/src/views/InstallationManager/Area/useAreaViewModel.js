@@ -2,15 +2,25 @@ import { useContext, useEffect} from 'react';
 import { Services } from '../../../providers/Providers';
 import {Functions} from '../../../providers/Providers';
 
+
 const useAreaViewModel = () =>
 {
+    // REST methods
     const AreasService = useContext(Services);
+    
+    // Function to update TreeView
     const OnModified = useContext(Functions);
-    const SaveArea = (model, values) =>
+
+    /**
+     * REST methods
+     * @param {Area} model
+     * @param {object} formValues
+     */
+    const SaveArea = (model, formValues) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
-        model.Description = values.Description;
+        model.Ref = formValues.Ref;
+        model.Name = formValues.Name;
+        model.Description = formValues.Description;
         
         if(model !== undefined || model!== null)
         {
@@ -21,11 +31,11 @@ const useAreaViewModel = () =>
         }
     }
         
-    const AddNewArea = (model, values) =>
+    const AddNewArea = (model, formValues) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
-        model.Description = values.Description;
+        model.Ref = formValues.Ref;
+        model.Name = formValues.Name;
+        model.Description = formValues.Description;
         if(model !== undefined || model!== null)
         {
             AreasService.AddAsync(model)
