@@ -7,7 +7,7 @@ namespace IKeep.Lib.Core
     public class Entity
     {
         public Guid Id { get; set; }
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatus EntityStatus { get; set; } 
         public string EntityType
         {
             get
