@@ -82,10 +82,12 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Building>, BuildingsDbSet>();
             services.AddScoped<IDbSet<Category>, CategoriesDbSet>();
             services.AddScoped<IDbSet<Corrective>, CorrectivesDbSet>();
+            services.AddScoped<IDbSet<ElementObservation>, ElementObservationsDbSet>();
             services.AddScoped<IDbSet<ElementType>, ElementTypesDbSet>();
             services.AddScoped<IDbSet<Floor>, FloorsDbSet>();
             services.AddScoped<IDbSet<Format>, FormatsDbSet>();
             services.AddScoped<IDbSet<GenericElement>, GenericElementsDbset>();
+            services.AddScoped<IDbSet<GenericTask>, GenericTasksDbset>();
             services.AddScoped<IDbSet<Inspection>, InspectionsDbSet>();
             services.AddScoped<IDbSet<Installation>, InstallationsDbSet>();
             services.AddScoped<IDbSet<Map>, MapsDbSet>();
@@ -106,6 +108,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Floor>, GenericRepository<Floor>>();
             services.AddScoped<IRepository<Format>, GenericRepository<Format>>();
             services.AddScoped<IRepository<GenericElement>, GenericRepository<GenericElement>>();
+            services.AddScoped<IRepository<GenericTask>, GenericRepository<GenericTask>>();
             services.AddScoped<IRepository<Inspection>, GenericRepository<Inspection>>();
             services.AddScoped<IRepository<Installation>, GenericRepository<Installation>>();
             services.AddScoped<IRepository<Map>, GenericRepository<Map>>();
@@ -127,6 +130,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Floor>, GenericCrudService<Floor>>();
             services.AddScoped<ICrudService<Format>, GenericCrudService<Format>>();
             services.AddScoped<ICrudService<GenericElement>, GenericCrudService<GenericElement>>();
+            services.AddScoped<ICrudService<GenericTask>, GenericCrudService<GenericTask>>();
             services.AddScoped<ICrudService<Inspection>, GenericCrudService<Inspection>>();
             services.AddScoped<ICrudService<Installation>, GenericCrudService<Installation>>();
             services.AddScoped<ICrudService<Map>, GenericCrudService<Map>>();
