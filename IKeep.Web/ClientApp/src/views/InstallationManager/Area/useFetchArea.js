@@ -2,10 +2,17 @@ import  { useState, useEffect, useContext } from 'react';
 import {Services} from '../../../providers/Providers';
 import Area from '../../../models/Area';
 
+
+/**
+ * Get Area related with treeNode
+ * @param {TreeNode} treeNode
+ */
 const useFetchArea = (treeNode) =>
 {
     const [fetchedArea, setFetchedArea] = useState(null);
     const [error, setError] = useState(false);
+
+    // REST methods
     const AreasService = useContext(Services);
 
     useEffect(() =>

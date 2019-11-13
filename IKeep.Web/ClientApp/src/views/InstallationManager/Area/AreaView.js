@@ -4,6 +4,11 @@ import AreaForm from './AreaForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
+
+/**
+ * 
+ * @param {TreeNode} treeNode
+ */
 const AreaView = ({treeNode}) =>
 {
     const classes = useStyles();
