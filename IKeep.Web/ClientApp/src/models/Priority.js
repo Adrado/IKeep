@@ -1,6 +1,6 @@
-﻿import Entity from './Entity'
+import Entity from './Entity'
 
-class Format extends Entity
+class Priority extends Entity
 {
     constructor(json)
     {
@@ -8,13 +8,15 @@ class Format extends Entity
         if(json)
         {
             this.Name = json.name;
+            this.GenericTasksIds = json.genericTasksIds;
         }
         else
         {
             this.Name = "";
+            this.GenericTasksIds = [];
         }
 
     }
 }
 
-export default Format;
+export default Priority;

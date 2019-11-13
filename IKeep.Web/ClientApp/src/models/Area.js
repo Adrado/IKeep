@@ -4,7 +4,7 @@ class Area extends Entity
 {
     constructor(json)
     {
-        super(json)
+        super(json);
         if(json)
         {
             this.Ref = json.ref;
