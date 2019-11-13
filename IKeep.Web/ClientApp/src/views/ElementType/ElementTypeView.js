@@ -45,7 +45,7 @@ const ElementTypeView = () =>
           { fetchedElementType === null &&
             <CircularProgress className={classes.progress}/>
           }
-          { error == true &&
+          { error === true &&
             <h1>Error...</h1>
           }
           { fetchedElementType !== null &&

@@ -51,7 +51,7 @@ const GenericElementView = () =>
               { fetchedGenericElement === null &&
                 <CircularProgress className={classes.progress}/>
               }
-              { error == true &&
+              { error === true &&
                 <h1>Error...</h1>
               }
               { fetchedGenericElement !== null &&

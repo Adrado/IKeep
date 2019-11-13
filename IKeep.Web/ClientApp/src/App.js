@@ -9,9 +9,17 @@ import GenericElementView from './views/GenericElement/GenericElementView'
 import ElementTypeView from './views/ElementType/ElementTypeView'
 
 import {Services, ElementTypeService , CRUD} from './providers/Providers';
+import Layout2 from './components/Layout2';
 
 const App = () => (
-  <Layout>
+  <Layout2></Layout2>
+  
+);
+
+export default App;
+
+
+/* <Layout>
     <Route exact path='/' component={Home} />
     <Route path='/users' component={UserViewModel}/>
     <Route path='/roles' component={RoleViewModel}/>
@@ -26,7 +34,4 @@ const App = () => (
     <ElementTypeService.Provider value={CRUD.ElementType}>
       <Route path='/elementTypes' component={ElementTypeView}/>
     </ElementTypeService.Provider>
-  </Layout>
-);
-
-export default App;
+  </Layout> */
