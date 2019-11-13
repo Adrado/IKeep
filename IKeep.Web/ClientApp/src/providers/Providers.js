@@ -9,6 +9,11 @@ import TreeViewService from '../services/TreeViewService';
 import UsersService from '../services/UsersService';
 import ElementTypesService from '../services/ElementTypesService';
 import GenericElementsService from '../services/GenericElementsService';
+import CategoriesService from '../services/CategoriesService';
+import FormatsService from '../services/FormatsService';
+import GenericTasksService from '../services/GenericTasksService';
+import PrioritiesService from '../services/PrioritiesService';
+import TasksService from '../services/TasksService';
 
 
 export const CRUD =
@@ -22,6 +27,11 @@ export const CRUD =
     User : new UsersService(),
     ElementType : new ElementTypesService(),
     GenericElement : new GenericElementsService(),
+    Category: new CategoriesService(),
+    Format: new FormatsService(),
+    GenericTask: new GenericTasksService(),
+    Priority: new PrioritiesService(),
+    Task: new TasksService(),
 }
 
 export const Services = React.createContext();
