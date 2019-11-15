@@ -16,12 +16,38 @@ namespace IKeep.Lib.Models
         public Guid PriorityId { get; set; }
         [JsonIgnore]
         public virtual Priority Priority { get; set; }
+
+        public string PriorityName
+        {
+            get
+            {
+                return Priority == null ? "" : Priority.Name;
+            }
+        }
         public Guid FormatId { get; set; }
         [JsonIgnore]
         public virtual Format Format { get; set; }
+
+        public string FormatName
+        {
+            get
+            {
+                return Format == null ? "" : Format.Name;
+            }
+        }
+
         public Guid CategoryId { get; set; }
         [JsonIgnore]
         public virtual Category Category { get; set; }
+
+        public string CategoryName
+        {
+            get
+            {
+                return Category == null ? "" : Category.Name;
+            }
+        }
+
         [JsonIgnore]
         public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds

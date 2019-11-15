@@ -19,7 +19,7 @@ namespace IKeep.Lib.Models
         {
             get
             {
-                return ElementType.Name;
+                return ElementType == null? "" : ElementType.Name;
             }
         }
 
