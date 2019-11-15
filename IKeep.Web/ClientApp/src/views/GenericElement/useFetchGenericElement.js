@@ -1,12 +1,12 @@
 import  { useState, useEffect, useContext } from 'react';
-import {Services} from '../../providers/Providers';
+import {GenericElementService} from '../../providers/Providers';
 import GenericElement from '../../models/GenericElement';
 
 const useFetchGenericElement = () =>
 {
     const [fetchedGenericElement, setFetchedGenericElement] = useState(null);
     const [error, setError] = useState(false);
-    const GenericElementsService = useContext(Services);
+    const GenericElementsService = useContext(GenericElementService);
     const [update, setUpdate] = useState(null);
 
     const UpdateData = (data) =>

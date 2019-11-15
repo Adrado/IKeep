@@ -4,13 +4,15 @@ import {Grid} from '@material-ui/core'
 
 import useFetchGenericElement from './useFetchGenericElement';
 import GenericElementForm from './GenericElementForm';
-import DataTable from '../../components/DataTable';
+
 import { makeStyles } from '@material-ui/core/styles';
 import {Functions} from '../../providers/Providers'
 import GenericElement from '../../models/GenericElement';
 
-//import {Services, CRUD} from '../../providers/Providers';
+//Components
+import DataTable from '../../components/DataTable';
 
+//import {Services, CRUD} from '../../providers/Providers';
 import useFetchElementType from '../../views/ElementType/useFetchElementType'
 
 function reducer(state, action) {

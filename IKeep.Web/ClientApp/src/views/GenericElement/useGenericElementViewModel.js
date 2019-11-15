@@ -1,10 +1,10 @@
 import { useContext, useEffect} from 'react';
-import { Services } from '../../providers/Providers';
+import { GenericElementService } from '../../providers/Providers';
 //import {Functions} from '../../providers/Providers';
 
 const useGenericElementViewModel = (OnModified, Select) =>
 {
-    const GenericElementsService = useContext(Services);
+    const GenericElementsService = useContext(GenericElementService);
     //const OnModified = useContext(Functions);
     const SaveGenericElement = (model, values, elementTypeId) =>
     {
