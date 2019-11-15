@@ -1,12 +1,12 @@
 import { useContext, useEffect} from 'react';
-import { ElementTypeService } from '../../providers/Providers';
+import { FormatService } from '../../providers/Providers';
 //import {Functions} from '../../providers/Providers';
 
-const useElementTypeViewModel = (OnModified, Select) =>
+const useFormatViewModel = (OnModified, Select) =>
 {
-    const ElementTypesService = useContext(ElementTypeService);
+    const FormatsService = useContext(FormatService);
     //const OnModified = useContext(Functions);
-    const SaveElementType = (model, values) =>
+    const SaveFormat = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
@@ -14,7 +14,7 @@ const useElementTypeViewModel = (OnModified, Select) =>
         
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.UpdateAsync(model)
+            FormatsService.UpdateAsync(model)
             .then((response) => {
                 OnModified();
                 Select();
@@ -22,14 +22,14 @@ const useElementTypeViewModel = (OnModified, Select) =>
         }
     }
         
-    const AddNewElementType = (model, values) =>
+    const AddNewFormat = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
  
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.AddAsync(model)
+            FormatsService.AddAsync(model)
                 .then((response) => { 
                     OnModified();
                     Select();
@@ -37,12 +37,12 @@ const useElementTypeViewModel = (OnModified, Select) =>
         }
     }
  
-    const DeleteElementType = (model) =>
+    const DeleteFormat = (model) =>
     {
         //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.DeleteAsync(model.Id)
+            FormatsService.DeleteAsync(model.Id)
                 .then((response) => {
                     OnModified();
                     Select();
@@ -54,11 +54,11 @@ const useElementTypeViewModel = (OnModified, Select) =>
 
     return(
         [
-            AddNewElementType,
-            SaveElementType,
-            DeleteElementType
+            AddNewFormat,
+            SaveFormat,
+            DeleteFormat
         ]
     )
 }
 
-export default useElementTypeViewModel;
+export default useFormatViewModel;

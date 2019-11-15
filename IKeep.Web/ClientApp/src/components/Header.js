@@ -60,7 +60,7 @@ class Header extends React.Component {
   render() {
   const { classes } = this.props;
   return (<AppBar position="static">
-     <Toolbar>
+     /* <Toolbar>
           <IconButton color="inherit" aria-label="Open drawer">
             <MenuIcon />
           </IconButton>
@@ -80,7 +80,7 @@ class Header extends React.Component {
               }}
             />
           </div>
-        </Toolbar>
+        </Toolbar> */
   </AppBar>
   );
 }

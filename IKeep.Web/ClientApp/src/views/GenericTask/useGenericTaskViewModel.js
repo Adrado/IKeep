@@ -1,12 +1,12 @@
 import { useContext, useEffect} from 'react';
-import { ElementTypeService } from '../../providers/Providers';
+import { GenericTaskService } from '../../providers/Providers';
 //import {Functions} from '../../providers/Providers';
 
-const useElementTypeViewModel = (OnModified, Select) =>
+const useGenericTaskViewModel = (OnModified, Select) =>
 {
-    const ElementTypesService = useContext(ElementTypeService);
+    const GenericTasksService = useContext(GenericTaskService);
     //const OnModified = useContext(Functions);
-    const SaveElementType = (model, values) =>
+    const SaveGenericTask = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
@@ -14,7 +14,7 @@ const useElementTypeViewModel = (OnModified, Select) =>
         
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.UpdateAsync(model)
+            GenericTasksService.UpdateAsync(model)
             .then((response) => {
                 OnModified();
                 Select();
@@ -22,14 +22,14 @@ const useElementTypeViewModel = (OnModified, Select) =>
         }
     }
         
-    const AddNewElementType = (model, values) =>
+    const AddNewGenericTask = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
  
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.AddAsync(model)
+            GenericTasksService.AddAsync(model)
                 .then((response) => { 
                     OnModified();
                     Select();
@@ -37,12 +37,12 @@ const useElementTypeViewModel = (OnModified, Select) =>
         }
     }
  
-    const DeleteElementType = (model) =>
+    const DeleteGenericTask = (model) =>
     {
         //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.DeleteAsync(model.Id)
+            GenericTasksService.DeleteAsync(model.Id)
                 .then((response) => {
                     OnModified();
                     Select();
@@ -54,11 +54,11 @@ const useElementTypeViewModel = (OnModified, Select) =>
 
     return(
         [
-            AddNewElementType,
-            SaveElementType,
-            DeleteElementType
+            AddNewGenericTask,
+            SaveGenericTask,
+            DeleteGenericTask
         ]
     )
 }
 
-export default useElementTypeViewModel;
+export default useGenericTaskViewModel;

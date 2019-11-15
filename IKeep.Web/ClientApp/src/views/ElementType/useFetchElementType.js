@@ -4,9 +4,12 @@ import ElementType from '../../models/ElementType';
 
 const useFetchElementType = () =>
 {
+    //CRUD services
+    const ElementTypesService = useContext(ElementTypeService);
+
     const [fetchedElementType, setFetchedElementType] = useState(null);
     const [error, setError] = useState(false);
-    const ElementTypesService = useContext(ElementTypeService);
+    
     const [update, setUpdate] = useState(null);
 
     const UpdateData = (data) =>

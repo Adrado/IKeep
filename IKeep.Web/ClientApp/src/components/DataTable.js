@@ -26,7 +26,7 @@ const DataTable = ({Title, Data, Columns}) =>
         options={{
           actionsColumnIndex: -1,
           filtering: true,
-          toolbar: true,
+          toolbar: false,
           pageSize: 10,
           pageSizeOptions: [10, 20]
         }}
@@ -36,7 +36,7 @@ const DataTable = ({Title, Data, Columns}) =>
             actions: ' '
           },
           body: {
-            emptyDataSourceMessage: 'Guherandinên ku tiştek tune',
+            emptyDataSourceMessage: 'No se han encontrado coincidencias',
             filterRow:{
               filterTooltip: 'Filtrar'
             }

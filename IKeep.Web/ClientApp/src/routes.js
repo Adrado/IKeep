@@ -36,18 +36,17 @@ import Maps from "./views/Maps/Maps.js";
 import NotificationsPage from "./views/Notifications/Notifications.js";
 import UpgradeToPro from "./views/UpgradeToPro/UpgradeToPro.js";
 
-import InstallationManagerView from './views/InstallationManager/InstallationManagerView';
-
-
-//import ElementTypeView from './views/ElementType/ElementTypeView'
-import ProvElementTypeView from './views/ElementType/ProvElementTypeView'
-
-//import GenericElementView from './views/GenericElement/GenericElementView'
-import ProvGenericElementView from './views/GenericElement/ProvGenericElementView'
-
-
 // core components/views for RTL layout
 import RTLPage from "./views/RTLPage/RTLPage.js";
+
+//Views
+import InstallationManagerView from './views/InstallationManager/InstallationManagerView';
+import ElementTypeView from './views/ElementType/ElementTypeView';
+import GenericElementView from './views/GenericElement/GenericElementView';
+import GenericTaskView from "./views/GenericTask/GenericTaskView.js";
+import PriorityView from "./views/Priority/PriorityView.js";
+import FormatView from "./views/Format/FormatView.js";
+import CategoryView from "./views/Category/CategoryView.js";
 
 const dashboardRoutes = [
   {
@@ -62,18 +61,50 @@ const dashboardRoutes = [
     path: "/genericElement",
     name: "Elementos Genéricos",
     icon: "",
-    component: ProvGenericElementView,
+    component: GenericElementView,
     layout: "/admin"
   },
   {
     path: "/elementType",
     name: "Tipos de Elementos",
     icon: "",
-    component: ProvElementTypeView,
+    component: ElementTypeView,
     layout: "/admin"
   },
 
+  {
+    path: "/genericTask",
+    name: "Tareas",
+    icon: "",
+    component: GenericTaskView,
+    layout: "/admin"
+  },
+
+  {
+    path: "/priority",
+    name: "Prioridades",
+    icon: "",
+    component: PriorityView,
+    layout: "/admin"
+  },
+
+  {
+    path: "/format",
+    name: "Formatos",
+    icon: "",
+    component: FormatView,
+    layout: "/admin"
+  },
+
+  {
+    path: "/category",
+    name: "Categorías",
+    icon: "",
+    component: CategoryView,
+    layout: "/admin"
+  },
   
+/*
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -82,7 +113,7 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin"
   },
-  /*
+  
   {
     path: "/user",
     name: "User Profile",

@@ -21,7 +21,7 @@ class GenericTask extends Entity
             this.Ref = "";
             this.Description = "";
             this.Duration = "";
-            this.Period = 0;
+            this.Period = Period;
             this.PriorityId = "";
             this.FormatId = "";
             this.CategoryId = "";
@@ -33,16 +33,15 @@ class GenericTask extends Entity
 
 export default GenericTask;
 
-const Period =
-    [
-        Daily,
-        Weekly,
-        Monthly,
-        Bimonthly,
-        Quarterly,
-        Semester,
-        Yearly,
-        TwoYearly,
-        FourYearly
-    ]
+const Period = Object.freeze({
+    Daily: 0,
+    Weekly: 1,
+    Monthly: 2,
+    Bimonthly: 3,
+    Quarterly: 4,
+    Semester: 5,
+    Yearly: 6,
+    TwoYearly: 7,
+    FourYearly: 8
+})
 
