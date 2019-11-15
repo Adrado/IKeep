@@ -32,10 +32,18 @@ export const CRUD =
     GenericTask: new GenericTasksService(),
     Priority: new PrioritiesService(),
     Task: new TasksService(),
+
 }
 
-export const Services = React.createContext();
+//CRUD SERVICES
 export const ElementTypeService = React.createContext(CRUD.ElementType);
-export const Functions = React.createContext();
+export const GenericTaskService = React.createContext(CRUD.GenericTask);
+export const GenericElementService = React.createContext(CRUD.GenericElement);
+export const CategoryService = React.createContext(CRUD.Category);
+export const FormatService = React.createContext(CRUD.Format);
+export const PriorityService = React.createContext(CRUD.Priority);
 
-export const AuxiliarServices = React.createContext();
+
+//Auxiliar Context
+export const Functions = React.createContext();
+export const Services = React.createContext();
