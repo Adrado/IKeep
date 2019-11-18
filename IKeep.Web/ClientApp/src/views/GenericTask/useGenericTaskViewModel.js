@@ -9,7 +9,8 @@ const useGenericTaskViewModel = (OnModified, Select) =>
     const SaveGenericTask = (model, values) =>
     {
         model.Ref = values.Ref;
-        model.Name = values.Name;
+        model.Description = values.Description;
+        model.Duration = values.Duration;
 
         
         if(model !== undefined || model!== null)
@@ -25,7 +26,8 @@ const useGenericTaskViewModel = (OnModified, Select) =>
     const AddNewGenericTask = (model, values) =>
     {
         model.Ref = values.Ref;
-        model.Name = values.Name;
+        model.Description = values.Description;
+        model.Duration = values.Duration;
  
         if(model !== undefined || model!== null)
         {

@@ -1,5 +1,5 @@
 import  { useState, useEffect, useContext } from 'react';
-import {GenericElementService} from '../../providers/Providers';
+import {GenericElementService, GElementGTaskService} from '../../providers/Providers';
 import GenericElement from '../../models/GenericElement';
 
 const useFetchGenericElement = () =>
@@ -7,6 +7,7 @@ const useFetchGenericElement = () =>
     const [fetchedGenericElement, setFetchedGenericElement] = useState(null);
     const [error, setError] = useState(false);
     const GenericElementsService = useContext(GenericElementService);
+    const GElementGTasksService = useContext(GElementGTaskService);
     const [update, setUpdate] = useState(null);
 
     const UpdateData = (data) =>
@@ -36,6 +37,7 @@ const useFetchGenericElement = () =>
             try{
                 const response = await GenericElementsService.GetAllAsync();
                 const dataUpdated = UpdateData(response.data)
+                console.log(dataUpdated);
                 setFetchedGenericElement(dataUpdated);
             }
             catch (error){

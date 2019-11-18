@@ -10,6 +10,8 @@ import {Functions} from '../../providers/Providers'
 //import FormHelperText from '@material-ui/core/FormHelperText';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import useFetchTasks from './useFetchTasks';
+import DataTable from '../../components/DataTable';
 
 
 const GenericElementState = 
@@ -22,6 +24,7 @@ const GenericElementState =
 const GenericElementForm = ({onModify, selectorData}) => 
 {
   const {state, dispatch} = useContext(Functions)
+  console.log(state);
 
   const SelectRow = () =>
   {
@@ -31,6 +34,13 @@ const GenericElementForm = ({onModify, selectorData}) =>
   const classes = useStyles();
   const [Add, Save, Delete] = useGenericElementViewModel(onModify, SelectRow);
   const {values, handleOnChange, onAdd, onSave, onDelete, handleSelectorChange, renderOptions, selected} = useForm(GenericElementState, state.selectedRow, Add, Save, Delete, selectorData, state.selectedRow.ElementTypeId);
+  const {tasks} = useFetchTasks(state.selectedRow.Id);
+  console.log(tasks);
+
+  const columns = [
+      { title: 'Activo', field: 'Status'},
+      { title: 'Tarea', field: 'GenericTaskDescription'},
+  ]
 
     return(
         <Fragment>
@@ -78,6 +88,13 @@ const GenericElementForm = ({onModify, selectorData}) =>
                       </Grid>
                     }
                   </Grid>
+                    {tasks !== null &&
+                      <DataTable
+                      Title = {"gato"}
+                      Data = {tasks}
+                      Columns = {columns}
+                      />
+                    }
             </Grid>
         </Fragment>
     );

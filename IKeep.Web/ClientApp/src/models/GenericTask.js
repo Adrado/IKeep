@@ -15,6 +15,10 @@ class GenericTask extends Entity
             this.FormatId = json.formatId;
             this.CategoryId = json.categoryId;
             this.TasksIds = json.tasksIds;
+
+            this.PriorityName = json.priorityName;
+            this.FormatName = json.formatName;
+            this.CategoryName = json.categoryName;
         }
         else
         {
@@ -26,6 +30,10 @@ class GenericTask extends Entity
             this.FormatId = "";
             this.CategoryId = "";
             this.TasksIds = "";
+
+            this.PriorityName = "";
+            this.FormatName = "";
+            this.CategoryName = "";            
         }
     }
 

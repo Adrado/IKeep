@@ -11,6 +11,7 @@ class GenericElement extends Entity
             this.ElementTypeId = json.elementTypeId;
             this.ElementsIds = json.elementsIds;
             this.ElementTypeName = json.elementTypeName;
+            this.GenericElementGenericTasksIds = json.genericElementGenericTasksIds;
         }
         else
         {
@@ -18,6 +19,7 @@ class GenericElement extends Entity
             this.ElementTypeId = "";
             this.ElementTypeName = "";
             this.ElementsIds = [];
+            this.GenericElementGenericTasksIds = [];
         }
     }
 }

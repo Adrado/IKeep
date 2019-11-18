@@ -31,7 +31,10 @@ const GenericTaskView = () =>
     const columns = [
       { title: 'Ref', field: 'Ref' },
       { title: 'Descripción', field: 'Description' },
-      { title: 'Duración', field: 'Duration'}
+      { title: 'Duración', field: 'Duration'},
+      { title: 'Formato', field: 'FormatName'},
+      { title: 'Prioridad', field: 'PriorityName'},
+      { title: 'Categoria', field: 'CategoryName'}
     ] 
     const title = "Tipos de Elementos"
     const [state, dispatch] = useReducer(reducer, initialState);
