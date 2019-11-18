@@ -61,5 +61,6 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<InstallationUser> InstallationUsers { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<ElementImage> ElementImages { get; set; }
+        public DbSet<GenericElementGenericTask> GenericElementGenericTasks { get; set; }
     }
 }

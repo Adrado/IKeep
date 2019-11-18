@@ -5,9 +5,9 @@ using System.Text;
 
 namespace IKeep.Lib.DA.EFCore
 {
-    public class GenericElementsDbset : IKeepDbSet<GenericElement>
+    public class GenericElementsDbSet : IKeepDbSet<GenericElement>
     {
-        public GenericElementsDbset(IKeepContext dbContext)
+        public GenericElementsDbSet(IKeepContext dbContext)
         {
             DbContext = dbContext;
             DbSet = dbContext.GenericElements;

@@ -4,14 +4,16 @@ using IKeep.Lib.DA.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IKeep.Web.Migrations
 {
     [DbContext(typeof(IKeepContext))]
-    partial class IKeepContextModelSnapshot : ModelSnapshot
+    [Migration("20191118093916_AddGenericElementGenericTask")]
+    partial class AddGenericElementGenericTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,28 +253,6 @@ namespace IKeep.Web.Migrations
                     b.HasIndex("ElementTypeId");
 
                     b.ToTable("GenericElements");
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.GenericElementGenericTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("EntityStatus");
-
-                    b.Property<Guid>("GenericElementId");
-
-                    b.Property<Guid>("GenericTaskId");
-
-                    b.Property<int>("Status");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GenericElementId");
-
-                    b.HasIndex("GenericTaskId");
-
-                    b.ToTable("GenericElementGenericTasks");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.GenericTask", b =>
@@ -694,19 +674,6 @@ namespace IKeep.Web.Migrations
                     b.HasOne("IKeep.Lib.Models.ElementType", "ElementType")
                         .WithMany("GenericElements")
                         .HasForeignKey("ElementTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.GenericElementGenericTask", b =>
-                {
-                    b.HasOne("IKeep.Lib.Models.GenericElement", "GenericElement")
-                        .WithMany("GenericElementGenericTasks")
-                        .HasForeignKey("GenericElementId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IKeep.Lib.Models.GenericTask", "GenericTask")
-                        .WithMany("GenericElementGenericTasks")
-                        .HasForeignKey("GenericTaskId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

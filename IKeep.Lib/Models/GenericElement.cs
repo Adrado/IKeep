@@ -1,4 +1,5 @@
 ﻿using IKeep.Lib.Core;
+using IKeep.Lib.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,16 @@ namespace IKeep.Lib.Models
             get
             {
                 return Elements == null ? new List<Guid>() : Elements.Select(x => x.Id).ToList();
+            }
+        }
+
+        [JsonIgnore]
+        public virtual ICollection<GenericElementGenericTask> GenericElementGenericTasks { get; set; }
+        public List<Guid> GenericElementGenericTasksIds
+        {
+            get
+            {
+                return GenericElementGenericTasks == null ? new List<Guid>() : GenericElementGenericTasks.Select(x => x.Id).ToList();
             }
         }
     }
