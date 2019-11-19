@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react"
-import { GElementGTaskService } from "../../providers/Providers"
-import GenericElementGenericTask from "../../models/GenericElementGenericTask";
+import { GElementGTaskService } from "../../../providers/Providers"
+import GenericElementGenericTask from "../../../models/GenericElementGenericTask";
 
-const useFetchTasks = (id) =>
+const useGElementGTasks = (id) =>
 {
     const GElementGTasksService = useContext(GElementGTaskService)
     const [tasks, setTasks] = useState(null);
@@ -49,4 +49,4 @@ const useFetchTasks = (id) =>
     }
 }
 
-export default useFetchTasks;
+export default useGElementGTasks;

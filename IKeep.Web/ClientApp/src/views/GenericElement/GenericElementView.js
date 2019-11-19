@@ -1,20 +1,27 @@
 import React, {Fragment, useReducer} from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {Grid} from '@material-ui/core' 
 
-import useFetchGenericElement from './useFetchGenericElement';
-import GenericElementForm from './GenericElementForm';
-
-import { makeStyles } from '@material-ui/core/styles';
+//Contexts
 import {Functions} from '../../providers/Providers'
+
+//Models
 import GenericElement from '../../models/GenericElement';
+
+//Forms
+import GenericElementForm from './GenericElementForm';
+import GElementGTaskForm from './GElementGTask/GElementGTaskForm';
 
 //Components
 import DataTable from '../../components/DataTable';
 
-//import {Services, CRUD} from '../../providers/Providers';
-import useFetchElementType from '../../views/ElementType/useFetchElementType'
+//Hooks CRUD Data
+import useFetchElementType from '../../views/ElementType/useFetchElementType';
+import useFetchGenericElement from './useFetchGenericElement';
 
+//Allows comunicate Form with Table
 function reducer(state, action) {
   switch (action.type) {
       case 'SELECT_ROW':
@@ -36,20 +43,20 @@ const GenericElementView = () =>
     const classes = useStyles();
     const {fetchedGenericElement, error, onModify} = useFetchGenericElement();
     const {fetchedElementType} = useFetchElementType();
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    //Info to Table
     const columns = [
       { title: 'Nombre', field: 'Name' },
       { title: 'Tipo', field: 'ElementTypeName'}
     ] 
     const title = "Elementos Genéricos";
-    const [state, dispatch] = useReducer(reducer, initialState);
-
-    
 
     return(
       <Fragment>
         <Grid container spacing={3}>
           <Functions.Provider value={{ state, dispatch }}>
-            <Grid item xs={6}>
+            <Grid item sm={4} xs={12}>
               { fetchedGenericElement === null &&
                 <CircularProgress className={classes.progress}/>
               }
@@ -64,7 +71,8 @@ const GenericElementView = () =>
                   />  
               }
             </Grid>
-            <Grid item xs={6}>
+
+            <Grid item sm={4} xs={12}>
               {fetchedElementType === null &&
                 <CircularProgress className={classes.progress}/>
               }
@@ -74,7 +82,12 @@ const GenericElementView = () =>
                 selectorData = {fetchedElementType}
                 />
               }
+            </Grid>
 
+            <Grid item sm={4} xs={12}>
+              
+                <GElementGTaskForm/>
+              
             </Grid>
           </Functions.Provider>
         </Grid>

@@ -2,16 +2,17 @@ import React, {Fragment, useContext, useState} from 'react';
 import { TextField, Button, Grid, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
 import useForm from '../../components/useForm'
-//import PropTypes from 'prop-types';
+
 import GenericElement from '../../models/GenericElement';
 import useGenericElementViewModel from './useGenericElementViewModel';
 import {Functions} from '../../providers/Providers'
 
-//import FormHelperText from '@material-ui/core/FormHelperText';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import useFetchTasks from './useFetchTasks';
+import useFetchGElementGTasks from './GElementGTask/useFetchGElementGTasks';
 import DataTable from '../../components/DataTable';
+import useFetchGenericTask from '../GenericTask/useFetchGenericTask'
+
+import MaterialTable from 'material-table';
 
 
 const GenericElementState = 
@@ -33,12 +34,20 @@ const GenericElementForm = ({onModify, selectorData}) =>
 
   const classes = useStyles();
   const [Add, Save, Delete] = useGenericElementViewModel(onModify, SelectRow);
-  const {values, handleOnChange, onAdd, onSave, onDelete, handleSelectorChange, renderOptions, selected} = useForm(GenericElementState, state.selectedRow, Add, Save, Delete, selectorData, state.selectedRow.ElementTypeId);
-  const {tasks} = useFetchTasks(state.selectedRow.Id);
+  const {values, handleOnChange, onAdd, onSave, onDelete, handleSelectorChange, renderOptions, selected} = useForm(
+    GenericElementState, 
+    state.selectedRow, 
+    Add, 
+    Save, 
+    Delete, 
+    selectorData, 
+    state.selectedRow.ElementTypeId);
+  const {tasks} = useFetchGElementGTasks(state.selectedRow.Id);
+  const {fetchedGenericTask} = useFetchGenericTask();
   console.log(tasks);
 
   const columns = [
-      { title: 'Activo', field: 'Status'},
+      { title: 'Estado', field: 'Status', lookup: { 0: 'Inactivo', 1: 'Activo' }},
       { title: 'Tarea', field: 'GenericTaskDescription'},
   ]
 
@@ -89,10 +98,52 @@ const GenericElementForm = ({onModify, selectorData}) =>
                     }
                   </Grid>
                     {tasks !== null &&
-                      <DataTable
-                      Title = {"gato"}
-                      Data = {tasks}
-                      Columns = {columns}
+                      <MaterialTable
+                        title = {""}
+                        columns={columns}
+                        data={tasks}
+
+                        actions={[
+                          {
+                            icon: 'edit',
+                            tooltip: 'Add User',
+                            isFreeAction: true,
+                            onClick: (event) => alert("You want to add a new row")
+                          }
+                        ]}
+
+                        options={{
+                          actionsColumnIndex: -1,
+                          filtering: false,
+                          toolbar: true,
+                          pageSize: 10,
+                          pageSizeOptions: [10, 20],
+                          //selection: true,
+                        }}
+
+                        localization={{
+                          header: {
+                            actions: ' '
+                          },
+                          body: {
+                            emptyDataSourceMessage: 'No se han encontrado coincidencias',
+                            filterRow:{
+                              filterTooltip: 'Filtrar'
+                            }
+                          },
+                          toolbar: {
+                            searchTooltip: 'Buscar',
+                            searchPlaceholder: 'Buscar'
+                          },
+                          pagination: {
+                            labelRowsSelect: 'Filas',
+                            labelDisplayedRows: ' {from}-{to} de {count}',
+                            firstTooltip: 'Primera página',
+                            previousTooltip: 'Anterior página',
+                            nextTooltip: 'Siguiente página',
+                            lastTooltip: 'Última página'
+                          }
+                        }}
                       />
                     }
             </Grid>
@@ -101,6 +152,12 @@ const GenericElementForm = ({onModify, selectorData}) =>
 }
 
 export default GenericElementForm;
+
+/* <DataTable
+    Title = {"gato"}
+    Data = {tasks}
+    Columns = {columns}
+    /> */
 
 const useStyles = makeStyles(theme => ({
   container: {
