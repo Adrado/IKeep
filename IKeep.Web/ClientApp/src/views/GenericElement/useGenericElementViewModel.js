@@ -21,7 +21,7 @@ const useGenericElementViewModel = (OnModified, Select) =>
             });
         }
     }
-        
+      
     const AddNewGenericElement = (model, values, elementTypeId) =>
     {
         model.Ref = values.Ref;

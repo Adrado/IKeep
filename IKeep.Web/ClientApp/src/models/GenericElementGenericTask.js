@@ -17,7 +17,7 @@ class GenericElementGenericTask extends Entity
         {
             this.GenericElementId = "";
             this.GenericTaskId = "";
-            this.Status = "";
+            this.Status = 1;
             this.GenericElementName = "";
             this.GenericTaskDescription = "";
         }

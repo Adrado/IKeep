@@ -12,7 +12,6 @@ import GenericElement from '../../models/GenericElement';
 
 //Forms
 import GenericElementForm from './GenericElementForm';
-import GElementGTaskForm from './GElementGTask/GElementGTaskForm';
 
 //Components
 import DataTable from '../../components/DataTable';
@@ -20,6 +19,8 @@ import DataTable from '../../components/DataTable';
 //Hooks CRUD Data
 import useFetchElementType from '../../views/ElementType/useFetchElementType';
 import useFetchGenericElement from './useFetchGenericElement';
+
+import GenericTasksTable from './GElementGTask/GenericTasksTable';
 
 //Allows comunicate Form with Table
 function reducer(state, action) {
@@ -72,7 +73,7 @@ const GenericElementView = () =>
               }
             </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={3} xs={12}>
               {fetchedElementType === null &&
                 <CircularProgress className={classes.progress}/>
               }
@@ -84,9 +85,9 @@ const GenericElementView = () =>
               }
             </Grid>
 
-            <Grid item sm={4} xs={12}>
+            <Grid item sm={5} xs={12}>
               
-                <GElementGTaskForm/>
+                <GenericTasksTable/>
               
             </Grid>
           </Functions.Provider>

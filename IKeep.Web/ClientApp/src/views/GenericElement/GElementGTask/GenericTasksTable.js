@@ -6,40 +6,29 @@ import MaterialTable from 'material-table';
 import GenericElementGenericTask from '../../../models/GenericElementGenericTask';
 import {Functions} from '../../../providers/Providers';
 
-//Components
-import DataTable from '../../../components/DataTable';
-import useForm from '../../../components/useForm';
-
 import useFetchGenericTask from '../../GenericTask/useFetchGenericTask'
 import useGElementGTaskViewModel from './useGElementGTaskViewModel';
 
-const GElementGTaskState = 
-{
-  Status : "",
-  GenericTaskDescription : ""
-}
 
-const GElementGTaskForm = ({onModify, selectorData}) => 
+const GenericTasksTable = () => 
 {
   const {state, dispatch} = useContext(Functions)
-  console.log(state);
 
-  const SelectRow = () =>
-  {
-    dispatch({ type: 'SELECT_ROW', data: new GenericElementGenericTask()});
-  }
-
+  const GElementSelected = state.selectedRow;
+  
   const {fetchedGenericTask} = useFetchGenericTask();
 
   const classes = useStyles();
-  const [Add, Save, Delete] = useGElementGTaskViewModel(onModify, SelectRow);
-  const {values, handleOnChange, onAdd, onSave, onDelete, handleSelectorChange} = useForm(
-    GElementGTaskState, 
-    state.selectedRow, 
-    Add, 
-    Save, 
-    Delete, 
-  );
+  
+  const [Add, Save, Delete] = useGElementGTaskViewModel();
+
+  const SelectedTasks = (data) =>
+  {
+    console.log("Entra")
+    console.log(data);
+    console.log(GElementSelected.Id);
+    Add(GElementSelected.Id, data);
+  }
 
   const Periodicity = Object.freeze({
     0 : "Diaria",
@@ -63,6 +52,8 @@ const GElementGTaskForm = ({onModify, selectorData}) =>
   ]
   const Title = "Tareas";
 
+  
+
     return(
         <Fragment>
             <Grid container className={classes.container} spacing={1}>  
@@ -77,7 +68,7 @@ const GElementGTaskForm = ({onModify, selectorData}) =>
                         {
                           icon: 'add',
                           tooltip: 'Añadir Tareas',
-                          onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                          onClick: (evt, data) => SelectedTasks(data)
                         }
                       ]}
 
@@ -88,6 +79,9 @@ const GElementGTaskForm = ({onModify, selectorData}) =>
                         pageSize: 10,
                         pageSizeOptions: [10, 20],
                         selection: true,
+                        selectionProps: rowData => ({
+                          disabled: [rowData.Description === 'Limpiar', rowData.Description === 'Limpieza general']
+                        }),              
                         search: true
                       }}
 
@@ -120,7 +114,7 @@ const GElementGTaskForm = ({onModify, selectorData}) =>
   )                
 }
 
-export default GElementGTaskForm;
+export default GenericTasksTable;
 
 const useStyles = makeStyles(theme => ({
   container: {

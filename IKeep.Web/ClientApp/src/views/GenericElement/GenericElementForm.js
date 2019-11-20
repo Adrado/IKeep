@@ -13,6 +13,7 @@ import DataTable from '../../components/DataTable';
 import useFetchGenericTask from '../GenericTask/useFetchGenericTask'
 
 import MaterialTable from 'material-table';
+import useGElementGTaskViewModel from './GElementGTask/useGElementGTaskViewModel';
 
 
 const GenericElementState = 
@@ -43,12 +44,13 @@ const GenericElementForm = ({onModify, selectorData}) =>
     selectorData, 
     state.selectedRow.ElementTypeId);
   const {tasks} = useFetchGElementGTasks(state.selectedRow.Id);
-  const {fetchedGenericTask} = useFetchGenericTask();
+  const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
+
   console.log(tasks);
 
   const columns = [
       { title: 'Estado', field: 'Status', lookup: { 0: 'Inactivo', 1: 'Activo' }},
-      { title: 'Tarea', field: 'GenericTaskDescription'},
+      { title: 'Tarea', field: 'GenericTaskDescription', editable: 'never'},
   ]
 
     return(
@@ -105,8 +107,8 @@ const GenericElementForm = ({onModify, selectorData}) =>
 
                         actions={[
                           {
-                            icon: 'edit',
-                            tooltip: 'Add User',
+                            icon: 'add',
+                            tooltip: 'Añadir Tareas',
                             isFreeAction: true,
                             onClick: (event) => alert("You want to add a new row")
                           }
@@ -129,7 +131,14 @@ const GenericElementForm = ({onModify, selectorData}) =>
                             emptyDataSourceMessage: 'No se han encontrado coincidencias',
                             filterRow:{
                               filterTooltip: 'Filtrar'
-                            }
+                            },
+                            editRow:{
+                              deleteText: '¿Estás seguro de eliminar esta tarea?',
+                              cancelTooltip: 'Cancelar',
+                              saveTooltip: 'Guardar'
+                            },
+                            editTooltip: 'Editar',
+                            deleteTooltip: 'Eliminar'
                           },
                           toolbar: {
                             searchTooltip: 'Buscar',
@@ -143,6 +152,35 @@ const GenericElementForm = ({onModify, selectorData}) =>
                             nextTooltip: 'Siguiente página',
                             lastTooltip: 'Última página'
                           }
+                        }}
+
+                        editable={{
+                          onRowUpdate: (newData, oldData) =>
+                            new Promise((resolve, reject) => {
+                              setTimeout(() => {
+                                {
+                                  /* const data = tasks;
+                                  const index = tasks.indexOf(oldData);
+                                  data[index] = newData; */
+                                  SaveGElementGTask(oldData, newData)
+                                  //this.setState({ data }, () => resolve());
+                                }
+                                resolve()
+                              }, 1000)
+                            }),
+                          onRowDelete: oldData =>
+                            new Promise((resolve, reject) => {
+                              setTimeout(() => {
+                                {
+                                  /* let data = this.state.data;
+                                  const index = data.indexOf(oldData);
+                                  data.splice(index, 1);
+                                  this.setState({ data }, () => resolve()); */
+                                  DeleteGElementGTask(oldData)
+                                }
+                                resolve()
+                              }, 1000)
+                            }),
                         }}
                       />
                     }
