@@ -1,6 +1,7 @@
 import React from 'react';
-import {Treebeard} from 'react-treebeard'
+import {Treebeard, decorators} from 'react-treebeard'
 import useHandleTree from './useHandleTree'
+import Header from './Header'
 
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ const Tree = ({treeData = {}}) =>
             style={treeStyle}
             data = {data}
             onToggle = {onToggle}
+            decorators = {{...decorators, Header}}
         />
     );
 } 

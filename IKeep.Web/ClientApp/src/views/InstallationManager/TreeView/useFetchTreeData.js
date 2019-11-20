@@ -85,7 +85,7 @@ const useFetchTreeData = (Update, ParentId) =>
             id: null,
             name: "Añadir Nueva Instalación",
             type: "InstallationProxy",
-            new : true
+            new : true,
         }
 
         installations.push(newInstallation);
