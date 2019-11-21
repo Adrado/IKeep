@@ -1,8 +1,7 @@
-import React, {Fragment, useReducer} from 'react';
+import React, {Fragment, useReducer, useState} from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import {Grid} from '@material-ui/core' 
+//Material-ui components
+import {Grid, Collapse, CircularProgress, makeStyles} from '@material-ui/core' 
 
 //Contexts
 import {Functions} from '../../providers/Providers'
@@ -46,7 +45,14 @@ const GenericElementView = () =>
     const {fetchedElementType} = useFetchElementType();
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    //Info to Table
+    const [display, setDisplay] = useState(true);
+
+    const DisplayTable = () =>
+    {
+      setDisplay(!display);
+    }
+
+    //Info to GenericElements Table 
     const columns = [
       { title: 'Nombre', field: 'Name' },
       { title: 'Tipo', field: 'ElementTypeName'}
@@ -55,13 +61,15 @@ const GenericElementView = () =>
 
     return(
       <Fragment>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           <Functions.Provider value={{ state, dispatch }}>
-            <Grid item sm={4} xs={12}>
+
+          {display &&
+            <Grid item sm={6} xs={12}>
               { fetchedGenericElement === null &&
                 <CircularProgress className={classes.progress}/>
               }
-              { error === true &&
+              { error &&
                 <h1>Error...</h1>
               }
               { fetchedGenericElement !== null &&
@@ -72,24 +80,28 @@ const GenericElementView = () =>
                   />  
               }
             </Grid>
-
-            <Grid item sm={3} xs={12}>
+          }
+            <Grid item sm={6} xs={12}>
               {fetchedElementType === null &&
                 <CircularProgress className={classes.progress}/>
               }
               {fetchedElementType !== null &&
                 <GenericElementForm
-                onModify = {onModify}
-                selectorData = {fetchedElementType}
+                  onModify = {onModify}
+                  selectorData = {fetchedElementType}
+                  displayTable = {DisplayTable}
                 />
               }
             </Grid>
 
-            <Grid item sm={5} xs={12}>
-              
-                <GenericTasksTable/>
-              
+          {!display &&
+            <Grid item sm={6} xs={12}>
+                <GenericTasksTable
+                  displayTable = {DisplayTable}
+                />
             </Grid>
+          } 
+
           </Functions.Provider>
         </Grid>
       </Fragment>

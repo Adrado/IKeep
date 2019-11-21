@@ -7,7 +7,6 @@ import GenericElement from '../../models/GenericElement';
 import useGenericElementViewModel from './useGenericElementViewModel';
 import {Functions} from '../../providers/Providers'
 
-
 import useFetchGElementGTasks from './GElementGTask/useFetchGElementGTasks';
 import DataTable from '../../components/DataTable';
 import useFetchGenericTask from '../GenericTask/useFetchGenericTask'
@@ -23,7 +22,7 @@ const GenericElementState =
   ElementTypeId: "", 
 }
 
-const GenericElementForm = ({onModify, selectorData}) => 
+const GenericElementForm = ({onModify, selectorData, displayTable}) => 
 {
   const {state, dispatch} = useContext(Functions)
   console.log(state);
@@ -43,10 +42,9 @@ const GenericElementForm = ({onModify, selectorData}) =>
     Delete, 
     selectorData, 
     state.selectedRow.ElementTypeId);
+  
   const {tasks} = useFetchGElementGTasks(state.selectedRow.Id);
   const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
-
-  console.log(tasks);
 
   const columns = [
       { title: 'Estado', field: 'Status', lookup: { 0: 'Inactivo', 1: 'Activo' }},
@@ -60,7 +58,7 @@ const GenericElementForm = ({onModify, selectorData}) =>
                   <h3>{values.Name}</h3>
               </Grid>
                   
-                  <Grid item xs={6} sm = {4}>
+                  <Grid item xs={6} sm = {6}>
                       <TextField
                       name="Name" type="text" onChange={handleOnChange} value = {values.Name}
                       label="Nombre"
@@ -69,7 +67,7 @@ const GenericElementForm = ({onModify, selectorData}) =>
                       />
                   </Grid>
                 
-                  <FormControl variant="filled" className={classes.formControl} xs={6} sm = {4}>
+                  <FormControl variant="filled" className={classes.formControl} xs={6} sm = {6}>
                   
                     <InputLabel id="demo-simple-select-label">Tipo de Elemento</InputLabel>
               
@@ -99,8 +97,10 @@ const GenericElementForm = ({onModify, selectorData}) =>
                       </Grid>
                     }
                   </Grid>
-                    {tasks !== null &&
-                      <MaterialTable
+
+                  {tasks !== null &&
+                  <Grid item sm={12}>
+                    <MaterialTable
                         title = {""}
                         columns={columns}
                         data={tasks}
@@ -110,7 +110,7 @@ const GenericElementForm = ({onModify, selectorData}) =>
                             icon: 'add',
                             tooltip: 'Añadir Tareas',
                             isFreeAction: true,
-                            onClick: (event) => alert("You want to add a new row")
+                            onClick: (event) => displayTable()
                           }
                         ]}
 
@@ -182,8 +182,10 @@ const GenericElementForm = ({onModify, selectorData}) =>
                               }, 1000)
                             }),
                         }}
-                      />
-                    }
+                  />
+                  </Grid>
+                  }
+
             </Grid>
         </Fragment>
     );

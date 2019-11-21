@@ -10,7 +10,7 @@ import useFetchGenericTask from '../../GenericTask/useFetchGenericTask'
 import useGElementGTaskViewModel from './useGElementGTaskViewModel';
 
 
-const GenericTasksTable = () => 
+const GenericTasksTable = ({displayTable}) => 
 {
   const {state, dispatch} = useContext(Functions)
 
@@ -28,6 +28,7 @@ const GenericTasksTable = () =>
     console.log(data);
     console.log(GElementSelected.Id);
     Add(GElementSelected.Id, data);
+    displayTable();
   }
 
   const Periodicity = Object.freeze({
@@ -66,9 +67,17 @@ const GenericTasksTable = () =>
 
                       actions={[
                         {
+                          
                           icon: 'add',
                           tooltip: 'Añadir Tareas',
                           onClick: (evt, data) => SelectedTasks(data)
+                        },
+                        {
+                          //icons at https://material-ui.com/es/components/material-icons/, if "ArrowBack", change to "arrow_back"
+                          icon: 'arrow_back',
+                          tooltip: 'Volver',
+                          isFreeAction: true,
+                          onClick: (event) => displayTable()
                         }
                       ]}
 
