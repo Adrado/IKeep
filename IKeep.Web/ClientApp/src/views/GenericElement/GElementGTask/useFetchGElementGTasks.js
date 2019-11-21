@@ -7,6 +7,7 @@ const useGElementGTasks = (id) =>
     const GElementGTasksService = useContext(GElementGTaskService)
     const [tasks, setTasks] = useState(null);
     const [error, setError] = useState(false);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
@@ -41,11 +42,13 @@ const useGElementGTasks = (id) =>
             GetById();
         }
 
-    },[id, GElementGTasksService]);
+    },[id, GElementGTasksService, change]);
 
     return{
         tasks,
-        error
+        error,
+        change,
+        setChange
     }
 }
 

@@ -8,10 +8,11 @@ import useGenericElementViewModel from './useGenericElementViewModel';
 import {Functions} from '../../providers/Providers'
 
 import useFetchGElementGTasks from './GElementGTask/useFetchGElementGTasks';
-import DataTable from '../../components/DataTable';
-import useFetchGenericTask from '../GenericTask/useFetchGenericTask'
 
+import useFetchGenericTask from '../GenericTask/useFetchGenericTask'
+//Data Table
 import MaterialTable from 'material-table';
+import {localizationEsp} from '../../components/MaterialTableProps'
 import useGElementGTaskViewModel from './GElementGTask/useGElementGTaskViewModel';
 
 
@@ -43,7 +44,7 @@ const GenericElementForm = ({onModify, selectorData, displayTable}) =>
     selectorData, 
     state.selectedRow.ElementTypeId);
   
-  const {tasks} = useFetchGElementGTasks(state.selectedRow.Id);
+  const {tasks, change, setChange} = useFetchGElementGTasks(state.selectedRow.Id);
   const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
 
   const columns = [
@@ -116,76 +117,37 @@ const GenericElementForm = ({onModify, selectorData, displayTable}) =>
 
                         options={{
                           actionsColumnIndex: -1,
-                          filtering: false,
+                          filtering: true,
                           toolbar: true,
                           pageSize: 10,
                           pageSizeOptions: [10, 20],
                           //selection: true,
                         }}
 
-                        localization={{
-                          header: {
-                            actions: ' '
-                          },
-                          body: {
-                            emptyDataSourceMessage: 'No se han encontrado coincidencias',
-                            filterRow:{
-                              filterTooltip: 'Filtrar'
-                            },
-                            editRow:{
-                              deleteText: '¿Estás seguro de eliminar esta tarea?',
-                              cancelTooltip: 'Cancelar',
-                              saveTooltip: 'Guardar'
-                            },
-                            editTooltip: 'Editar',
-                            deleteTooltip: 'Eliminar'
-                          },
-                          toolbar: {
-                            searchTooltip: 'Buscar',
-                            searchPlaceholder: 'Buscar'
-                          },
-                          pagination: {
-                            labelRowsSelect: 'Filas',
-                            labelDisplayedRows: ' {from}-{to} de {count}',
-                            firstTooltip: 'Primera página',
-                            previousTooltip: 'Anterior página',
-                            nextTooltip: 'Siguiente página',
-                            lastTooltip: 'Última página'
-                          }
-                        }}
+                        localization={localizationEsp}
 
                         editable={{
                           onRowUpdate: (newData, oldData) =>
-                            new Promise((resolve, reject) => {
-                              setTimeout(() => {
-                                {
-                                  /* const data = tasks;
-                                  const index = tasks.indexOf(oldData);
-                                  data[index] = newData; */
-                                  SaveGElementGTask(oldData, newData)
-                                  //this.setState({ data }, () => resolve());
-                                }
-                                resolve()
-                              }, 1000)
-                            }),
+                          new Promise((resolve, reject) => {
+                            SaveGElementGTask(oldData, newData)
+                            .then(() => {
+                              setChange(!change)
+                              resolve()
+                            })
+                          }),
+
                           onRowDelete: oldData =>
                             new Promise((resolve, reject) => {
-                              setTimeout(() => {
-                                {
-                                  /* let data = this.state.data;
-                                  const index = data.indexOf(oldData);
-                                  data.splice(index, 1);
-                                  this.setState({ data }, () => resolve()); */
-                                  DeleteGElementGTask(oldData)
-                                }
+                              DeleteGElementGTask(oldData)
+                              .then(() => {
+                                setChange(!change)
                                 resolve()
-                              }, 1000)
+                              })
                             }),
                         }}
                   />
                   </Grid>
                   }
-
             </Grid>
         </Fragment>
     );
@@ -193,11 +155,6 @@ const GenericElementForm = ({onModify, selectorData, displayTable}) =>
 
 export default GenericElementForm;
 
-/* <DataTable
-    Title = {"gato"}
-    Data = {tasks}
-    Columns = {columns}
-    /> */
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -227,3 +184,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/* onRowUpdate: (newData, oldData) =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        {
+          const data = tasks;
+          const index = tasks.indexOf(oldData);
+          data[index] = newData; 
+          SaveGElementGTask(oldData, newData)
+          //this.setState({ data }, () => resolve());
+        }
+        resolve()
+      }, 1000)
+    }),
+  
+  onRowDelete: oldData =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        {
+           let data = this.state.data;
+          const index = data.indexOf(oldData);
+          data.splice(index, 1);
+          this.setState({ data }, () => resolve());
+          DeleteGElementGTask(oldData)
+        }
+        resolve()
+      }, 1000)
+    }),
+
+*/

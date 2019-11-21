@@ -13,11 +13,11 @@ const useGElementGTaskViewModel = () =>
 
         if(model !== undefined || model!== null)
         {
-            GElementGTasksService.UpdateAsync(model)
-            .then((response) => {
-                /* OnModified();
-                Select(); */
-            });
+           return GElementGTasksService.UpdateAsync(model)
+            /* .then((response) => {
+                OnModified();
+                Select();
+            }); */
         }
     }
         
@@ -49,11 +49,11 @@ const useGElementGTaskViewModel = () =>
         //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            GElementGTasksService.DeleteAsync(model.Id)
-                .then((response) => {
-                    /* OnModified();
-                    Select(); */
-                })
+            return GElementGTasksService.DeleteAsync(model.Id)
+                /* .then((response) => {
+                    OnModified();
+                    Select();
+                }) */
         }
     }
 

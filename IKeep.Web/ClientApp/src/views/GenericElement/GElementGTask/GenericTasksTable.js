@@ -1,7 +1,10 @@
 import React, {Fragment, useContext, useState} from 'react';
 import { TextField, Button, Grid, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core' 
 import { makeStyles } from '@material-ui/core/styles';
+
+//DataTable
 import MaterialTable from 'material-table';
+import {localizationEsp} from '../../../components/MaterialTableProps'
 
 import GenericElementGenericTask from '../../../models/GenericElementGenericTask';
 import {Functions} from '../../../providers/Providers';
@@ -94,29 +97,7 @@ const GenericTasksTable = ({displayTable}) =>
                         search: true
                       }}
 
-                      localization={{
-                        header: {
-                          actions: ' '
-                        },
-                        body: {
-                          emptyDataSourceMessage: 'No se han encontrado coincidencias',
-                          filterRow:{
-                            filterTooltip: 'Filtrar'
-                          }
-                        },
-                        toolbar: {
-                          searchTooltip: 'Buscar',
-                          searchPlaceholder: 'Buscar'
-                        },
-                        pagination: {
-                          labelRowsSelect: 'Filas',
-                          labelDisplayedRows: ' {from}-{to} de {count}',
-                          firstTooltip: 'Primera página',
-                          previousTooltip: 'Anterior página',
-                          nextTooltip: 'Siguiente página',
-                          lastTooltip: 'Última página'
-                        }
-                      }}
+                      localization={localizationEsp}
                     />
                     }
         </Fragment>
