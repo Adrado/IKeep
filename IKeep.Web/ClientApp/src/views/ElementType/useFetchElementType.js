@@ -4,13 +4,10 @@ import ElementType from '../../models/ElementType';
 
 const useFetchElementType = () =>
 {
-    //CRUD services
     const ElementTypesService = useContext(ElementTypeService);
-
-    const [fetchedElementType, setFetchedElementType] = useState(null);
+    const [ETypes, setETypes] = useState(null);
     const [error, setError] = useState(false);
-    
-    const [update, setUpdate] = useState(null);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
@@ -26,21 +23,16 @@ const useFetchElementType = () =>
         return data;
     }
 
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
-    }
-
     useEffect(() =>
     {
         const GetAllElementTypes = async () =>
         {
             try{
                 const response = await ElementTypesService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data);
+                const dataUpdated = UpdateData(response.data)
+                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
                 console.log(dataUpdated);
-                setFetchedElementType(dataUpdated);
+                setETypes(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -49,12 +41,13 @@ const useFetchElementType = () =>
 
         GetAllElementTypes();
 
-    },[update]);
+    },[ElementTypesService, change]);
 
     return{
-        fetchedElementType,
+        ETypes,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 

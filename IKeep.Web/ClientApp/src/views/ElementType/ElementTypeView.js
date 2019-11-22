@@ -27,7 +27,7 @@ const initialState = {
 const ElementTypeView = () =>
 {
     const classes = useStyles();
-    const {fetchedElementType, error, onModify} = useFetchElementType();
+    const {ETypes, error, change, setChange} = useFetchElementType();
     const columns = [
       { title: 'Ref', field: 'Ref' },
       { title: 'Nombre', field: 'Name' }
@@ -40,18 +40,18 @@ const ElementTypeView = () =>
         <Functions.Provider value={{ state, dispatch }}>
           <ElementTypeForm
             //elementTypeData = {selectedRow}
-            onModify = {onModify}/>
+            onModify = {setChange}/>
           
-          { fetchedElementType === null &&
+          { ETypes === null &&
             <CircularProgress className={classes.progress}/>
           }
           { error === true &&
             <h1>Error...</h1>
           }
-          { fetchedElementType !== null &&
+          { ETypes !== null &&
             <DataTable
               Title = {title}
-              Data = {fetchedElementType}
+              Data = {ETypes}
               Columns = {columns}
               />  
           }

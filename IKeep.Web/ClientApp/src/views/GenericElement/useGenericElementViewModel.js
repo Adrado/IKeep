@@ -1,53 +1,41 @@
 import { useContext, useEffect} from 'react';
 import { GenericElementService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import GenericElement from '../../models/GenericElement';
 
-const useGenericElementViewModel = (OnModified, Select) =>
+const useGenericElementViewModel = () =>
 {
     const GenericElementsService = useContext(GenericElementService);
-    //const OnModified = useContext(Functions);
-    const SaveGenericElement = (model, values, elementTypeId) =>
+
+    const SaveGenericElement = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
-        model.ElementTypeId = elementTypeId; 
+        model.ElementTypeId = values.ElementTypeId; 
 
         if(model !== undefined || model!== null)
         {
-            GenericElementsService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return GenericElementsService.UpdateAsync(model);
         }
     }
       
-    const AddNewGenericElement = (model, values, elementTypeId) =>
+    const AddNewGenericElement = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
-        model.ElementTypeId = elementTypeId; 
+        let genericElement = new GenericElement();
+        genericElement.Ref = values.Ref;
+        genericElement.Name = values.Name;
+        genericElement.ElementTypeId = values.ElementTypeId; 
  
-        if(model !== undefined || model!== null)
+        if(genericElement !== undefined || genericElement!== null)
         {
-            GenericElementsService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return GenericElementsService.AddAsync(genericElement);
         }
     }
  
     const DeleteGenericElement = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            GenericElementsService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return GenericElementsService.DeleteAsync(model.Id);
         }
     }
 

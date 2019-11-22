@@ -1,14 +1,13 @@
 import  { useState, useEffect, useContext } from 'react';
-import {GenericElementService, GElementGTaskService} from '../../providers/Providers';
+import {GenericElementService} from '../../providers/Providers';
 import GenericElement from '../../models/GenericElement';
 
 const useFetchGenericElement = () =>
 {
-    const [fetchedGenericElement, setFetchedGenericElement] = useState(null);
-    const [error, setError] = useState(false);
     const GenericElementsService = useContext(GenericElementService);
-    const GElementGTasksService = useContext(GElementGTaskService);
-    const [update, setUpdate] = useState(null);
+    const [GElements, setGElements] = useState(null);
+    const [error, setError] = useState(false);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
@@ -24,12 +23,6 @@ const useFetchGenericElement = () =>
         return data;
     }
 
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
-    }
-
     useEffect(() =>
     {
         const GetAllGenericElements = async () =>
@@ -37,8 +30,8 @@ const useFetchGenericElement = () =>
             try{
                 const response = await GenericElementsService.GetAllAsync();
                 const dataUpdated = UpdateData(response.data)
-                console.log(dataUpdated);
-                setFetchedGenericElement(dataUpdated);
+                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                setGElements(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -47,12 +40,13 @@ const useFetchGenericElement = () =>
 
         GetAllGenericElements();
 
-    },[update]);
+    },[GenericElementsService, change]);
 
     return{
-        fetchedGenericElement,
+        GElements,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 
