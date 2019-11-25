@@ -1,54 +1,52 @@
 import { useContext, useEffect} from 'react';
 import { GenericTaskService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import GenericTask from '../../models/GenericTask';
 
-const useGenericTaskViewModel = (OnModified, Select) =>
+const useGenericTaskViewModel = () =>
 {
     const GenericTasksService = useContext(GenericTaskService);
-    //const OnModified = useContext(Functions);
+
     const SaveGenericTask = (model, values) =>
     {
-        model.Ref = values.Ref;
         model.Description = values.Description;
-        model.Duration = values.Duration;
+        model.Duration = values.Duration; 
+        model.Period = values.Period; 
+        model.PriorityId = values.PriorityId; 
+        model.FormatId = values.FormatId; 
+        model.CategoryId = values.CategoryId; 
+        model.TasksIds = values.TasksIds; 
+       
 
-        
+
         if(model !== undefined || model!== null)
         {
-            GenericTasksService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return GenericTasksService.UpdateAsync(model);
         }
     }
-        
-    const AddNewGenericTask = (model, values) =>
+      
+    const AddNewGenericTask = (values) =>
     {
-        model.Ref = values.Ref;
+        let model = new GenericTask();
+
         model.Description = values.Description;
-        model.Duration = values.Duration;
+        model.Duration = values.Duration; 
+        model.Period = values.Period; 
+        model.PriorityId = values.PriorityId; 
+        model.FormatId = values.FormatId; 
+        model.CategoryId = values.CategoryId; 
+        model.TasksIds = values.TasksIds;  
  
         if(model !== undefined || model!== null)
         {
-            GenericTasksService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return GenericTasksService.AddAsync(model);
         }
     }
  
     const DeleteGenericTask = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            GenericTasksService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return GenericTasksService.DeleteAsync(model.Id);
         }
     }
 

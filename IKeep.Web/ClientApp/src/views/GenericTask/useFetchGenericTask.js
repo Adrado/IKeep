@@ -4,10 +4,10 @@ import GenericTask from '../../models/GenericTask';
 
 const useFetchGenericTask = () =>
 {
-    const [fetchedGenericTask, setFetchedGenericTask] = useState(null);
-    const [error, setError] = useState(false);
     const GenericTasksService = useContext(GenericTaskService);
-    const [update, setUpdate] = useState(null);
+    const [GTasks, setGTasks] = useState(null);
+    const [error, setError] = useState(false);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
@@ -23,21 +23,15 @@ const useFetchGenericTask = () =>
         return data;
     }
 
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
-    }
-
     useEffect(() =>
     {
         const GetAllGenericTasks = async () =>
         {
             try{
                 const response = await GenericTasksService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data);
-                console.log(dataUpdated);
-                setFetchedGenericTask(dataUpdated);
+                const dataUpdated = UpdateData(response.data)
+                dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0)); 
+                setGTasks(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -46,12 +40,13 @@ const useFetchGenericTask = () =>
 
         GetAllGenericTasks();
 
-    },[update]);
+    },[GenericTasksService, change]);
 
     return{
-        fetchedGenericTask,
+        GTasks,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 

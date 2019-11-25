@@ -23,15 +23,19 @@ const GElementGTasksTable = ({displayTable}) =>
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions)
-  console.log(state);
+  
+  const {tasks, change, setChange} = useFetchGElementGTasks(state.selectedRow.Id, state.change);
+  const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
 
-  const SelectRow = () =>
+  const AddTasks = () =>
   {
-    dispatch({ type: 'SELECT_ROW', data: new GenericElement()});
+    dispatch({ type: 'ADD_TASKS', data: tasks});
   }
 
-  const {tasks, change, setChange} = useFetchGElementGTasks(state.selectedRow.Id);
-  const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
+  const DeleteRows = () =>
+  {
+    dispatch({ type: 'TASKS_ADDED', data: !state.change});
+  }
 
   const columns = [
       { title: 'Estado', field: 'Status', lookup: { 0: 'Inactivo', 1: 'Activo' }},
@@ -51,7 +55,10 @@ const GElementGTasksTable = ({displayTable}) =>
                     icon: 'add',
                     tooltip: 'Añadir Tareas',
                     isFreeAction: true,
-                    onClick: (event) => displayTable()
+                    onClick: (event) => {
+                      AddTasks();
+                      displayTable();
+                    }
                   }
                 ]}
 
@@ -81,7 +88,8 @@ const GElementGTasksTable = ({displayTable}) =>
                     new Promise((resolve, reject) => {
                       DeleteGElementGTask(oldData)
                       .then(() => {
-                        setChange(!change)
+                        setChange(!change);
+                        DeleteRows();
                         resolve()
                       })
                     }),

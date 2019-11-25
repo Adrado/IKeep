@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react"
 import { GElementGTaskService } from "../../../providers/Providers"
 import GenericElementGenericTask from "../../../models/GenericElementGenericTask";
 
-const useGElementGTasks = (id) =>
+const useGElementGTasks = (id, update) =>
 {
     const GElementGTasksService = useContext(GElementGTaskService)
     const [tasks, setTasks] = useState(null);
@@ -42,7 +42,7 @@ const useGElementGTasks = (id) =>
             GetById();
         }
 
-    },[id, GElementGTasksService, change]);
+    },[id, GElementGTasksService, change, update]);
 
     return{
         tasks,

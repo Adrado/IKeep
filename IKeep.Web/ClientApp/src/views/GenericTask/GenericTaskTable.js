@@ -9,12 +9,14 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchGenericTask from './useFetchGenericTask';
+import useGenericTaskViewModel from './useGenericTaskViewModel';
+import useFetchFormat from '../Format/useFetchFormat';
+import useFetchCategory from '../Category/useFetchCategory';
+import useFetchPriority from '../Priority/useFetchPriority';
 
 
-const GenericElementsTable = () => 
+const GenericTasksTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -24,41 +26,64 @@ const GenericElementsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {ETypes} = useFetchElementType();
-  console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {Categories} = useFetchCategory();
+  const {Formats} = useFetchFormat();
+  const {Priorities} = useFetchPriority();
+
+  const {GTasks, change, setChange} = useFetchGenericTask();
+  const [Add, Save, Delete] = useGenericTaskViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  const BuildFieldType = () =>
+  const BuildField = (Data) =>
   {
-    let lookupTypes = {}
-    for (let i in ETypes)
+    let lookup = {}
+    for (let i in Data)
     {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
     }
-    return lookupTypes;
+    return lookup;
   }
 
-  //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
+  //Info to GenericTasks Table 
+  const LookupFormats = BuildField(Formats);
+  const LookupCategories = BuildField(Categories);
+  const LookupPriorities = BuildField(Priorities);
+
+  const Periodicity = Object.freeze({
+    0 : "Diaria",
+    1 : "Semanal",
+    2 : "Mensual",
+    3 : "Bimensual",
+    4 : "Cuatrimestral",
+    5 : "Semestral",
+    6 : "Anual",
+    7 : "Bianual",
+    8 : "Cuatrianual"
+  })
+
   const columns = [
-    { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
-    ] 
-  const Title = "Elementos Genéricos";
+    { title: 'Descripción', field: 'Description' },
+    { title: 'Periodicidad', field: 'Period', lookup: Periodicity},
+    //Vigilar el formato para evitar errores en el servidor.
+    { title: 'Duración estimada', field: 'Duration'},
+    { title: 'Formato', field: 'FormatId', lookup: LookupFormats},
+    { title: 'Prioridad', field: 'PriorityId', lookup: LookupPriorities},
+    { title: 'Categoria', field: 'CategoryId', lookup: LookupCategories}
+  ] 
+
+  const Title = "Tareas";
   
     return(
         <Fragment>
-          {GElements === null &&
+          {GTasks === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { GTasks !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={GTasks}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -115,7 +140,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default GenericTasksTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

@@ -4,13 +4,10 @@ import Format from '../../models/Format';
 
 const useFetchFormat = () =>
 {
-    //CRUD services
     const FormatsService = useContext(FormatService);
-
-    const [fetchedFormat, setFetchedFormat] = useState(null);
+    const [Formats, setFormats] = useState(null);
     const [error, setError] = useState(false);
-    
-    const [update, setUpdate] = useState(null);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
@@ -26,21 +23,15 @@ const useFetchFormat = () =>
         return data;
     }
 
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
-    }
-
     useEffect(() =>
     {
         const GetAllFormats = async () =>
         {
             try{
                 const response = await FormatsService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data);
-                console.log(dataUpdated);
-                setFetchedFormat(dataUpdated);
+                const dataUpdated = UpdateData(response.data)
+                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                setFormats(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -49,12 +40,13 @@ const useFetchFormat = () =>
 
         GetAllFormats();
 
-    },[update]);
+    },[FormatsService, change]);
 
     return{
-        fetchedFormat,
+        Formats,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 

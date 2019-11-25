@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from 'react';
+import React, {Fragment, useContext, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 //DataTable
@@ -14,18 +14,31 @@ import useGElementGTaskViewModel from '../GElementGTask/useGElementGTaskViewMode
 const GenericTasksTable = ({displayTable}) => 
 {
   //const classes = useStyles();
-  const {state} = useContext(Functions);
+  const {state, dispatch} = useContext(Functions);
 
   const GElementSelected = state.selectedRow;
   
-  const {fetchedGenericTask} = useFetchGenericTask();
+  const {GTasks} = useFetchGenericTask();
+
+  const tasksAdded = () =>
+  {
+    dispatch({ type: 'TASKS_ADDED', data: !state.change});
+  }
 
   const [Add] = useGElementGTaskViewModel();
 
-  const SelectedTasks = (data) =>
+  const AddSelectedTasks = (data) =>
   {
-    Add(GElementSelected.Id, data);
-    displayTable();
+    let p = [];
+    for (let i in data)
+    {
+      p.push(Add(GElementSelected.Id, data[i]));
+    }
+
+    Promise.all(p).then(()=> {
+      tasksAdded();
+      displayTable();
+    })
   }
 
   const Periodicity = Object.freeze({
@@ -50,21 +63,35 @@ const GenericTasksTable = ({displayTable}) =>
   ]
   const Title = "Tareas";
 
+  const isSelected = (rowData) =>
+  {
+    let result = state.tasks.find(task => task.GenericTaskId === rowData.Id);
+
+    if (result !== undefined && result !== null && result.GenericTaskId === rowData.Id)
+      return true;
+    else
+      return false;
+  }
+
+  useEffect(() =>
+  {
+       
+  },[state]);
 
     return(
         <Fragment>
-          { fetchedGenericTask !== null &&
+          { GTasks !== null &&
             <MaterialTable
             title = {Title}
             columns={columns}
-            data={fetchedGenericTask}
+            data={GTasks}
 
             actions={[
               {
                 
                 icon: 'add',
                 tooltip: 'Añadir Tareas',
-                onClick: (evt, data) => SelectedTasks(data)
+                onClick: (evt, data) => AddSelectedTasks(data)
               },
               {
                 //icons at https://material-ui.com/es/components/material-icons/, if "ArrowBack", change to "arrow_back"
@@ -83,9 +110,8 @@ const GenericTasksTable = ({displayTable}) =>
               pageSizeOptions: [10, 20],
               selection: true,
               selectionProps: rowData => ({
-                disabled: [rowData.Description === 'Limpiar', rowData.Description === 'Limpieza general']
-                //disabled: [rowData.Description === []]
-              }),              
+                disabled: isSelected(rowData)
+              }),       
               search: true
             }}
 

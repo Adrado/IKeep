@@ -4,32 +4,23 @@ import Category from '../../models/Category';
 
 const useFetchCategory = () =>
 {
-    //CRUD services
     const CategorysService = useContext(CategoryService);
-
-    const [fetchedCategory, setFetchedCategory] = useState(null);
+    const [Categories, setCategories] = useState(null);
     const [error, setError] = useState(false);
-    
-    const [update, setUpdate] = useState(null);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
-        let categorys = []; 
+        let categories = []; 
         for (let i in data)
         {
             let category = new Category(data[i]);
             
             //if(category.EntityStatus !== 0)  
-            categorys.push(category);
+            categories.push(category);
         }
-        data = categorys;
+        data = categories;
         return data;
-    }
-
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
     }
 
     useEffect(() =>
@@ -38,9 +29,9 @@ const useFetchCategory = () =>
         {
             try{
                 const response = await CategorysService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data);
-                console.log(dataUpdated);
-                setFetchedCategory(dataUpdated);
+                const dataUpdated = UpdateData(response.data)
+                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                setCategories(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -49,12 +40,13 @@ const useFetchCategory = () =>
 
         GetAllCategorys();
 
-    },[update]);
+    },[CategorysService, change]);
 
     return{
-        fetchedCategory,
+        Categories,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 

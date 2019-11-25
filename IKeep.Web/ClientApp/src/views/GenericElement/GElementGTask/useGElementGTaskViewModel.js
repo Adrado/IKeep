@@ -21,26 +21,18 @@ const useGElementGTaskViewModel = () =>
         }
     }
         
-    const AddNewGElementGTasks = (genericElementId, genericTasks) =>
+    const AddNewGElementGTasks = (genericElementId, model) =>
     {
-        for (let i in genericTasks)
-        {
-            const GElementGTask = new GenericElementGenericTask()
-            const GTask = genericTasks[i];
-            console.log(GTask);
-            GElementGTask.GenericElementId = genericElementId;
-            GElementGTask.GenericTaskId = GTask.Id;
-            GElementGTask.Status = 1;
+        const GElementGTask = new GenericElementGenericTask()
 
-            if(GElementGTask.GenericElementId !== null || GElementGTask.GenericElementId !== undefined && 
-                GElementGTask.GenericTaskId !== null || GElementGTask.GenericTaskId !== undefined)
-            {
-                    GElementGTasksService.AddAsync(GElementGTask)
-                    .then((response) => { 
-                        /* OnModified();
-                        Select(); */
-                    });
-            }
+        GElementGTask.GenericElementId = genericElementId;
+        GElementGTask.GenericTaskId = model.Id;
+        GElementGTask.Status = 1;
+
+        if(GElementGTask.GenericElementId !== null || GElementGTask.GenericElementId !== undefined && 
+            GElementGTask.GenericTaskId !== null || GElementGTask.GenericTaskId !== undefined)
+        {
+            return GElementGTasksService.AddAsync(GElementGTask)
         }
     }
  

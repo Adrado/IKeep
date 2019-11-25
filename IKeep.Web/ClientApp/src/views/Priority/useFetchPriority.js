@@ -4,32 +4,23 @@ import Priority from '../../models/Priority';
 
 const useFetchPriority = () =>
 {
-    //CRUD services
     const PrioritysService = useContext(PriorityService);
-
-    const [fetchedPriority, setFetchedPriority] = useState(null);
+    const [Priorities, setPriorities] = useState(null);
     const [error, setError] = useState(false);
-    
-    const [update, setUpdate] = useState(null);
+    const [change, setChange] = useState(false);
 
     const UpdateData = (data) =>
     {
-        let prioritys = []; 
+        let priorities = []; 
         for (let i in data)
         {
             let priority = new Priority(data[i]);
             
             //if(priority.EntityStatus !== 0)  
-            prioritys.push(priority);
+            priorities.push(priority);
         }
-        data = prioritys;
+        data = priorities;
         return data;
-    }
-
-    const onModify = () =>
-    {
-        let x = Math.floor(Math.random() * (1000 - 1)) + 1;
-        setUpdate(x);
     }
 
     useEffect(() =>
@@ -38,9 +29,9 @@ const useFetchPriority = () =>
         {
             try{
                 const response = await PrioritysService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data);
-                console.log(dataUpdated);
-                setFetchedPriority(dataUpdated);
+                const dataUpdated = UpdateData(response.data)
+                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                setPriorities(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -49,12 +40,13 @@ const useFetchPriority = () =>
 
         GetAllPrioritys();
 
-    },[update]);
+    },[PrioritysService, change]);
 
     return{
-        fetchedPriority,
+        Priorities,
         error,
-        onModify
+        change,
+        setChange
     }
 }
 
