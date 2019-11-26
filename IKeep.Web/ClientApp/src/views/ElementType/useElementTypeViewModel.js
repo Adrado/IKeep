@@ -1,52 +1,41 @@
 import { useContext, useEffect} from 'react';
 import { ElementTypeService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import ElementType from '../../models/ElementType';
 
-const useElementTypeViewModel = (OnModified, Select) =>
+const useElementTypeViewModel = () =>
 {
     const ElementTypesService = useContext(ElementTypeService);
-    //const OnModified = useContext(Functions);
+
     const SaveElementType = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = values.ElementTypeId; 
 
-        
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return ElementTypesService.UpdateAsync(model);
         }
     }
-        
-    const AddNewElementType = (model, values) =>
+      
+    const AddNewElementType = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
+        let elementType = new ElementType();
+        elementType.Ref = values.Ref;
+        elementType.Name = values.Name;
+        elementType.ElementTypeId = values.ElementTypeId; 
  
-        if(model !== undefined || model!== null)
+        if(elementType !== undefined || elementType!== null)
         {
-            ElementTypesService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return ElementTypesService.AddAsync(elementType);
         }
     }
  
     const DeleteElementType = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            ElementTypesService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return ElementTypesService.DeleteAsync(model.Id);
         }
     }
 

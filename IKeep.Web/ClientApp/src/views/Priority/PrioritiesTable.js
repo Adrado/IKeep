@@ -9,12 +9,11 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchPriority from './useFetchPriority';
+import usePriorityViewModel from './usePriorityViewModel';
 
 
-const GenericElementsTable = () => 
+const PrioritiesTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -24,41 +23,28 @@ const GenericElementsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {ETypes} = useFetchElementType();
-  //console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {Priorities, change, setChange} = useFetchPriority();
+  const [Add, Save, Delete] = usePriorityViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  const BuildFieldType = () =>
-  {
-    let lookupTypes = {}
-    for (let i in ETypes)
-    {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
-    }
-    return lookupTypes;
-  }
+  //Info to Priorities Table 
 
-  //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
   const columns = [
     { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
-    ] 
-  const Title = "Elementos Genéricos";
+  ] 
+
+  const Title = "Prioridades";
   
     return(
         <Fragment>
-          {GElements === null &&
+          {Priorities === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { Priorities !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={Priorities}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -115,7 +101,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default PrioritiesTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

@@ -1,12 +1,7 @@
 import React, {Fragment, useReducer} from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import useFetchElementType from './useFetchElementType';
-import ElementTypeForm from './ElementTypeForm';
-import DataTable from '../../components/DataTable';
-import { makeStyles } from '@material-ui/core/styles';
-import {Functions} from '../../providers/Providers'
+import {Functions} from '../../providers/Providers';
 import ElementType from '../../models/ElementType';
+import ElementTypesTable from './ElementTypesTable';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -14,7 +9,6 @@ function reducer(state, action) {
           return {
               selectedRow: action.data
           };
-
       default:
           return initialState;
   }
@@ -26,44 +20,15 @@ const initialState = {
 
 const ElementTypeView = () =>
 {
-    const classes = useStyles();
-    const {ETypes, error, change, setChange} = useFetchElementType();
-    const columns = [
-      { title: 'Ref', field: 'Ref' },
-      { title: 'Nombre', field: 'Name' }
-    ] 
-    const title = "Tipos de Elementos"
-    const [state, dispatch] = useReducer(reducer, initialState);
-
-    return(
-      <Fragment>
-        <Functions.Provider value={{ state, dispatch }}>
-          <ElementTypeForm
-            //elementTypeData = {selectedRow}
-            onModify = {setChange}/>
-          
-          { ETypes === null &&
-            <CircularProgress className={classes.progress}/>
-          }
-          { error === true &&
-            <h1>Error...</h1>
-          }
-          { ETypes !== null &&
-            <DataTable
-              Title = {title}
-              Data = {ETypes}
-              Columns = {columns}
-              />  
-          }
-        </Functions.Provider>
-      </Fragment>
-    )
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return(
+    <Fragment>
+      <Functions.Provider value={{ state, dispatch }}>
+          <ElementTypesTable/>  
+      </Functions.Provider>
+    </Fragment>
+  )
 }
 
 export default ElementTypeView;
 
-const useStyles = makeStyles(theme => ({
-    progress: {
-      margin: theme.spacing(2),
-    },
-  }));

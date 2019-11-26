@@ -1,20 +1,19 @@
 import React, {Fragment, useContext, useState} from 'react';
-import {CircularProgress, makeStyles} from '@material-ui/core' 
+import {CircularProgress, makeStyles} from '@material-ui/core';
 
 //Table
 import MaterialTable from 'material-table';
-import {localizationEsp} from '../../components/MaterialTableProps'
+import {localizationEsp} from '../../components/MaterialTableProps';
 
 //Contexts
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchCategory from './useFetchCategory';
+import useCategoryViewModel from './useCategoryViewModel';
 
 
-const GenericElementsTable = () => 
+const CategoriesTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -24,41 +23,28 @@ const GenericElementsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {ETypes} = useFetchElementType();
-  //console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {Categories, change, setChange} = useFetchCategory();
+  const [Add, Save, Delete] = useCategoryViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  const BuildFieldType = () =>
-  {
-    let lookupTypes = {}
-    for (let i in ETypes)
-    {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
-    }
-    return lookupTypes;
-  }
+  //Info to Categories Table 
 
-  //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
   const columns = [
     { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
-    ] 
-  const Title = "Elementos Genéricos";
+  ] 
+
+  const Title = "Categorías";
   
     return(
         <Fragment>
-          {GElements === null &&
+          {Categories === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { Categories !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={Categories}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -115,7 +101,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default CategoriesTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

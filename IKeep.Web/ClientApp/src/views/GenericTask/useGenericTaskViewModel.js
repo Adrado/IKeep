@@ -16,8 +16,6 @@ const useGenericTaskViewModel = () =>
         model.CategoryId = values.CategoryId; 
         model.TasksIds = values.TasksIds; 
        
-
-
         if(model !== undefined || model!== null)
         {
             return GenericTasksService.UpdateAsync(model);

@@ -9,12 +9,11 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchElementType from './useFetchElementType';
+import useElementTypeViewModel from './useElementTypeViewModel';
 
 
-const GenericElementsTable = () => 
+const ElementTypesTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -24,41 +23,28 @@ const GenericElementsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {ETypes} = useFetchElementType();
-  //console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {ETypes, change, setChange} = useFetchElementType();
+  const [Add, Save, Delete] = useElementTypeViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  const BuildFieldType = () =>
-  {
-    let lookupTypes = {}
-    for (let i in ETypes)
-    {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
-    }
-    return lookupTypes;
-  }
+  //Info to ElementTypes Table 
 
-  //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
   const columns = [
     { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
-    ] 
-  const Title = "Elementos Genéricos";
+  ] 
+
+  const Title = "Tipos de Elementos";
   
     return(
         <Fragment>
-          {GElements === null &&
+          {ETypes === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { ETypes !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={ETypes}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -115,7 +101,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default ElementTypesTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

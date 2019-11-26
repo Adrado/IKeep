@@ -54,7 +54,7 @@ const GenericElementView = () =>
     const classes = useStyles();
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    console.log(state);
+    //console.log(state);
 
     const [display, setDisplay] = useState(true);
     

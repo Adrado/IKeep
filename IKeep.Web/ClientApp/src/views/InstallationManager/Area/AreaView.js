@@ -3,6 +3,7 @@ import useFetchArea from './useFetchArea'
 import AreaForm from './AreaForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import ElementsTable from './Element/ElementsTable';
 
 
 /**
@@ -26,6 +27,7 @@ const AreaView = ({treeNode}) =>
           <AreaForm
             areaData = {fetchedArea}/>
         }
+        <ElementsTable/>
       </Fragment>
     )    
 }

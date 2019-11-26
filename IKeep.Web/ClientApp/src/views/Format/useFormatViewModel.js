@@ -1,52 +1,41 @@
 import { useContext, useEffect} from 'react';
 import { FormatService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import Format from '../../models/Format';
 
-const useFormatViewModel = (OnModified, Select) =>
+const useFormatViewModel = () =>
 {
     const FormatsService = useContext(FormatService);
-    //const OnModified = useContext(Functions);
+
     const SaveFormat = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = values.ElementTypeId; 
 
-        
         if(model !== undefined || model!== null)
         {
-            FormatsService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return FormatsService.UpdateAsync(model);
         }
     }
-        
-    const AddNewFormat = (model, values) =>
+      
+    const AddNewFormat = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
+        let format = new Format();
+        format.Ref = values.Ref;
+        format.Name = values.Name;
+        format.ElementTypeId = values.ElementTypeId; 
  
-        if(model !== undefined || model!== null)
+        if(format !== undefined || format!== null)
         {
-            FormatsService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return FormatsService.AddAsync(format);
         }
     }
  
     const DeleteFormat = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            FormatsService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return FormatsService.DeleteAsync(model.Id);
         }
     }
 

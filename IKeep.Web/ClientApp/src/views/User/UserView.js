@@ -1,7 +1,7 @@
 import React, {Fragment, useReducer} from 'react';
 import {Functions} from '../../providers/Providers';
-import Format from '../../models/Format';
-import FormatsTable from './FormatsTable';
+import User from '../../models/User';
+import UsersTable from './UsersTable';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -15,20 +15,20 @@ function reducer(state, action) {
 }
 
 const initialState = {
-  selectedRow: new Format(),
+  selectedRow: new User(),
 };
 
-const FormatView = () =>
+const UserView = () =>
 {
   const [state, dispatch] = useReducer(reducer, initialState);
   return(
     <Fragment>
       <Functions.Provider value={{ state, dispatch }}>
-          <FormatsTable/>  
+          <UsersTable/>  
       </Functions.Provider>
     </Fragment>
   )
 }
 
-export default FormatView;
+export default UserView;
 

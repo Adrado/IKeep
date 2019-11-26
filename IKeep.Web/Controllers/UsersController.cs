@@ -46,7 +46,7 @@ namespace IKeep.Web.Controllers
         }
 
         // PUT: api/Users/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult<User>> PutUser(User user)
         {
             return await Task.Run(() =>

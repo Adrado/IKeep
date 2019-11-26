@@ -1,52 +1,41 @@
 import { useContext, useEffect} from 'react';
 import { PriorityService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import Priority from '../../models/Priority';
 
-const usePriorityViewModel = (OnModified, Select) =>
+const usePriorityViewModel = () =>
 {
-    const PrioritysService = useContext(PriorityService);
-    //const OnModified = useContext(Functions);
+    const PrioritiesService = useContext(PriorityService);
+
     const SavePriority = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = values.ElementTypeId; 
 
-        
         if(model !== undefined || model!== null)
         {
-            PrioritysService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return PrioritiesService.UpdateAsync(model);
         }
     }
-        
-    const AddNewPriority = (model, values) =>
+      
+    const AddNewPriority = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
+        let priority = new Priority();
+        priority.Ref = values.Ref;
+        priority.Name = values.Name;
+        priority.ElementTypeId = values.ElementTypeId; 
  
-        if(model !== undefined || model!== null)
+        if(priority !== undefined || priority!== null)
         {
-            PrioritysService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return PrioritiesService.AddAsync(priority);
         }
     }
  
     const DeletePriority = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            PrioritysService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return PrioritiesService.DeleteAsync(model.Id);
         }
     }
 

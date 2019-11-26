@@ -1,20 +1,20 @@
 import React, {Fragment, useContext, useState} from 'react';
-import {CircularProgress, makeStyles} from '@material-ui/core' 
+import {CircularProgress, makeStyles} from '@material-ui/core';
 
 //Table
 import MaterialTable from 'material-table';
-import {localizationEsp} from '../../components/MaterialTableProps'
+import {localizationEsp} from '../../components/MaterialTableProps';
 
 //Contexts
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchUsers from './useFetchUsers';
+import useUserViewModel from './useUserViewModel';
+import useFetchRoles from '../Role/useFetchRoles';
 
 
-const GenericElementsTable = () => 
+const UsersTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -24,41 +24,55 @@ const GenericElementsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {ETypes} = useFetchElementType();
-  //console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {Users, change, setChange} = useFetchUsers();
+  const [Add, Save, Delete] = useUserViewModel();
   const [row, setRow] = useState(state.selectedRow);
-   
-  const BuildFieldType = () =>
+  const{Roles} = useFetchRoles();
+
+  const BuildField = (Data) =>
   {
-    let lookupTypes = {}
-    for (let i in ETypes)
+    let lookup = {}
+    for (let i in Data)
     {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
     }
-    return lookupTypes;
+    return lookup;
   }
 
-  //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
+   
+  //Info to Users Table 
+  const LookupRoles = BuildField(Roles);
+
   const columns = [
+    { title: 'Usuario', field: 'LoginName' },
+    { title: 'Contraseña', field: 'Password' },
+    { title: 'Rol', field: 'RoleId', lookup: LookupRoles},
     { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
-    ] 
-  const Title = "Elementos Genéricos";
+    { title: 'Primer Apellido', field: 'FirstSurname' },
+    { title: 'Segundo Apellido', field: 'SecondSurname' },
+    { title: 'DNI', field: 'DNI' },
+    { title: 'Fijo', field: 'Phone' },
+    { title: 'Móvil', field: 'Phone2' },
+    { title: 'Correo', field: 'Email' },
+    { title: 'Lugar de Nacimiento', field: 'Birthplace' },
+    { title: 'Fecha de Nacimiento', field: 'Birthdate', type: 'date' },
+    { title: 'Ciudad', field: 'City' },
+    { title: 'Dirección', field: 'Address' }
+  ] 
+
+  const Title = "Usuarios";
   
     return(
         <Fragment>
-          {GElements === null &&
+          {Users === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { Users !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={Users}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -94,7 +108,8 @@ const GenericElementsTable = () =>
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {
                     Save(oldData, newData)
-                    .then(() => {
+                    .then((response) => {
+                      console.log(response)
                       setChange(!change)
                       resolve()
                     })
@@ -115,7 +130,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default UsersTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

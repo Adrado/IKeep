@@ -9,12 +9,12 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchGenericElement from './useFetchGenericElement';
-import useGenericElementViewModel from './useGenericElementViewModel';
+import useFetchElements from './useFetchElements';
+import useElementViewModel from './useElementViewModel';
 import useFetchElementType from '../ElementType/useFetchElementType';
 
 
-const GenericElementsTable = () => 
+const ElementsTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -26,8 +26,8 @@ const GenericElementsTable = () =>
 
   const {ETypes} = useFetchElementType();
   //console.log(ETypes)
-  const {GElements, change, setChange} = useFetchGenericElement();
-  const [Add, Save, Delete] = useGenericElementViewModel();
+  const {Elements, change, setChange} = useFetchElements();
+  const [Add, Save, Delete] = useElementViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
   const BuildFieldType = () =>
@@ -41,7 +41,7 @@ const GenericElementsTable = () =>
     return lookupTypes;
   }
 
-  //Info to GenericElements Table 
+  //Info to Elements Table 
   const LookupTypes = BuildFieldType();
   const columns = [
     { title: 'Nombre', field: 'Name' },
@@ -51,14 +51,14 @@ const GenericElementsTable = () =>
   
     return(
         <Fragment>
-          {GElements === null &&
+          {Elements === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { GElements !== null &&
+          { Elements !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={GElements}
+              data={Elements}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -115,7 +115,7 @@ const GenericElementsTable = () =>
   )                
 }
 
-export default GenericElementsTable;
+export default ElementsTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

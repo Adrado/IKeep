@@ -1,52 +1,41 @@
 import { useContext, useEffect} from 'react';
 import { CategoryService } from '../../providers/Providers';
-//import {Functions} from '../../providers/Providers';
+import Category from '../../models/Category';
 
-const useCategoryViewModel = (OnModified, Select) =>
+const useCategoryViewModel = () =>
 {
-    const CategorysService = useContext(CategoryService);
-    //const OnModified = useContext(Functions);
+    const CategoriesService = useContext(CategoryService);
+
     const SaveCategory = (model, values) =>
     {
         model.Ref = values.Ref;
         model.Name = values.Name;
+        model.ElementTypeId = values.ElementTypeId; 
 
-        
         if(model !== undefined || model!== null)
         {
-            CategorysService.UpdateAsync(model)
-            .then((response) => {
-                OnModified();
-                Select();
-            });
+            return CategoriesService.UpdateAsync(model);
         }
     }
-        
-    const AddNewCategory = (model, values) =>
+      
+    const AddNewCategory = (values) =>
     {
-        model.Ref = values.Ref;
-        model.Name = values.Name;
+        let category = new Category();
+        category.Ref = values.Ref;
+        category.Name = values.Name;
+        category.ElementTypeId = values.ElementTypeId; 
  
-        if(model !== undefined || model!== null)
+        if(category !== undefined || category!== null)
         {
-            CategorysService.AddAsync(model)
-                .then((response) => { 
-                    OnModified();
-                    Select();
-                });
+            return CategoriesService.AddAsync(category);
         }
     }
  
     const DeleteCategory = (model) =>
     {
-        //confirm("¿Estás seguro de eliminar este elemento?" + model.EntityType);
         if(model !== undefined || model!== null)
         {
-            CategorysService.DeleteAsync(model.Id)
-                .then((response) => {
-                    OnModified();
-                    Select();
-                })
+            return CategoriesService.DeleteAsync(model.Id);
         }
     }
 

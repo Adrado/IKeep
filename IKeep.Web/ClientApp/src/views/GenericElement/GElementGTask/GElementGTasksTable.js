@@ -1,7 +1,7 @@
-import React, {Fragment, useContext, useState} from 'react';
+import React, {Fragment, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import GenericElement from '../../../models/GenericElement';
+
 import {Functions} from '../../../providers/Providers'
 import useFetchGElementGTasks from './useFetchGElementGTasks';
 
@@ -11,13 +11,6 @@ import MaterialTable from 'material-table';
 import {localizationEsp} from '../../../components/MaterialTableProps'
 import useGElementGTaskViewModel from './useGElementGTaskViewModel';
 
-
-const GenericElementState = 
-{
-  Ref: "", 
-  Name: "", 
-  ElementTypeId: "", 
-}
 
 const GElementGTasksTable = ({displayTable}) => 
 {
