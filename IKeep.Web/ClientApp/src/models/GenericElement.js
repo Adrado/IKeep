@@ -9,8 +9,9 @@ class GenericElement extends Entity
         {
             this.Name = json.name;
             this.ElementTypeId = json.elementTypeId;
-            this.ElementsIds = json.elementsIds;
             this.ElementTypeName = json.elementTypeName;
+
+            this.ElementsIds = json.elementsIds;
             this.GenericElementGenericTasksIds = json.genericElementGenericTasksIds;
         }
         else

@@ -7,27 +7,31 @@ class Element extends Entity
         super(json);
         if(json)
         {
-            this.Ref = json.ref;
             this.Name = json.name;
-            this.Status = json.status;
             this.ElementTypeId = json.elementTypeId;
+            this.ElementTypeName = json.elementTypeName;
+
             this.AreaId = json.area.Id;
             this.TasksIds = json.tasksIds;
             this.CorrectivesIds = json.correctivesIds;
             this.ObservationsIds = json.observationsIds;
             this.GenericElementId = json.genericElementId;
+
+            this.Status = json.status;
         }
         else
         {
-            this.Ref = "";
             this.Name = "";
-            this.Status = "";
             this.ElementTypeId = "";
+            this.ElementTypeName = "";
+            
             this.AreaId = "";
             this.TasksIds = [];
             this.CorrectivesIds = [];
             this.ObservationsIds = [];
             this.GenericElementId = "00000000-0000-0000-0000-000000000000";
+
+            this.Status = "";
         }
     }
 }
