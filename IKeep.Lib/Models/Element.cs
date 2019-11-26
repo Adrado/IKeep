@@ -9,17 +9,32 @@ namespace IKeep.Lib.Models
 {
     public class Element : Entity
     {
+        // Vigilar las posibilidades del campo Status
+        public StatusElement Status { get; set; }
         public string Name { get; set; }
         public Guid? ElementTypeId { get; set; }
         [JsonIgnore]
         public virtual ElementType ElementType { get; set; }
-        // Vigilar las posibilidades del campo Status
-        public StatusElement Status { get; set; }
+        public string ElementTypeName
+        {
+            get
+            {
+                return ElementType == null ? "" : ElementType.Name;
+            }
+        }
+
+        /*
+        public string Ref { get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
+        public string Description { get; set; }
+        public string SafetyAndHealth { get; set; }
+         */
+
         public Guid AreaId { get; set; }
         public Guid? GenericElementId { get; set; }
         [JsonIgnore]
         public virtual GenericElement GenericElement { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<Task> Tasks { get; set; }
         public List<Guid> TasksIds

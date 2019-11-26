@@ -10,7 +10,6 @@ namespace IKeep.Lib.Models
     public class User : Entity
     {
         public string LoginName { get; set; }
-        [JsonIgnore]
         public string Password { get; set; }
         public string Name { get; set; }
         public string FirstSurname { get; set; }
