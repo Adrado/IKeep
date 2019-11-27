@@ -17,6 +17,9 @@ namespace IKeep.Lib.Models
         public Guid PriorityId { get; set; }
         [JsonIgnore]
         public virtual Priority Priority { get; set; }
+        public Guid? SupplierId { get; set; }
+        [JsonIgnore]
+        public virtual Supplier Supplier { get; set; }
 
         public string PriorityName
         {
@@ -66,6 +69,16 @@ namespace IKeep.Lib.Models
             get
             {
                 return GenericElementGenericTasks == null ? new List<Guid>() : GenericElementGenericTasks.Select(x => x.Id).ToList();
+            }
+        }
+
+        [JsonIgnore]
+        public virtual ICollection<ElementGenericTask> ElementGenericTasks { get; set; }
+        public List<Guid> ElementGenericTasksIds
+        {
+            get
+            {
+                return ElementGenericTasks == null ? new List<Guid>() : ElementGenericTasks.Select(x => x.Id).ToList();
             }
         }
     }
