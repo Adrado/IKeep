@@ -46,7 +46,7 @@ const GenericTasksTable = ({displayTable}) =>
     1 : "Semanal",
     2 : "Mensual",
     3 : "Bimensual",
-    4 : "Cuatrimestral",
+    4 : "Trimestral",
     5 : "Semestral",
     6 : "Anual",
     7 : "Bianual",
