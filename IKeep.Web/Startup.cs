@@ -84,6 +84,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Corrective>, CorrectivesDbSet>();
             services.AddScoped<IDbSet<ElementObservation>, ElementObservationsDbSet>();
             services.AddScoped<IDbSet<ElementType>, ElementTypesDbSet>();
+            services.AddScoped<IDbSet<ElementGenericTask>, ElementGenericTasksDbSet>();
             services.AddScoped<IDbSet<Floor>, FloorsDbSet>();
             services.AddScoped<IDbSet<Format>, FormatsDbSet>();
             services.AddScoped<IDbSet<GenericElement>, GenericElementsDbSet>();
@@ -106,6 +107,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Category>, GenericRepository<Category>>();
             services.AddScoped<IRepository<Corrective>, GenericRepository<Corrective>>();
             services.AddScoped<IRepository<ElementType>, GenericRepository<ElementType>>();
+            services.AddScoped<IRepository<ElementGenericTask>, GenericRepository<ElementGenericTask>>();
             services.AddScoped<IRepository<Floor>, GenericRepository<Floor>>();
             services.AddScoped<IRepository<Format>, GenericRepository<Format>>();
             services.AddScoped<IRepository<GenericElement>, GenericRepository<GenericElement>>();
@@ -129,6 +131,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Corrective>, GenericCrudService<Corrective>>();
             services.AddScoped<ICrudService<User>, GenericCrudService<User>>();
             services.AddScoped<ICrudService<ElementType>, GenericCrudService<ElementType>>();
+            services.AddScoped<ICrudService<ElementGenericTask>, GenericCrudService<ElementGenericTask>>();
             services.AddScoped<ICrudService<Floor>, GenericCrudService<Floor>>();
             services.AddScoped<ICrudService<Format>, GenericCrudService<Format>>();
             services.AddScoped<ICrudService<GenericElement>, GenericCrudService<GenericElement>>();
@@ -146,8 +149,6 @@ namespace IKeep.Web
 
             services.AddScoped<ITreeViewService, TreeViewService>();
             
-
-
             // Other Services
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
