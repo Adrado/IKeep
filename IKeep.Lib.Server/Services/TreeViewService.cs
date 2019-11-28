@@ -45,8 +45,8 @@ namespace IKeep.Lib.Server.Services
 
                 tree.RootNode = new TreeNode { Id = Guid.Parse("ccf9fd7d-4d91-4599-b156-4e6e3f4b1e22"), Name = "Root" };
 
-                // Build the tree, setting parent and children references for all elements
                 tree.SortTree();
+                // Build the tree, setting parent and children references for all elements
                 tree.BuildTree();
             }
 
@@ -55,8 +55,8 @@ namespace IKeep.Lib.Server.Services
 
         public Tree GetTreeView()
         {
-            var model = GetData();
-            return model;
+            var tree = GetData();
+            return tree;
         }
 
         //https://ole.michelsen.dk/blog/mapping-relational-table-data-to-a-tree-structure-in-mvc.html
