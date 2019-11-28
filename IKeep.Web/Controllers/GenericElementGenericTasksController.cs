@@ -53,10 +53,10 @@ namespace IKeep.Web.Controllers
         }
 
         // GET: api/GenericElementGenericTasks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<GenericElementGenericTask>>> GetGenericElementGenericTask(Guid id)
+        [HttpGet("{genericElementId}")]
+        public async Task<ActionResult<IEnumerable<GenericElementGenericTask>>> GetGenericElementGenericTask(Guid genericElementId)
         {
-            return await _genericElementGenericTasksService.GetAll().Where(x => x.GenericElementId == id).ToListAsync();
+            return await _genericElementGenericTasksService.GetAll().Where(x => x.GenericElementId == genericElementId).ToListAsync();
         }
 
         // PUT: api/GenericElementGenericTasks/5
