@@ -28,6 +28,14 @@ namespace IKeep.Lib.Models
             }
         }
 
+        public string ElementTypeName
+        {
+            get
+            {
+                return GenericElement == null ? "" : GenericElement.ElementTypeName;
+            }
+        }
+
         [JsonIgnore]
         public virtual ICollection<ElementGenericTask> ElementGenericTasks { get; set; }
         public List<Guid> ElementGenericTasksIds

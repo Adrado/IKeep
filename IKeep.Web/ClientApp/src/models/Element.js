@@ -7,11 +7,17 @@ class Element extends Entity
         super(json);
         if(json)
         {
+            this.Ref = json.ref;
+            this.Brand = json.brand;
+            this.Model = json.model;
+            this.Description = json.description;
+            this.SafetyAndHealth = json.safetyAndHealth;
+
             this.Name = json.name;
-            this.ElementTypeId = json.elementTypeId;
             this.ElementTypeName = json.elementTypeName;
 
             this.AreaId = json.area.Id;
+            this.ElementGenericTasksIds = json.elementGenericTasksIds;
             this.TasksIds = json.tasksIds;
             this.CorrectivesIds = json.correctivesIds;
             this.ObservationsIds = json.observationsIds;
@@ -21,11 +27,17 @@ class Element extends Entity
         }
         else
         {
+            this.Ref = "";
+            this.Brand = "";
+            this.Model = "";
+            this.Description = "";
+            this.SafetyAndHealth = "";
+
             this.Name = "";
-            this.ElementTypeId = "";
             this.ElementTypeName = "";
             
             this.AreaId = "";
+            this.ElementGenericTasksIds = [];
             this.TasksIds = [];
             this.CorrectivesIds = [];
             this.ObservationsIds = [];
