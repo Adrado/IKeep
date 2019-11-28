@@ -82,6 +82,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Building>, BuildingsDbSet>();
             services.AddScoped<IDbSet<Category>, CategoriesDbSet>();
             services.AddScoped<IDbSet<Corrective>, CorrectivesDbSet>();
+            services.AddScoped<IDbSet<Element>, ElementsDbSet>();
             services.AddScoped<IDbSet<ElementObservation>, ElementObservationsDbSet>();
             services.AddScoped<IDbSet<ElementType>, ElementTypesDbSet>();
             services.AddScoped<IDbSet<ElementGenericTask>, ElementGenericTasksDbSet>();
@@ -106,6 +107,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Building>, GenericRepository<Building>>();
             services.AddScoped<IRepository<Category>, GenericRepository<Category>>();
             services.AddScoped<IRepository<Corrective>, GenericRepository<Corrective>>();
+            services.AddScoped<IRepository<Element>, GenericRepository<Element>>();
             services.AddScoped<IRepository<ElementType>, GenericRepository<ElementType>>();
             services.AddScoped<IRepository<ElementGenericTask>, GenericRepository<ElementGenericTask>>();
             services.AddScoped<IRepository<Floor>, GenericRepository<Floor>>();
@@ -130,6 +132,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Category>, GenericCrudService<Category>>();
             services.AddScoped<ICrudService<Corrective>, GenericCrudService<Corrective>>();
             services.AddScoped<ICrudService<User>, GenericCrudService<User>>();
+            services.AddScoped<ICrudService<Element>, GenericCrudService<Element>>();
             services.AddScoped<ICrudService<ElementType>, GenericCrudService<ElementType>>();
             services.AddScoped<ICrudService<ElementGenericTask>, GenericCrudService<ElementGenericTask>>();
             services.AddScoped<ICrudService<Floor>, GenericCrudService<Floor>>();
