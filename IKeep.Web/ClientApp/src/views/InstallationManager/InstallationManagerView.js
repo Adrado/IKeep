@@ -18,7 +18,7 @@ const InstallationManagerView =() =>
     return(
         <Fragment>
             <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Grid item xs = {12}>
                         <Functions.Provider value = {onSelectNode}>
                             <Services.Provider value={CRUD.TreeView}>
@@ -33,7 +33,7 @@ const InstallationManagerView =() =>
 
                 { node !== null &&
                <Functions.Provider value= {onModified}>
-                    <Grid item xs={8}>
+                    <Grid item xs={9}>
                         { node.Type === "InstallationProxy" &&
                         <Services.Provider value={CRUD.Installation}>
                             <InstallationView treeNode = {node}/>

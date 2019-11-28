@@ -3,51 +3,58 @@ import {CircularProgress, makeStyles} from '@material-ui/core'
 
 //Table
 import MaterialTable from 'material-table';
-import {localizationEsp} from '../../components/MaterialTableProps'
+import {localizationEsp} from '../../../../components/MaterialTableProps'
 
 //Contexts
-import {Functions} from '../../providers/Providers';
+//import {Functions} from '../../../../providers/Providers';
 
 //CRUD Services
 import useFetchElements from './useFetchElements';
 import useElementViewModel from './useElementViewModel';
-import useFetchElementType from '../ElementType/useFetchElementType';
+import useFetchElementType from '../../../ElementType/useFetchElementType';
+
+import AddElementsDialog from './AddElementsDialog';
 
 
-const ElementsTable = () => 
+const ElementsTable = ({areaId}) => 
 {
   const classes = useStyles();
-  const {state, dispatch} = useContext(Functions);
-
-  const Select = (e, rowData) =>
-  {
-    dispatch({ type: 'SELECT_ROW', data: rowData,});
-  }
 
   const {ETypes} = useFetchElementType();
   //console.log(ETypes)
-  const {Elements, change, setChange} = useFetchElements();
+  const {Elements, change, setChange} = useFetchElements(areaId);
   const [Add, Save, Delete] = useElementViewModel();
-  const [row, setRow] = useState(state.selectedRow);
+  const [row, setRow] = useState(null);
    
-  const BuildFieldType = () =>
+  const BuildField = (Data) =>
   {
-    let lookupTypes = {}
-    for (let i in ETypes)
+    let lookup = {}
+    for (let i in Data)
     {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
     }
-    return lookupTypes;
+    return lookup;
   }
 
   //Info to Elements Table 
-  const LookupTypes = BuildFieldType();
+  const LookupState = 
+  {
+    0: "Inactivo",
+    1: "Activo"
+  };
+  
   const columns = [
+    { title: 'Estado', field: 'Status', lookup: LookupState },
+    { title: 'Ref', field: 'Ref' },
     { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
+    { title: 'Tipo', field: 'ElementTypeName'},
+    { title: 'Marca', field: 'Brand' },
+    { title: 'Modelo', field: 'Model' },
+    { title: 'Descripción', field: 'Description' },
+    { title: 'Salud&Seg', field: 'SafetyAndHealth' },
     ] 
-  const Title = "Elementos Genéricos";
+  const Title = "Elementos";
   
     return(
         <Fragment>
@@ -65,17 +72,26 @@ const ElementsTable = () =>
                 actionsColumnIndex: -1,
                 filtering: true,
                 toolbar: true,
-                pageSize: 10,
+                pageSize: 8,
                 pageSizeOptions: [10, 20],
                 rowStyle: rowData => ({
                   backgroundColor: (row.tableData && row.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
                 })
               }}
 
+              actions={[
+                {
+                  
+                  icon: 'add',
+                  tooltip: 'Añadir Tareas',
+                  onClick: (evt, data) => AddElementsDialog()
+                }
+              ]}
+
               onRowClick={((evt, selectedRow) => 
-                { 
-                Select(evt, selectedRow);
-                setRow(selectedRow) 
+                {
+                  AddElementsDialog()
+                  setRow(selectedRow) 
                 }
                 )}
 

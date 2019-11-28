@@ -1,6 +1,6 @@
 import { useContext, useEffect} from 'react';
-import { ElementService } from '../../providers/Providers';
-import Element from '../../models/Element';
+import { ElementService } from '../../../../providers/Providers';
+import Element from '../../../../models/Element';
 
 const useElementViewModel = () =>
 {
@@ -18,12 +18,17 @@ const useElementViewModel = () =>
         }
     }
       
-    const AddNewElement = (values) =>
+    const AddNewElement = (values, areaId, genericElement) =>
     {
         let element = new Element();
+        element.AreaId = areaId;
+        element.GenericElementId = genericElement.Id;
         element.Ref = values.Ref;
-        element.Name = values.Name;
-        element.ElementTypeId = values.ElementTypeId; 
+        element.Brand = values.Brand;
+        element.Model = values.Model;
+        element.Description = values.Description;
+        element.SafetyAndHealth = values.SafetyAndHealth;
+        element.ElementGenericTasksIds = genericElement.GenericElementGenericTasksIds; 
  
         if(element !== undefined && element!== null)
         {

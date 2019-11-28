@@ -1,8 +1,8 @@
 import  { useState, useEffect, useContext } from 'react';
-import {ElementService} from '../../providers/Providers';
-import Element from '../../models/Element';
+import {ElementService} from '../../../../providers/Providers';
+import Element from '../../../../models/Element';
 
-const useFetchElements = () =>
+const useFetchElements = (areaId) =>
 {
     const ElementsService = useContext(ElementService);
     const [Elements, setElements] = useState(null);
@@ -24,11 +24,11 @@ const useFetchElements = () =>
 
     useEffect(() =>
     {
-        const GetAllElements = async () =>
+        const GetElementsByAreaId = async () =>
         {
             try
             {
-                const response = await ElementsService.GetAllAsync();
+                const response = await ElementsService.GetById(areaId);
                 console.log(response);
                 const dataUpdated = UpdateData(response.data)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
@@ -39,7 +39,7 @@ const useFetchElements = () =>
             } 
         }
 
-        GetAllElements();
+        GetElementsByAreaId();
 
     },[ElementsService, change]);
 

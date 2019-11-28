@@ -4,6 +4,7 @@ import AreaForm from './AreaForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import ElementsTable from './Element/ElementsTable';
+import AddElementsDialog from './Element/AddElementsDialog';
 
 
 /**
@@ -25,9 +26,15 @@ const AreaView = ({treeNode}) =>
         }
         {fetchedArea !== null &&
           <AreaForm
-            areaData = {fetchedArea}/>
+            areaData = {fetchedArea}
+            />
         }
-        <ElementsTable/>
+        {fetchedArea !== null &&
+          <ElementsTable
+            areaId = {fetchedArea.Id}
+          />
+        }
+        <AddElementsDialog/>
       </Fragment>
     )    
 }
