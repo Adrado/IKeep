@@ -1,7 +1,7 @@
 import React, {Fragment, useReducer, useState} from 'react';
 
 //Material-ui components
-import {Grid, CircularProgress, makeStyles} from '@material-ui/core' 
+import {Grid} from '@material-ui/core' 
 
 //Contexts
 import {Functions} from '../../providers/Providers'
@@ -9,15 +9,12 @@ import {Functions} from '../../providers/Providers'
 //Models
 import GenericElement from '../../models/GenericElement';
 
-//Hooks CRUD Data
-import useFetchElementType from '../../views/ElementType/useFetchElementType';
-
 //Tables view
 import GenericTasksTable from './GTask/GenericTasksTable';
 import GenericElementsTable from './GenericElementsTable';
 import GElementGTasksTable from './GElementGTask/GElementGTasksTable';
 
-//Allows comunicate Form with Table
+//Allows comunicate between tables
 function reducer(state, action) {
   switch (action.type) {
       case 'SELECT_ROW':
@@ -51,13 +48,9 @@ const initialState = {
 
 const GenericElementView = () =>
 {
-    const classes = useStyles();
-
     const [state, dispatch] = useReducer(reducer, initialState);
-    //console.log(state);
-
     const [display, setDisplay] = useState(true);
-    
+
     const DisplayTable = () =>
     {
       setDisplay(!display);
@@ -95,9 +88,3 @@ const GenericElementView = () =>
 }
 
 export default GenericElementView;
-
-const useStyles = makeStyles(theme => ({
-    progress: {
-      margin: theme.spacing(2),
-    },
-  }));

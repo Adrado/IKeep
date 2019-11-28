@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 //DataTable
 import MaterialTable from 'material-table';
-import {localizationEsp} from '../../../components/MaterialTableProps'
+import {localizationEsp} from '../../../components/MaterialTableProps';
 
 import {Functions} from '../../../providers/Providers';
 
-import useFetchGenericTask from '../../GenericTask/useFetchGenericTask'
+import useFetchGenericTask from '../../GenericTask/useFetchGenericTask';
 import useGElementGTaskViewModel from '../GElementGTask/useGElementGTaskViewModel';
 
 

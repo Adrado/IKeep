@@ -47,7 +47,7 @@ import GenericTaskView from "./views/GenericTask/GenericTaskView.js";
 import PriorityView from "./views/Priority/PriorityView.js";
 import FormatView from "./views/Format/FormatView.js";
 import CategoryView from "./views/Category/CategoryView.js";
-import UserView from "./views/User/UserView"
+import UserView from "./views/User/UserView";
 import RoleView from "./views/Role/RolesView.js";
 
 const dashboardRoutes = [
@@ -66,6 +66,7 @@ const dashboardRoutes = [
     component: GenericElementView,
     layout: "/admin"
   },
+
   {
     path: "/elementType",
     name: "Tipos de Elementos",

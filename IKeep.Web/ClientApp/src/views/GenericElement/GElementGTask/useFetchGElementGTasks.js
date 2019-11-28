@@ -29,7 +29,7 @@ const useGElementGTasks = (id, update) =>
         {
             try{
                 const response = await GElementGTasksService.GetById(id);
-               // console.log(response);
+                console.log(response);
                 const dataUpdated = UpdateData(response.data)
                 setTasks(dataUpdated);
             }
