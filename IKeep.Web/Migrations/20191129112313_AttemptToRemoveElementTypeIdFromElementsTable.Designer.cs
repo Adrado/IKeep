@@ -4,14 +4,16 @@ using IKeep.Lib.DA.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IKeep.Web.Migrations
 {
     [DbContext(typeof(IKeepContext))]
-    partial class IKeepContextModelSnapshot : ModelSnapshot
+    [Migration("20191129112313_AttemptToRemoveElementTypeIdFromElementsTable")]
+    partial class AttemptToRemoveElementTypeIdFromElementsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,6 +130,8 @@ namespace IKeep.Web.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<Guid?>("ElementTypeId");
+
                     b.Property<int>("EntityStatus");
 
                     b.Property<Guid?>("GenericElementId");
@@ -143,6 +147,8 @@ namespace IKeep.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AreaId");
+
+                    b.HasIndex("ElementTypeId");
 
                     b.HasIndex("GenericElementId");
 
@@ -661,6 +667,10 @@ namespace IKeep.Web.Migrations
                         .WithMany("Elements")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IKeep.Lib.Models.ElementType")
+                        .WithMany("Elements")
+                        .HasForeignKey("ElementTypeId");
 
                     b.HasOne("IKeep.Lib.Models.GenericElement", "GenericElement")
                         .WithMany("Elements")
