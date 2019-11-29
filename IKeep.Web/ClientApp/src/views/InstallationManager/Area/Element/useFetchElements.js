@@ -18,6 +18,7 @@ const useFetchElements = (areaId) =>
             //if(element.EntityStatus !== 0)  
             elements.push(element);
         }
+        console.log(elements)
         data = elements;
         return data;
     }
@@ -29,9 +30,11 @@ const useFetchElements = (areaId) =>
             try
             {
                 const response = await ElementsService.GetById(areaId);
-                console.log(response);
+                console.log(response.data);
                 const dataUpdated = UpdateData(response.data)
+                console.log(dataUpdated)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                console.log(dataUpdated)
                 setElements(dataUpdated);
             }
             catch (error){
@@ -41,7 +44,7 @@ const useFetchElements = (areaId) =>
 
         GetElementsByAreaId();
 
-    },[ElementsService, change]);
+    },[ElementsService, change, areaId]);
 
     return{
         Elements,

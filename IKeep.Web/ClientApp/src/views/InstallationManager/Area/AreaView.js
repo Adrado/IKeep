@@ -57,7 +57,7 @@ const AreaView = ({treeNode}) =>
 
     return(
       <Fragment>
-        <Functions.Provider value={{ state, dispatch }}>
+        
           {fetchedArea === null &&
             <CircularProgress className={classes.progress}/>
           }
@@ -82,7 +82,7 @@ const AreaView = ({treeNode}) =>
               areaId = {fetchedArea.Id}
             />
           }
-        </Functions.Provider>
+        
       </Fragment>
     )    
 }

@@ -27,7 +27,7 @@ const useElementViewModel = () =>
         let element = new Element();
         element.AreaId = areaId;
         element.GenericElementId = genericElement.Id;
-        element.ElementGenericTasksIds = genericElement.GenericElementGenericTasksIds;
+        //element.ElementGenericTasksIds = genericElement.GenericElementGenericTasksIds;
         console.log(element);
  
         if(element !== undefined && element!== null)

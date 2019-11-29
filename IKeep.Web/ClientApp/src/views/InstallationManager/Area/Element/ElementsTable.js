@@ -21,7 +21,7 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
   const classes = useStyles();
 
   const {ETypes} = useFetchElementType();
-  //console.log(ETypes)
+  console.log(areaId)
   const {Elements, change, setChange} = useFetchElements(areaId);
   const [Add, Save, Delete] = useElementViewModel();
   const [row, setRow] = useState(null);
@@ -61,7 +61,7 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
           {Elements === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { Elements !== null &&
+          {Elements !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
