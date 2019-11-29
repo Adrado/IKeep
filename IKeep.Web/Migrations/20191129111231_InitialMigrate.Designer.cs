@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IKeep.Web.Migrations
 {
     [DbContext(typeof(IKeepContext))]
-    [Migration("20191128085242_AddElementGenericTask")]
-    partial class AddElementGenericTask
+    [Migration("20191129111231_InitialMigrate")]
+    partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
