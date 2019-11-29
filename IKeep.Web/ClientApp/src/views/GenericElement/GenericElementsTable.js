@@ -30,19 +30,19 @@ const GenericElementsTable = () =>
   const [Add, Save, Delete] = useGenericElementViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  const BuildFieldType = () =>
+  const BuildField = (Data) =>
   {
-    let lookupTypes = {}
-    for (let i in ETypes)
+    let lookup = {}
+    for (let i in Data)
     {
-      let type = ETypes[i];
-      lookupTypes[type.Id] = type.Name;
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
     }
-    return lookupTypes;
+    return lookup;
   }
 
   //Info to GenericElements Table 
-  const LookupTypes = BuildFieldType();
+  const LookupTypes = BuildField(ETypes);
   const columns = [
     { title: 'Nombre', field: 'Name' },
     { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}

@@ -88,7 +88,6 @@ const GenericTasksTable = ({displayTable}) =>
 
             actions={[
               {
-                
                 icon: 'add',
                 tooltip: 'Añadir Tareas',
                 onClick: (evt, data) => AddSelectedTasks(data)

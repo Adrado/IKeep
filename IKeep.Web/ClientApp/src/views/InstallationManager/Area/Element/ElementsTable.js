@@ -16,7 +16,7 @@ import useFetchElementType from '../../../ElementType/useFetchElementType';
 import AddElementsDialog from './AddElementsDialog';
 
 
-const ElementsTable = ({areaId}) => 
+const ElementsTable = ({areaId, handleClickOpen}) => 
 {
   const classes = useStyles();
 
@@ -26,7 +26,7 @@ const ElementsTable = ({areaId}) =>
   const [Add, Save, Delete] = useElementViewModel();
   const [row, setRow] = useState(null);
    
-  const BuildField = (Data) =>
+  /* const BuildField = (Data) =>
   {
     let lookup = {}
     for (let i in Data)
@@ -35,7 +35,7 @@ const ElementsTable = ({areaId}) =>
       lookup[data.Id] = data.Name;
     }
     return lookup;
-  }
+  } */
 
   //Info to Elements Table 
   const LookupState = 
@@ -83,8 +83,9 @@ const ElementsTable = ({areaId}) =>
                 {
                   
                   icon: 'add',
+                  isFreeAction: true,
                   tooltip: 'Añadir Tareas',
-                  onClick: (evt, data) => AddElementsDialog()
+                  onClick: (evt, data) => handleClickOpen()
                 }
               ]}
 
@@ -98,14 +99,14 @@ const ElementsTable = ({areaId}) =>
               localization={localizationEsp}
 
               editable={{
-                onRowAdd: newData =>
+                /* onRowAdd: newData =>
                   new Promise((resolve, reject) => {
                       Add(newData)
                       .then(() => {
                         setChange(!change)
                         resolve()
                         })
-                  }),
+                  }), */
 
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {

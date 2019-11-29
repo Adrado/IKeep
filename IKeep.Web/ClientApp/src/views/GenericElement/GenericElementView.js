@@ -60,7 +60,7 @@ const GenericElementView = () =>
       <Fragment>
         <Grid container spacing={4}>
           <Functions.Provider value={{ state, dispatch }}>
-
+            
           {display &&
             <Grid item sm={6} xs={12}>
                 <GenericElementsTable/>  
