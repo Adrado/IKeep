@@ -27,8 +27,7 @@ namespace IKeep.Lib.Models
                 return GenericElement == null ? "" : GenericElement.Name;
             }
         }
-
-        public string ElementTypeName
+        public string TypeName
         {
             get
             {
@@ -88,8 +87,8 @@ namespace IKeep.Lib.Models
     }
     public enum StatusElement
     {
-        Active,
-        Inactive
+        Inactive,
+        Active
     }
 }
 
