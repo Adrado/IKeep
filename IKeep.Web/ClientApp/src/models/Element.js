@@ -14,36 +14,38 @@ class Element extends Entity
             this.SafetyAndHealth = json.safetyAndHealth;
 
             this.Name = json.name;
-            this.ElementTypeName = json.elementTypeName;
+            this.TypeName = json.typeName;
 
             this.AreaId = json.area.Id;
             this.ElementGenericTasksIds = json.elementGenericTasksIds;
             this.TasksIds = json.tasksIds;
             this.CorrectivesIds = json.correctivesIds;
-            this.ObservationsIds = json.observationsIds;
+            this.ElementObservationsIds = json.elementObservationsIds;
             this.GenericElementId = json.genericElementId;
+            this.ElementImagesIds = json.elementImagesIds;
 
             this.Status = json.status;
         }
         else
         {
-            this.Ref = "";
-            this.Brand = "";
-            this.Model = "";
-            this.Description = "";
-            this.SafetyAndHealth = "";
+            this.Ref = "1";
+            this.Brand = "2";
+            this.Model = "3";
+            this.Description = "4";
+            this.SafetyAndHealth = "5";
+            this.AreaId = "";
 
             this.Name = "";
-            this.ElementTypeName = "";
+            this.TypeName = "";
             
-            this.AreaId = "";
             this.ElementGenericTasksIds = [];
             this.TasksIds = [];
             this.CorrectivesIds = [];
-            this.ObservationsIds = [];
+            this.ElementObservationsIds = [];
+            this.ElementImagesIds = [];
             this.GenericElementId = "00000000-0000-0000-0000-000000000000";
 
-            this.Status = "";
+            this.Status = 1;
         }
     }
 }
