@@ -16,7 +16,7 @@ class Element extends Entity
             this.Name = json.name;
             this.TypeName = json.typeName;
 
-            this.AreaId = json.area.Id;
+            this.AreaId = json.areaId;
             this.ElementGenericTasksIds = json.elementGenericTasksIds;
             this.TasksIds = json.tasksIds;
             this.CorrectivesIds = json.correctivesIds;
@@ -28,11 +28,11 @@ class Element extends Entity
         }
         else
         {
-            this.Ref = "1";
-            this.Brand = "2";
-            this.Model = "3";
-            this.Description = "4";
-            this.SafetyAndHealth = "5";
+            this.Ref = "";
+            this.Brand = "";
+            this.Model = "";
+            this.Description = "";
+            this.SafetyAndHealth = "";
             this.AreaId = "";
 
             this.Name = "";
