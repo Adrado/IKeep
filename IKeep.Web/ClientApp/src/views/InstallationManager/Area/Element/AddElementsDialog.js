@@ -12,32 +12,65 @@ import useFetchGenericElement from '../../../GenericElement/useFetchGenericEleme
 import useFetchElementType from '../../../ElementType/useFetchElementType';
 import { localizationEsp } from '../../../../components/MaterialTableProps';
 import useElementViewModel from './useElementViewModel';
+import PropTypes from 'prop-types';
+import Element from '../../../../models/Element';
+import useElementGTask from './useElementGTaskViewModel';
 
 //import Functions from '../../../../providers/Providers'
 
-export default function AddElementsDialog({open, handleClose, areaId}) {
+export default function AddElementsDialog({open, handleClose, areaId, change, setChange}) {
   const classes = useStyles();
 
   //const {state, dispatch} = useContext(Functions);
+
   const {GElements} = useFetchGenericElement();
   const {ETypes} = useFetchElementType();
   const [Add] = useElementViewModel();
-
+  const [AddElementGTask] = useElementGTask();
+  
 
   const AddSelectedGElements = (data) =>
   {
-    let p = [];
+    let elementsPromises = [];
+    let tasksPromises = [];
     for (let i in data)
     {
-      console.log(areaId);
-      console.log(data[i]);
-      p.push(Add(areaId, data[i]));
+      elementsPromises.push(Add(areaId, data[i]));
     }
+    Promise.all(elementsPromises)
+    .then((values)=> {
+      for (let j = 0; j<values.length; j++)
+      {
+        let elementCreated = new Element(values[j].data);
+        for (let k in data)
+        {
+          let gElement = data[k];
+          console.log(gElement)
+          console.log(elementCreated)
+          alert(gElement);
+          if(elementCreated.GenericElementId === gElement.Id)
+          {
+            for( let m = 0; m < gElement.GElementGTasks.length; m++)
+            {
+              let gElementGTask = gElement.GElementGTask[m];
+              
+              alert(gElementGTask.Id)
+              tasksPromises.push(AddElementGTask(elementCreated.Id, gElementGTask))
+            }
+            
+          }
+        }
+      }
 
-    Promise.all(p).then(()=> {
-      handleClose();
-    })
-    console.log(p);
+      Promise.all(tasksPromises).then(()=>
+      {
+        setChange(!change)
+        handleClose();
+      });
+
+    });
+
+    
   }
 
   const BuildField = (Data) =>
@@ -68,9 +101,9 @@ export default function AddElementsDialog({open, handleClose, areaId}) {
             <Typography variant="h6" className={classes.title}>
               
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            {/* <Button autoFocus color="inherit" onClick={handleClose}>
               Guardar Cambios
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
         {GElements !== null &&
@@ -94,7 +127,7 @@ export default function AddElementsDialog({open, handleClose, areaId}) {
           actions={[
             {
               icon: 'add',
-              tooltip: 'Añadir Tareas',
+              tooltip: 'Añadir Elementos',
               onClick: (evt, data) => AddSelectedGElements(data)
             }
           ]}
@@ -104,6 +137,11 @@ export default function AddElementsDialog({open, handleClose, areaId}) {
   );
 }
 
+AddElementsDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired, 
+  areaId: PropTypes.string.isRequired
+};
 
 const useStyles = makeStyles(theme => ({
   appBar: {

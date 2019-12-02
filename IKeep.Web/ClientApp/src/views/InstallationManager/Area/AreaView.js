@@ -5,6 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import ElementsTable from './Element/ElementsTable';
 import AddElementsDialog from './Element/AddElementsDialog';
+import PropTypes from 'prop-types';
+import TreeNode from '../../../services/dtos/TreeNode'
 
 import {Functions} from '../../../providers/Providers'
 
@@ -46,6 +48,7 @@ const AreaView = ({treeNode}) =>
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
     const [open, setOpen] = useState(false);
+    const [change, setChange] = useState(false);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -74,12 +77,14 @@ const AreaView = ({treeNode}) =>
               areaId = {fetchedArea.Id}
               handleClickOpen = {handleClickOpen}
             />
-          }
+          }   
           {fetchedArea !== null &&
             <AddElementsDialog
               open = {open}
               handleClose = {handleClose}
               areaId = {fetchedArea.Id}
+              change = {change}
+              setChange = {setChange}
             />
           }
         
@@ -88,6 +93,10 @@ const AreaView = ({treeNode}) =>
 }
 
 export default AreaView;
+
+AreaView.propTypes = {
+  treeNode: PropTypes.instanceOf(TreeNode),
+};
 
 const useStyles = makeStyles(theme => ({
     progress: {

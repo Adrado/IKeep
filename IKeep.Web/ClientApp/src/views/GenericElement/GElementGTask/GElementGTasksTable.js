@@ -17,12 +17,12 @@ const GElementGTasksTable = ({displayTable}) =>
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions)
   
-  const {tasks, change, setChange} = useFetchGElementGTasks(state.selectedRow.Id, state.change);
+  const {GElementGTasks, change, setChange} = useFetchGElementGTasks(state.selectedRow.Id, state.change);
   const [AddGElementGTask, SaveGElementGTask, DeleteGElementGTask] = useGElementGTaskViewModel();
 
   const AddTasks = () =>
   {
-    dispatch({ type: 'ADD_TASKS', data: tasks});
+    dispatch({ type: 'ADD_TASKS', data: GElementGTasks});
   }
 
   const DeleteRows = () =>
@@ -37,11 +37,11 @@ const GElementGTasksTable = ({displayTable}) =>
 
     return(
         <Fragment>
-          {tasks !== null &&
+          {GElementGTasks !== null &&
             <MaterialTable
                 title = {state.selectedRow.Name}
                 columns={columns}
-                data={tasks}
+                data={GElementGTasks}
 
                 actions={[
                   {

@@ -13,19 +13,19 @@ import useFetchElements from './useFetchElements';
 import useElementViewModel from './useElementViewModel';
 import useFetchElementType from '../../../ElementType/useFetchElementType';
 
-import AddElementsDialog from './AddElementsDialog';
-
+import PropTypes from 'prop-types';
 
 const ElementsTable = ({areaId, handleClickOpen}) => 
 {
   const classes = useStyles();
-
+  
   const {ETypes} = useFetchElementType();
   console.log(areaId)
   const {Elements, change, setChange} = useFetchElements(areaId);
-  const [Add, Save, Delete] = useElementViewModel();
-  const [row, setRow] = useState(null);
-   
+  const [, Save, Delete] = useElementViewModel();
+  const [, setRow] = useState(null);
+  
+  
   /* const BuildField = (Data) =>
   {
     let lookup = {}
@@ -47,8 +47,8 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
   const columns = [
     { title: 'Estado', field: 'Status', lookup: LookupState },
     { title: 'Ref', field: 'Ref' },
-    { title: 'Nombre', field: 'Name' },
-    { title: 'Tipo', field: 'ElementTypeName'},
+    { title: 'Nombre', field: 'Name', editable: 'never' },
+    { title: 'Tipo', field: 'TypeName', editable: 'never'},
     { title: 'Marca', field: 'Brand' },
     { title: 'Modelo', field: 'Model' },
     { title: 'Descripción', field: 'Description' },
@@ -73,10 +73,10 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
                 filtering: true,
                 toolbar: true,
                 pageSize: 8,
-                pageSizeOptions: [10, 20],
-                rowStyle: rowData => ({
+                pageSizeOptions: [8, 20],
+                /* rowStyle: rowData => ({
                   backgroundColor: (row.tableData && row.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
-                })
+                }) */
               }}
 
               actions={[
@@ -84,14 +84,14 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
                   
                   icon: 'add',
                   isFreeAction: true,
-                  tooltip: 'Añadir Tareas',
+                  tooltip: 'Añadir Elementos',
                   onClick: (evt, data) => handleClickOpen()
                 }
               ]}
 
               onRowClick={((evt, selectedRow) => 
                 {
-                  AddElementsDialog()
+                  //AddElementsDialog()
                   setRow(selectedRow) 
                 }
                 )}
@@ -133,6 +133,11 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
 }
 
 export default ElementsTable;
+
+ElementsTable.propTypes = {
+  handleClickOpen: PropTypes.func.isRequired, 
+  areaId: PropTypes.string.isRequired
+};
 
 const useStyles = makeStyles(theme => ({
   progress: {

@@ -11,10 +11,13 @@ const useFetchElements = (areaId) =>
 
     const UpdateData = (data) =>
     {
+        console.log(data)
         let elements = []; 
         for (let i in data)
         {
+            console.log(data[i])
             let element = new Element(data[i]);
+            console.log(element)
             //if(element.EntityStatus !== 0)  
             elements.push(element);
         }

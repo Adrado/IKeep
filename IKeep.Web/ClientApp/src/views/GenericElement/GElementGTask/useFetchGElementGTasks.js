@@ -2,10 +2,10 @@ import { useContext, useState, useEffect } from "react"
 import { GElementGTaskService } from "../../../providers/Providers"
 import GenericElementGenericTask from "../../../models/GenericElementGenericTask";
 
-const useGElementGTasks = (id, update) =>
+const useGElementGTasks = (gElementId, update) =>
 {
     const GElementGTasksService = useContext(GElementGTaskService)
-    const [tasks, setTasks] = useState(null);
+    const [GElementGTasks, setGElementGTasks] = useState(null);
     const [error, setError] = useState(false);
     const [change, setChange] = useState(false);
 
@@ -28,24 +28,24 @@ const useGElementGTasks = (id, update) =>
         const GetById = async () =>
         {
             try{
-                const response = await GElementGTasksService.GetById(id);
+                const response = await GElementGTasksService.GetById(gElementId);
                 console.log(response);
                 const dataUpdated = UpdateData(response.data)
-                setTasks(dataUpdated);
+                setGElementGTasks(dataUpdated);
             }
             catch (error){
                 setError(true)
             } 
         }
-        if(id !== null && id !== undefined)
+        if(gElementId !== null && gElementId !== undefined)
         {
             GetById();
         }
 
-    },[id, GElementGTasksService, change, update]);
+    },[gElementId, GElementGTasksService, change, update]);
 
     return{
-        tasks,
+        GElementGTasks,
         error,
         change,
         setChange
