@@ -16,6 +16,7 @@ import PrioritiesService from '../services/PrioritiesService';
 import TasksService from '../services/TasksService';
 import GenericElementGenericTasksService from '../services/GenericElementGenericTasksService';
 import ElementsService from '../services/ElementsService';
+import ElementGenericTasksService from '../services/ElementGenericTasksService';
 
 
 export const CRUD =
@@ -36,6 +37,7 @@ export const CRUD =
     Task: new TasksService(),
     GElementGTask: new GenericElementGenericTasksService(),
     Element: new ElementsService(),
+    ElementGTask: new ElementGenericTasksService(),
 }
 
 //CRUD SERVICES
@@ -49,6 +51,7 @@ export const GElementGTaskService = React.createContext(CRUD.GElementGTask);
 export const UserService = React.createContext(CRUD.User);
 export const RoleService = React.createContext(CRUD.Role);
 export const ElementService = React.createContext(CRUD.Element);
+export const ElementGTaskService = React.createContext(CRUD.ElementGTask);
 
 //Auxiliar Context
 export const Functions = React.createContext();
