@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-//import {Div} from 'react-treebeard'
-//import {Div} from '../src/components/common';
-import Icon from '@material-ui/core/Icon';
+
 const Div = styled('div', {
     shouldForwardProp: prop => ['className', 'children'].indexOf(prop) !== -1
 })((({style}) => style));
 
 // Example: Customising The Header Decorator To Include Icons
 const Header = ({onSelect, style, customStyles, node}) => {
-    console.log(node)
     let iconType;
     if(node.id !== null)
     {
@@ -27,10 +24,6 @@ const Header = ({onSelect, style, customStyles, node}) => {
             break;
             case 'AreaProxy':
                 iconType = 'solar-panel';
-            break;
-            case 'Mango':
-            case 'Papaya':
-            console.log('El kilogramo de Mangos y Papayas cuesta $2.79.');
             break;
         }
     }
