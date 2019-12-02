@@ -34,15 +34,7 @@ namespace IKeep.Lib.Models
             }
         }
 
-        [JsonIgnore]
         public virtual ICollection<GenericElementGenericTask> GenericElementGenericTasks { get; set; }
-        public List<Guid> GenericElementGenericTasksIds
-        {
-            get
-            {
-                return GenericElementGenericTasks == null ? new List<Guid>() : GenericElementGenericTasks.Select(x => x.Id).ToList();
-            }
-        }
     }
 }
 
