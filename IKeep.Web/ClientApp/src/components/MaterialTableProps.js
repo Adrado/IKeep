@@ -10,7 +10,7 @@ export const localizationEsp ={
       editRow:{
         deleteText: '¿Estás seguro de eliminar esta fila?',
         cancelTooltip: 'Cancelar',
-        saveTooltip: 'Guardar'
+        saveTooltip: 'Confirmar'
       },
       editTooltip: 'Editar',
       deleteTooltip: 'Eliminar'
