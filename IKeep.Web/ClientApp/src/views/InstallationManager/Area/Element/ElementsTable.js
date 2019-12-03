@@ -38,11 +38,10 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
   } */
 
   //Info to Elements Table 
-  const LookupState = 
-  {
+  const LookupState = Object.freeze({
     0: "Inactivo",
     1: "Activo"
-  };
+  });
   
   const columns = [
     { title: 'Estado', field: 'Status', lookup: LookupState },

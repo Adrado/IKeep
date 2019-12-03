@@ -8,8 +8,8 @@ const useElementViewModel = () =>
 
     const SaveElement = (element, values) =>
     {
+        element.Status = values.Status;
         element.Ref = values.Ref;
-        //element.ElementTypeId = values.ElementTypeId;
         element.Ref = values.Ref;
         element.Brand = values.Brand;
         element.Model = values.Model;

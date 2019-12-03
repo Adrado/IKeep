@@ -19,11 +19,12 @@ const AreaForm = ({areaData = Area}) =>
   const [Add, Save, Delete] = useAreaViewModel();
   const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(AreaState, areaData, Add, Save, Delete);
   
+  
     return(
         <React.Fragment>
             <Grid container className={classes.container} spacing={1}>  
               <Grid item xs={12}>
-                  <h3>Espacio</h3>
+                  <h3>Espacio - {values.Name} </h3>
               </Grid>
                   
                   <Grid item xs={6} sm = {4}>

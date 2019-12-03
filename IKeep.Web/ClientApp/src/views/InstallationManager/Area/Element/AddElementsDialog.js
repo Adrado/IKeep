@@ -15,6 +15,7 @@ import useElementViewModel from './useElementViewModel';
 import PropTypes from 'prop-types';
 import Element from '../../../../models/Element';
 import useElementGTask from './useElementGTaskViewModel';
+import GenericElementGenericTask from '../../../../models/GenericElementGenericTask';
 
 //import Functions from '../../../../providers/Providers'
 
@@ -45,32 +46,23 @@ export default function AddElementsDialog({open, handleClose, areaId, change, se
         for (let k in data)
         {
           let gElement = data[k];
-          console.log(gElement)
-          console.log(elementCreated)
-          alert(gElement);
           if(elementCreated.GenericElementId === gElement.Id)
           {
-            for( let m = 0; m < gElement.GElementGTasks.length; m++)
+            for( let m = 0; m < gElement.GenericElementGenericTasks.length; m++)
             {
-              let gElementGTask = gElement.GElementGTask[m];
-              
-              alert(gElementGTask.Id)
+              let gElementGTask = new GenericElementGenericTask(gElement.GenericElementGenericTasks[m]);
               tasksPromises.push(AddElementGTask(elementCreated.Id, gElementGTask))
             }
-            
           }
         }
       }
+    });
 
-      Promise.all(tasksPromises).then(()=>
+    Promise.all(tasksPromises).then(()=>
       {
         setChange(!change)
         handleClose();
       });
-
-    });
-
-    
   }
 
   const BuildField = (Data) =>
@@ -87,7 +79,7 @@ export default function AddElementsDialog({open, handleClose, areaId, change, se
   //Info to GenericElements Table 
   const LookupTypes = BuildField(ETypes);
   const columns = [
-    { title: 'Nombre', field: 'Name' },
+    { title: 'Nombre', field: 'Name', editable: 'always' },
     { title: 'Tipo', field: 'ElementTypeId', lookup: LookupTypes}
     ] 
   const Title = "Elementos Genéricos";
