@@ -11,17 +11,13 @@ const useFetchElements = (areaId) =>
 
     const UpdateData = (data) =>
     {
-        console.log(data)
         let elements = []; 
         for (let i in data)
         {
-            console.log(data[i])
             let element = new Element(data[i]);
-            console.log(element)
             //if(element.EntityStatus !== 0)  
             elements.push(element);
         }
-        console.log(elements)
         data = elements;
         return data;
     }
@@ -33,11 +29,8 @@ const useFetchElements = (areaId) =>
             try
             {
                 const response = await ElementsService.GetById(areaId);
-                console.log(response.data);
                 const dataUpdated = UpdateData(response.data)
-                console.log(dataUpdated)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                console.log(dataUpdated)
                 setElements(dataUpdated);
             }
             catch (error){
@@ -46,6 +39,10 @@ const useFetchElements = (areaId) =>
         }
 
         GetElementsByAreaId();
+
+        return () => {
+            ElementsService.CancelOperation();
+        };
 
     },[ElementsService, change, areaId]);
 

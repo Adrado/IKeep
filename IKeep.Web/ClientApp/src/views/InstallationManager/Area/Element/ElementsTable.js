@@ -1,9 +1,9 @@
 import React, {Fragment, useContext, useState} from 'react';
-import {CircularProgress, makeStyles} from '@material-ui/core' 
+import {CircularProgress, makeStyles} from '@material-ui/core';
 
 //Table
 import MaterialTable from 'material-table';
-import {localizationEsp} from '../../../../components/MaterialTableProps'
+import {localizationEsp} from '../../../../components/MaterialTableProps';
 
 //Contexts
 //import {Functions} from '../../../../providers/Providers';
@@ -11,7 +11,6 @@ import {localizationEsp} from '../../../../components/MaterialTableProps'
 //CRUD Services
 import useFetchElements from './useFetchElements';
 import useElementViewModel from './useElementViewModel';
-import useFetchElementType from '../../../ElementType/useFetchElementType';
 
 import PropTypes from 'prop-types';
 
@@ -19,24 +18,10 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
 {
   const classes = useStyles();
   
-  const {ETypes} = useFetchElementType();
-  console.log(areaId)
   const {Elements, change, setChange} = useFetchElements(areaId);
   const [, Save, Delete] = useElementViewModel();
   const [, setRow] = useState(null);
   
-  
-  /* const BuildField = (Data) =>
-  {
-    let lookup = {}
-    for (let i in Data)
-    {
-      let data = Data[i];
-      lookup[data.Id] = data.Name;
-    }
-    return lookup;
-  } */
-
   //Info to Elements Table 
   const LookupState = Object.freeze({
     0: "Inactivo",
@@ -52,7 +37,8 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
     { title: 'Modelo', field: 'Model' },
     { title: 'Descripción', field: 'Description' },
     { title: 'Salud&Seg', field: 'SafetyAndHealth' },
-    ] 
+    ];
+
   const Title = "Elementos";
   
     return(
@@ -73,14 +59,13 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
                 toolbar: true,
                 pageSize: 8,
                 pageSizeOptions: [8, 20],
-                /* rowStyle: rowData => ({
+                /*rowStyle: rowData => ({
                   backgroundColor: (row.tableData && row.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
                 }) */
               }}
 
               actions={[
                 {
-                  
                   icon: 'add',
                   isFreeAction: true,
                   tooltip: 'Añadir Elementos',

@@ -19,6 +19,7 @@ const useFetchInstallation = (treeNode) =>
                 setFetchedInstallation(installation);
             }
             catch (error){
+                console.log(error)
                 setError(true)
             } 
         }
@@ -40,7 +41,11 @@ const useFetchInstallation = (treeNode) =>
             NewInstallation();
         }
 
-    },[treeNode]);
+        return () => {
+            InstallationsService.CancelOperation();
+        };
+
+    },[treeNode, InstallationsService]);
 
     return{
         fetchedInstallation,

@@ -39,7 +39,11 @@ const useFetchBuilding = (treeNode) =>
             NewBuilding();
         }
 
-    },[treeNode]);
+        return () => {
+            BuildingsService.CancelOperation();
+        };
+
+    },[treeNode, BuildingsService]);
 
     return{
         fetchedBuilding,

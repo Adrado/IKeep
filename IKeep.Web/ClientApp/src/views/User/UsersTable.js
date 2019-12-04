@@ -76,7 +76,7 @@ const UsersTable = () =>
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
-                actionsColumnIndex: -1,
+                //actionsColumnIndex: -1,
                 filtering: true,
                 toolbar: true,
                 pageSize: 10,
@@ -89,7 +89,7 @@ const UsersTable = () =>
               onRowClick={((evt, selectedRow) => 
                 { 
                 Select(evt, selectedRow);
-                setRow(selectedRow) 
+                setRow(selectedRow); 
                 }
                 )}
 
@@ -108,8 +108,7 @@ const UsersTable = () =>
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {
                     Save(oldData, newData)
-                    .then((response) => {
-                      console.log(response)
+                    .then(() => {
                       setChange(!change)
                       resolve()
                     })

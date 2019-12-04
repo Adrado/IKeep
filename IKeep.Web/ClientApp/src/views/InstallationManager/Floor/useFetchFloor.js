@@ -39,7 +39,11 @@ const useFetchFloor = (treeNode) =>
             NewFloor();
         }
 
-    },[treeNode]);
+        return () => {
+            FloorsService.CancelOperation();
+        };
+
+    },[treeNode, FloorsService]);
 
     return{
         fetchedFloor,

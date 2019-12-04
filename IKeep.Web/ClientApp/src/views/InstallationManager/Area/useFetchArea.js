@@ -2,7 +2,6 @@ import  { useState, useEffect, useContext } from 'react';
 import {Services} from '../../../providers/Providers';
 import Area from '../../../models/Area';
 
-
 /**
  * Get Area related with treeNode
  * @param {TreeNode} treeNode
@@ -45,8 +44,12 @@ const useFetchArea = (treeNode) =>
         {
             NewArea();
         }
+        
+        return () => {
+            AreasService.CancelOperation();
+        };
 
-    },[treeNode]);
+    },[treeNode, AreasService]);
 
     return{
         fetchedArea,
