@@ -93,6 +93,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<GenericTask>, GenericTasksDbset>();
             services.AddScoped<IDbSet<Inspection>, InspectionsDbSet>();
             services.AddScoped<IDbSet<Installation>, InstallationsDbSet>();
+            services.AddScoped<IDbSet<InstallationUser>, InstallationUsersDbSet>();
             services.AddScoped<IDbSet<Map>, MapsDbSet>();
             services.AddScoped<IDbSet<Observation>, ObservationsDbSet>();
             services.AddScoped<IDbSet<Priority>, PrioritiesDbSet>();
@@ -117,6 +118,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<GenericTask>, GenericRepository<GenericTask>>();
             services.AddScoped<IRepository<Inspection>, GenericRepository<Inspection>>();
             services.AddScoped<IRepository<Installation>, GenericRepository<Installation>>();
+            services.AddScoped<IRepository<InstallationUser>, GenericRepository<InstallationUser>>();
             services.AddScoped<IRepository<Map>, GenericRepository<Map>>();
             services.AddScoped<IRepository<Observation>, GenericRepository<Observation>>();
             services.AddScoped<IRepository<Priority>, GenericRepository<Priority>>();
@@ -142,6 +144,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<GenericTask>, GenericCrudService<GenericTask>>();
             services.AddScoped<ICrudService<Inspection>, GenericCrudService<Inspection>>();
             services.AddScoped<ICrudService<Installation>, GenericCrudService<Installation>>();
+            services.AddScoped<ICrudService<InstallationUser>, GenericCrudService<InstallationUser>>();
             services.AddScoped<ICrudService<Map>, GenericCrudService<Map>>();
             services.AddScoped<ICrudService<Observation>, GenericCrudService<Observation>>();
             services.AddScoped<ICrudService<Priority>, GenericCrudService<Priority>>();
