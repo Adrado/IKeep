@@ -11,8 +11,22 @@ namespace IKeep.Lib.Models
         public Guid UserId { get; set; }
         [JsonIgnore]
         public virtual User User { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return User == null ? "" : User.Name;
+            }
+        }
         public Guid InstallationId { get; set; }
         [JsonIgnore]
         public virtual Installation Installation { get; set; }
+        public string InstallationName
+        {
+            get
+            {
+                return Installation == null ? "" : Installation.Name;
+            }
+        }
     }
 }
