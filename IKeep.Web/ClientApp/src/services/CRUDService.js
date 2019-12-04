@@ -30,6 +30,10 @@ class CRUDService extends GenericService
     {
         return this.Delete(id);
     }
+    CancelOperation()
+    {
+        return this.Cancel();
+    }
 }
 
 export default CRUDService;

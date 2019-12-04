@@ -18,11 +18,13 @@ class GenericService
     {
         this.ApiUrl = "api/" + dtoName;
         //this.Token = $window.Token;
+        this.CancelToken = axios.CancelToken;
+        this.source = this.CancelToken.source();
     }
 
     async Get()
     {
-        return await axios.get(this.ApiUrl);
+        return await axios.get(this.ApiUrl, {cancelToken: this.source.token});
     }
     
     async GetById(id)
@@ -43,6 +45,11 @@ class GenericService
     async Delete(id)
     {
         return await axios.delete(this.ApiUrl + "/" + id);
+    }
+
+    Cancel()
+    {
+        this.source.cancel();
     }
 }
 
