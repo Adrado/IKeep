@@ -50,6 +50,7 @@ import FormatView from "./views/Format/FormatView.js";
 import CategoryView from "./views/Category/CategoryView.js";
 import UserView from "./views/User/UserView";
 import RoleView from "./views/Role/RolesView.js";
+import InstallationUserView from './views/InstallationUser/InstallationUserView';
 
 const dashboardRoutes = [
   {
@@ -113,6 +114,14 @@ const dashboardRoutes = [
     name: "Usuarios",
     icon: "",
     component: UserView,
+    layout: "/admin"
+  },
+
+  {
+    path: "/installationUser",
+    name: "Usuarios Instalaciones",
+    icon: "",
+    component: InstallationUserView,
     layout: "/admin"
   },
 
