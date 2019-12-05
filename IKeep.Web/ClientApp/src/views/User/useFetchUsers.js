@@ -35,11 +35,12 @@ const useFetchUsers = () =>
             }
             catch (error){
                 setError(true)
+                console.log(error);
             } 
         }
 
         GetAllUsers();
-        
+
         return () => {
             UsersService.CancelOperation();
         };

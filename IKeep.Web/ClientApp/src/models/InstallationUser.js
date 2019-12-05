@@ -2,6 +2,11 @@ import Entity from './Entity'
 
 class InstallationUser extends Entity
 {
+    get UserFullName()
+    {
+        let fullName = this.UserName + " " + this.UserFirstSurname; 
+        return fullName;
+    }
     constructor(json)
     {
         super(json);
@@ -11,6 +16,7 @@ class InstallationUser extends Entity
             this.InstallationId = json.installationId;
             this.UserName = json.userName;
             this.InstallationName = json.installationName;
+            this.UserFirstSurname = json.userFirstSurname;
         }
         else
         {
@@ -18,8 +24,8 @@ class InstallationUser extends Entity
             this.InstallationId = "00000000-0000-0000-0000-000000000000";
             this.UserName = "";
             this.InstallationName = "";
+            this.UserFirstSurname = "";
         }
-        
     }
 }
 
