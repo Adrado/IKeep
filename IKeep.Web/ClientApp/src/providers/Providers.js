@@ -55,6 +55,7 @@ export const RoleService = React.createContext(CRUD.Role);
 export const ElementService = React.createContext(CRUD.Element);
 export const ElementGTaskService = React.createContext(CRUD.ElementGTask);
 export const InstallationUserService = React.createContext(CRUD.InstallationUser);
+export const InstallationService = React.createContext(CRUD.Installation);
 
 //Auxiliar Context
 export const Functions = React.createContext();
