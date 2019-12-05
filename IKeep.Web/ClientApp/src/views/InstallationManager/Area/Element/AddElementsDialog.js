@@ -132,7 +132,9 @@ export default function AddElementsDialog({open, handleClose, areaId, change, se
 AddElementsDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired, 
-  areaId: PropTypes.string.isRequired
+  areaId: PropTypes.string.isRequired,
+  change: PropTypes.bool.isRequired,
+  setChange: PropTypes.func.isRequired
 };
 
 const useStyles = makeStyles(theme => ({

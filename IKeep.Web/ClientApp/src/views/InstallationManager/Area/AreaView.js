@@ -1,14 +1,19 @@
 import React, {Fragment, useState, useReducer} from 'react';
+
+//CRUD services
 import useFetchArea from './useFetchArea'
+
+//Views
 import AreaForm from './AreaForm';
+import ElementsTable from './Element/ElementsTable';
+
+//style components
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import ElementsTable from './Element/ElementsTable';
-import AddElementsDialog from './Element/AddElementsDialog';
+
+//Validation
 import PropTypes from 'prop-types';
 import TreeNode from '../../../services/dtos/TreeNode'
-
-import {Functions} from '../../../providers/Providers'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -44,19 +49,9 @@ const initialState = {
  */
 const AreaView = ({treeNode}) =>
 {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    //const [state, dispatch] = useReducer(reducer, initialState);
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
-    const [open, setOpen] = useState(false);
-    const [change, setChange] = useState(false);
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
 
     return(
       <Fragment>
@@ -75,19 +70,9 @@ const AreaView = ({treeNode}) =>
           {fetchedArea !== null &&
             <ElementsTable
               areaId = {fetchedArea.Id}
-              handleClickOpen = {handleClickOpen}
             />
           }   
-          {fetchedArea !== null &&
-            <AddElementsDialog
-              open = {open}
-              handleClose = {handleClose}
-              areaId = {fetchedArea.Id}
-              change = {change}
-              setChange = {setChange}
-            />
-          }
-        
+
       </Fragment>
     )    
 }

@@ -5,6 +5,9 @@ import {CircularProgress, makeStyles} from '@material-ui/core';
 import MaterialTable from 'material-table';
 import {localizationEsp} from '../../../../components/MaterialTableProps';
 
+//Dialog
+import AddElementsDialog from './AddElementsDialog';
+
 //Contexts
 //import {Functions} from '../../../../providers/Providers';
 
@@ -14,13 +17,22 @@ import useElementViewModel from './useElementViewModel';
 
 import PropTypes from 'prop-types';
 
-const ElementsTable = ({areaId, handleClickOpen}) => 
+const ElementsTable = ({areaId}) => 
 {
   const classes = useStyles();
   
   const {Elements, change, setChange} = useFetchElements(areaId);
   const [, Save, Delete] = useElementViewModel();
   const [, setRow] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   //Info to Elements Table 
   const LookupState = Object.freeze({
@@ -57,8 +69,8 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
                 actionsColumnIndex: -1,
                 filtering: true,
                 toolbar: true,
-                pageSize: 8,
-                pageSizeOptions: [8, 20],
+                pageSize: 5,
+                pageSizeOptions: [5, 10, 20],
                 /*rowStyle: rowData => ({
                   backgroundColor: (row.tableData && row.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
                 }) */
@@ -69,7 +81,7 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
                   icon: 'add',
                   isFreeAction: true,
                   tooltip: 'Añadir Elementos',
-                  onClick: (evt, data) => handleClickOpen()
+                  onClick: () => handleClickOpen()
                 }
               ]}
 
@@ -83,14 +95,6 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
               localization={localizationEsp}
 
               editable={{
-                /* onRowAdd: newData =>
-                  new Promise((resolve, reject) => {
-                      Add(newData)
-                      .then(() => {
-                        setChange(!change)
-                        resolve()
-                        })
-                  }), */
 
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {
@@ -112,6 +116,16 @@ const ElementsTable = ({areaId, handleClickOpen}) =>
               }}
           />
           }
+
+        {Elements !== null &&
+        <AddElementsDialog
+            open = {open}
+            handleClose = {handleClose}
+            areaId = {areaId}
+            change = {change}
+            setChange = {setChange}
+          />
+        }
         </Fragment>
   )                
 }
