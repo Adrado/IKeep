@@ -14,42 +14,49 @@ class GenericService
         return config;
     }
 
+    get CreateCancelToken()
+    {
+        const CancelToken = this.CancelToken
+        var c = new CancelToken(c=>{this.CancelFunction = c})
+        return c
+    }
+
     constructor(dtoName)
     {
         this.ApiUrl = "api/" + dtoName;
         //this.Token = $window.Token;
         this.CancelToken = axios.CancelToken;
-        this.source = this.CancelToken.source();
+        this.CancelFunction = this.CancelToken.source.cancel;
     }
 
     async Get()
     {
-        return await axios.get(this.ApiUrl, {cancelToken: this.source.token});
+        return await axios.get(this.ApiUrl, {cancelToken: this.CreateCancelToken});
     }
     
     async GetById(id)
     {
-        return await axios.get(this.ApiUrl + "/"+ id)
+        return await axios.get(this.ApiUrl + "/"+ id, {cancelToken: this.CreateCancelToken})
     }
 
     async Post(dto)
     {
-        return await axios.post(this.ApiUrl, dto);
+        return await axios.post(this.ApiUrl, dto, {cancelToken: this.CreateCancelToken});
     }
 
     async Put(dto)
     {
-        return await axios.put(this.ApiUrl, dto);
+        return await axios.put(this.ApiUrl, dto, {cancelToken: this.CreateCancelToken});
     }
 
     async Delete(id)
     {
-        return await axios.delete(this.ApiUrl + "/" + id);
+        return await axios.delete(this.ApiUrl + "/" + id, {cancelToken: this.CreateCancelToken});
     }
 
     Cancel()
     {
-        this.source.cancel();
+        this.CancelFunction();
     }
 }
 
