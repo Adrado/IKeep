@@ -1,4 +1,5 @@
-import React, {Fragment, useState, useReducer} from 'react';
+//Core
+import React, {Fragment} from 'react';
 
 //CRUD services
 import useFetchArea from './useFetchArea'
@@ -7,7 +8,7 @@ import useFetchArea from './useFetchArea'
 import AreaForm from './AreaForm';
 import ElementsTable from './Element/ElementsTable';
 
-//style components
+//Style components
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,41 +16,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TreeNode from '../../../services/dtos/TreeNode'
 
-function reducer(state, action) {
-  switch (action.type) {
-      case 'SELECT_ROW':
-          return {
-            selectedRow: action.data,
-            tasks: state.tasks,
-            change: state.change
-          };
-      case 'ADD_TASKS':
-          return{
-            selectedRow: state.selectedRow,
-            tasks: action.data,
-            change: state.change
-          };
-      case 'TASKS_ADDED':
-          return{
-            selectedRow: state.selectedRow,
-            tasks: state.tasks,
-            change: action.data
-          };
-      default:
-          return initialState;
-  }
-}
-
-const initialState = {
-  selectedAreaId: null,
-};
-
 /**
  * @param {TreeNode} treeNode
  */
 const AreaView = ({treeNode}) =>
 {
-    //const [state, dispatch] = useReducer(reducer, initialState);
     const classes = useStyles();
     const {fetchedArea, error} = useFetchArea(treeNode);
 

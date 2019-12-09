@@ -35,14 +35,14 @@ const InstallationForm = ({installationData = Installation}) =>
                     <h3>Instalación</h3>
                 </Grid>
                    
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Ref" type="text" onChange = {handleOnChange} value = {Ref}
                         label="Ref"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Name" type="text" onChange = {handleOnChange} value = {Name}
                         label="Nombre"
@@ -50,49 +50,49 @@ const InstallationForm = ({installationData = Installation}) =>
                         variant="filled"
                         required/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="CIF" type="text" onChange = {handleOnChange} value = {CIF}
                         label="CIF"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="CP" type="number" onChange = {handleOnChange} value = {CP}
                         label="CP"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Address" type="text" onChange = {handleOnChange} value = {Address}
                         label="Dirección"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="City" type="text" onChange = {handleOnChange} value = {City}
                         label="Ciudad"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Phone" type="number" onChange = {handleOnChange} value = {Phone}
                         label="Teléfono"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Phone2" type="number" onChange = {handleOnChange} value = {Phone2}
                         label="Teléfono secundario"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Fax" type="text" onChange = {handleOnChange} value = {Fax}
                         label="Fax"
@@ -100,7 +100,7 @@ const InstallationForm = ({installationData = Installation}) =>
                         variant="filled"/>
                     </Grid>
 
-                    <Grid item xs={6} sm = {4}>
+                    <Grid item xs={6} sm = {3}>
                         <TextField
                         name="Email" type="email" onChange = {handleOnChange} value = {Email}
                         label="Correo electrónico"

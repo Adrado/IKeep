@@ -1,27 +1,29 @@
+//Core
 import React, {Fragment, useState} from 'react';
-import {CircularProgress, makeStyles} from '@material-ui/core';
+
+//CRUD Services
+import useFetchInstallationUsers from './useFetchInstallationUsers';
+import useInstallationUserViewModel from '../../../InstallationUser/useInstallationUserViewModel';
 
 //Table
 import MaterialTable from 'material-table';
 import {localizationEsp} from '../../../../components/MaterialTableProps';
 
 //Dialog
-import AddElementsDialog from './AddElementsDialog';
+import AddInstallationUsersDialog from './AddInstallationUsersDialog';
 
-//CRUD Services
-import useFetchElements from './useFetchElements';
-import useElementViewModel from './useElementViewModel';
+//Style components
+import {CircularProgress, makeStyles} from '@material-ui/core';
 
 //Validation
 import PropTypes from 'prop-types';
 
-
-const ElementsTable = ({areaId}) => 
+const InstallationUsersTable = ({installationId}) => 
 {
   const classes = useStyles();
   
-  const {Elements, change, setChange} = useFetchElements(areaId);
-  const [, Save, Delete] = useElementViewModel();
+  const {InstallationUsers, change, setChange} = useFetchInstallationUsers(installationId);
+  const [, Save, Delete] = useInstallationUserViewModel();
   const [, setRow] = useState(null);
 
   const [open, setOpen] = useState(false);
@@ -33,35 +35,31 @@ const ElementsTable = ({areaId}) =>
     setOpen(false);
   };
   
-  //Info to Elements Table 
+  //Info to InstallationUsers Table 
   const LookupState = Object.freeze({
     0: "Inactivo",
     1: "Activo"
   });
   
   const columns = [
-    { title: 'Estado', field: 'Status', lookup: LookupState },
-    { title: 'Ref', field: 'Ref' },
-    { title: 'Nombre', field: 'Name', editable: 'never' },
-    { title: 'Tipo', field: 'TypeName', editable: 'never'},
-    { title: 'Marca', field: 'Brand' },
-    { title: 'Modelo', field: 'Model' },
-    { title: 'Descripción', field: 'Description' },
-    { title: 'Salud&Seg', field: 'SafetyAndHealth' },
+    { title: 'Estado', field: 'EntityStatus', lookup: LookupState },
+    { title: 'Usuario', field: 'UserFullName', editable: 'never'},
+    { title: 'Rol', field: 'RoleId',  },
+    //{ title: 'Instalación', field: 'InstallationName', editable: 'never'},
     ];
 
-  const Title = "Elementos";
+  const Title = "Usuarios";
   
     return(
         <Fragment>
-          {Elements === null &&
+          {InstallationUsers === null &&
               <CircularProgress className={classes.progress}/>
           }
-          {Elements !== null &&
+          {InstallationUsers !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={Elements}
+              data={InstallationUsers}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -79,14 +77,14 @@ const ElementsTable = ({areaId}) =>
                 {
                   icon: 'add',
                   isFreeAction: true,
-                  tooltip: 'Añadir Elementos',
+                  tooltip: 'Añadir Usuarios',
                   onClick: () => handleClickOpen()
                 }
               ]}
 
               onRowClick={((evt, selectedRow) => 
                 {
-                  //AddElementsDialog()
+                  //AddInstallationUsersDialog()
                   setRow(selectedRow) 
                 }
                 )}
@@ -116,11 +114,11 @@ const ElementsTable = ({areaId}) =>
           />
           }
 
-        {Elements !== null &&
-        <AddElementsDialog
+        {InstallationUsers !== null &&
+        <AddInstallationUsersDialog
             open = {open}
             handleClose = {handleClose}
-            areaId = {areaId}
+            installationId = {installationId}
             change = {change}
             setChange = {setChange}
           />
@@ -129,11 +127,11 @@ const ElementsTable = ({areaId}) =>
   )                
 }
 
-export default ElementsTable;
+export default InstallationUsersTable;
 
-ElementsTable.propTypes = {
+InstallationUsersTable.propTypes = {
   handleClickOpen: PropTypes.func.isRequired, 
-  areaId: PropTypes.string.isRequired
+  installationId: PropTypes.string.isRequired
 };
 
 const useStyles = makeStyles(theme => ({
