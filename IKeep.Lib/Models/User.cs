@@ -22,11 +22,8 @@ namespace IKeep.Lib.Models
         public DateTime Birthdate { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public DateTime EntryTime { get; set; }
-        public DateTime ExitTime { get; set; }
         public string ImageId { get; set; }
         public string Token { get; set; }
-        public Guid RoleId { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Task> Tasks { get; set; }

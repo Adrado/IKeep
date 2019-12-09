@@ -11,12 +11,12 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public virtual ICollection<User> Users { get; set; }
-        public List<Guid> UsersIds
+        public virtual ICollection<InstallationUser> InstallationUsers { get; set; }
+        public List<Guid> InstallationUsersIds
         {
             get
             {
-                return Users == null ? new List<Guid>() : Users.Select(x => x.Id).ToList();
+                return InstallationUsers == null ? new List<Guid>() : InstallationUsers.Select(x => x.Id).ToList();
             }
         }
     }

@@ -18,6 +18,7 @@ namespace IKeep.Lib.Models
                 return User == null ? "" : User.Name;
             }
         }
+
         public Guid InstallationId { get; set; }
         [JsonIgnore]
         public virtual Installation Installation { get; set; }
@@ -26,6 +27,17 @@ namespace IKeep.Lib.Models
             get
             {
                 return Installation == null ? "" : Installation.Name;
+            }
+        }
+
+        public Guid RoleId { get; set; }
+        [JsonIgnore]
+        public virtual Role Role { get; set; }
+        public string RoleName
+        {
+            get
+            {
+                return Role == null ? "" : Role.Name;
             }
         }
     }
