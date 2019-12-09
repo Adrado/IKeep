@@ -17,7 +17,8 @@ export const localizationEsp ={
     },
     toolbar: {
       searchTooltip: 'Buscar',
-      searchPlaceholder: 'Buscar'
+      searchPlaceholder: 'Buscar',
+      nRowsSelected: '{0} fila(s) seleccionada(s)'
     },
     pagination: {
       labelRowsSelect: 'Filas',
