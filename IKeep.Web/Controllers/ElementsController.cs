@@ -26,31 +26,6 @@ namespace IKeep.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Element>>> GetElements()
         {
-            //var x = _elementsService.GetAll().ToList().Count();
-
-            //if (x == 0)
-            //{
-            //    var a = new Element
-            //    {
-            //        Id = Guid.Parse("60e7806c-dc43-4ff9-8f7b-b18b97d0ec0f"),
-            //        FloorId = Guid.Parse("de579db4-6927-479c-824a-a3fb20031f39"),
-            //        Ref = "I1",
-            //        Name = "MT-BCN",
-            //        Description = "asdjklñqwe"
-            //    };
-
-            //    var b = new Element
-            //    {
-            //        Id = Guid.Parse("fdb3bb2c-adc0-4692-865c-7dbc7aa1c97f"),
-            //        FloorId = Guid.Parse("0433bd95-532f-43f5-ab33-994f613b7530"),
-            //        Ref = "I2",
-            //        Name = "MA",
-            //        Description = "yurtuyjhfgj"
-            //    };
-            //    _elementsService.Add(a);
-            //    _elementsService.Add(b);
-            //}
-
             return await _elementsService.GetAll().ToListAsync();
         }
 

@@ -29,19 +29,18 @@ namespace IKeep.Web.Controllers
             return await _installationUsersService.GetAll().ToListAsync();
         }
 
-        // GET: api/InstallationUsers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<InstallationUser>> GetInstallationUser(Guid id)
+        // GET: api/InstallationUsers/installation/Guid
+        [HttpGet("installation/{id}")]
+        public async Task<ActionResult<IEnumerable<InstallationUser>>> GetInstallationUsersByInstallationId(Guid id)
         {
-            return await Task.Run(() =>
-            {
-                var installationUser = _installationUsersService.GetAll().FirstOrDefault(x => x.Id == id);
-                if (installationUser == null)
-                {
-                    return NotFound();
-                }
-                return new ActionResult<InstallationUser>(installationUser);
-            });
+            return await _installationUsersService.GetAll().Where(x => x.InstallationId == id).ToListAsync();
+        }
+
+        // GET: api/InstallationUsers/user/Guid
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<IEnumerable<InstallationUser>>> GetInstallationUsersByUserId(Guid id)
+        {
+            return await _installationUsersService.GetAll().Where(x => x.UserId == id).ToListAsync();
         }
 
         // PUT: api/InstallationUsers/5
