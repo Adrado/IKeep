@@ -2,7 +2,7 @@ import  { useState, useEffect, useContext } from 'react';
 import {InstallationUserService} from '../../providers/Providers';
 import InstallationUser from '../../models/InstallationUser';
 
-const useFetchInstallationUsers = () =>
+const useFetchAllInstallationUsers = () =>
 {
     const InstallationUsersService = useContext(InstallationUserService);
     const [InstallationUsers, setInstallationUsers] = useState(null);
@@ -55,4 +55,4 @@ const useFetchInstallationUsers = () =>
     }
 }
 
-export default useFetchInstallationUsers;
+export default useFetchAllInstallationUsers;

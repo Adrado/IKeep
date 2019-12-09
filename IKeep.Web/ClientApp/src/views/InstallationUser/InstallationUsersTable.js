@@ -9,9 +9,9 @@ import {localizationEsp} from '../../components/MaterialTableProps';
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchInstallationUsers from './useFetchInstallationUsers';
+import useFetchAllInstallationUsers from './useFetchAllInstallationUsers';
 import useInstallationUserViewModel from './useInstallationUserViewModel';
-import AddInstallationUserDialog from './AddInstallationDialog';
+import AddInstallationUserDialog from './AddInstallationUserDialog';
 
 
 const InstallationUsersTable = () => 
@@ -24,7 +24,7 @@ const InstallationUsersTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {InstallationUsers, change, setChange} = useFetchInstallationUsers();
+  const {InstallationUsers, change, setChange} = useFetchAllInstallationUsers();
   const [Add, Save, Delete] = useInstallationUserViewModel();
   const [row, setRow] = useState(state.selectedRow);
 

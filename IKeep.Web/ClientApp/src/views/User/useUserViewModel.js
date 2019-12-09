@@ -22,7 +22,7 @@ const useUserViewModel = () =>
         user.Birthdate = values.Birthdate;
         user.City = values.City;
         user.Address = values.Address;
-        user.RoleId = values.RoleId;
+        //user.RoleId = values.RoleId;
 
         if(user !== undefined && user!== null)
         {
@@ -45,7 +45,7 @@ const useUserViewModel = () =>
         user.Birthdate = values.Birthdate;
         user.City = values.City;
         user.Address = values.Address;
-        user.RoleId = values.RoleId;
+        //user.RoleId = values.RoleId;
 
         if(user !== undefined && user !== null)
         {

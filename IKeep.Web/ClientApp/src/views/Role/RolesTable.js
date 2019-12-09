@@ -48,7 +48,7 @@ const RolesTable = () =>
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
-                actionsColumnIndex: -1,
+                //actionsColumnIndex: -1,
                 filtering: true,
                 toolbar: true,
                 pageSize: 10,
@@ -77,6 +77,15 @@ const RolesTable = () =>
                         })
                   }),
 
+                onRowDelete: oldData =>
+                  new Promise((resolve, reject) => {
+                    Delete(oldData)
+                    .then(() => {
+                      setChange(!change)
+                      resolve()
+                    })
+                  }),
+
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {
                     Save(oldData, newData)
@@ -86,14 +95,7 @@ const RolesTable = () =>
                     })
                   }),
 
-                onRowDelete: oldData =>
-                  new Promise((resolve, reject) => {
-                    Delete(oldData)
-                    .then(() => {
-                      setChange(!change)
-                      resolve()
-                    })
-                  }),
+                
               }}
           />
           }

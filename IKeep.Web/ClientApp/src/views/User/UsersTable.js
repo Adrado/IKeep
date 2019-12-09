@@ -47,18 +47,18 @@ const UsersTable = () =>
   const columns = [
     { title: 'Usuario', field: 'LoginName' },
     { title: 'Contraseña', field: 'Password' },
-    { title: 'Rol', field: 'RoleId', lookup: LookupRoles},
+    //{ title: 'Rol', field: 'RoleId', lookup: LookupRoles},
     { title: 'Nombre', field: 'Name' },
     { title: 'Primer Apellido', field: 'FirstSurname' },
     { title: 'Segundo Apellido', field: 'SecondSurname' },
     { title: 'DNI', field: 'DNI' },
+    { title: 'Ciudad', field: 'City' },
+    { title: 'Dirección', field: 'Address' },
     { title: 'Fijo', field: 'Phone' },
     { title: 'Móvil', field: 'Phone2' },
     { title: 'Correo', field: 'Email' },
-    { title: 'Lugar de Nacimiento', field: 'Birthplace' },
+    //{ title: 'Lugar de Nacimiento', field: 'Birthplace' },
     { title: 'Fecha de Nacimiento', field: 'Birthdate', type: 'date' },
-    { title: 'Ciudad', field: 'City' },
-    { title: 'Dirección', field: 'Address' }
   ] 
 
   const Title = "Usuarios";

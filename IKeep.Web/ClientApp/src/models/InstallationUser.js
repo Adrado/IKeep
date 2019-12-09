@@ -17,6 +17,11 @@ class InstallationUser extends Entity
             this.UserName = json.userName;
             this.InstallationName = json.installationName;
             this.UserFirstSurname = json.userFirstSurname;
+
+            this.RoleId = json.roleId;
+            this.RoleName = json.role;
+            /* this.CategoryId = json.categoryId;
+            this.CategoryName = json.category; */
         }
         else
         {
@@ -25,6 +30,11 @@ class InstallationUser extends Entity
             this.UserName = "";
             this.InstallationName = "";
             this.UserFirstSurname = "";
+
+            this.RoleId = "00000000-0000-0000-0000-000000000000";
+            this.RoleName = "";
+            /* this.CategoryId = "00000000-0000-0000-0000-000000000000";
+            this.CategoryName = ""; */
         }
     }
 }
