@@ -4,6 +4,7 @@ import React, {Fragment, useState} from 'react';
 //CRUD Services
 import useFetchInstallationUsers from './useFetchInstallationUsers';
 import useInstallationUserViewModel from '../../../InstallationUser/useInstallationUserViewModel';
+import useFetchRoles from '../../../Role/useFetchRoles';
 
 //Table
 import MaterialTable from 'material-table';
@@ -23,6 +24,7 @@ const InstallationUsersTable = ({installationId}) =>
   const classes = useStyles();
   
   const {InstallationUsers, change, setChange} = useFetchInstallationUsers(installationId);
+  const {Roles} = useFetchRoles();
   const [, Save, Delete] = useInstallationUserViewModel();
   const [, setRow] = useState(null);
 
@@ -35,16 +37,28 @@ const InstallationUsersTable = ({installationId}) =>
     setOpen(false);
   };
   
+  const BuildField = (Data) =>
+  {
+    let lookup = {};
+    for (let i in Data)
+    {
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
+    }
+    return lookup;
+  }
+
+  const LookupRoles = BuildField(Roles);
   //Info to InstallationUsers Table 
   const LookupState = Object.freeze({
     0: "Inactivo",
     1: "Activo"
   });
-  
+
   const columns = [
     { title: 'Estado', field: 'EntityStatus', lookup: LookupState },
-    { title: 'Usuario', field: 'UserFullName', editable: 'never'},
-    { title: 'Rol', field: 'RoleId',  },
+    { title: 'Usuario', field: 'UserName', editable: 'never'},
+    { title: 'Rol', field: 'RoleId', lookup: LookupRoles },
     //{ title: 'Instalación', field: 'InstallationName', editable: 'never'},
     ];
 
@@ -119,6 +133,7 @@ const InstallationUsersTable = ({installationId}) =>
             open = {open}
             handleClose = {handleClose}
             installationId = {installationId}
+            installationUsers = {InstallationUsers}
             change = {change}
             setChange = {setChange}
           />

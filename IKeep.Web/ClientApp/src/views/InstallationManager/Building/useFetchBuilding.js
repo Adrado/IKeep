@@ -10,12 +10,17 @@ const useFetchBuilding = (treeNode) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetBuilding = async () =>
         {
             try{
-                const response = await BuildingsService.GetByIdAsync(treeNode.Id); 
-                const building = new Building(response.data);
-                setFetchedBuilding(building);
+                const response = await BuildingsService.GetByIdAsync(treeNode.Id);
+                if(isSuscribed)
+                {
+                    const building = new Building(response.data);
+                    setFetchedBuilding(building);
+                }
+                
             }
             catch (error){
                 setError(true)
@@ -40,7 +45,7 @@ const useFetchBuilding = (treeNode) =>
         }
 
         return () => {
-            BuildingsService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[treeNode, BuildingsService]);

@@ -10,12 +10,17 @@ const useFetchFloor = (treeNode) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true
         const GetFloor = async () =>
         {
             try{
-                const response = await FloorsService.GetByIdAsync(treeNode.Id); 
-                const floor = new Floor(response.data);
-                setFetchedFloor(floor);
+                const response = await FloorsService.GetByIdAsync(treeNode.Id);
+                if(isSuscribed)
+                {
+                    const floor = new Floor(response.data);
+                    setFetchedFloor(floor);
+                }
+                
             }
             catch (error){
                 setError(true)
@@ -40,7 +45,7 @@ const useFetchFloor = (treeNode) =>
         }
 
         return () => {
-            FloorsService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[treeNode, FloorsService]);

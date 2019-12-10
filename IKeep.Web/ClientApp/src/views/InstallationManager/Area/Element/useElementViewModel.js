@@ -6,22 +6,6 @@ const useElementViewModel = () =>
 {
     const ElementsService = useContext(ElementService);
 
-    const SaveElement = (element, values) =>
-    {
-        element.Status = values.Status;
-        element.Ref = values.Ref;
-        element.Ref = values.Ref;
-        element.Brand = values.Brand;
-        element.Model = values.Model;
-        element.Description = values.Description;
-        element.SafetyAndHealth = values.SafetyAndHealth;
-
-        if(element !== undefined && element !== null)
-        {
-            return ElementsService.UpdateAsync(element);
-        }
-    }
-      
     const AddNewElement =  (areaId, genericElement) =>
     {
         let element = new Element();
@@ -35,7 +19,22 @@ const useElementViewModel = () =>
             return ElementsService.AddAsync(element);
         }
     }
- 
+
+    const SaveElement = (element, values) =>
+    {
+        element.Status = values.Status;
+        element.Ref = values.Ref;
+        element.Brand = values.Brand;
+        element.Model = values.Model;
+        element.Description = values.Description;
+        element.SafetyAndHealth = values.SafetyAndHealth;
+
+        if(element !== undefined && element !== null)
+        {
+            return ElementsService.UpdateAsync(element);
+        }
+    }
+      
     const DeleteElement = (model) =>
     {
         if(model !== undefined && model!== null)

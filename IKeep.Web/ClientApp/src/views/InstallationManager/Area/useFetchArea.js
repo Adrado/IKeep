@@ -16,12 +16,17 @@ const useFetchArea = (treeNode) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetArea = async () =>
         {
             try{
-                const response = await AreasService.GetByIdAsync(treeNode.Id); 
-                const area = new Area(response.data);
-                setFetchedArea(area);
+                const response = await AreasService.GetByIdAsync(treeNode.Id);
+                if(isSuscribed)
+                {
+                    const area = new Area(response.data);
+                    setFetchedArea(area);
+                }
+                
             }
             catch (error){
                 setError(true)
@@ -46,7 +51,7 @@ const useFetchArea = (treeNode) =>
         }
         
         return () => {
-            AreasService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[treeNode, AreasService]);

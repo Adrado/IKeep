@@ -24,14 +24,18 @@ const useFetchElements = (areaId) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetElementsByAreaId = async () =>
         {
             try
             {
                 const response = await ElementsService.GetById(areaId);
-                const dataUpdated = UpdateData(response.data)
-                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setElements(dataUpdated);
+                if( isSuscribed)
+                {
+                    const dataUpdated = UpdateData(response.data)
+                    dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                    setElements(dataUpdated);
+                }
             }
             catch (error){
                 setError(true)
@@ -41,7 +45,7 @@ const useFetchElements = (areaId) =>
         GetElementsByAreaId();
 
         return () => {
-            ElementsService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[ElementsService, change, areaId]);

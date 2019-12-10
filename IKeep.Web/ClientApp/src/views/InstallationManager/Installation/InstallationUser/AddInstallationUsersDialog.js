@@ -16,71 +16,64 @@ import PropTypes from 'prop-types';
 
 import useFetchUsers from '../../../User/useFetchUsers';
 import useFetchRoles from '../../../Role/useFetchRoles';
+import useTempData from './useTempData';
+import InstallationUser from '../../../../models/InstallationUser';
 
 
-export default function AddInstallationUsersDialog({open, handleClose, installationId, change, setChange})
+export default function AddInstallationUsersDialog({open, handleClose, installationId, installationUsers, change, setChange})
 {
   const classes = useStyles();
 
   const {Users} = useFetchUsers();
-  const {Roles} = useFetchRoles();
+  //const {Roles} = useFetchRoles();
   const [Add] = useInstallationUserViewModel();
-  
-  
-
-  /* const AddSelectedGInstallationUsers = (data) =>
+  const [tempData, setTempData] = useTempData(Users, installationId);
+  const AddUsers = (data) =>
   {
     let installationUsersPromises = [];
-    let tasksPromises = [];
+    //let tasksPromises = [];
     for (let i in data)
     {
-      installationUsersPromises.push(Add(areaId, data[i]));
+      console.log(data[i])
+      installationUsersPromises.push(Add(installationId, data[i].UserId, data[i].RoleId));
     }
     Promise.all(installationUsersPromises)
-    .then((values)=> {
-      for (let j = 0; j<values.length; j++)
-      {
-        let installationUserCreated = new InstallationUser(values[j].data);
-        for (let k in data)
-        {
-          let gInstallationUser = data[k];
-          if(installationUserCreated.GenericInstallationUserId === gInstallationUser.Id)
-          {
-            for( let m = 0; m < gInstallationUser.GenericInstallationUserGenericTasks.length; m++)
-            {
-              let gInstallationUserGTask = new GenericInstallationUserGenericTask(gInstallationUser.GenericInstallationUserGenericTasks[m]);
-              tasksPromises.push(AddInstallationUserGTask(installationUserCreated.Id, gInstallationUserGTask))
-            }
-          }
-        }
-      }
-    });
-
-    Promise.all(tasksPromises).then(()=>
-      {
+    .then((values) => 
+    {
         setChange(!change)
         handleClose();
-      });
-  } */
+    });
+  }
 
-  const BuildField = (Data) =>
+  /* const BuildField = (Data) =>
   {
-    let lookup = {}
+    let lookup = {};
     for (let i in Data)
     {
       let data = Data[i];
       lookup[data.Id] = data.Name;
     }
     return lookup;
-  }
+  } */
   
   //Info to GenericInstallationUsers Table 
- // const LookupTypes = BuildField(ETypes);
+  //const LookupRoles = BuildField(Roles);
   const columns = [
-    { title: 'Nombre', field: 'Name', editable: 'always' },
-    //{ title: 'Tipo', field: 'InstallationUserTypeId', lookup: LookupTypes}
+    { title: 'Nombre', field: 'UserName', editable: 'always' },
+    //{ title: 'Rol', field: 'RoleId', lookup: LookupRoles}
     ] 
   const Title = "Usuarios";
+
+  const isSelected = (rowData) =>
+  {
+    let result = installationUsers.find(installationUser => installationUser.UserId === rowData.UserId);
+
+    if (result !== undefined && result !== null && result.UserId === rowData.UserId)
+      return true;
+    else
+      return false;
+  }
+
   return (
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -96,20 +89,24 @@ export default function AddInstallationUsersDialog({open, handleClose, installat
             </Button> */}
           </Toolbar>
         </AppBar>
-        {Users !== null &&
+        {tempData !== null &&
         <MaterialTable
-          data = {Users}
+          data = {tempData}
           columns = {columns}
           title = {Title}
           localization={localizationEsp}
           options={{
-            selection: true,
-            actionsColumnIndex: -1,
-            filtering: true,
+            
+            //actionsColumnIndex: -1,
+            //filtering: true,
             toolbar: true,
             showSelectAllCheckbox: false,
             pageSize: 10,
             pageSizeOptions: [10, 20],
+            selection: true,
+            selectionProps: rowData => ({
+              disabled: isSelected(rowData)
+            }),  
             /* rowStyle: rowData => ({
               backgroundColor: (row.tableData && row.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
             }) */
@@ -119,11 +116,21 @@ export default function AddInstallationUsersDialog({open, handleClose, installat
             {
               icon: 'add',
               tooltip: 'Asignar Usuarios',
-              //onClick: (evt, data) => AddSelectedGInstallationUsers(data)
+              onClick: (evt, data) => AddUsers(data)
             }
           ]}
-          
-          //onSelectionChange={(rows) => console.log(rows)}
+        
+         /* editable={{
+        onRowUpdate: (newData, oldData) =>
+                new Promise((resolve, reject) => {
+                  let data = tempData;
+                  const index = data.indexOf(oldData);
+                  data[index] = newData;
+                  setTempData(data);
+                  console.log(data);
+                  resolve()
+                }),
+              }} */ 
         />
         }
       </Dialog>
@@ -134,8 +141,9 @@ AddInstallationUsersDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired, 
   installationId: PropTypes.string.isRequired,
+  installationUsers: PropTypes.arrayOf(PropTypes.instanceOf(InstallationUser)),
   change: PropTypes.bool.isRequired,
-  setChange: PropTypes.func.isRequired
+  setChange: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles(theme => ({

@@ -10,16 +10,19 @@ const useFetchInstallation = (treeNode) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetInstallation = async () =>
         {
             try{
                 const response = await InstallationsService.GetByIdAsync(treeNode.Id);
-                console.log(response);
-                const installation = new Installation(response.data);
-                setFetchedInstallation(installation);
+                if(isSuscribed)
+                {
+                    const installation = new Installation(response.data);
+                    setFetchedInstallation(installation);
+                }
             }
             catch (error){
-                console.log(error)
+                //console.log(error)
                 setError(true)
             } 
         }
@@ -42,7 +45,7 @@ const useFetchInstallation = (treeNode) =>
         }
 
         return () => {
-            InstallationsService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[treeNode, InstallationsService]);

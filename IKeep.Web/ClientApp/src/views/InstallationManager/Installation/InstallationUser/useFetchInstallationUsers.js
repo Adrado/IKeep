@@ -24,14 +24,18 @@ const useFetchInstallationUsers = (installationId) =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetInstallationUsersByAreaId = async () =>
         {
             try
             {
                 const response = await InstallationUsersService.GetByInstallationIdAsync(installationId);
-                const dataUpdated = UpdateData(response.data)
-                dataUpdated.sort((a,b) => (a.UserName > b.UserName) ? 1 : ((b.UserName > a.UserName) ? -1 : 0)); 
-                setInstallationUsers(dataUpdated);
+                if(isSuscribed)
+                {
+                    const dataUpdated = UpdateData(response.data)
+                    dataUpdated.sort((a,b) => (a.UserName > b.UserName) ? 1 : ((b.UserName > a.UserName) ? -1 : 0)); 
+                    setInstallationUsers(dataUpdated);
+                }
             }
             catch (error){
                 setError(true)
@@ -41,7 +45,7 @@ const useFetchInstallationUsers = (installationId) =>
         GetInstallationUsersByAreaId();
 
         return () => {
-            InstallationUsersService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[InstallationUsersService, change, installationId]);
