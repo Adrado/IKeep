@@ -30,7 +30,7 @@ namespace IKeep.Lib.Models
             }
         }
 
-        public Guid RoleId { get; set; }
+        public Guid? RoleId { get; set; }
         [JsonIgnore]
         public virtual Role Role { get; set; }
         public string RoleName
