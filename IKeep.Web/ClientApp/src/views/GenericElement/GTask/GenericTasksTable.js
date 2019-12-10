@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import {localizationEsp} from '../../../components/MaterialTableProps';
 
+//Reducers
 import {Functions} from '../../../providers/Providers';
 
 import useFetchGenericTask from '../../GenericTask/useFetchGenericTask';
@@ -107,6 +108,7 @@ const GenericTasksTable = ({displayTable}) =>
               toolbar: true,
               pageSize: 10,
               pageSizeOptions: [10, 20],
+              showSelectAllCheckbox: false,
               selection: true,
               selectionProps: rowData => ({
                 disabled: isSelected(rowData)

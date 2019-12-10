@@ -31,7 +31,7 @@ class InstallationUser extends Entity
             this.InstallationName = "";
             this.UserFirstSurname = "";
 
-            this.RoleId = "00000000-0000-0000-0000-000000000000";
+            this.RoleId = "";
             this.RoleName = "";
             /* this.CategoryId = "00000000-0000-0000-0000-000000000000";
             this.CategoryName = ""; */

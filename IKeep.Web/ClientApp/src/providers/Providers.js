@@ -19,7 +19,6 @@ import ElementsService from '../services/ElementsService';
 import ElementGenericTasksService from '../services/ElementGenericTasksService';
 import InstallationUsersService from '../services/InstallationUsersService';
 
-
 export const CRUD =
 {
     Area : new AreasService(),

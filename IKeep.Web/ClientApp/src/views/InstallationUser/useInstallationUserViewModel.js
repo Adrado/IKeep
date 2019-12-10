@@ -6,23 +6,12 @@ const useInstallationUserViewModel = () =>
 {
     const InstallationUsersService = useContext(InstallationUserService);
 
-    const AddNewInstallationUser = (values) =>
+    const AddNewInstallationUser = (installationId, userId, roleId) =>
     {
         let installationUser = new InstallationUser();
-        installationUser.LoginName = values.LoginName;
-        installationUser.Password = values.Password;
-        installationUser.Name = values.Name;
-        installationUser.FirstSurname = values.FirstSurname;
-        installationUser.SecondSurname = values.SecondSurname;
-        installationUser.DNI = values.DNI;
-        installationUser.Phone = values.Phone;
-        installationUser.Phone2 = values.Phone2;
-        installationUser.Email = values.Email;
-        installationUser.Birthplace = values.Birthplace;
-        installationUser.Birthdate = values.Birthdate;
-        installationUser.City = values.City;
-        installationUser.Address = values.Address;
-        installationUser.RoleId = values.RoleId;
+        installationUser.InstallationId = installationId;
+        installationUser.UserId = userId;
+        installationUser.RoleId = roleId;
 
         if(installationUser !== undefined && installationUser!== null)
         {
@@ -32,19 +21,7 @@ const useInstallationUserViewModel = () =>
 
     const SaveInstallationUser = (installationUser, values) =>
     {
-        installationUser.LoginName = values.LoginName;
-        installationUser.Password = values.Password;
-        installationUser.Name = values.Name;
-        installationUser.FirstSurname = values.FirstSurname;
-        installationUser.SecondSurname = values.SecondSurname;
-        installationUser.DNI = values.DNI;
-        installationUser.Phone = values.Phone;
-        installationUser.Phone2 = values.Phone2;
-        installationUser.Email = values.Email;
-        installationUser.Birthplace = values.Birthplace;
-        installationUser.Birthdate = values.Birthdate;
-        installationUser.City = values.City;
-        installationUser.Address = values.Address;
+        installationUser.EntityStatus = values.EntityStatus
         installationUser.RoleId = values.RoleId;
 
         if(installationUser !== undefined && installationUser !== null)

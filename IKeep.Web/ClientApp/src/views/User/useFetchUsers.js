@@ -24,14 +24,19 @@ const useFetchUsers = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllUsers = async () =>
         {
             try
             {
                 const response = await UsersService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data)
-                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setUsers(dataUpdated);
+                if (isSuscribed)
+                {
+                    const dataUpdated = UpdateData(response.data)
+                    dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                    setUsers(dataUpdated);
+                }
+                
             }
             catch (error){
                 setError(true)
@@ -42,7 +47,7 @@ const useFetchUsers = () =>
         GetAllUsers();
 
         return () => {
-            UsersService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[UsersService, change]);

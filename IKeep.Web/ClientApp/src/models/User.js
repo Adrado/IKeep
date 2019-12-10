@@ -20,10 +20,11 @@ class User extends Entity
             this.Birthdate = json.birthdate;
             this.City = json.city;
             this.Address = json.address;
-            this.EntryTime = json.entryTime;
-            this.ExitTime = json.exitTime;
+            //this.EntryTime = json.entryTime;
+            //this.ExitTime = json.exitTime;
             this.ImageId = json.imageId;
             this.Token = json.token;
+
             this.RoleId = json.roleId;
         }
         else
@@ -41,10 +42,11 @@ class User extends Entity
             this.Birthdate = "";
             this.City = "";
             this.Address = "";
-            this.EntryTime = new Date();
-            this.ExitTime = new Date();
+            //this.EntryTime = new Date();
+            //this.ExitTime = new Date();
             this.ImageId = "";
             this.Token = "";
+
             this.RoleId = "";
         }
     }
