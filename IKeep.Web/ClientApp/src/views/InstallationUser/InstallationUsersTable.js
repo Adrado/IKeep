@@ -12,6 +12,7 @@ import {Functions} from '../../providers/Providers';
 import useFetchAllInstallationUsers from './useFetchAllInstallationUsers';
 import useInstallationUserViewModel from './useInstallationUserViewModel';
 import AddInstallationUserDialog from './AddInstallationUserDialog';
+import useFetchRoles from '../Role/useFetchRoles';
 
 
 const InstallationUsersTable = () => 
@@ -27,6 +28,7 @@ const InstallationUsersTable = () =>
   const {InstallationUsers, change, setChange} = useFetchAllInstallationUsers();
   const [Add, Save, Delete] = useInstallationUserViewModel();
   const [row, setRow] = useState(state.selectedRow);
+  const {Roles} = useFetchRoles();
 
   const [open, setOpen] = useState(false);
   const [changes, setChanges] = useState(false);
@@ -39,6 +41,18 @@ const InstallationUsersTable = () =>
     setOpen(false);
   };
 
+  const BuildField = (Data) =>
+  {
+    let lookup = {};
+    for (let i in Data)
+    {
+      let data = Data[i];
+      lookup[data.Id] = data.Name;
+    }
+    return lookup;
+  }
+
+  const LookupRoles = BuildField(Roles);
 
   const Estado = Object.freeze({
     0 : "Inactivo",
@@ -46,8 +60,10 @@ const InstallationUsersTable = () =>
   })
   const columns = [
     { title: 'Estado', field: 'EntityStatus', lookup: Estado },
-    { title: 'Usuario', field: 'UserName' },
-    { title: 'Instalación', field: 'InstalationName' },
+    { title: 'Rol', field: 'RoleId', lookup: LookupRoles},
+    { title: 'Usuario', field: 'UserName', editable: 'never' },
+    { title: 'Instalación', field: 'InstallationName', editable: 'never' },
+    
   ] 
 
   const Title = "Usuarios";

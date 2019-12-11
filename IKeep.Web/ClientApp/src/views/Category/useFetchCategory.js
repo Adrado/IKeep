@@ -25,6 +25,7 @@ const useFetchCategory = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllCategorys = async () =>
         {
             try{
@@ -39,6 +40,10 @@ const useFetchCategory = () =>
         }
 
         GetAllCategorys();
+
+        return () => {
+            isSuscribed = false;
+        };
 
     },[CategorysService, change]);
 

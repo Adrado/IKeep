@@ -24,6 +24,7 @@ const useFetchRoles = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllRoles = async () =>
         {
             try
@@ -39,6 +40,10 @@ const useFetchRoles = () =>
         }
 
         GetAllRoles();
+
+        return () => {
+            isSuscribed = false;
+        };
 
     },[RolesService, change]);
 

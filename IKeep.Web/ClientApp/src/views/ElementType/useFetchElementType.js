@@ -25,6 +25,7 @@ const useFetchElementType = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllElementTypes = async () =>
         {
             try{
@@ -40,6 +41,10 @@ const useFetchElementType = () =>
         }
 
         GetAllElementTypes();
+
+        return () => {
+            isSuscribed = false;
+        };
 
     },[ElementTypesService, change]);
 

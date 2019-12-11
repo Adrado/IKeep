@@ -24,6 +24,7 @@ const useFetchInstallations = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllInstallations = async () =>
         {
             try
@@ -42,7 +43,7 @@ const useFetchInstallations = () =>
         GetAllInstallations();
 
         return () => {
-            InstallationsService.CancelOperation();
+            isSuscribed = false;
         };
 
     },[InstallationsService, change]);

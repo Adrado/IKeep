@@ -25,6 +25,7 @@ const useFetchPriority = () =>
 
     useEffect(() =>
     {
+        let isSuscribed = true;
         const GetAllPrioritys = async () =>
         {
             try{
@@ -40,6 +41,9 @@ const useFetchPriority = () =>
 
         GetAllPrioritys();
 
+        return () => {
+            isSuscribed = false;
+        };
     },[PrioritysService, change]);
 
     return{
