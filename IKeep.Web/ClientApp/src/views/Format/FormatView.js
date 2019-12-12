@@ -1,6 +1,10 @@
+//Core
 import React, {Fragment, useReducer} from 'react';
+//Context
 import {Functions} from '../../providers/Providers';
+//Models
 import Format from '../../models/Format';
+//View Components
 import FormatsTable from './FormatsTable';
 
 function reducer(state, action) {

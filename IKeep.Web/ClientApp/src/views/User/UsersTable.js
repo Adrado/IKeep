@@ -27,22 +27,8 @@ const UsersTable = () =>
   const {Users, change, setChange} = useFetchUsers();
   const [Add, Save, Delete] = useUserViewModel();
   const [row, setRow] = useState(state.selectedRow);
-  const{Roles} = useFetchRoles();
-
-  const BuildField = (Data) =>
-  {
-    let lookup = {}
-    for (let i in Data)
-    {
-      let data = Data[i];
-      lookup[data.Id] = data.Name;
-    }
-    return lookup;
-  }
-
-   
+  
   //Info to Users Table 
-  const LookupRoles = BuildField(Roles);
 
   const columns = [
     { title: 'Usuario', field: 'LoginName' },

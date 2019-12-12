@@ -1,13 +1,12 @@
+//Core
 import React, {Fragment, useContext, useState} from 'react';
+//Style Components
 import {CircularProgress, makeStyles} from '@material-ui/core' 
-
 //Table
 import MaterialTable from 'material-table';
 import {localizationEsp} from '../../components/MaterialTableProps'
-
 //Contexts
 import {Functions} from '../../providers/Providers';
-
 //CRUD Services
 import useFetchFormat from './useFetchFormat';
 import useFormatViewModel from './useFormatViewModel';

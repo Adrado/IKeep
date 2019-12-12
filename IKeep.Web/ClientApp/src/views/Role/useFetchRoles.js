@@ -30,9 +30,12 @@ const useFetchRoles = () =>
             try
             {
                 const response = await RolesService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data)
-                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setRoles(dataUpdated);
+                if(isSuscribed === true)
+                {
+                    const dataUpdated = UpdateData(response.data)
+                    dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                    setRoles(dataUpdated);
+                }
             }
             catch (error){
                 setError(true)

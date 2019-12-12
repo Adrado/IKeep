@@ -34,7 +34,7 @@ namespace IKeep.Lib.Models
             }
         }
 
-        public virtual ICollection<GenericElementGenericTask> GenericElementGenericTasks { get; set; }
+        public virtual ICollection<GenericElementGenericChore> GenericElementGenericChores { get; set; }
     }
 }
 

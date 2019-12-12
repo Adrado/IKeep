@@ -85,12 +85,12 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Element>, ElementsDbSet>();
             services.AddScoped<IDbSet<ElementObservation>, ElementObservationsDbSet>();
             services.AddScoped<IDbSet<ElementType>, ElementTypesDbSet>();
-            services.AddScoped<IDbSet<ElementGenericTask>, ElementGenericTasksDbSet>();
+            services.AddScoped<IDbSet<ElementGenericChore>, ElementGenericChoresDbSet>();
             services.AddScoped<IDbSet<Floor>, FloorsDbSet>();
             services.AddScoped<IDbSet<Format>, FormatsDbSet>();
             services.AddScoped<IDbSet<GenericElement>, GenericElementsDbSet>();
-            services.AddScoped<IDbSet<GenericElementGenericTask>, GenericElementGenericTasksDbSet>();
-            services.AddScoped<IDbSet<GenericTask>, GenericTasksDbset>();
+            services.AddScoped<IDbSet<GenericElementGenericChore>, GenericElementGenericChoresDbSet>();
+            services.AddScoped<IDbSet<GenericChore>, GenericChoresDbset>();
             services.AddScoped<IDbSet<Inspection>, InspectionsDbSet>();
             services.AddScoped<IDbSet<Installation>, InstallationsDbSet>();
             services.AddScoped<IDbSet<InstallationUser>, InstallationUsersDbSet>();
@@ -100,7 +100,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Report>, ReportsDbSet>();
             services.AddScoped<IDbSet<Role>, RolesDbSet>();
             services.AddScoped<IDbSet<Supplier>, SuppliersDbSet>();
-            services.AddScoped<IDbSet<Task>, TasksDbSet>();
+            services.AddScoped<IDbSet<Chore>, ChoresDbSet>();
             services.AddScoped<IDbSet<User>, UsersDbSet>();
 
             // Repositories
@@ -110,12 +110,12 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Corrective>, GenericRepository<Corrective>>();
             services.AddScoped<IRepository<Element>, GenericRepository<Element>>();
             services.AddScoped<IRepository<ElementType>, GenericRepository<ElementType>>();
-            services.AddScoped<IRepository<ElementGenericTask>, GenericRepository<ElementGenericTask>>();
+            services.AddScoped<IRepository<ElementGenericChore>, GenericRepository<ElementGenericChore>>();
             services.AddScoped<IRepository<Floor>, GenericRepository<Floor>>();
             services.AddScoped<IRepository<Format>, GenericRepository<Format>>();
             services.AddScoped<IRepository<GenericElement>, GenericRepository<GenericElement>>();
-            services.AddScoped<IRepository<GenericElementGenericTask>, GenericRepository<GenericElementGenericTask>>();
-            services.AddScoped<IRepository<GenericTask>, GenericRepository<GenericTask>>();
+            services.AddScoped<IRepository<GenericElementGenericChore>, GenericRepository<GenericElementGenericChore>>();
+            services.AddScoped<IRepository<GenericChore>, GenericRepository<GenericChore>>();
             services.AddScoped<IRepository<Inspection>, GenericRepository<Inspection>>();
             services.AddScoped<IRepository<Installation>, GenericRepository<Installation>>();
             services.AddScoped<IRepository<InstallationUser>, GenericRepository<InstallationUser>>();
@@ -125,7 +125,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Report>, GenericRepository<Report>>();
             services.AddScoped<IRepository<Role>, GenericRepository<Role>>();
             services.AddScoped<IRepository<Supplier>, GenericRepository<Supplier>>();
-            services.AddScoped<IRepository<Task>, GenericRepository<Task>>();
+            services.AddScoped<IRepository<Chore>, GenericRepository<Chore>>();
             services.AddScoped<IRepository<User>, GenericRepository<User>>();
 
             // Crud Services
@@ -136,12 +136,12 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<User>, GenericCrudService<User>>();
             services.AddScoped<ICrudService<Element>, GenericCrudService<Element>>();
             services.AddScoped<ICrudService<ElementType>, GenericCrudService<ElementType>>();
-            services.AddScoped<ICrudService<ElementGenericTask>, GenericCrudService<ElementGenericTask>>();
+            services.AddScoped<ICrudService<ElementGenericChore>, GenericCrudService<ElementGenericChore>>();
             services.AddScoped<ICrudService<Floor>, GenericCrudService<Floor>>();
             services.AddScoped<ICrudService<Format>, GenericCrudService<Format>>();
             services.AddScoped<ICrudService<GenericElement>, GenericCrudService<GenericElement>>();
-            services.AddScoped<ICrudService<GenericElementGenericTask>, GenericCrudService<GenericElementGenericTask>>();
-            services.AddScoped<ICrudService<GenericTask>, GenericCrudService<GenericTask>>();
+            services.AddScoped<ICrudService<GenericElementGenericChore>, GenericCrudService<GenericElementGenericChore>>();
+            services.AddScoped<ICrudService<GenericChore>, GenericCrudService<GenericChore>>();
             services.AddScoped<ICrudService<Inspection>, GenericCrudService<Inspection>>();
             services.AddScoped<ICrudService<Installation>, GenericCrudService<Installation>>();
             services.AddScoped<ICrudService<InstallationUser>, GenericCrudService<InstallationUser>>();
@@ -151,10 +151,10 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Report>, GenericCrudService<Report>>();
             services.AddScoped<ICrudService<Role>, GenericCrudService<Role>>();
             services.AddScoped<ICrudService<Supplier>, GenericCrudService<Supplier>>();
-            services.AddScoped<ICrudService<Task>, GenericCrudService<Task>>();
+            services.AddScoped<ICrudService<Chore>, GenericCrudService<Chore>>();
 
             services.AddScoped<ITreeViewService, TreeViewService>();
-            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IChoreService, ChoreService>();
 
             // Other Services
             //services.AddScoped<IRegisterService, RegisterService>();

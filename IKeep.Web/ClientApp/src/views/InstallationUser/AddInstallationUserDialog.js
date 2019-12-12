@@ -49,10 +49,10 @@ export default function AddInstallationUserDialog({open, handleClose, change, se
           let gElement = data[k];
           if(elementCreated.GenericElementId === gElement.Id)
           {
-            for( let m = 0; m < gElement.GenericElementGenericTasks.length; m++)
+            for( let m = 0; m < gElement.GenericElementGenericChores.length; m++)
             {
-              let gElementGTask = new GenericElementGenericTask(gElement.GenericElementGenericTasks[m]);
-              tasksPromises.push(AddElementGTask(elementCreated.Id, gElementGTask))
+              let gElementGChore = new GenericElementGenericChore(gElement.GenericElementGenericChores[m]);
+              tasksPromises.push(AddElementGChore(elementCreated.Id, gElementGChore))
             }
           }
         }

@@ -8,12 +8,12 @@ class Priority extends Entity
         if(json)
         {
             this.Name = json.name;
-            this.GenericTasksIds = json.genericTasksIds;
+            this.GenericChoresIds = json.genericChoresIds;
         }
         else
         {
             this.Name = "";
-            this.GenericTasksIds = [];
+            this.GenericChoresIds = [];
         }
 
     }

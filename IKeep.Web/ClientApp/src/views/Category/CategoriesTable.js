@@ -1,4 +1,6 @@
 import React, {Fragment, useContext, useState} from 'react';
+
+//Styles Components
 import {CircularProgress, makeStyles} from '@material-ui/core';
 
 //Table

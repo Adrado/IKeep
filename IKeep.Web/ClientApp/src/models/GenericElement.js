@@ -12,9 +12,9 @@ class GenericElement extends Entity
             this.ElementTypeName = json.elementTypeName;
 
             this.ElementsIds = json.elementsIds;
-            /* this.GenericElementGenericTasksIds = json.genericElementGenericTasksIds;
-            this.GenericTasksIds = json.genericTasksIds; */
-            this.GenericElementGenericTasks = json.genericElementGenericTasks;
+            /* this.GenericElementGenericChoresIds = json.genericElementGenericChoresIds;
+            this.GenericChoresIds = json.genericChoresIds; */
+            this.GenericElementGenericChores = json.genericElementGenericChores;
         }
         else
         {
@@ -22,9 +22,9 @@ class GenericElement extends Entity
             this.ElementTypeId = "";
             this.ElementTypeName = "";
             this.ElementsIds = [];
-            /* this.GenericElementGenericTasksIds = [];
-            this.GenericTasksIds = []; */
-            this.GenericElementGenericTasks = [];
+            /* this.GenericElementGenericChoresIds = [];
+            this.GenericChoresIds = []; */
+            this.GenericElementGenericChores = [];
         }
     }
 }

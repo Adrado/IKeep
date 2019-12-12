@@ -22,22 +22,22 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public virtual ICollection<GenericTask> GenericTasks { get; set; }
-        public List<Guid> GenericTasksIds
+        public virtual ICollection<GenericChore> GenericChores { get; set; }
+        public List<Guid> GenericChoresIds
         {
             get
             {
-                return GenericTasks == null ? new List<Guid>() : GenericTasks.Select(x => x.Id).ToList();
+                return GenericChores == null ? new List<Guid>() : GenericChores.Select(x => x.Id).ToList();
             }
         }
 
         [JsonIgnore]
-        public virtual ICollection<Task> Tasks { get; set; }
-        public List<Guid> TasksIds
+        public virtual ICollection<Chore> Chores { get; set; }
+        public List<Guid> ChoresIds
         {
             get
             {
-                return Tasks == null ? new List<Guid>() : Tasks.Select(x => x.Id).ToList();
+                return Chores == null ? new List<Guid>() : Chores.Select(x => x.Id).ToList();
             }
         }
     }

@@ -10,9 +10,9 @@ import {Functions} from '../../providers/Providers'
 import GenericElement from '../../models/GenericElement';
 
 //Tables view
-import GenericTasksTable from './GTask/GenericTasksTable';
+import GenericChoresTable from './GChore/GenericChoresTable';
 import GenericElementsTable from './GenericElementsTable';
-import GElementGTasksTable from './GElementGTask/GElementGTasksTable';
+import GElementGChoresTable from './GElementGChore/GElementGChoresTable';
 
 //Allows comunicate between tables
 function reducer(state, action) {
@@ -68,14 +68,14 @@ const GenericElementView = () =>
           }
 
           <Grid item sm={6} xs={12}>
-            <GElementGTasksTable
+            <GElementGChoresTable
               displayTable = {DisplayTable}
             />
           </Grid>
 
           {!display &&
             <Grid item sm={6} xs={12}>
-                <GenericTasksTable
+                <GenericChoresTable
                   displayTable = {DisplayTable}
                 />
             </Grid>

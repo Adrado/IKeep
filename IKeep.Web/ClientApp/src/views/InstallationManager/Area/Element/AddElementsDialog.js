@@ -1,39 +1,40 @@
-import React, {useContext} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
-import MaterialTable from 'material-table';
+//Core
+import React from 'react';
 
+//Style components
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Dialog, AppBar, Toolbar, Typography, Slide } from '@material-ui/core';
+
+//MaterialTable
+import MaterialTable from 'material-table';
+import { localizationEsp } from '../../../../components/MaterialTableProps';
+
+//CRUD Services
 import useFetchGenericElement from '../../../GenericElement/useFetchGenericElement'
 import useFetchElementType from '../../../ElementType/useFetchElementType';
-import { localizationEsp } from '../../../../components/MaterialTableProps';
 import useElementViewModel from './useElementViewModel';
-import PropTypes from 'prop-types';
-import Element from '../../../../models/Element';
-import useElementGTask from './useElementGTaskViewModel';
-import GenericElementGenericTask from '../../../../models/GenericElementGenericTask';
+import useElementGChore from './useElementGChoreViewModel';
 
-//import Functions from '../../../../providers/Providers'
+//Validation
+import PropTypes from 'prop-types';
+
+//Models
+import Element from '../../../../models/Element';
+import GenericElementGenericChore from '../../../../models/GenericElementGenericChore';
+
 
 export default function AddElementsDialog({open, handleClose, areaId, change, setChange}) {
   const classes = useStyles();
 
-  //const {state, dispatch} = useContext(Functions);
-
   const {GElements} = useFetchGenericElement();
   const {ETypes} = useFetchElementType();
   const [Add] = useElementViewModel();
-  const [AddElementGTask] = useElementGTask();
+  const [AddElementGChore] = useElementGChore();
   
-
   const AddSelectedGElements = (data) =>
   {
     let elementsPromises = [];
-    let tasksPromises = [];
+    let choresPromises = [];
     for (let i in data)
     {
       elementsPromises.push(Add(areaId, data[i]));
@@ -48,17 +49,17 @@ export default function AddElementsDialog({open, handleClose, areaId, change, se
           let gElement = data[k];
           if(elementCreated.GenericElementId === gElement.Id)
           {
-            for( let m = 0; m < gElement.GenericElementGenericTasks.length; m++)
+            for( let m = 0; m < gElement.GenericElementGenericChores.length; m++)
             {
-              let gElementGTask = new GenericElementGenericTask(gElement.GenericElementGenericTasks[m]);
-              tasksPromises.push(AddElementGTask(elementCreated.Id, gElementGTask))
+              let gElementGChore = new GenericElementGenericChore(gElement.GenericElementGenericChores[m]);
+              choresPromises.push(AddElementGChore(elementCreated.Id, gElementGChore))
             }
           }
         }
       }
     });
 
-    Promise.all(tasksPromises).then(()=>
+    Promise.all(choresPromises).then(()=>
       {
         setChange(!change)
         handleClose();

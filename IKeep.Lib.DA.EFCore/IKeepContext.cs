@@ -26,14 +26,14 @@ namespace IKeep.Lib.DA.EFCore
             .WithMany(a => a.Elements)
             .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<GenericTask>()
-             .HasMany(p => p.Tasks)
-             .WithOne(t => t.GenericTask)
+            modelBuilder.Entity<GenericChore>()
+             .HasMany(p => p.Chores)
+             .WithOne(t => t.GenericChore)
              .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Task>()
-            .HasOne(b => b.GenericTask)
-            .WithMany(a => a.Tasks)
+            modelBuilder.Entity<Chore>()
+            .HasOne(b => b.GenericChore)
+            .WithMany(a => a.Chores)
             .OnDelete(DeleteBehavior.Restrict);
         }
 
@@ -54,14 +54,14 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<Report> Reports { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<GenericTask> GenericTasks { get; set; }
+        public DbSet<Chore> Chores { get; set; }
+        public DbSet<GenericChore> GenericChores { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ElementObservation> ElementObservations { get; set; }
         public DbSet<InstallationUser> InstallationUsers { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<ElementImage> ElementImages { get; set; }
-        public DbSet<GenericElementGenericTask> GenericElementGenericTasks { get; set; }
-        public DbSet<ElementGenericTask> ElementGenericTasks { get; set; }
+        public DbSet<GenericElementGenericChore> GenericElementGenericChores { get; set; }
+        public DbSet<ElementGenericChore> ElementGenericChores { get; set; }
     }
 }

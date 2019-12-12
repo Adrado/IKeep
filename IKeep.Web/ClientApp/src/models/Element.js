@@ -17,8 +17,8 @@ class Element extends Entity
             this.TypeName = json.typeName;
 
             this.AreaId = json.areaId;
-            this.ElementGenericTasksIds = json.elementGenericTasksIds;
-            this.TasksIds = json.tasksIds;
+            this.ElementGenericChoresIds = json.elementGenericChoresIds;
+            this.ChoresIds = json.tasksIds;
             this.CorrectivesIds = json.correctivesIds;
             this.ElementObservationsIds = json.elementObservationsIds;
             this.GenericElementId = json.genericElementId;
@@ -38,8 +38,8 @@ class Element extends Entity
             this.Name = "";
             this.TypeName = "";
             
-            this.ElementGenericTasksIds = [];
-            this.TasksIds = [];
+            this.ElementGenericChoresIds = [];
+            this.ChoresIds = [];
             this.CorrectivesIds = [];
             this.ElementObservationsIds = [];
             this.ElementImagesIds = [];

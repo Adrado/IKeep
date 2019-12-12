@@ -1,5 +1,10 @@
+//Hooks
 import  { useState, useEffect, useContext } from 'react';
+
+//CRUD Service
 import {CategoryService} from '../../providers/Providers';
+
+//Model
 import Category from '../../models/Category';
 
 const useFetchCategory = () =>
@@ -30,9 +35,12 @@ const useFetchCategory = () =>
         {
             try{
                 const response = await CategorysService.GetAllAsync();
-                const dataUpdated = UpdateData(response.data)
-                dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setCategories(dataUpdated);
+                if(isSuscribed === true)
+                {
+                    const dataUpdated = UpdateData(response.data)
+                    dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
+                    setCategories(dataUpdated);
+                }
             }
             catch (error){
                 setError(true)

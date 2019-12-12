@@ -1,5 +1,8 @@
+//React Hooks
 import  { useState, useEffect, useContext } from 'react';
+//CRUD Services
 import {UserService} from '../../providers/Providers';
+//Model
 import User from '../../models/User';
 
 const useFetchUsers = () =>

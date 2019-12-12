@@ -26,12 +26,12 @@ namespace IKeep.Lib.Models
         public string Token { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Task> Tasks { get; set; }
-        public List<Guid> TasksIds
+        public virtual ICollection<Chore> Chores { get; set; }
+        public List<Guid> ChoresIds
         {
             get
             {
-                return Tasks == null ? new List<Guid>() : Tasks.Select(x => x.Id).ToList();
+                return Chores == null ? new List<Guid>() : Chores.Select(x => x.Id).ToList();
             }
         }
 

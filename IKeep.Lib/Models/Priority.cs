@@ -11,12 +11,12 @@ namespace IKeep.Lib.Models
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public virtual ICollection<GenericTask> GenericTasks { get; set; }
-        public List<Guid> GenericTasksIds
+        public virtual ICollection<GenericChore> GenericChores { get; set; }
+        public List<Guid> GenericChoresIds
         {
             get
             {
-                return GenericTasks == null ? new List<Guid>() : GenericTasks.Select(x => x.Id).ToList();
+                return GenericChores == null ? new List<Guid>() : GenericChores.Select(x => x.Id).ToList();
             }
         }
     }
