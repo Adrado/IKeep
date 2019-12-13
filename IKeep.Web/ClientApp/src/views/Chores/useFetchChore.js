@@ -35,6 +35,7 @@ const useFetchChores = (id) =>
             {
                 const response = await ChoresService.GetByIdAsync(id)
                 console.log(response);
+                console.log(response.data);
                 if (isSuscribed)
                 {
                     //const dataUpdated = UpdateData(response.data)

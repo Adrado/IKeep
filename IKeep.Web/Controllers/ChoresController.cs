@@ -25,17 +25,17 @@ namespace IKeep.Web.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Installation>>> GetChores(Guid id)
+        public async Task<ActionResult<IEnumerable<Element>>> GetChores(Guid id)
         {
             return await Task.Run(() =>
             {
-                var installations = _tasksService.AddChoresToInstallation(id);
+                var elements = _tasksService.AddChoresToInstallation(id);
 
-                if (installations == null)
+                if (elements == null)
                 {
                     return NotFound();
                 }
-                return new ActionResult<IEnumerable<Installation>>(installations);
+                return new ActionResult<IEnumerable<Element>>(elements);
             });
         }
 
