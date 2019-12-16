@@ -23,7 +23,7 @@ namespace IKeep.Lib.Models
     }
     public enum TaskStatus
     {
-        Inactive,
-        Active
+        Undone,
+        Done
     }
 }
