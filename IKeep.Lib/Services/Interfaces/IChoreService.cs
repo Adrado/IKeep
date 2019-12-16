@@ -9,6 +9,6 @@ namespace IKeep.Lib.Services.Interfaces
 {
     public interface IChoreService : IGenericService
     {
-        IEnumerable<Element> AddChoresToInstallation(Guid installationId);
+        bool AddChores (NewChoresRequest newChoresRequest);
     }
 }

@@ -9,6 +9,7 @@ using IKeep.Lib.DA.EFCore;
 using IKeep.Lib.Models;
 using IKeep.Lib.Core;
 using IKeep.Lib.Services.Interfaces;
+using IKeep.Lib.Services.Dtos;
 
 namespace IKeep.Web.Controllers
 {
@@ -16,26 +17,37 @@ namespace IKeep.Web.Controllers
     [ApiController]
     public class ChoresController : ControllerBase
     {
-        private readonly IChoreService _tasksService;
+        private readonly IChoreService _choresService;
 
-        public ChoresController(IChoreService tasksService)
+        public ChoresController(IChoreService choresService)
         {
-            _tasksService = tasksService;
+            _choresService = choresService;
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Element>>> GetChores(Guid id)
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<IEnumerable<Element>>> GetChores(Guid id)
+        //{
+        //    return await Task.Run(() =>
+        //    {
+        //        var elements = _choresService.AddChores(id);
+
+        //        if (elements == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return new ActionResult<IEnumerable<Element>>(elements);
+        //    });
+        //}
+
+        // POST: api/Chores
+        [HttpPost]
+        public async Task<ActionResult<bool>> PostChore(NewChoresRequest newChoresRequest)
         {
             return await Task.Run(() =>
             {
-                var elements = _tasksService.AddChoresToInstallation(id);
-
-                if (elements == null)
-                {
-                    return NotFound();
-                }
-                return new ActionResult<IEnumerable<Element>>(elements);
+                var output = _choresService.AddChores(newChoresRequest);
+                return new ActionResult<bool>(output);
             });
         }
 
@@ -72,16 +84,7 @@ namespace IKeep.Web.Controllers
         //    });
         //}
 
-        //// POST: api/Tasks
-        //[HttpPost]
-        //public async Task<ActionResult<Task>> PostTask(Task task)
-        //{
-        //    return await System.Threading.Tasks.Task.Run(() =>
-        //    {
-        //        var output = _tasksService.Add(task);
-        //        return new ActionResult<Task>(output);
-        //    });
-        //}
+
 
         //// DELETE: api/Tasks/5
         //[HttpDelete("{id}")]
