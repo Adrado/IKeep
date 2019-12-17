@@ -76,10 +76,6 @@ namespace IKeep.Lib.Server.Services
         {
             var elements = new List<Element>();
             elements = (from Installation in _context.Installations
-                            //.Include(i => i.Buildings)
-                            //.ThenInclude(b => b.Floors)
-                            //.ThenInclude(f => f.Areas)
-                            //.ThenInclude(a => a.Elements)
                         where Installation.Id == installationId
                         from Building in Installation.Buildings
                         from Floor in Building.Floors
@@ -162,36 +158,54 @@ namespace IKeep.Lib.Server.Services
 
         private void StartAddingElements(Guid elementId, GenericChore gChore, Period period, int year)
         {
-            DateTime Year = new DateTime(year, 1, 1, 0, 0, 0);
+            DateTime StartDate = new DateTime(year, 1, 1, 0, 0, 0);
+            DateTime EndDate = new DateTime(year, 12, 31, 23, 59, 59);
 
             switch (period)
             {
-                //Daily
                 case Period.Daily:
-                    AddDailyChore(elementId, gChore, Year);
+                    AddDailyChore(elementId, gChore, StartDate, EndDate);
                     break;
+
                 case Period.Weekly:
-                    AddWeeklyChore();
+                    int firstMonday = FirstMonday(StartDate.Year);
+                    DateTime FirstMondayOfTheYear = new DateTime(StartDate.Year, 1, firstMonday, 0, 0, 0);
+                    AddWeeklyChore(elementId, gChore, FirstMondayOfTheYear, EndDate);
                     break;
+
                 case Period.Monthly:
-                    AddMonthlyChore();
+                    AddMonthlyChore(elementId, gChore, StartDate, EndDate);
                     break;
+
                 case Period.Bimonthly:
                     AddBimonthlyChore();
                     break;
+
                 case Period.Quarterly:
                     AddQuarterlyChore();
                     break;
+
                 case Period.Semester:
                     AddSemesterChore();
                     break;
+
                 case Period.TwoYearly:
                     AddTwoYearlyChore();
                     break;
+
                 case Period.FourYearly:
                     AddFourYearlyChore();
                     break;
             }
+        }
+
+        private int FirstMonday(int year)
+        {
+            int day = 0;
+
+            while ((new DateTime(year, 01, ++day)).DayOfWeek != DayOfWeek.Monday) ;
+
+            return day;
         }
 
         private void ContinueAddingElements()
@@ -199,11 +213,9 @@ namespace IKeep.Lib.Server.Services
 
         }
 
-        private void AddDailyChore(Guid elementId, GenericChore gChore, DateTime StartDate)
+        private void AddDailyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
         {
-            DateTime EndDate = new DateTime(StartDate.Year, 12, 31);
-
-            for (DateTime d = StartDate; d <= EndDate; d = d.AddDays(1))
+            for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
             {
                 Chore Chore = new Chore();
                 Chore.ElementId = elementId;
@@ -216,14 +228,35 @@ namespace IKeep.Lib.Server.Services
             }
         }
 
-        private void AddWeeklyChore()
+        private void AddWeeklyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
         {
+            for (DateTime d = startDate; d <= endDate; d = d.AddDays(7))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = elementId;
+                Chore.StartDate = d;
+                Chore.EndDate = d.AddDays(6.99);
+                Chore.GenericChoreId = gChore.Id;
+                Chore.Status = 0;
 
+                _choresService.Add(Chore);
+            }
         }
 
-        private void AddMonthlyChore()
+        private void AddMonthlyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
         {
+            for (DateTime d = startDate; d <= endDate; d = d.AddMonths(1))
+            {
+                var 
+                Chore Chore = new Chore();
+                Chore.ElementId = elementId;
+                Chore.StartDate = d;
+                Chore.EndDate = d.AddDays(6.99);
+                Chore.GenericChoreId = gChore.Id;
+                Chore.Status = 0;
 
+                _choresService.Add(Chore);
+            }
         }
 
         private void AddBimonthlyChore()
@@ -264,52 +297,7 @@ namespace IKeep.Lib.Server.Services
     }
 }
 
-        //private void AddChores(Installation installation, Element element, Guid genericChoreId)
-        //{
-
-        //}
-
-        //private void AddDailyChore(Element element)
-        //{
-
-        //}
-
-        //private void AddWeeklyChore(Element element)
-        //{
-
-        //}
-        //private void AddMonthlyChore(Element element)
-        //{
-
-        //}
-        //private void AddBimonthlyChore(Element element)
-        //{
-
-        //}
-        //private void AddQuarterlyChore(Element element)
-        //{
-
-        //}
-        //private void AddSemesterChore(Element element)
-        //{
-
-        //}
-        //private void AddYearlyChore(Element element)
-        //{
-
-        //}
-        //private void AddTwoYearlyChore(Element element)
-        //{
-
-        //}
-        //private void AddFourYearlyChore(Element element)
-        //{
-
-        //}
-    
-
-
-
+       
 
 //using (var db = _context)
 //{
