@@ -67,7 +67,7 @@ const GenericChoresTable = () =>
 
   const columns = [
     { title: 'Descripción', field: 'Description' },
-    { title: 'Periodicidad', field: 'Period', lookup: Periodicity},
+    { title: 'Periodicidad', field: 'Period', lookup: Periodicity, editable: "onAdd"},
     //Vigilar el formato para evitar errores en el servidor.
     { title: 'Duración estimada', field: 'Duration'},
     { title: 'Formato', field: 'FormatId', lookup: LookupFormats},

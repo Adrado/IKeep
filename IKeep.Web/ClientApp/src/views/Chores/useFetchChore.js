@@ -33,7 +33,7 @@ const useFetchChores = (id) =>
         {
             try
             {
-                const response = await ChoresService.GetByIdAsync(id)
+                const response = await ChoresService.GetAllAsync(id)
                 console.log(response);
                 console.log(response.data);
                 if (isSuscribed)
