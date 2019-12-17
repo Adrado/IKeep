@@ -13,11 +13,11 @@ namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenericTasksController : ControllerBase
+    public class GenericChoresController : ControllerBase
     {
         private readonly ICrudService<GenericChore> _genericChoresService;
 
-        public GenericTasksController(ICrudService<GenericChore> genericChoresService)
+        public GenericChoresController(ICrudService<GenericChore> genericChoresService)
         {
             _genericChoresService = genericChoresService;
         }
