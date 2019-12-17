@@ -41,6 +41,11 @@ namespace IKeep.Lib.Server.Services
             _context = context;
         }
 
+        public IQueryable<Chore> GetAll()
+        {
+            return _context.Chores;
+        }
+
         public bool AddChores(NewChoresRequest newChoresRequest)
         {
             bool response = false;

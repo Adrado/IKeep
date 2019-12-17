@@ -25,20 +25,11 @@ namespace IKeep.Web.Controllers
         }
 
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<IEnumerable<Element>>> GetChores(Guid id)
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        var elements = _choresService.AddChores(id);
-
-        //        if (elements == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return new ActionResult<IEnumerable<Element>>(elements);
-        //    });
-        //}
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Chore>>> GetChores()
+        {
+            return await _choresService.GetAll().ToListAsync();
+        }
 
         // POST: api/Chores
         [HttpPost]
