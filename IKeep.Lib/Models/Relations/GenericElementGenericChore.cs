@@ -22,7 +22,7 @@ namespace IKeep.Lib.Models
         public Guid GenericChoreId { get; set; }
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
-        public string GenericTaskDescription
+        public string GenericChoreDescription
         {
             get
             {
