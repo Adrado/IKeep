@@ -19,9 +19,9 @@ namespace IKeep.Lib.Models
         public Guid? GenericChoreId { get; set; }
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
-        public TaskStatus Status { get; set; }
+        public ChoreStatus Status { get; set; }
     }
-    public enum TaskStatus
+    public enum ChoreStatus
     {
         Undone,
         Done
