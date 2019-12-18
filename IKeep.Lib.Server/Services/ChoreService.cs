@@ -13,30 +13,15 @@ namespace IKeep.Lib.Server.Services
 {
     public class ChoreService : IChoreService
     {
-        // private readonly ICrudService<Chore> _tasksService;
-        // private readonly ICrudService<Installation> _installationsService;
-        // private readonly ICrudService<Building> _buildingsService;
-        // private readonly ICrudService<Floor> _floorsService;
-        // private readonly ICrudService<Area> _areasService;
-        // private readonly ICrudEntity<Element> _elementsService;
+        
         private readonly ICrudService<Chore> _choresService;
         private readonly IKeepContext _context;
 
         public ChoreService(
-            //ICrudService<Installation> installationsService,
-            //ICrudService<Building> buildingsService,
-            //ICrudService<Floor> floorsService,
-            //ICrudService<Area> areasService,
-            //ICrudEntity<Element> elementsService,
             IKeepContext context,
             ICrudService<Chore> choreService
             )
         {
-            //_installationsService = installationsService;
-            //_buildingsService = buildingsService;
-            // _floorsService = floorsService;
-            //_areasService = areasService;
-            // _elementsService = elementsService;
             _choresService = choreService;
             _context = context;
         }
@@ -126,7 +111,6 @@ namespace IKeep.Lib.Server.Services
             {
                 AddElementChores(element, year);
             }
-
             return true;
         }
 
@@ -135,13 +119,23 @@ namespace IKeep.Lib.Server.Services
             var elementGenericChores = element.ElementGenericChores;
             foreach (ElementGenericChore elemenGChore in elementGenericChores)
             {
+                NewChoresGuideline newChoresGuideline = new NewChoresGuideline();
+                newChoresGuideline.GenericChore = elemenGChore.GenericChore;
+                newChoresGuideline.ElementId = element.Id;
+
                 GenericChore gChore = elemenGChore.GenericChore;
                 Period gChorePeriod = gChore.Period;
-                Chore Chore = GetLastChore(element.Id, gChore.Id, year);
-                if (Chore == null)
-                    StartAddingElements(element.Id, gChore, gChorePeriod, year);
+
+                Chore LastChore = GetLastChore(element.Id, gChore.Id, year);
+
+                if (LastChore == null)
+                    newChoresGuideline.TimeSpanToAddChores = GetDefaultTimeSpan(year);
+                else if (DateTime.Compare(LastChore.StartDate, new DateTime(year, 12, 31)) < 0)
+                    newChoresGuideline.TimeSpanToAddChores = ResumeTimeSpan(LastChore);
                 else
-                    ContinueAddingElements();
+                    continue;
+
+                AddingElements(newChoresGuideline);
             }
         }
 
@@ -156,168 +150,343 @@ namespace IKeep.Lib.Server.Services
             return lastChore;
         }
 
-        private void StartAddingElements(Guid elementId, GenericChore gChore, Period period, int year)
+        private TimeSpanToAddChores GetDefaultTimeSpan( int year)
         {
-            DateTime StartDate = new DateTime(year, 1, 1, 0, 0, 0);
-            DateTime EndDate = new DateTime(year, 12, 31, 23, 59, 59);
+            TimeSpanToAddChores timeSpanToAddChores = new TimeSpanToAddChores();
+            timeSpanToAddChores.Start = new DateTime(year, 1, 1, 0, 0, 0);
+            timeSpanToAddChores.End = new DateTime(year, 12, 31, 23, 59, 59);
+            return timeSpanToAddChores;
+        }
+
+        private TimeSpanToAddChores ResumeTimeSpan(Chore lastChore)
+        {
+            TimeSpanToAddChores timeSpanToAddChores = new TimeSpanToAddChores();
+            timeSpanToAddChores.Start = new DateTime(lastChore.StartDate.Year, lastChore.StartDate.Month, lastChore.StartDate.Day).AddDays(1);
+            timeSpanToAddChores.End = new DateTime(lastChore.StartDate.Year, 12, 31, 23, 59, 59);
+            return timeSpanToAddChores;
+        }
+
+        private void AddingElements(NewChoresGuideline guideline)
+        {
+            Period period = guideline.GenericChore.Period;
+            //DateTime StartDate = new DateTime(year, 1, 1, 0, 0, 0);
+            //DateTime EndDate = new DateTime(year, 12, 31, 23, 59, 59);
 
             switch (period)
             {
                 case Period.Daily:
-                    AddDailyChore(elementId, gChore, StartDate, EndDate);
+                    AddDailyChore(guideline);
                     break;
 
                 case Period.Weekly:
-                    int firstMonday = FirstMonday(StartDate.Year);
-                    DateTime FirstMondayOfTheYear = new DateTime(StartDate.Year, 1, firstMonday, 0, 0, 0);
-                    AddWeeklyChore(elementId, gChore, FirstMondayOfTheYear, EndDate);
+                
+                    AddWeeklyChore(guideline);
                     break;
 
                 case Period.Monthly:
-                    AddMonthlyChore(elementId, gChore, StartDate, EndDate);
+                    AddMonthlyChore(guideline);
                     break;
 
                 case Period.Bimonthly:
-                    AddBimonthlyChore();
+                    AddBimonthlyChore(guideline);
                     break;
 
                 case Period.Quarterly:
-                    AddQuarterlyChore();
+                    AddQuarterlyChore(guideline);
                     break;
 
                 case Period.Semester:
-                    AddSemesterChore();
+                    AddSemesterChore(guideline);
+                    break;
+
+                case Period.Yearly:
+                    AddYearlyChore(guideline);
                     break;
 
                 case Period.TwoYearly:
-                    AddTwoYearlyChore();
+                    AddTwoYearlyChore(guideline);
                     break;
 
                 case Period.FourYearly:
-                    AddFourYearlyChore();
+                    AddFourYearlyChore(guideline);
                     break;
             }
         }
 
-        private int FirstMonday(int year)
+
+        private void AddDailyChore(NewChoresGuideline guideline)
         {
-            int day = 0;
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
 
-            while ((new DateTime(year, 01, ++day)).DayOfWeek != DayOfWeek.Monday) ;
-
-            return day;
-        }
-
-        private void ContinueAddingElements()
-        {
-
-        }
-
-        private void AddDailyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
-        {
             for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = elementId;
-                Chore.StartDate = d;
-                Chore.EndDate = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
-                Chore.GenericChoreId = gChore.Id;
-                Chore.Status = 0;
+                Chore Chore = new Chore
+                {
+                    ElementId = guideline.ElementId,
+                    StartDate = d,
+                    EndDate = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59),
+                    GenericChoreId = guideline.GenericChore.Id,
+                    Status = ChoreStatus.Undone,
+                    EntityStatus = EntityStatus.Active,
+                };
 
                 _choresService.Add(Chore);
             }
         }
 
-        private void AddWeeklyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
+        private void AddWeeklyChore(NewChoresGuideline guideline)
         {
-            for (DateTime d = startDate; d <= endDate; d = d.AddDays(7))
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime dateFirstMonday = FirstMonday(startDate);
+       
+            for (DateTime d = dateFirstMonday; d <= endDate; d = d.AddDays(7))
             {
                 Chore Chore = new Chore();
-                Chore.ElementId = elementId;
+                Chore.ElementId = guideline.ElementId;
                 Chore.StartDate = d;
                 Chore.EndDate = d.AddDays(6.99);
-                Chore.GenericChoreId = gChore.Id;
+                Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
                 _choresService.Add(Chore);
             }
         }
 
-        private void AddMonthlyChore(Guid elementId, GenericChore gChore, DateTime startDate, DateTime endDate)
+        private DateTime FirstMonday(DateTime date)
         {
-            for (DateTime d = startDate; d <= endDate; d = d.AddMonths(1))
+            int day = date.Day;
+
+            while ((new DateTime(date.Year, date.Month, ++day)).DayOfWeek != DayOfWeek.Monday) ;
+            return new DateTime(date.Year, date.Month, day, 0, 0, 0);
+        }
+
+        private void AddMonthlyChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfTheMonth = GetFirstDayOfMonth(startDate);
+
+            for (DateTime d = FirstDayOfTheMonth; d <= endDate; d = d.AddMonths(1))
             {
-                var 
                 Chore Chore = new Chore();
-                Chore.ElementId = elementId;
+                Chore.ElementId = guideline.ElementId;
                 Chore.StartDate = d;
-                Chore.EndDate = d.AddDays(6.99);
-                Chore.GenericChoreId = gChore.Id;
+                Chore.EndDate = GetLastDayOfMonth(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
                 _choresService.Add(Chore);
             }
         }
 
-        private void AddBimonthlyChore()
+        private DateTime GetFirstDayOfMonth(DateTime date)
         {
-
-        }
-        private void AddQuarterlyChore()
-        {
-
-        }
-        private void AddSemesterChore()
-        {
-
+            return date.Day == 1 ? date : new DateTime(date.Year, date.Month, 1, 0, 0, 0).AddMonths(1);
         }
 
-        private void AddTwoYearlyChore()
+        private DateTime GetLastDayOfMonth(DateTime date)
         {
-
+            return new DateTime(date.Year, date.Month,
+                                 DateTime.DaysInMonth(date.Year, date.Month),
+                                 23, 59, 59);
         }
 
-        private void AddFourYearlyChore()
+        private void AddBimonthlyChore(NewChoresGuideline guideline)
         {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfBimonthly = GetFirstDayOfBimonthly(startDate);
 
+            for (DateTime d = FirstDayOfBimonthly; d <= endDate; d = d.AddMonths(2))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOfBimonthly(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
         }
 
-        //private bool AddNewTask(Element element, GenericChore genericChore, DateTime prevDate)
-        //{
-        //    Chore chore = new Chore();
-        //    chore.ElementId = element.Id;
-        //    chore.StartDate = prevDate.AddDays(1);
-        //    chore.EndDate = chore.StartDate.AddDays(1);
-        //    chore.GenericChoreId = genericChore.Id;
-        //    _choresService.Add(chore);
-        //    return true;
-        //}
+        private DateTime GetFirstDayOfBimonthly(DateTime date)
+        {
+            for(DateTime d = new DateTime(date.Year, 1, 1, 0, 0, 0); d <= new DateTime(date.Year, 12, 1); d.AddMonths(2))
+            {
+                if (DateTime.Compare(date, d) == 0)
+                    return date;
+                else if(DateTime.Compare(date, d) > 0)
+                    return d;
+            }
+            return date;
+        }
 
+        private DateTime GetLastDayOfBimonthly(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month,
+                                 DateTime.DaysInMonth(date.Year, date.Month),
+                                 23, 59, 59).AddMonths(1);
+        }
 
+        private void AddQuarterlyChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfQuarterly = GetFirstDayOfQuarterly(startDate);
+
+            for (DateTime d = FirstDayOfQuarterly; d <= endDate; d = d.AddMonths(3))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOfQuarterly(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
+        }
+
+        private DateTime GetFirstDayOfQuarterly(DateTime date)
+        {
+            for (DateTime d = new DateTime(date.Year, 1, 1, 0, 0, 0); d <= new DateTime(date.Year, 12, 1); d.AddMonths(3))
+            {
+                if (DateTime.Compare(date, d) == 0)
+                    return date;
+                else if (DateTime.Compare(date, d) > 0)
+                    return d;
+            }
+            return date;
+        }
+
+        private DateTime GetLastDayOfQuarterly(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month,
+                                 DateTime.DaysInMonth(date.Year, date.Month),
+                                 23, 59, 59).AddMonths(2);
+        }
+
+        private void AddSemesterChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfSemester = GetFirstDayOfSemester(startDate);
+
+            for (DateTime d = FirstDayOfSemester; d <= endDate; d = d.AddMonths(6))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOfSemester(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
+        }
+
+        private DateTime GetFirstDayOfSemester(DateTime date)
+        {
+            for (DateTime d = new DateTime(date.Year, 1, 1, 0, 0, 0); d <= new DateTime(date.Year, 12, 1); d.AddMonths(6))
+            {
+                if (DateTime.Compare(date, d) == 0)
+                    return date;
+                else if (DateTime.Compare(date, d) > 0)
+                    return d;
+            }
+            return date;
+        }
+
+        private DateTime GetLastDayOfSemester(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month,
+                                 DateTime.DaysInMonth(date.Year, date.Month),
+                                 23, 59, 59).AddMonths(5);
+        }
+
+        private void AddYearlyChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfYear = GetFirstDayOfYear(startDate);
+
+            for (DateTime d = FirstDayOfYear; d <= endDate; d = d.AddYears(1))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOfYear(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
+        }
+        private DateTime GetFirstDayOfYear(DateTime date)
+        {
+            return new DateTime(date.Year, 1, 1, 0, 0, 0);
+        }
+        private DateTime GetLastDayOfYear(DateTime date)
+        {
+            return new DateTime(date.Year, 12, 31, 23, 59, 59);
+        }
+
+        private void AddTwoYearlyChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfTwoYearly = GetFirstDayOfTwoYearly(startDate);
+
+            for (DateTime d = FirstDayOfTwoYearly; d <= endDate; d = d.AddYears(2))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOfTwoYearly(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
+        }
+        private DateTime GetFirstDayOfTwoYearly(DateTime date)
+        {
+            return new DateTime(date.Year, 1, 1, 0, 0, 0);
+        }
+        private DateTime GetLastDayOfTwoYearly(DateTime date)
+        {
+            return new DateTime(date.Year, 12, 31, 23, 59, 59).AddYears(1);
+        }
+        private void AddFourYearlyChore(NewChoresGuideline guideline)
+        {
+            DateTime endDate = guideline.TimeSpanToAddChores.End;
+            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime FirstDayOfFourYearly = GetFirstDayOfFourYearly(startDate);
+
+            for (DateTime d = FirstDayOfFourYearly; d <= endDate; d = d.AddYears(4))
+            {
+                Chore Chore = new Chore();
+                Chore.ElementId = guideline.ElementId;
+                Chore.StartDate = d;
+                Chore.EndDate = GetLastDayOffourYearly(d);
+                Chore.GenericChoreId = guideline.GenericChore.Id;
+                Chore.Status = 0;
+
+                _choresService.Add(Chore);
+            }
+        }
+        private DateTime GetFirstDayOfFourYearly(DateTime date)
+        {
+            return new DateTime(date.Year, 1, 1, 0, 0, 0);
+        }
+        private DateTime GetLastDayOffourYearly(DateTime date)
+        {
+            return new DateTime(date.Year, 12, 31, 23, 59, 59).AddYears(3);
+        }
     }
 }
 
        
-
-//using (var db = _context)
-//{
-
-//var installation = db.Installations.Where(i => i.Id == installationId).FirstOrDefault();
-//var hola = installation.Buildings.SelectMany(building => building.Floors).SelectMany(floor => floor.Areas).SelectMany(area => area.Elements); ;
-//var FullInstallation = db.Installations
-//    .Where(i => i.Id == installationId)
-//    .Include(i => i.Buildings)
-//    .ThenInclude(b => b.Floors)
-//    .ThenInclude(f => f.Areas)
-//    .ThenInclude(a => a.Elements)
-//    .ThenInclude(e => e.Chores)
-//    .ToList();
-
-//var FullInstallation = db.Installations
-//    .Where(i => i.Id == installationId)
-//    .Include(i => i.Buildings)
-//    .ThenInclude(b => b.Floors)
-//    .ThenInclude(f => f.Areas)
-//    .ThenInclude(a => a.Elements)
-
-//    .ToList();
