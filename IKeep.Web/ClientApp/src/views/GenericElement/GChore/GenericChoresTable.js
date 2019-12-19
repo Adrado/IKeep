@@ -1,5 +1,5 @@
+//React Core
 import React, {Fragment, useContext, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 //DataTable
 import MaterialTable from 'material-table';
@@ -11,9 +11,10 @@ import {Functions} from '../../../providers/Providers';
 //CRUD Services
 import useFetchGenericChore from '../../GenericChore/useFetchGenericChore';
 import useGElementGChoreViewModel from '../GElementGChore/useGElementGChoreViewModel';
+import useFetchElementsNum from './useFetchElementsNum';
 
-//Validations
-
+//Validation
+import PropTypes from 'prop-types';
 
 const GenericChoresTable = ({displayTable}) => 
 {
@@ -23,6 +24,7 @@ const GenericChoresTable = ({displayTable}) =>
   const GElementSelected = state.selectedRow;
   
   const {GChores} = useFetchGenericChore();
+  const {numElements} = useFetchElementsNum(GElementSelected.Id);
 
   const tasksAdded = () =>
   {
@@ -84,6 +86,10 @@ const GenericChoresTable = ({displayTable}) =>
 
     return(
         <Fragment>
+
+          {numElements !== null &&
+            <h1>Se añadiran tareas a {numElements} elementos</h1>
+          }
           { GChores !== null &&
             <MaterialTable
             title = {Title}
@@ -128,30 +134,6 @@ const GenericChoresTable = ({displayTable}) =>
 
 export default GenericChoresTable;
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  button: {
-      margin: theme.spacing(1),
-    },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  progress: {
-    margin: theme.spacing(2),
-  },
-}));
+GenericChoresTable.propTypes = {
+  displayTable: PropTypes.func,
+};

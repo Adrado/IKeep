@@ -5,6 +5,11 @@ class ElementsService extends CRUDService
     {
         super("elements");
     }
+
+    GetNumByElementIdAsync(gElementId)
+    {
+        return this.GetByIdAsync("genericElement/" + gElementId);
+    }
 }
 
 export default ElementsService;

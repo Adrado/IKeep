@@ -23,6 +23,8 @@ class Chore extends Entity
 
             this.StartDate = json.starDate;
             this.EndDate = json.endDate;
+
+            this.FormatTaskId = json.FormatTaskId;
         }
         else
         {
