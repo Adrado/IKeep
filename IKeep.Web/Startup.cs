@@ -155,7 +155,7 @@ namespace IKeep.Web
 
             services.AddScoped<ITreeViewService, TreeViewService>();
             services.AddScoped<IChoreService, ChoreService>();
-
+            services.AddScoped<IGetElementsService, GetElementsService>();
             // Other Services
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
