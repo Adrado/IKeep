@@ -58,6 +58,18 @@ namespace IKeep.Web.Controllers
             return await _genericElementGenericChoresService.GetAll().Where(x => x.GenericElementId == genericElementId).ToListAsync();
         }
 
+        // POST: api/GenericElementGenericTasks
+        [HttpPost]
+        public async Task<ActionResult<GenericElementGenericChore>> PostGenericElementGenericTask(GenericElementGenericChore genericElementGenericChore)
+        {
+            return await Task.Run(() =>
+            {
+                var output = _genericElementGenericChoresService.Add(genericElementGenericChore);
+
+                return new ActionResult<GenericElementGenericChore>(output);
+            });
+        }
+
         // PUT: api/GenericElementGenericTasks/5
         [HttpPut]
         public async Task<ActionResult<GenericElementGenericChore>> PutGenericElementGenericTask(GenericElementGenericChore genericElementGenericTask)
@@ -65,17 +77,6 @@ namespace IKeep.Web.Controllers
             return await Task.Run(() =>
             {
                 var output = _genericElementGenericChoresService.Update(genericElementGenericTask);
-                return new ActionResult<GenericElementGenericChore>(output);
-            });
-        }
-
-        // POST: api/GenericElementGenericTasks
-        [HttpPost]
-        public async Task<ActionResult<GenericElementGenericChore>> PostGenericElementGenericTask(GenericElementGenericChore genericElementGenericTask)
-        {
-            return await Task.Run(() =>
-            {
-                var output = _genericElementGenericChoresService.Add(genericElementGenericTask);
                 return new ActionResult<GenericElementGenericChore>(output);
             });
         }

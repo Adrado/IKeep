@@ -36,6 +36,16 @@ namespace IKeep.Web.Controllers
             return await _elementsService.GetAll().Where(x => x.AreaId == areaId).ToListAsync();
         }
 
+        [HttpGet("genericElement/{id}")]
+        public async Task<ActionResult<int>> GetElementsByGenericElementId(Guid id)
+        {
+            return await Task.Run(() =>
+            {
+                var count = _elementsService.GetAll().Where(x => x.GenericElementId == id).ToList().Count();
+                return new ActionResult<int>(count);
+            });  
+        }
+
         // PUT: api/Elements/5
         [HttpPut]
         public async Task<ActionResult<Element>> PutElement(Element element)
