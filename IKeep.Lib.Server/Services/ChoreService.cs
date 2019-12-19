@@ -14,21 +14,19 @@ namespace IKeep.Lib.Server.Services
     public class ChoreService : IChoreService
     {
         
-        private readonly ICrudService<Chore> _choresService;
-        private readonly IKeepContext _context;
+        private readonly ICrudService<Chore> _choresCrudService;
+        private readonly IGetElementsService _getElementsService;
 
-        public ChoreService(
-            IKeepContext context,
-            ICrudService<Chore> choreService
-            )
+        public ChoreService(IGetElementsService getElementsService,
+                            ICrudService<Chore> choreService)
         {
-            _choresService = choreService;
-            _context = context;
+            _choresCrudService = choreService;
+            _getElementsService = getElementsService;
         }
 
         public IQueryable<Chore> GetAll()
         {
-            return _context.Chores;
+            return _choresCrudService.GetAll();
         }
 
         public bool AddChores(NewChoresRequest newChoresRequest)
@@ -47,63 +45,17 @@ namespace IKeep.Lib.Server.Services
             IEnumerable<Element> elements = new List<Element>();
 
             if (newChoresRequest.InstallationId != null)
-                elements = GetInstallationElements(newChoresRequest.InstallationId);
+                elements = _getElementsService.GetInstallationElements(newChoresRequest.InstallationId);
             else if (newChoresRequest.BuildingId != null)
-                elements = GetBuildingElements(newChoresRequest.BuildingId);
+                elements = _getElementsService.GetBuildingElements(newChoresRequest.BuildingId);
             else if (newChoresRequest.FloorId != null)
-                elements = GetFloorElements(newChoresRequest.FloorId);
+                elements = _getElementsService.GetFloorElements(newChoresRequest.FloorId);
             else if (newChoresRequest.AreaId != null)
-                elements = GetAreaElements(newChoresRequest.AreaId);
+                elements = _getElementsService.GetAreaElements(newChoresRequest.AreaId);
 
             return elements;
         }
-        private IEnumerable<Element> GetInstallationElements(Guid? installationId)
-        {
-            var elements = new List<Element>();
-            elements = (from Installation in _context.Installations
-                        where Installation.Id == installationId
-                        from Building in Installation.Buildings
-                        from Floor in Building.Floors
-                        from Area in Floor.Areas
-                        from Element in Area.Elements
-                        select Element).ToList();
-
-            return elements;
-        }
-
-        private IEnumerable<Element> GetBuildingElements(Guid? buildingId)
-        {
-            var elements = new List<Element>();
-            elements = (from Building in _context.Buildings
-                        where Building.Id == buildingId
-                        from Floor in Building.Floors
-                        from Area in Floor.Areas
-                        from Element in Area.Elements
-                        select Element).ToList();
-            return elements;
-        }
-
-        private IEnumerable<Element> GetFloorElements(Guid? floorId)
-        {
-            var elements = new List<Element>();
-            elements = (from Floor in _context.Floors
-                        where Floor.Id == floorId
-                        from Area in Floor.Areas
-                        from Element in Area.Elements
-                        select Element).ToList();
-            return elements;
-        }
-
-        private IEnumerable<Element> GetAreaElements(Guid? areaId)
-        {
-            var elements = new List<Element>();
-            elements = (from Area in _context.Areas
-                        where Area.Id == areaId
-                        from Element in Area.Elements
-                        select Element).ToList();
-            return elements;
-        }
-
+       
 
         private bool AddChoreToElements(IEnumerable<Element> elements, int year)
         {
@@ -130,7 +82,7 @@ namespace IKeep.Lib.Server.Services
 
                 if (LastChore == null)
                     newChoresGuideline.TimeSpanToAddChores = GetDefaultTimeSpan(year);
-                else if (DateTime.Compare(LastChore.StartDate, new DateTime(year, 12, 31)) < 0)
+                else if (IsTimeSpanIncomplete(LastChore, year) == true)
                     newChoresGuideline.TimeSpanToAddChores = ResumeTimeSpan(LastChore);
                 else
                     continue;
@@ -139,10 +91,70 @@ namespace IKeep.Lib.Server.Services
             }
         }
 
+        private bool IsTimeSpanIncomplete(Chore chore, int year)
+        {
+            bool IsIncomplete = false;
+
+            Period period = chore.GenericChore.Period;
+
+            DateTime start;
+            DateTime end;
+
+            switch (period)
+            {
+                case Period.Daily:
+                    start = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false ;
+                    break;
+
+                case Period.Weekly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.Monthly:
+                    start = new DateTime(year, 12, 1);
+                    IsIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false;
+                    break;
+
+                case Period.Bimonthly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.Quarterly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.Semester:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.Yearly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.TwoYearly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+
+                case Period.FourYearly:
+                    end = new DateTime(year, 12, 31);
+                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    break;
+            }
+
+            return IsIncomplete;
+        }
+
         private Chore GetLastChore(Guid elementId, Guid gChoreId, int year)
         {
             Chore lastChore;
-            lastChore = _context.Chores
+            lastChore = _choresCrudService.GetAll()
                         .Where(c => c.GenericChoreId == gChoreId && c.ElementId == elementId && c.StartDate.Year == year)
                         .OrderByDescending(c => c.StartDate)
                         .FirstOrDefault();
@@ -169,8 +181,6 @@ namespace IKeep.Lib.Server.Services
         private void AddingElements(NewChoresGuideline guideline)
         {
             Period period = guideline.GenericChore.Period;
-            //DateTime StartDate = new DateTime(year, 1, 1, 0, 0, 0);
-            //DateTime EndDate = new DateTime(year, 12, 31, 23, 59, 59);
 
             switch (period)
             {
@@ -231,7 +241,7 @@ namespace IKeep.Lib.Server.Services
                     EntityStatus = EntityStatus.Active,
                 };
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -250,7 +260,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -277,7 +287,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -308,7 +318,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -346,7 +356,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -384,7 +394,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
 
@@ -422,7 +432,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
         private DateTime GetFirstDayOfYear(DateTime date)
@@ -449,7 +459,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
         private DateTime GetFirstDayOfTwoYearly(DateTime date)
@@ -475,7 +485,7 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresService.Add(Chore);
+                _choresCrudService.Add(Chore);
             }
         }
         private DateTime GetFirstDayOfFourYearly(DateTime date)
