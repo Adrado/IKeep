@@ -8,11 +8,11 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 //Contexts
 import {Functions} from '../../providers/Providers';
 //CRUD Services
-import useFetchFormat from './useFetchFormat';
-import useFormatViewModel from './useFormatViewModel';
+import useFetchFormatLabels from './useFetchFormatLabels';
+import useFormatLabelViewModel from './useFormatLabelViewModel';
 
 
-const FormatsTable = () => 
+const FormatLabelsTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -22,28 +22,29 @@ const FormatsTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {Formats, change, setChange} = useFetchFormat();
-  const [Add, Save, Delete] = useFormatViewModel();
+  const {FormatLabels, change, setChange} = useFetchFormatLabels();
+  const [Add, Save, Delete] = useFormatLabelViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
   //Info to Formats Table 
 
   const columns = [
     { title: 'Nombre', field: 'Name' },
+    { title: 'Extensión', field: 'Extension' },
   ] 
 
   const Title = "Formatos";
   
     return(
         <Fragment>
-          {Formats === null &&
+          {FormatLabels === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { Formats !== null &&
+          { FormatLabels !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={Formats}
+              data={FormatLabels}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -100,7 +101,7 @@ const FormatsTable = () =>
   )                
 }
 
-export default FormatsTable;
+export default FormatLabelsTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

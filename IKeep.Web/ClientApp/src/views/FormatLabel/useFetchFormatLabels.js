@@ -1,14 +1,14 @@
 //React Hooks
 import  { useState, useEffect, useContext } from 'react';
 //CRUD Service
-import {FormatService} from '../../providers/Providers';
+import {FormatLabelService} from '../../providers/Providers';
 //Model
-import Format from '../../models/Format';
+import FormatLabel from '../../models/FormatLabel';
 
-const useFetchFormat = () =>
+const useFetchFormatLabels = () =>
 {
-    const FormatsService = useContext(FormatService);
-    const [Formats, setFormats] = useState(null);
+    const FormatLabelsService = useContext(FormatLabelService);
+    const [FormatLabels, setFormatLabels] = useState(null);
     const [error, setError] = useState(false);
     const [change, setChange] = useState(false);
 
@@ -17,7 +17,7 @@ const useFetchFormat = () =>
         let formats = []; 
         for (let i in data)
         {
-            let format = new Format(data[i]);
+            let format = new FormatLabel(data[i]);
             
             //if(format.EntityStatus !== 0)  
             formats.push(format);
@@ -31,10 +31,10 @@ const useFetchFormat = () =>
         const GetAllFormats = async () =>
         {
             try{
-                const response = await FormatsService.GetAllAsync();
+                const response = await FormatLabelsService.GetAllAsync();
                 const dataUpdated = UpdateData(response.data)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setFormats(dataUpdated);
+                setFormatLabels(dataUpdated);
             }
             catch (error){
                 setError(true)
@@ -43,14 +43,14 @@ const useFetchFormat = () =>
 
         GetAllFormats();
 
-    },[FormatsService, change]);
+    },[FormatLabelsService, change]);
 
     return{
-        Formats,
+        FormatLabels,
         error,
         change,
         setChange
     }
 }
 
-export default useFetchFormat;
+export default useFetchFormatLabels;

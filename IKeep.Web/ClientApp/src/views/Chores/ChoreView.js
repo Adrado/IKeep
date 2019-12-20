@@ -22,6 +22,11 @@ const ChoreView = () =>
   return(
     <Fragment>
       <Button onClick={AddNewChores}>A</Button>
+
+      {Chores === null &&
+        <h1>Cargando...</h1>
+      }
+
       {Chores !== null &&
         <MaterialTable
           title = {"Tareas"}

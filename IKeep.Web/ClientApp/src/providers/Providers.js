@@ -10,7 +10,7 @@ import UsersService from '../services/UsersService';
 import ElementTypesService from '../services/ElementTypesService';
 import GenericElementsService from '../services/GenericElementsService';
 import CategoriesService from '../services/CategoriesService';
-import FormatsService from '../services/FormatsService';
+import FormatLabelsService from '../services/FormatLabelsService';
 import GenericChoresService from '../services/GenericChoresService';
 import PrioritiesService from '../services/PrioritiesService';
 import ChoresService from '../services/ChoresService';
@@ -18,6 +18,7 @@ import GenericElementGenericChoresService from '../services/GenericElementGeneri
 import ElementsService from '../services/ElementsService';
 import ElementGenericChoresService from '../services/ElementGenericChoresService';
 import InstallationUsersService from '../services/InstallationUsersService';
+import GenericChoreFormatLabel from '../models/GenericChoreFormatLabel';
 
 export const CRUD =
 {
@@ -31,7 +32,7 @@ export const CRUD =
     ElementType : new ElementTypesService(),
     GenericElement : new GenericElementsService(),
     Category: new CategoriesService(),
-    Format: new FormatsService(),
+    FormatLabel: new FormatLabelsService(),
     GenericChore: new GenericChoresService(),
     Priority: new PrioritiesService(),
     Chore: new ChoresService(),
@@ -39,6 +40,7 @@ export const CRUD =
     Element: new ElementsService(),
     ElementGChore: new ElementGenericChoresService(),
     InstallationUser: new InstallationUsersService(),
+    GChoreFLabel : new GenericChoreFormatLabel(),
 }
 
 //CRUD SERVICES
@@ -46,7 +48,7 @@ export const ElementTypeService = React.createContext(CRUD.ElementType);
 export const GenericChoreService = React.createContext(CRUD.GenericChore);
 export const GenericElementService = React.createContext(CRUD.GenericElement);
 export const CategoryService = React.createContext(CRUD.Category);
-export const FormatService = React.createContext(CRUD.Format);
+export const FormatLabelService = React.createContext(CRUD.FormatLabel);
 export const PriorityService = React.createContext(CRUD.Priority);
 export const GElementGChoreService = React.createContext(CRUD.GElementGChore);
 export const UserService = React.createContext(CRUD.User);
@@ -56,6 +58,7 @@ export const ElementGChoreService = React.createContext(CRUD.ElementGChore);
 export const InstallationUserService = React.createContext(CRUD.InstallationUser);
 export const InstallationService = React.createContext(CRUD.Installation);
 export const ChoreService = React.createContext(CRUD.Chore);
+export const GChoreFLabelService = React.createContext(CRUD.GChoreFLabel);
 
 //Auxiliar Context
 export const Functions = React.createContext();

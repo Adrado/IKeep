@@ -12,13 +12,15 @@ class GenericChore extends Entity
             this.Duration = json.duration;
             this.Period = json.period;
             this.PriorityId = json.priorityId;
-            this.FormatId = json.formatId;
+            this.FormatLabelId = json.formatId;
             this.CategoryId = json.categoryId;
             this.ChoresIds = json.tasksIds;
 
             this.PriorityName = json.priorityName;
             this.FormatName = json.formatName;
             this.CategoryName = json.categoryName;
+
+            this.GenericChoreFormatLabels = json.genericChoreFormatLabels;
         }
         else
         {
@@ -33,7 +35,9 @@ class GenericChore extends Entity
 
             this.PriorityName = "";
             this.FormatName = "";
-            this.CategoryName = "";            
+            this.CategoryName = "";
+            
+            this.GenericChoreFormatLabels = [];
         }
     }
 

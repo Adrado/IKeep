@@ -14,9 +14,10 @@ import {Functions} from '../../providers/Providers';
 //CRUD Services
 import useFetchGenericChore from './useFetchGenericChore';
 import useGenericChoreViewModel from './useGenericChoreViewModel';
-import useFetchFormat from '../Format/useFetchFormat';
+//import useFetchFormatLabels from '../FormatLabel/useFetchFormatLabels';
 import useFetchCategory from '../Category/useFetchCategory';
 import useFetchPriority from '../Priority/useFetchPriority';
+import AddFormatLabelsDialog from './AddFormatLabelsDialog';
 
 
 const GenericChoresTable = () => 
@@ -24,13 +25,26 @@ const GenericChoresTable = () =>
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
 
+  const [genericChore, setGenericChore] = useState(null)
+  
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
+
   const Select = (e, rowData) =>
   {
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
   const {Categories} = useFetchCategory();
-  const {Formats} = useFetchFormat();
+  //const {FormatLabels} = useFetchFormatLabels();
   const {Priorities} = useFetchPriority();
 
   const {GChores, change, setChange} = useFetchGenericChore();
@@ -49,7 +63,7 @@ const GenericChoresTable = () =>
   }
 
   //Info to GenericChores Table 
-  const LookupFormats = BuildField(Formats);
+  //const LookupFormats = BuildField(FormatLabels);
   const LookupCategories = BuildField(Categories);
   const LookupPriorities = BuildField(Priorities);
 
@@ -70,12 +84,12 @@ const GenericChoresTable = () =>
     { title: 'Periodicidad', field: 'Period', lookup: Periodicity, editable: "onAdd"},
     //Vigilar el formato para evitar errores en el servidor.
     { title: 'Duración estimada', field: 'Duration'},
-    { title: 'Formato', field: 'FormatId', lookup: LookupFormats},
+    //{ title: 'Formato', field: 'FormatLabelId', lookup: LookupFormats},
     { title: 'Prioridad', field: 'PriorityId', lookup: LookupPriorities},
     { title: 'Categoria', field: 'CategoryId', lookup: LookupCategories}
   ] 
 
-  const Title = "Tareas";
+  const Title = "Tareas Genéricas";
   
     return(
         <Fragment>
@@ -109,6 +123,18 @@ const GenericChoresTable = () =>
 
               localization={localizationEsp}
 
+              actions={[
+                {
+                  icon: 'add',
+                  tooltip: 'Añadir Formatos ',
+                  onClick: (event, rowData) => 
+                  {
+                    setGenericChore(rowData);
+                    handleClickOpen()
+                  }
+                }
+              ]}
+
               editable={{
                 onRowAdd: newData =>
                   new Promise((resolve, reject) => {
@@ -139,7 +165,19 @@ const GenericChoresTable = () =>
               }}
           />
           }
+
+        {(GChores !== null && genericChore !== null) &&
+          <AddFormatLabelsDialog
+              open = {open}
+              handleClose = {handleClose}
+              genericChore = {genericChore}
+              change = {change}
+              setChange = {setChange}
+            />
+        }
+
         </Fragment>
+
   )                
 }
 

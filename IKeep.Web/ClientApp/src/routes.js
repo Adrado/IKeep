@@ -6,7 +6,7 @@ import ElementTypeView from './views/ElementType/ElementTypeView';
 import GenericElementView from './views/GenericElement/GenericElementView';
 import GenericChoreView from "./views/GenericChore/GenericChoreView.js";
 import PriorityView from "./views/Priority/PriorityView.js";
-import FormatView from "./views/Format/FormatView.js";
+import FormatLabelView from "./views/FormatLabel/FormatLabelView.js";
 import CategoryView from "./views/Category/CategoryView.js";
 import UserView from "./views/User/UserView";
 import RoleView from "./views/Role/RolesView.js";
@@ -52,7 +52,7 @@ const dashboardRoutes = [
 
   {
     path: "/genericChore",
-    name: "Tareas",
+    name: "Tareas Genéricas",
     icon: "",
     component: GenericChoreView,
     layout: "/admin"
@@ -67,10 +67,10 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/format",
+    path: "/formatLabel",
     name: "Formatos",
     icon: "",
-    component: FormatView,
+    component: FormatLabelView,
     layout: "/admin"
   },
 

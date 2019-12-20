@@ -1,6 +1,6 @@
 ﻿import Entity from './Entity'
 
-class Format extends Entity
+class FormatLabel extends Entity
 {
     constructor(json)
     {
@@ -8,13 +8,15 @@ class Format extends Entity
         if(json)
         {
             this.Name = json.name;
+            this.Extension = json.extension;
         }
         else
         {
             this.Name = "";
+            this.Extension = "";
         }
 
     }
 }
 
-export default Format;
+export default FormatLabel;

@@ -3,9 +3,9 @@ import React, {Fragment, useReducer} from 'react';
 //Context
 import {Functions} from '../../providers/Providers';
 //Models
-import Format from '../../models/Format';
+import FormatLabel from '../../models/FormatLabel';
 //View Components
-import FormatsTable from './FormatsTable';
+import FormatLabelsTable from './FormatLabelsTable';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -19,20 +19,20 @@ function reducer(state, action) {
 }
 
 const initialState = {
-  selectedRow: new Format(),
+  selectedRow: new FormatLabel(),
 };
 
-const FormatView = () =>
+const FormatLabelView = () =>
 {
   const [state, dispatch] = useReducer(reducer, initialState);
   return(
     <Fragment>
       <Functions.Provider value={{ state, dispatch }}>
-          <FormatsTable/>  
+          <FormatLabelsTable/>  
       </Functions.Provider>
     </Fragment>
   )
 }
 
-export default FormatView;
+export default FormatLabelView;
 

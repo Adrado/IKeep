@@ -29,6 +29,7 @@ const useFetchGenericChore = () =>
         {
             try{
                 const response = await GenericChoresService.GetAllAsync();
+                console.log(response.data);
                 const dataUpdated = UpdateData(response.data)
                 dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0)); 
                 setGChores(dataUpdated);
