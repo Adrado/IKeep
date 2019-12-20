@@ -87,10 +87,12 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<ElementType>, ElementTypesDbSet>();
             services.AddScoped<IDbSet<ElementGenericChore>, ElementGenericChoresDbSet>();
             services.AddScoped<IDbSet<Floor>, FloorsDbSet>();
-            services.AddScoped<IDbSet<Format>, FormatsDbSet>();
+            services.AddScoped<IDbSet<FormatLabel>, FormatLabelsDbSet>();
+            services.AddScoped<IDbSet<FormatValue>, FormatValuesDbSet>();
             services.AddScoped<IDbSet<GenericElement>, GenericElementsDbSet>();
             services.AddScoped<IDbSet<GenericElementGenericChore>, GenericElementGenericChoresDbSet>();
-            services.AddScoped<IDbSet<GenericChore>, GenericChoresDbset>();
+            services.AddScoped<IDbSet<GenericChore>, GenericChoresDbSet>();
+            services.AddScoped<IDbSet<GenericChoreFormatLabel>, GenericChoreFormatLabelsDbSet>();
             services.AddScoped<IDbSet<Inspection>, InspectionsDbSet>();
             services.AddScoped<IDbSet<Installation>, InstallationsDbSet>();
             services.AddScoped<IDbSet<InstallationUser>, InstallationUsersDbSet>();
@@ -112,10 +114,12 @@ namespace IKeep.Web
             services.AddScoped<IRepository<ElementType>, GenericRepository<ElementType>>();
             services.AddScoped<IRepository<ElementGenericChore>, GenericRepository<ElementGenericChore>>();
             services.AddScoped<IRepository<Floor>, GenericRepository<Floor>>();
-            services.AddScoped<IRepository<Format>, GenericRepository<Format>>();
+            services.AddScoped<IRepository<FormatLabel>, GenericRepository<FormatLabel>>();
+            services.AddScoped<IRepository<FormatValue>, GenericRepository<FormatValue>>();
             services.AddScoped<IRepository<GenericElement>, GenericRepository<GenericElement>>();
             services.AddScoped<IRepository<GenericElementGenericChore>, GenericRepository<GenericElementGenericChore>>();
             services.AddScoped<IRepository<GenericChore>, GenericRepository<GenericChore>>();
+            services.AddScoped<IRepository<GenericChoreFormatLabel>, GenericRepository<GenericChoreFormatLabel>>();
             services.AddScoped<IRepository<Inspection>, GenericRepository<Inspection>>();
             services.AddScoped<IRepository<Installation>, GenericRepository<Installation>>();
             services.AddScoped<IRepository<InstallationUser>, GenericRepository<InstallationUser>>();
@@ -138,10 +142,12 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<ElementType>, GenericCrudService<ElementType>>();
             services.AddScoped<ICrudService<ElementGenericChore>, GenericCrudService<ElementGenericChore>>();
             services.AddScoped<ICrudService<Floor>, GenericCrudService<Floor>>();
-            services.AddScoped<ICrudService<Format>, GenericCrudService<Format>>();
+            services.AddScoped<ICrudService<FormatLabel>, GenericCrudService<FormatLabel>>();
+            services.AddScoped<ICrudService<FormatValue>, GenericCrudService<FormatValue>>();
             services.AddScoped<ICrudService<GenericElement>, GenericCrudService<GenericElement>>();
             services.AddScoped<ICrudService<GenericElementGenericChore>, GenericCrudService<GenericElementGenericChore>>();
             services.AddScoped<ICrudService<GenericChore>, GenericCrudService<GenericChore>>();
+            services.AddScoped<ICrudService<GenericChoreFormatLabel>, GenericCrudService<GenericChoreFormatLabel>>();
             services.AddScoped<ICrudService<Inspection>, GenericCrudService<Inspection>>();
             services.AddScoped<ICrudService<Installation>, GenericCrudService<Installation>>();
             services.AddScoped<ICrudService<InstallationUser>, GenericCrudService<InstallationUser>>();
@@ -153,10 +159,11 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Supplier>, GenericCrudService<Supplier>>();
             services.AddScoped<ICrudService<Chore>, GenericCrudService<Chore>>();
 
+            // Other Services
             services.AddScoped<ITreeViewService, TreeViewService>();
             services.AddScoped<IChoreService, ChoreService>();
             services.AddScoped<IGetElementsService, GetElementsService>();
-            // Other Services
+            
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
         }

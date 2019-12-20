@@ -5,12 +5,12 @@ using System.Text;
 
 namespace IKeep.Lib.DA.EFCore
 {
-    public class GenericChoresDbSet : IKeepDbSet<GenericChore>
+    public class FormatValuesDbSet : IKeepDbSet<FormatValue>
     {
-        public GenericChoresDbSet(IKeepContext dbContext)
+        public FormatValuesDbSet(IKeepContext dbContext)
         {
             DbContext = dbContext;
-            DbSet = dbContext.GenericChores;
+            DbSet = dbContext.FormatValues;
         }
     }
 }

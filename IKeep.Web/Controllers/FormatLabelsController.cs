@@ -14,74 +14,74 @@ namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FormatsController : ControllerBase
+    public class FormatLabelsController : ControllerBase
     {
-        private readonly ICrudService<Format> _formatsService;
+        private readonly ICrudService<FormatLabel> _formatLabelsService;
 
-        public FormatsController(ICrudService<Format> formatsService)
+        public FormatLabelsController(ICrudService<FormatLabel> formatLabelsService)
         {
-            _formatsService = formatsService;
+            _formatLabelsService = formatLabelsService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Format>>> GetFormats()
+        public async Task<ActionResult<IEnumerable<FormatLabel>>> GetFormats()
         {
-            var x = _formatsService.GetAll().ToList().Count();
+            var x = _formatLabelsService.GetAll().ToList().Count();
 
             if (x == 0)
             {
-                var a = new Format
+                var a = new FormatLabel
                 {
                     Id = Guid.Parse("5d92c825-6671-42a1-8852-df35f9280cc7"),
                     Name = "Temperatura",
                 };
 
-                var b = new Format
+                var b = new FormatLabel
                 {
                     Id = Guid.Parse("bfd48d51-ba58-4f68-a610-753067d9aa5e"),
                     Name = "Presión",
                 };
-                _formatsService.Add(a);
-                _formatsService.Add(b);
+                _formatLabelsService.Add(a);
+                _formatLabelsService.Add(b);
             }
 
-            return await _formatsService.GetAll().ToListAsync();
+            return await _formatLabelsService.GetAll().ToListAsync();
         }
 
         // GET: api/Formats/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Format>> GetFormat(Guid id)
+        public async Task<ActionResult<FormatLabel>> GetFormat(Guid id)
         {
             return await Task.Run(() =>
             {
-                var format = _formatsService.GetAll().FirstOrDefault(x => x.Id == id);
+                var format = _formatLabelsService.GetAll().FirstOrDefault(x => x.Id == id);
                 if (format == null)
                 {
                     return NotFound();
                 }
-                return new ActionResult<Format>(format);
+                return new ActionResult<FormatLabel>(format);
             });
         }
 
         // PUT: api/Formats/5
         [HttpPut]
-        public async Task<ActionResult<Format>> PutFormat(Format format)
+        public async Task<ActionResult<FormatLabel>> PutFormat(FormatLabel format)
         {
             return await Task.Run(() =>
             {
-                var output = _formatsService.Update(format);
-                return new ActionResult<Format>(output);
+                var output = _formatLabelsService.Update(format);
+                return new ActionResult<FormatLabel>(output);
             });
         }
 
         // POST: api/Formats
         [HttpPost]
-        public async Task<ActionResult<Format>> PostFormat(Format format)
+        public async Task<ActionResult<FormatLabel>> PostFormat(FormatLabel format)
         {
             return await Task.Run(() =>
             {
-                var output = _formatsService.Add(format);
-                return new ActionResult<Format>(output);
+                var output = _formatLabelsService.Add(format);
+                return new ActionResult<FormatLabel>(output);
             });
         }
 
@@ -91,7 +91,7 @@ namespace IKeep.Web.Controllers
         {
             return await Task.Run(() =>
             {
-                return _formatsService.Delete(id);
+                return _formatLabelsService.Delete(id);
             });
         }
     }

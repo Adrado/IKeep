@@ -20,10 +20,13 @@ namespace IKeep.Lib.Models
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
         public ChoreStatus Status { get; set; }
+        public virtual ICollection<FormatValue> FormatValues { get; set; }
     }
     public enum ChoreStatus
     {
         Undone,
         Done
+        //ProperlyDone,
+        //ImproperlyDone
     }
 }

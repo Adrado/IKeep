@@ -28,17 +28,8 @@ namespace IKeep.Lib.Models
                 return Priority == null ? "" : Priority.Name;
             }
         }
-        public Guid FormatId { get; set; }
-        [JsonIgnore]
-        public virtual Format Format { get; set; }
 
-        public string FormatName
-        {
-            get
-            {
-                return Format == null ? "" : Format.Name;
-            }
-        }
+        public virtual ICollection<GenericChoreFormatLabel> GenericChoreFormatLabels { get; set; }
 
         public Guid CategoryId { get; set; }
         [JsonIgnore]
@@ -54,7 +45,8 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<Chore> Chores { get; set; }
-        public List<Guid> TasksIds
+        [JsonIgnore]
+        public List<Guid> ChoresIds
         {
             get
             {

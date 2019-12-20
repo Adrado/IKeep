@@ -29,6 +29,7 @@ namespace IKeep.Lib.Models
                 return GenericChore == null ? "" : GenericChore.Description;
             }
         }
+        //Goal?
         public Status Status { get; set; }
     }
 

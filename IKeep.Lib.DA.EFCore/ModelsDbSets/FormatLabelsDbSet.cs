@@ -5,12 +5,12 @@ using System.Text;
 
 namespace IKeep.Lib.DA.EFCore
 {
-    public class FormatsDbSet : IKeepDbSet<Format>
+    public class FormatLabelsDbSet : IKeepDbSet<FormatLabel>
     {
-        public FormatsDbSet(IKeepContext dbContext)
+        public FormatLabelsDbSet(IKeepContext dbContext)
         {
             DbContext = dbContext;
-            DbSet = dbContext.Formats;
+            DbSet = dbContext.FormatLabels;
         }
     }
 }
