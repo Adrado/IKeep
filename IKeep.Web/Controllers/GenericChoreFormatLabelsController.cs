@@ -30,10 +30,10 @@ namespace IKeep.Web.Controllers
         }
 
         // GET: api/ElementGenericTasks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<GenericChoreFormatLabel>>> GetGenericChoreFormatLabel(Guid id)
+        [HttpGet("{gChoreId}")]
+        public async Task<ActionResult<IEnumerable<GenericChoreFormatLabel>>> GetGenericChoreFormatLabel(Guid gChoreId)
         {
-            return await _genericChoreFormatLabelsService.GetAll().Where(x => x.Id == id).ToListAsync();
+            return await _genericChoreFormatLabelsService.GetAll().Where(x => x.GenericChoreId == gChoreId).ToListAsync();
         }
 
         // PUT: api/ElementGenericTasks/5

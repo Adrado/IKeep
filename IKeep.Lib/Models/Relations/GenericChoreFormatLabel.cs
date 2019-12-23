@@ -12,6 +12,21 @@ namespace IKeep.Lib.Models
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
         public Guid FormatLabelId { get; set; }
+        [JsonIgnore]
         public virtual FormatLabel FormatLabel { get; set; }
+        public string FormatName
+        {
+            get
+            {
+                return FormatLabel == null ? "" : FormatLabel.Name;
+            }
+        }
+        public string FormatExtension
+        {
+            get
+            {
+                return FormatLabel == null ? "" : FormatLabel.Extension;
+            }
+        }
     }
 }
