@@ -1,24 +1,28 @@
+// React Core
 import React, {Fragment, useContext} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+//Styles
 
-
+//CRUD Services
 import {Functions} from '../../../providers/Providers'
 import useFetchGElementGChores from './useFetchGElementGChores';
-
+import useGElementGChoreViewModel from './useGElementGChoreViewModel';
 
 //Data Table
 import MaterialTable from 'material-table';
 import {localizationEsp} from '../../../components/MaterialTableProps'
-import useGElementGChoreViewModel from './useGElementGChoreViewModel';
+
+//Validation
+import PropTypes from 'prop-types';
+
+
 
 
 const GElementGChoresTable = ({displayTable}) => 
 {
-  const classes = useStyles();
   const {state, dispatch} = useContext(Functions)
   
   const {GElementGChores, change, setChange} = useFetchGElementGChores(state.selectedRow.Id, state.change);
-  const [AddGElementGChore, SaveGElementGChore, DeleteGElementGChore] = useGElementGChoreViewModel();
+  const [, SaveGElementGChore, DeleteGElementGChore] = useGElementGChoreViewModel();
 
   const AddChores = () =>
   {
@@ -48,7 +52,7 @@ const GElementGChoresTable = ({displayTable}) =>
                     icon: 'add',
                     tooltip: 'Añadir Tareas',
                     isFreeAction: true,
-                    onClick: (event) => {
+                    onClick: () => {
                       AddChores();
                       displayTable();
                     }
@@ -95,31 +99,6 @@ const GElementGChoresTable = ({displayTable}) =>
 
 export default GElementGChoresTable;
 
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  button: {
-      margin: theme.spacing(1),
-    },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  progress: {
-    margin: theme.spacing(2),
-  },
-}));
+GElementGChoresTable.propTypes = {
+  displayTable: PropTypes.func.isRequired
+};

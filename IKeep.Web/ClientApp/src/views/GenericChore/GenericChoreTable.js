@@ -14,10 +14,11 @@ import {Functions} from '../../providers/Providers';
 //CRUD Services
 import useFetchGenericChore from './useFetchGenericChore';
 import useGenericChoreViewModel from './useGenericChoreViewModel';
-//import useFetchFormatLabels from '../FormatLabel/useFetchFormatLabels';
 import useFetchCategory from '../Category/useFetchCategory';
 import useFetchPriority from '../Priority/useFetchPriority';
-import AddFormatLabelsDialog from './AddFormatLabelsDialog';
+
+
+import AddFormatLabelsDialog from './AddFormatLabelsDialog/AddFormatLabelsDialog';
 
 
 const GenericChoresTable = () => 
@@ -35,8 +36,6 @@ const GenericChoresTable = () =>
   const handleClose = () => {
     setOpen(false);
   };
-
-  
 
   const Select = (e, rowData) =>
   {

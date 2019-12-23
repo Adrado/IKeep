@@ -2,6 +2,10 @@ import Entity from './Entity'
 
 class GenericChore extends Entity
 {
+    get FormatDescription()
+    {
+        return this.Title + ", " + this.Author;
+    }
     constructor(json)
     {
         super(json);

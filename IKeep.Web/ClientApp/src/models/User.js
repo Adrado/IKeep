@@ -17,7 +17,7 @@ class User extends Entity
             this.Phone2 = json.phone2;
             this.Email = json.email;
             this.Birthplace = json.birthplace;
-            this.Birthdate = json.birthdate;
+            this.Birthdate = new Date(json.birthdate);
             this.City = json.city;
             this.Address = json.address;
             //this.EntryTime = json.entryTime;

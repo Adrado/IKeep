@@ -1,6 +1,6 @@
 import { useContext, useEffect} from 'react';
-import { GChoreFLabelService } from '../../providers/Providers';
-import GenericChoreFormatLabel from '../../models/GenericChoreFormatLabel';
+import { GChoreFLabelService } from '../../../providers/Providers';
+import GenericChoreFormatLabel from '../../../models/GenericChoreFormatLabel';
 
 const useGChoreFLabelViewModel = () =>
 {
@@ -17,12 +17,15 @@ const useGChoreFLabelViewModel = () =>
         }
     }
       
-    const AddNewGChoreFLabel = (genericChoreId, formatLabelId) =>
+    const AddNewGChoreFLabel = (genericChoreId, formatLabel) =>
     {
         let model = new GenericChoreFormatLabel();
 
+
         model.GenericChoreId = genericChoreId;
-        model.FormatLabelId = formatLabelId; 
+        model.FormatLabelId = formatLabel.Id; 
+        
+        console.log(model);
  
         if(model !== undefined || model!== null)
         {

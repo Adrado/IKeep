@@ -3,7 +3,7 @@ class GenericChoreFormatLabelService extends CRUDService
 {
     constructor()
     {
-        super("genericChoreFormatLabel");
+        super("genericChoreFormatLabels");
     }
 }
 

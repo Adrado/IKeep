@@ -18,7 +18,7 @@ import GenericElementGenericChoresService from '../services/GenericElementGeneri
 import ElementsService from '../services/ElementsService';
 import ElementGenericChoresService from '../services/ElementGenericChoresService';
 import InstallationUsersService from '../services/InstallationUsersService';
-import GenericChoreFormatLabel from '../models/GenericChoreFormatLabel';
+import GenericChoreFormatLabelService from '../services/GenericChoreFormatLabelService';
 
 export const CRUD =
 {
@@ -40,7 +40,7 @@ export const CRUD =
     Element: new ElementsService(),
     ElementGChore: new ElementGenericChoresService(),
     InstallationUser: new InstallationUsersService(),
-    GChoreFLabel : new GenericChoreFormatLabel(),
+    GChoreFLabel : new GenericChoreFormatLabelService(),
 }
 
 //CRUD SERVICES
