@@ -16,12 +16,15 @@ namespace IKeep.Lib.Server.Services
         
         private readonly ICrudService<Chore> _choresCrudService;
         private readonly IGetElementsService _getElementsService;
+        private readonly IFormatService _formatService;
 
         public ChoreService(IGetElementsService getElementsService,
-                            ICrudService<Chore> choreService)
+                            ICrudService<Chore> choreService,
+                            IFormatService formatService)
         {
             _choresCrudService = choreService;
             _getElementsService = getElementsService;
+            _formatService = formatService;
         }
 
         public IQueryable<Chore> GetAll()
@@ -189,7 +192,6 @@ namespace IKeep.Lib.Server.Services
                     break;
 
                 case Period.Weekly:
-                
                     AddWeeklyChore(guideline);
                     break;
 
@@ -241,7 +243,11 @@ namespace IKeep.Lib.Server.Services
                     EntityStatus = EntityStatus.Active,
                 };
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if(choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -260,7 +266,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -287,7 +297,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -318,7 +332,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -356,7 +374,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -394,7 +416,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
 
@@ -432,7 +458,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
         private DateTime GetFirstDayOfYear(DateTime date)
@@ -459,7 +489,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
         private DateTime GetFirstDayOfTwoYearly(DateTime date)
@@ -485,7 +519,11 @@ namespace IKeep.Lib.Server.Services
                 Chore.GenericChoreId = guideline.GenericChore.Id;
                 Chore.Status = 0;
 
-                _choresCrudService.Add(Chore);
+                var choreResult = _choresCrudService.Add(Chore);
+                if (choreResult.Id != default)
+                {
+                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
+                }
             }
         }
         private DateTime GetFirstDayOfFourYearly(DateTime date)

@@ -163,7 +163,8 @@ namespace IKeep.Web
             services.AddScoped<ITreeViewService, TreeViewService>();
             services.AddScoped<IChoreService, ChoreService>();
             services.AddScoped<IGetElementsService, GetElementsService>();
-            
+            services.AddScoped<IFormatService, FormatService>();
+
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
         }

@@ -43,7 +43,7 @@ const GElementGChoresTable = ({displayTable}) =>
         <Fragment>
           {GElementGChores !== null &&
             <MaterialTable
-                title = {state.selectedRow.Name}
+                title = {state.selectedRow.Name + " - Tareas"}
                 columns={columns}
                 data={GElementGChores}
 
