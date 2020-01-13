@@ -14,7 +14,7 @@ import useGChoreFLabelViewModel from './useGChoreFLabelViewModel';
 import PropTypes from 'prop-types';
 import GenericChore from '../../../models/GenericChore';
 
-const FormatsTable = ({gChore, change, setChange }) => 
+const FormatsTable = ({gChore, change, setChange, handleClose}) => 
 {
   const classes = useStyles();
 
@@ -31,7 +31,7 @@ const FormatsTable = ({gChore, change, setChange }) =>
     Promise.all(FLabelsPromises)
     .then(()=> {
         setChange(!change)
-        //handleClose();
+        handleClose();
     });   
   } 
 
@@ -95,7 +95,8 @@ FormatsTable.propTypes = {
     //handleClose: PropTypes.func.isRequired, 
     gChore: PropTypes.instanceOf(GenericChore),
     change: PropTypes.bool.isRequired,
-    setChange: PropTypes.func.isRequired
+    setChange: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired
   };
 const useStyles = makeStyles(theme => ({
   progress: {

@@ -51,6 +51,7 @@ export default function AddFormatLabelsDialog({open, handleClose, genericChore, 
                 gChore = {genericChore}
                 change = {change}
                 setChange = {setChange}
+                handleClose = {handleClose}
               />
             }
           </Grid>

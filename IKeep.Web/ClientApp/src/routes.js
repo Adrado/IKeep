@@ -11,7 +11,7 @@ import CategoryView from "./views/Category/CategoryView.js";
 import UserView from "./views/User/UserView";
 import RoleView from "./views/Role/RolesView.js";
 import InstallationUserView from './views/InstallationUser/InstallationUserView';
-import ChoreView from './views/Chores/ChoreView';
+import GenerateChoresView from './views/GenerateChores/GenerateChoresView';
 
 const dashboardRoutes = [
   /* {
@@ -108,9 +108,9 @@ const dashboardRoutes = [
 
   {
     path: "/chore",
-    name: "Tareas",
+    name: "Generar Ordenes",
     icon: "",
-    component: ChoreView,
+    component: GenerateChoresView,
     layout: "/admin"
   }
   

@@ -20,12 +20,12 @@ const useChoreViewModel = () =>
         }
     }
       
-    const AddNewChore = (values) =>
+    const AddNewChore = (year, installationId) =>
     {
         alert("Entra")
         let newChoresRequest = new NewChoresRequest();
-        newChoresRequest.Year = 2019;
-        newChoresRequest.InstallationId = "d24ab749-87e9-43a9-9c7f-70d7021e5c83";
+        newChoresRequest.Year = year; //2019;
+        newChoresRequest.InstallationId = installationId; //"d24ab749-87e9-43a9-9c7f-70d7021e5c83";
  
         if(newChoresRequest !== undefined && newChoresRequest!== null)
         {
