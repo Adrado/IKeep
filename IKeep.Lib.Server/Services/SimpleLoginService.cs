@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IKeep.Lib.Server.Services
+namespace IKeep.Lib.Services
 {
     public class SimpleLoginService : ILoginService
     {
