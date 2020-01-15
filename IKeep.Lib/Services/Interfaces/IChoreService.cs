@@ -10,7 +10,7 @@ namespace IKeep.Lib.Services.Interfaces
 {
     public interface IChoreService : IGenericService
     {
-        bool AddChores (NewChoresRequest newChoresRequest);
+        NewChoresResponse AddChores (NewChoresRequest newChoresRequest);
         IQueryable<Chore> GetAll();
     }
 }

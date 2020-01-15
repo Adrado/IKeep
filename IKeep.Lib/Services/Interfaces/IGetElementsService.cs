@@ -12,6 +12,7 @@ namespace IKeep.Lib.Services.Interfaces
         IEnumerable<Element> GetBuildingElements(Guid? buildingId);
         IEnumerable<Element> GetFloorElements(Guid? floorId);
         IEnumerable<Element> GetAreaElements(Guid? areaId);
+        IEnumerable<Installation> GetAllActiveInstallations();
 
     }
 }

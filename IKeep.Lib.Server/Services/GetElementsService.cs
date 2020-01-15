@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using IKeep.Lib.Core;
 
 namespace IKeep.Lib.Server.Services
 {
@@ -65,6 +66,13 @@ namespace IKeep.Lib.Server.Services
                         from Element in Area.Elements
                         select Element).ToList();
             return elements;
+        }
+
+        public IEnumerable<Installation> GetAllActiveInstallations()
+        {
+            var installations = new List<Installation>();
+            installations = _context.Installations.Where(i => i.EntityStatus == EntityStatus.Active).ToList();
+            return installations;
         }
     }
 }
