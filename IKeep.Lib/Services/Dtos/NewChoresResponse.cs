@@ -9,6 +9,8 @@ namespace IKeep.Lib.Services.Dtos
     {
         public IList<InstallationResponse> Installations { get; set; }
         public int TotalElements { get; set; }
+        public DateTime StartRequest { get; set; }
+        public DateTime EndRequest { get; set; }
     }
 
     public class InstallationResponse

@@ -17,21 +17,24 @@ const GenerateChoresView = () =>
     const [selected, setSelected] = useState('');
     const [year, setYear] = useState('');
 
-    //const {Chores} = useFetchChores(id);
+    const {Chores} = useFetchChores(id);
     const [AddNewChores] = useChoreViewModel();
     const classes = useStyles();
-    /* const columns = [
+     const columns = [
       { title: 'Fecha Inicio', field: 'startDate' },
       { title: 'Fecha Fin', field: 'endDate' },
       { title: 'Id Element', field: 'elementId' },
       { title: 'Id TareaGenérica', field: 'genericChoreId' },
-    ]  */
+    ]  
 
     const onAdd = () =>
     {
       alert(selected.Name);
       alert(year);
       AddNewChores(year, selected.Id)
+      .then((response) => {
+        console.log(response);
+        })
     }
     const handleInstallationChange = event => {
       setSelected(event.target.value);
@@ -125,7 +128,7 @@ const GenerateChoresView = () =>
         </Grid>
 
 
-      {/* {Chores === null &&
+      {Chores === null &&
         <h1>Cargando...</h1>
       }
 
@@ -135,7 +138,7 @@ const GenerateChoresView = () =>
           columns={columns}
           data={Chores}
           />
-      } */}
+      }
       
 
     </Fragment>
