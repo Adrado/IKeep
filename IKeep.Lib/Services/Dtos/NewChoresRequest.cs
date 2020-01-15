@@ -13,5 +13,7 @@ namespace IKeep.Lib.Services.Dtos
         public int Year { get; set; }
         public int? Month { get; set; }
         public int? Day { get; set; }
+        public bool AllInstallations { get; set; }
+
     }
 }

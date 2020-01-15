@@ -96,7 +96,7 @@ namespace IKeep.Lib.Server.Services
 
         private bool IsTimeSpanIncomplete(Chore chore, int year)
         {
-            bool IsIncomplete = false;
+            bool isIncomplete = false;
 
             Period period = chore.GenericChore.Period;
 
@@ -107,51 +107,51 @@ namespace IKeep.Lib.Server.Services
             {
                 case Period.Daily:
                     start = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false ;
+                    isIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false ;
                     break;
 
                 case Period.Weekly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.Monthly:
                     start = new DateTime(year, 12, 1);
-                    IsIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false;
                     break;
 
                 case Period.Bimonthly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.Quarterly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.Semester:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.Yearly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.TwoYearly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
 
                 case Period.FourYearly:
                     end = new DateTime(year, 12, 31);
-                    IsIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
+                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
                     break;
             }
 
-            return IsIncomplete;
+            return isIncomplete;
         }
 
         private Chore GetLastChore(Guid elementId, Guid gChoreId, int year)
@@ -228,49 +228,32 @@ namespace IKeep.Lib.Server.Services
 
         private void AddDailyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
 
-            for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
+            for (DateTime d = startTimeSpan; d <= endTimeSpan; d = d.AddDays(1))
             {
-                Chore Chore = new Chore
-                {
-                    ElementId = guideline.ElementId,
-                    StartDate = d,
-                    EndDate = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59),
-                    GenericChoreId = guideline.GenericChore.Id,
-                    Status = ChoreStatus.Undone,
-                    EntityStatus = EntityStatus.Active,
-                };
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if(choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
         private void AddWeeklyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime dateFirstMonday = FirstMonday(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime dateFirstMonday = FirstMonday(startTimeSpan);
        
-            for (DateTime d = dateFirstMonday; d <= endDate; d = d.AddDays(7))
+            for (DateTime d = dateFirstMonday; d <= endTimeSpan; d = d.AddDays(7))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = d.AddDays(6.99);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfWeek(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
@@ -282,26 +265,25 @@ namespace IKeep.Lib.Server.Services
             return new DateTime(date.Year, date.Month, day, 0, 0, 0);
         }
 
+        private DateTime GetLastDayOfWeek(DateTime date)
+        {
+            DateTime EndWeek = date.AddDays(6);
+            return new DateTime(EndWeek.Year, EndWeek.Month, EndWeek.Day, 23, 59, 59);
+        }
+
         private void AddMonthlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfTheMonth = GetFirstDayOfMonth(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfTheMonth = GetFirstDayOfMonth(startTimeSpan);
 
-            for (DateTime d = FirstDayOfTheMonth; d <= endDate; d = d.AddMonths(1))
+            for (DateTime d = firstDayOfTheMonth; d <= endTimeSpan; d = d.AddMonths(1))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfMonth(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfMonth(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
@@ -319,24 +301,17 @@ namespace IKeep.Lib.Server.Services
 
         private void AddBimonthlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfBimonthly = GetFirstDayOfBimonthly(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfBimonthly = GetFirstDayOfBimonthly(startTimeSpan);
 
-            for (DateTime d = FirstDayOfBimonthly; d <= endDate; d = d.AddMonths(2))
+            for (DateTime d = firstDayOfBimonthly; d <= endTimeSpan; d = d.AddMonths(2))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfBimonthly(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfBimonthly(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
@@ -361,24 +336,17 @@ namespace IKeep.Lib.Server.Services
 
         private void AddQuarterlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfQuarterly = GetFirstDayOfQuarterly(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfQuarterly = GetFirstDayOfQuarterly(startTimeSpan);
 
-            for (DateTime d = FirstDayOfQuarterly; d <= endDate; d = d.AddMonths(3))
+            for (DateTime d = firstDayOfQuarterly; d <= endTimeSpan; d = d.AddMonths(3))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfQuarterly(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfQuarterly(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
@@ -403,24 +371,17 @@ namespace IKeep.Lib.Server.Services
 
         private void AddSemesterChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfSemester = GetFirstDayOfSemester(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfSemester = GetFirstDayOfSemester(startTimeSpan);
 
-            for (DateTime d = FirstDayOfSemester; d <= endDate; d = d.AddMonths(6))
+            for (DateTime d = firstDayOfSemester; d <= endTimeSpan; d = d.AddMonths(6))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfSemester(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfSemester(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
 
@@ -445,24 +406,17 @@ namespace IKeep.Lib.Server.Services
 
         private void AddYearlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfYear = GetFirstDayOfYear(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfYear = GetFirstDayOfYear(startTimeSpan);
 
-            for (DateTime d = FirstDayOfYear; d <= endDate; d = d.AddYears(1))
+            for (DateTime d = firstDayOfYear; d <= endTimeSpan; d = d.AddYears(1))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfYear(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfYear(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
         private DateTime GetFirstDayOfYear(DateTime date)
@@ -476,24 +430,17 @@ namespace IKeep.Lib.Server.Services
 
         private void AddTwoYearlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfTwoYearly = GetFirstDayOfTwoYearly(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfTwoYearly = GetFirstDayOfTwoYearly(startTimeSpan);
 
-            for (DateTime d = FirstDayOfTwoYearly; d <= endDate; d = d.AddYears(2))
+            for (DateTime d = firstDayOfTwoYearly; d <= endTimeSpan; d = d.AddYears(2))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOfTwoYearly(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOfTwoYearly(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
         private DateTime GetFirstDayOfTwoYearly(DateTime date)
@@ -506,24 +453,17 @@ namespace IKeep.Lib.Server.Services
         }
         private void AddFourYearlyChore(NewChoresGuideline guideline)
         {
-            DateTime endDate = guideline.TimeSpanToAddChores.End;
-            DateTime startDate = guideline.TimeSpanToAddChores.Start;
-            DateTime FirstDayOfFourYearly = GetFirstDayOfFourYearly(startDate);
+            DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
+            DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
+            DateTime firstDayOfFourYearly = GetFirstDayOfFourYearly(startTimeSpan);
 
-            for (DateTime d = FirstDayOfFourYearly; d <= endDate; d = d.AddYears(4))
+            for (DateTime d = firstDayOfFourYearly; d <= endTimeSpan; d = d.AddYears(4))
             {
-                Chore Chore = new Chore();
-                Chore.ElementId = guideline.ElementId;
-                Chore.StartDate = d;
-                Chore.EndDate = GetLastDayOffourYearly(d);
-                Chore.GenericChoreId = guideline.GenericChore.Id;
-                Chore.Status = 0;
+                DateTime choreStartDate = d;
+                DateTime choreEndDate = GetLastDayOffourYearly(d);
 
-                var choreResult = _choresCrudService.Add(Chore);
-                if (choreResult.Id != default)
-                {
-                    _formatService.AddFormatValuesToChore(guideline.GenericChore.Id, choreResult.Id);
-                }
+                Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
+                AddChoresToDatabase(guideline.GenericChore, Chore);
             }
         }
         private DateTime GetFirstDayOfFourYearly(DateTime date)
@@ -534,7 +474,28 @@ namespace IKeep.Lib.Server.Services
         {
             return new DateTime(date.Year, 12, 31, 23, 59, 59).AddYears(3);
         }
+
+        private void AddChoresToDatabase(GenericChore gChore, Chore chore)
+        {
+            var choreResult = _choresCrudService.Add(chore);
+            if (choreResult.Id != default)
+            {
+                _formatService.AddFormatValuesToChore(gChore.Id, choreResult.Id);
+            }
+        }
+
+        private Chore CreateChore(NewChoresGuideline guideline, DateTime startDate, DateTime endDate)
+        {
+            Chore Chore = new Chore()
+            {
+                ElementId = guideline.ElementId,
+                StartDate = startDate,
+                EndDate = endDate,
+                GenericChoreId = guideline.GenericChore.Id,
+                Status = ChoreStatus.Undone,
+            };
+
+            return Chore;
+        }
     }
 }
-
-       
