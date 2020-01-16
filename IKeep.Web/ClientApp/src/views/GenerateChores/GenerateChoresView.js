@@ -8,6 +8,7 @@ import MaterialTable from 'material-table';
 import { Button, Grid, TextField, FormControl, makeStyles, InputLabel, Select, MenuItem, MenuList } from '@material-ui/core';
 import useChoreViewModel from './useChoreViewModel';
 import useFetchInstallations from './useFetchInstallations';
+import CurrentChoreResponse from './CurrenChoreReport';
 
 const GenerateChoresView = () =>
 {
@@ -127,8 +128,10 @@ const GenerateChoresView = () =>
                     
         </Grid>
 
+      <CurrentChoreResponse/>
 
-      {Chores === null &&
+
+      {/* {Chores === null &&
         <h1>Cargando...</h1>
       }
 
@@ -138,7 +141,7 @@ const GenerateChoresView = () =>
           columns={columns}
           data={Chores}
           />
-      }
+      } */}
       
 
     </Fragment>

@@ -31,6 +31,20 @@ namespace IKeep.Lib.Server.Services
             _context = context;
         }
 
+        public NewChoresResponse ChoresResponse { get; set; }
+
+        public NewChoresResponse GetCurrentResponse()
+        {
+            if (ChoresResponse == null)
+            {
+                ChoresResponse = new NewChoresResponse();
+                ChoresResponse.TotalElements = 10;
+            }
+              
+                
+            return ChoresResponse;
+        }
+
         public IQueryable<Chore> GetAll()
         {
             return _choresCrudService.GetAll();
@@ -71,6 +85,8 @@ namespace IKeep.Lib.Server.Services
             response.EndRequest = DateTime.Now;
             response.Installations = InstallationsCompleted;
             response.TotalElements = AllElements;
+
+            ChoresResponse = response;
 
             return response;
         }

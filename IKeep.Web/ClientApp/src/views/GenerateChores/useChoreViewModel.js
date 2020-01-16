@@ -41,13 +41,19 @@ const useChoreViewModel = () =>
         }
     }
 
+    const GetReport = () =>
+    {
+        return ChoresService.GetCurretReport();
+    }
+
     useEffect(() => {},[])
 
     return(
         [
             AddNewChore,
             SaveChore,
-            DeleteChore
+            DeleteChore,
+            GetReport,
         ]
     )
 }

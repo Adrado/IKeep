@@ -31,6 +31,12 @@ namespace IKeep.Web.Controllers
             return await _choresService.GetAll().ToListAsync();
         }
 
+        [HttpGet("currentReport/")]
+        public NewChoresResponse GetCurrentReport()
+        {
+            return  _choresService.GetCurrentResponse();
+        }
+
         // POST: api/Chores
         [HttpPost]
         public async Task<ActionResult<NewChoresResponse>> PostChore(NewChoresRequest newChoresRequest)
@@ -41,6 +47,8 @@ namespace IKeep.Web.Controllers
                 return new ActionResult<NewChoresResponse>(output);
             });
         }
+
+        
 
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<Task>>> GetTasks()

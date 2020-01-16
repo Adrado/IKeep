@@ -5,6 +5,10 @@ class ChoresService extends CRUDService
     {
         super("chores");
     }
+    GetCurretReport()
+    {
+        return this.GetByIdAsync("currentReport/");
+    }
 }
 
 export default ChoresService;
