@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EFCore.BulkExtensions;
 
 namespace IKeep.Lib.Server.Services
 {
@@ -17,14 +18,17 @@ namespace IKeep.Lib.Server.Services
         private readonly ICrudService<Chore> _choresCrudService;
         private readonly IGetElementsService _getElementsService;
         private readonly IFormatService _formatService;
+        private readonly IKeepContext _context;
 
         public ChoreService(IGetElementsService getElementsService,
                             ICrudService<Chore> choreService,
-                            IFormatService formatService)
+                            IFormatService formatService,
+                            IKeepContext context)
         {
             _choresCrudService = choreService;
             _getElementsService = getElementsService;
             _formatService = formatService;
+            _context = context;
         }
 
         public IQueryable<Chore> GetAll()
@@ -39,6 +43,9 @@ namespace IKeep.Lib.Server.Services
             IEnumerable<Element> elements;
 
             response.StartRequest = DateTime.Now;
+            List<InstallationResponse> InstallationsCompleted = new List<InstallationResponse>();
+
+            int AllElements = 0;
 
             if(newChoresRequest.AllInstallations == true)
             {
@@ -48,7 +55,8 @@ namespace IKeep.Lib.Server.Services
                     elements = _getElementsService.GetInstallationElements(Installation.Id);
                     InstallationResponse installationResponse = new InstallationResponse();
                     installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
-                    response.Installations.Add(installationResponse);
+                    InstallationsCompleted.Add(installationResponse);
+                    AllElements = AllElements + installationResponse.ElementsNumber;
                 }
             }
             else
@@ -56,11 +64,14 @@ namespace IKeep.Lib.Server.Services
                 elements = GetElements(newChoresRequest);
                 InstallationResponse installationResponse = new InstallationResponse();
                 installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
-                response.Installations.Add(installationResponse);
+                InstallationsCompleted.Add(installationResponse);
+                AllElements = AllElements + installationResponse.ElementsNumber;
             }
 
-            response.StartRequest = DateTime.Now;
-            
+            response.EndRequest = DateTime.Now;
+            response.Installations = InstallationsCompleted;
+            response.TotalElements = AllElements;
+
             return response;
         }
 
@@ -99,7 +110,9 @@ namespace IKeep.Lib.Server.Services
         private int AddElementChores(Element element, int year)
         {
             var elementGenericChores = element.ElementGenericChores;
-            int totalChoresAdded = 0;
+            int totalChoresAdded;
+            List<Chore> AllChoresElement = new List<Chore>();
+
             foreach (ElementGenericChore elemenGChore in elementGenericChores)
             {
                 NewChoresGuideline newChoresGuideline = new NewChoresGuideline();
@@ -118,9 +131,15 @@ namespace IKeep.Lib.Server.Services
                 else
                     continue;
 
-                int choresAdded = AddingElements(newChoresGuideline);
-                totalChoresAdded = totalChoresAdded + choresAdded;
+                var choresAdded = AddingElements(newChoresGuideline);
+                AllChoresElement.AddRange(choresAdded);
+                //totalChoresAdded = totalChoresAdded + choresAdded;
             }
+
+            InsertChoresToDatabase(AllChoresElement);
+            _formatService.AddFormatValuesToChores(AllChoresElement);
+
+            totalChoresAdded = AllChoresElement.Count();
             return totalChoresAdded;
         }
 
@@ -211,58 +230,69 @@ namespace IKeep.Lib.Server.Services
             return timeSpanToAddChores;
         }
 
-        private int AddingElements(NewChoresGuideline guideline)
+        private List<Chore> AddingElements(NewChoresGuideline guideline)
         {
             Period period = guideline.GenericChore.Period;
-            int choresAdded = 0;
+            List<Chore> response = new List<Chore>();
+
+            List<Chore> listChoresAdded = new List<Chore>();
 
             switch (period)
             {
                 case Period.Daily:
-                    choresAdded = AddDailyChore(guideline);
+                    listChoresAdded = CreateDailyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Weekly:
-                    choresAdded = AddWeeklyChore(guideline);
+                    listChoresAdded = CreateWeeklyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Monthly:
-                    choresAdded = AddMonthlyChore(guideline);
+                    listChoresAdded = CreateMonthlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Bimonthly:
-                    choresAdded = AddBimonthlyChore(guideline);
+                    listChoresAdded = CreateBimonthlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Quarterly:
-                    choresAdded = AddQuarterlyChore(guideline);
+                    listChoresAdded = CreateQuarterlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Semester:
-                    choresAdded = AddSemesterChore(guideline);
+                    listChoresAdded = CreateSemesterChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.Yearly:
-                    choresAdded = AddYearlyChore(guideline);
+                    listChoresAdded = CreateYearlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.TwoYearly:
-                    choresAdded = AddTwoYearlyChore(guideline);
+                    listChoresAdded = CreateTwoYearlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
 
                 case Period.FourYearly:
-                    choresAdded = AddFourYearlyChore(guideline);
+                    listChoresAdded = CreateFourYearlyChoreList(guideline);
+                    response.AddRange(listChoresAdded);
                     break;
             }
-            return choresAdded;
+            return response;
         }
 
 
-        private int AddDailyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateDailyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
-            int choresAdded = 0;
+            List<Chore> DailyChores = new List<Chore>();
 
             for (DateTime d = startTimeSpan; d <= endTimeSpan; d = d.AddDays(1))
             {
@@ -270,20 +300,18 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
-
+                DailyChores.Add(Chore);
             }
-            return choresAdded;
+            return DailyChores;
         }
 
-        private int AddWeeklyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateWeeklyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime dateFirstMonday = FirstMonday(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> WeeklyChores = new List<Chore>();
+
 
             for (DateTime d = dateFirstMonday; d <= endTimeSpan; d = d.AddDays(7))
             {
@@ -291,11 +319,9 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfWeek(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                WeeklyChores.Add(Chore);
             }
-            return choresAdded;
+            return WeeklyChores;
         }
 
         private DateTime FirstMonday(DateTime date)
@@ -312,12 +338,12 @@ namespace IKeep.Lib.Server.Services
             return new DateTime(EndWeek.Year, EndWeek.Month, EndWeek.Day, 23, 59, 59);
         }
 
-        private int AddMonthlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateMonthlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfTheMonth = GetFirstDayOfMonth(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> MonthlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfTheMonth; d <= endTimeSpan; d = d.AddMonths(1))
             {
@@ -325,11 +351,12 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfMonth(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                MonthlyChores.Add(Chore);
+                //bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
+                //if (result == true)
+                //    choresAdded++;
             }
-            return choresAdded;
+            return MonthlyChores;
         }
 
         private DateTime GetFirstDayOfMonth(DateTime date)
@@ -344,12 +371,12 @@ namespace IKeep.Lib.Server.Services
                                  23, 59, 59);
         }
 
-        private int AddBimonthlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateBimonthlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfBimonthly = GetFirstDayOfBimonthly(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> BimonthlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfBimonthly; d <= endTimeSpan; d = d.AddMonths(2))
             {
@@ -357,11 +384,9 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfBimonthly(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                BimonthlyChores.Add(Chore);
             }
-            return choresAdded;
+            return BimonthlyChores;
         }
 
         private DateTime GetFirstDayOfBimonthly(DateTime date)
@@ -383,12 +408,12 @@ namespace IKeep.Lib.Server.Services
                                  23, 59, 59).AddMonths(1);
         }
 
-        private int AddQuarterlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateQuarterlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfQuarterly = GetFirstDayOfQuarterly(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> QuarterlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfQuarterly; d <= endTimeSpan; d = d.AddMonths(3))
             {
@@ -396,11 +421,9 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfQuarterly(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                QuarterlyChores.Add(Chore);
             }
-            return choresAdded;
+            return QuarterlyChores;
         }
 
         private DateTime GetFirstDayOfQuarterly(DateTime date)
@@ -422,12 +445,12 @@ namespace IKeep.Lib.Server.Services
                                  23, 59, 59).AddMonths(2);
         }
 
-        private int AddSemesterChore(NewChoresGuideline guideline)
+        private List<Chore> CreateSemesterChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfSemester = GetFirstDayOfSemester(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> SemesterChores = new List<Chore>();
 
             for (DateTime d = firstDayOfSemester; d <= endTimeSpan; d = d.AddMonths(6))
             {
@@ -435,11 +458,9 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfSemester(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                SemesterChores.Add(Chore);
             }
-            return choresAdded;
+            return SemesterChores;
         }
 
         private DateTime GetFirstDayOfSemester(DateTime date)
@@ -461,12 +482,12 @@ namespace IKeep.Lib.Server.Services
                                  23, 59, 59).AddMonths(5);
         }
 
-        private int AddYearlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateYearlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfYear = GetFirstDayOfYear(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> YearlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfYear; d <= endTimeSpan; d = d.AddYears(1))
             {
@@ -474,11 +495,9 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfYear(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                YearlyChores.Add(Chore);
             }
-            return choresAdded;
+            return YearlyChores;
         }
         private DateTime GetFirstDayOfYear(DateTime date)
         {
@@ -489,12 +508,12 @@ namespace IKeep.Lib.Server.Services
             return new DateTime(date.Year, 12, 31, 23, 59, 59);
         }
 
-        private int AddTwoYearlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateTwoYearlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfTwoYearly = GetFirstDayOfTwoYearly(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> TwoYearlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfTwoYearly; d <= endTimeSpan; d = d.AddYears(2))
             {
@@ -502,11 +521,12 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOfTwoYearly(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                TwoYearlyChores.Add(Chore);
+                //bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
+                //if (result == true)
+                //    choresAdded++;
             }
-            return choresAdded;
+            return TwoYearlyChores;
         }
         private DateTime GetFirstDayOfTwoYearly(DateTime date)
         {
@@ -516,12 +536,12 @@ namespace IKeep.Lib.Server.Services
         {
             return new DateTime(date.Year, 12, 31, 23, 59, 59).AddYears(1);
         }
-        private int AddFourYearlyChore(NewChoresGuideline guideline)
+        private List<Chore> CreateFourYearlyChoreList(NewChoresGuideline guideline)
         {
             DateTime endTimeSpan = guideline.TimeSpanToAddChores.End;
             DateTime startTimeSpan = guideline.TimeSpanToAddChores.Start;
             DateTime firstDayOfFourYearly = GetFirstDayOfFourYearly(startTimeSpan);
-            int choresAdded = 0;
+            List<Chore> FourYearlyChores = new List<Chore>();
 
             for (DateTime d = firstDayOfFourYearly; d <= endTimeSpan; d = d.AddYears(4))
             {
@@ -529,11 +549,12 @@ namespace IKeep.Lib.Server.Services
                 DateTime choreEndDate = GetLastDayOffourYearly(d);
 
                 Chore Chore = CreateChore(guideline, choreStartDate, choreEndDate);
-                bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
-                if (result == true)
-                    choresAdded++;
+                FourYearlyChores.Add(Chore);
+                //bool result = AddChoresToDatabase(guideline.GenericChore, Chore);
+                //if (result == true)
+                //    choresAdded++;
             }
-            return choresAdded;
+            return FourYearlyChores;
         }
         private DateTime GetFirstDayOfFourYearly(DateTime date)
         {
@@ -544,31 +565,38 @@ namespace IKeep.Lib.Server.Services
             return new DateTime(date.Year, 12, 31, 23, 59, 59).AddYears(3);
         }
 
-        private bool AddChoresToDatabase(GenericChore gChore, Chore chore)
-        {
-            var choreResult = _choresCrudService.Add(chore);
-            bool OK = false;
-            if (choreResult.Id != default)
-            {
-                _formatService.AddFormatValuesToChore(gChore.Id, choreResult.Id);
-                OK = true;
-            }
-            return OK;
-        }
+        //private bool AddChoresToDatabase(GenericChore gChore, Chore chore)
+        //{
+        //    var choreResult = _choresCrudService.Add(chore);
+        //    bool OK = false;
+        //    if (choreResult.Id != default)
+        //    {
+        //        _formatService.AddFormatValuesToChore(gChore.Id, choreResult.Id);
+        //        OK = true;
+        //    }
+        //    return OK;
+        //}
 
         private Chore CreateChore(NewChoresGuideline guideline, DateTime startDate, DateTime endDate)
         {
             Chore Chore = new Chore()
             {
+                Id = Guid.NewGuid(),
                 EntityStatus = EntityStatus.Active,
                 ElementId = guideline.ElementId,
                 StartDate = startDate,
                 EndDate = endDate,
                 GenericChoreId = guideline.GenericChore.Id,
                 Status = ChoreStatus.Undone,
-            };
+                UserId = null,
 
+            };
             return Chore;
+        }
+
+        private void InsertChoresToDatabase(List<Chore> chores)
+        {
+            _context.BulkInsert(chores);
         }
     }
 }

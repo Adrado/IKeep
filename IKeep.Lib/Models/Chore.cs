@@ -16,7 +16,7 @@ namespace IKeep.Lib.Models
         public virtual User User { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid? GenericChoreId { get; set; }
+        public Guid GenericChoreId { get; set; }
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
         public ChoreStatus Status { get; set; }

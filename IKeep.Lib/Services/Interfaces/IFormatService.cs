@@ -11,5 +11,6 @@ namespace IKeep.Lib.Services.Interfaces
     public interface IFormatService : IGenericService
     {
         void AddFormatValuesToChore(Guid genericChoreId, Guid choreId);
+        void AddFormatValuesToChores(List<Chore> chores);
     }
 }

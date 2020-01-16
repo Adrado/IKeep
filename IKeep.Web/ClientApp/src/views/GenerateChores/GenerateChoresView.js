@@ -11,7 +11,7 @@ import useFetchInstallations from './useFetchInstallations';
 
 const GenerateChoresView = () =>
 {
-    let id = "f814d347-282e-4251-9a21-1d5c00f336c5"
+    let id = "a53c923d-6f84-4a41-8a3e-bfea15cdd271"
     const {Installations} = useFetchInstallations();
 
     const [selected, setSelected] = useState('');
