@@ -30,7 +30,6 @@ namespace IKeep.Lib.Services.Dtos
     {
         public string ElementRef { get; set; }
         public int NumChores { get; set; }
-        public ChoreResponse ChoresNum { get; set; }
     }
 
     public class ChoreResponse

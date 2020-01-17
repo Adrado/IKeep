@@ -32,18 +32,36 @@ namespace IKeep.Lib.Server.Services
         }
 
         public NewChoresResponse ChoresResponse { get; set; }
+        public PartialReport PartialReport { get; set; }
 
-        public NewChoresResponse GetCurrentResponse()
+
+        public PartialReport GetCurrentResponse()
         {
-            if (ChoresResponse == null)
+            if (PartialReport == null)
             {
-                ChoresResponse = new NewChoresResponse();
-                ChoresResponse.TotalElements = 10;
+                PartialReport = new PartialReport();
+                PartialReport.Status = "No hay consultas activas";
             }
               
-                
-            return ChoresResponse;
+            return PartialReport;
         }
+
+        private void CreatePartialReport()
+        {
+            PartialReport = new PartialReport();
+            PartialReport.Elements = new List<ElementResponse>();
+            PartialReport.StartRequest = DateTime.Now;
+        }
+        private void UpdatePartialReport(Element element, int totalChoresAdded)
+        {
+            ElementResponse elementResponse = new ElementResponse
+            {
+                ElementRef = element.Ref,
+                NumChores = totalChoresAdded,
+            };
+            PartialReport.Elements.Add(elementResponse);
+        }
+
 
         public IQueryable<Chore> GetAll()
         {
@@ -52,11 +70,12 @@ namespace IKeep.Lib.Server.Services
 
         public NewChoresResponse AddChores(NewChoresRequest newChoresRequest)
         {
-            NewChoresResponse response = new NewChoresResponse();
+            CreatePartialReport();
+            ChoresResponse = new NewChoresResponse();
 
             IEnumerable<Element> elements;
 
-            response.StartRequest = DateTime.Now;
+            ChoresResponse.StartRequest = DateTime.Now;
             List<InstallationResponse> InstallationsCompleted = new List<InstallationResponse>();
 
             int AllElements = 0;
@@ -82,13 +101,11 @@ namespace IKeep.Lib.Server.Services
                 AllElements = AllElements + installationResponse.ElementsNumber;
             }
 
-            response.EndRequest = DateTime.Now;
-            response.Installations = InstallationsCompleted;
-            response.TotalElements = AllElements;
+            ChoresResponse.EndRequest = DateTime.Now;
+            ChoresResponse.Installations = InstallationsCompleted;
+            ChoresResponse.TotalElements = AllElements;
 
-            ChoresResponse = response;
-
-            return response;
+            return ChoresResponse;
         }
 
         private IEnumerable<Element> GetElements(NewChoresRequest newChoresRequest)
@@ -112,6 +129,7 @@ namespace IKeep.Lib.Server.Services
         {
             InstallationResponse InstallationResponse = new InstallationResponse();
             List<ElementResponse> ElementsList = new List<ElementResponse>();
+
             foreach (Element element in elements)
             {
                 ElementResponse elementResponse = new ElementResponse();
@@ -119,6 +137,7 @@ namespace IKeep.Lib.Server.Services
                 elementResponse.ElementRef = element.Ref;
                 ElementsList.Add(elementResponse);
             }
+
             InstallationResponse.Elements = ElementsList;
             return InstallationResponse;
         }
@@ -154,8 +173,10 @@ namespace IKeep.Lib.Server.Services
 
             InsertChoresToDatabase(AllChoresElement);
             _formatService.AddFormatValuesToChores(AllChoresElement);
-
             totalChoresAdded = AllChoresElement.Count();
+
+            UpdatePartialReport(element, totalChoresAdded); 
+
             return totalChoresAdded;
         }
 

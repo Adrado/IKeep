@@ -32,7 +32,7 @@ namespace IKeep.Web.Controllers
         }
 
         [HttpGet("currentReport/")]
-        public NewChoresResponse GetCurrentReport()
+        public PartialReport GetCurrentReport()
         {
             return  _choresService.GetCurrentResponse();
         }

@@ -19,7 +19,7 @@ const GenerateChoresView = () =>
     const [year, setYear] = useState('');
 
     const {Chores} = useFetchChores(id);
-    const [AddNewChores] = useChoreViewModel();
+    const [AddNewChores,,,GetReport] = useChoreViewModel();
     const classes = useStyles();
      const columns = [
       { title: 'Fecha Inicio', field: 'startDate' },
@@ -28,6 +28,13 @@ const GenerateChoresView = () =>
       { title: 'Id TareaGenérica', field: 'genericChoreId' },
     ]  
 
+    const onGetReport = () =>
+    {
+      GetReport()
+      .then((response) => {
+        console.log(response);
+        })
+    }
     const onAdd = () =>
     {
       alert(selected.Name);
@@ -125,10 +132,14 @@ const GenerateChoresView = () =>
                   <Button onClick={onAdd}>Generar Ordenes</Button>
             </Grid>
           }
+
+            {/* <Grid item xs={6} sm = {3}>
+                  <Button onClick={onGetReport}>Ver estado actual</Button>
+            </Grid> */}
                     
         </Grid>
 
-      <CurrentChoreResponse/>
+      {/* <CurrentChoreResponse/> */}
 
 
       {/* {Chores === null &&
