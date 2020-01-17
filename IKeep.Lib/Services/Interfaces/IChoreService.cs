@@ -12,6 +12,5 @@ namespace IKeep.Lib.Services.Interfaces
     {
         NewChoresResponse AddChores (NewChoresRequest newChoresRequest);
         IQueryable<Chore> GetAll();
-        PartialReport GetCurrentResponse();
     }
 }

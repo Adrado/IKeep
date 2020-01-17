@@ -32,36 +32,6 @@ namespace IKeep.Lib.Server.Services
         }
 
         public NewChoresResponse ChoresResponse { get; set; }
-        public PartialReport PartialReport { get; set; }
-
-
-        public PartialReport GetCurrentResponse()
-        {
-            if (PartialReport == null)
-            {
-                PartialReport = new PartialReport();
-                PartialReport.Status = "No hay consultas activas";
-            }
-              
-            return PartialReport;
-        }
-
-        private void CreatePartialReport()
-        {
-            PartialReport = new PartialReport();
-            PartialReport.Elements = new List<ElementResponse>();
-            PartialReport.StartRequest = DateTime.Now;
-        }
-        private void UpdatePartialReport(Element element, int totalChoresAdded)
-        {
-            ElementResponse elementResponse = new ElementResponse
-            {
-                ElementRef = element.Ref,
-                NumChores = totalChoresAdded,
-            };
-            PartialReport.Elements.Add(elementResponse);
-        }
-
 
         public IQueryable<Chore> GetAll()
         {
@@ -70,12 +40,12 @@ namespace IKeep.Lib.Server.Services
 
         public NewChoresResponse AddChores(NewChoresRequest newChoresRequest)
         {
-            CreatePartialReport();
             ChoresResponse = new NewChoresResponse();
 
             IEnumerable<Element> elements;
 
             ChoresResponse.StartRequest = DateTime.Now;
+            ChoresResponse.TotalChores = 0;
             List<InstallationResponse> InstallationsCompleted = new List<InstallationResponse>();
 
             int AllElements = 0;
@@ -99,6 +69,7 @@ namespace IKeep.Lib.Server.Services
                 installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
                 InstallationsCompleted.Add(installationResponse);
                 AllElements = AllElements + installationResponse.ElementsNumber;
+                ChoresResponse.TotalChores += installationResponse.TotalChores;
             }
 
             ChoresResponse.EndRequest = DateTime.Now;
@@ -128,6 +99,7 @@ namespace IKeep.Lib.Server.Services
         private InstallationResponse AddChoreToElements(IEnumerable<Element> elements, int year)
         {
             InstallationResponse InstallationResponse = new InstallationResponse();
+            InstallationResponse.TotalChores = 0;
             List<ElementResponse> ElementsList = new List<ElementResponse>();
 
             foreach (Element element in elements)
@@ -136,6 +108,7 @@ namespace IKeep.Lib.Server.Services
                 elementResponse.NumChores = AddElementChores(element, year);
                 elementResponse.ElementRef = element.Ref;
                 ElementsList.Add(elementResponse);
+                InstallationResponse.TotalChores += elementResponse.NumChores;
             }
 
             InstallationResponse.Elements = ElementsList;
@@ -147,6 +120,7 @@ namespace IKeep.Lib.Server.Services
             var elementGenericChores = element.ElementGenericChores;
             int totalChoresAdded;
             List<Chore> AllChoresElement = new List<Chore>();
+            List<ChoreResponse> ChoreResponses = new List<ChoreResponse>();
 
             foreach (ElementGenericChore elemenGChore in elementGenericChores)
             {
@@ -166,16 +140,18 @@ namespace IKeep.Lib.Server.Services
                 else
                     continue;
 
-                var choresAdded = AddingElements(newChoresGuideline);
+                List<Chore> choresAdded = AddingElements(newChoresGuideline);
                 AllChoresElement.AddRange(choresAdded);
-                //totalChoresAdded = totalChoresAdded + choresAdded;
+
+                ChoreResponse choreResponse = new ChoreResponse();
+                choreResponse.TotalChores = choresAdded.Count();
+                choreResponse.Period = newChoresGuideline.GenericChore.Period;
+                ChoreResponses.Add(choreResponse);
             }
 
             InsertChoresToDatabase(AllChoresElement);
             _formatService.AddFormatValuesToChores(AllChoresElement);
             totalChoresAdded = AllChoresElement.Count();
-
-            UpdatePartialReport(element, totalChoresAdded); 
 
             return totalChoresAdded;
         }
@@ -271,8 +247,9 @@ namespace IKeep.Lib.Server.Services
         {
             Period period = guideline.GenericChore.Period;
             List<Chore> response = new List<Chore>();
-
+            
             List<Chore> listChoresAdded = new List<Chore>();
+
 
             switch (period)
             {
