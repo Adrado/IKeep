@@ -12,6 +12,8 @@ namespace IKeep.Lib.Models
         public string Ref { get; set; }
         public string Name { get; set; }
         public Guid BuildingId { get; set; }
+        [JsonIgnore]
+        public virtual Building Building { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Area> Areas { get; set; }

@@ -18,6 +18,8 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public string SafetyAndHealth { get; set; }
         public Guid AreaId { get; set; }
+        [JsonIgnore]
+        public virtual Area Area { get; set; }
         public Guid? GenericElementId { get; set; }
         [JsonIgnore]
         public virtual GenericElement GenericElement { get; set; }

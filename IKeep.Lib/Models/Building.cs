@@ -14,6 +14,8 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public Guid InstallationId { get; set; }
         [JsonIgnore]
+        public virtual Installation Installation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Floor> Floors { get; set; }
         public List<Guid> FloorsIds
         {
