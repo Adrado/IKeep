@@ -1,4 +1,5 @@
 ﻿using IKeep.Lib.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,74 @@ namespace IKeep.Lib.Services.Dtos
     public class ElementResponse
     {
         public string ElementRef { get; set; }
-        public int NumChores { get; set; }
-        public int DailyChores { get; set; }
-        public int WeeklyChores { get; set; }
-        public int MonthlyChores { get; set; }
-        public int BimonthlyChores { get; set; }
-        public int QuarterlyChores { get; set; }
-        public int SemesterChores { get; set; }
-        public int YearlyChores { get; set; }
-        public int TwoYearlyChores { get; set; }
-        public int FourYearlyChores { get; set; }
+        [JsonIgnore]
+        public List<ChoreResponse> Chores { get; set; }
+        
+        public int TotalChores { get; set; }
+        public int DailyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Daily).ToList().Count;
+            }
+        }
+
+        public int WeeklyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Weekly).ToList().Count;
+            }
+        }
+        public int MonthlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Monthly).ToList().Count;
+            }
+        }
+        public int BimonthlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Bimonthly).ToList().Count;
+            }
+        }
+        public int QuarterlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Quarterly).ToList().Count;
+            }
+        }
+        public int SemesterChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Semester).ToList().Count;
+            }
+        }
+        public int YearlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.Yearly).ToList().Count;
+            }
+        }
+        public int TwoYearlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.TwoYearly).ToList().Count;
+            }
+        }
+        public int FourYearlyChores
+        {
+            get
+            {
+                return Chores == null ? 0 : Chores.Where(x => x.Period == Period.FourYearly).ToList().Count;
+            }
+        }
     }
 
     public class ChoreResponse

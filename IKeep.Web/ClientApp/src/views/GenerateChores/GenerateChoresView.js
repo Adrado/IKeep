@@ -9,6 +9,8 @@ import { Button, Grid, TextField, FormControl, makeStyles, InputLabel, Select, M
 import useChoreViewModel from './useChoreViewModel';
 import useFetchInstallations from './useFetchInstallations';
 import CurrentChoreResponse from './CurrenChoreReport';
+import usePartialReport from './usePartialReport';
+import PartialReportResponse from '../../services/dtos/PartialReportResponse';
 
 const GenerateChoresView = () =>
 {
@@ -17,10 +19,15 @@ const GenerateChoresView = () =>
 
     const [selected, setSelected] = useState('');
     const [year, setYear] = useState('');
+    const [current, setCurrent] = useState(null);
+    const [lastYear, setLastYear] = useState(null);
 
     const {Chores} = useFetchChores(id);
-    const [AddNewChores,,,GetReport] = useChoreViewModel();
+    const [AddNewChores] = useChoreViewModel();
+    const [GetReport] = usePartialReport();
     const classes = useStyles();
+
+
      const columns = [
       { title: 'Fecha Inicio', field: 'startDate' },
       { title: 'Fecha Fin', field: 'endDate' },
@@ -30,9 +37,12 @@ const GenerateChoresView = () =>
 
     const onGetReport = () =>
     {
-      GetReport()
+      GetReport(year, selected.Id)
       .then((response) => {
-        console.log(response);
+        let reportResponse = new PartialReportResponse(response.data);
+        setCurrent(reportResponse.CurrentRequest);
+        setLastYear(reportResponse.BeforeYear);
+        
         })
     }
     const onAdd = () =>
@@ -133,9 +143,13 @@ const GenerateChoresView = () =>
             </Grid>
           }
 
-            {/* <Grid item xs={6} sm = {3}>
+            <Grid item xs={6} sm = {3}>
                   <Button onClick={onGetReport}>Ver estado actual</Button>
-            </Grid> */}
+            </Grid>
+
+          {(current !== null && lastYear !== null) &&
+            <h1>Año Seleccionado {current}/{lastYear} Año anterior</h1>
+          }
                     
         </Grid>
 

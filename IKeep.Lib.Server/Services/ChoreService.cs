@@ -15,19 +15,22 @@ namespace IKeep.Lib.Server.Services
     public class ChoreService : IChoreService
     {
         
-        private readonly ICrudService<Chore> _choresCrudService;
+        private readonly ICrudService<Chore> _choresService;
         private readonly IGetElementsService _getElementsService;
-        private readonly IFormatService _formatService;
+        private readonly IFormatService _formatsService;
+        private readonly ICrudService<Installation> _installationsService;
         private readonly IKeepContext _context;
 
         public ChoreService(IGetElementsService getElementsService,
-                            ICrudService<Chore> choreService,
-                            IFormatService formatService,
+                            ICrudService<Chore> choresService,
+                            IFormatService formatsService,
+                            ICrudService<Installation> installationsService,
                             IKeepContext context)
         {
-            _choresCrudService = choreService;
+            _choresService = choresService;
             _getElementsService = getElementsService;
-            _formatService = formatService;
+            _formatsService = formatsService;
+            _installationsService = installationsService;
             _context = context;
         }
 
@@ -35,9 +38,9 @@ namespace IKeep.Lib.Server.Services
 
         public IQueryable<Chore> GetAll()
         {
-            return _choresCrudService.GetAll();
+            return _choresService.GetAll();
         }
-
+        
         public NewChoresResponse AddChores(NewChoresRequest newChoresRequest)
         {
             ChoresResponse = new NewChoresResponse();
@@ -56,8 +59,9 @@ namespace IKeep.Lib.Server.Services
                 foreach(Installation Installation in installationsActive)
                 {
                     elements = _getElementsService.GetInstallationElements(Installation.Id);
-                    InstallationResponse installationResponse = new InstallationResponse();
-                    installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
+                    InstallationResponse installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
+                    installationResponse.InstallationName = Installation.Name;
+
                     InstallationsCompleted.Add(installationResponse);
                     AllElements = AllElements + installationResponse.ElementsNumber;
                 }
@@ -65,8 +69,8 @@ namespace IKeep.Lib.Server.Services
             else
             {
                 elements = GetElements(newChoresRequest);
-                InstallationResponse installationResponse = new InstallationResponse();
-                installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
+                InstallationResponse installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
+                installationResponse.InstallationName = _installationsService.GetAll().FirstOrDefault(x => x.Id == newChoresRequest.InstallationId).Name;
                 InstallationsCompleted.Add(installationResponse);
                 AllElements = AllElements + installationResponse.ElementsNumber;
                 ChoresResponse.TotalChores += installationResponse.TotalChores;
@@ -100,27 +104,30 @@ namespace IKeep.Lib.Server.Services
         {
             InstallationResponse InstallationResponse = new InstallationResponse();
             InstallationResponse.TotalChores = 0;
-            List<ElementResponse> ElementsList = new List<ElementResponse>();
+            InstallationResponse.Elements = new List<ElementResponse>();
 
             foreach (Element element in elements)
             {
-                ElementResponse elementResponse = new ElementResponse();
-                elementResponse.NumChores = AddElementChores(element, year);
+                ElementResponse elementResponse = AddElementChores(element, year);
                 elementResponse.ElementRef = element.Ref;
-                ElementsList.Add(elementResponse);
-                InstallationResponse.TotalChores += elementResponse.NumChores;
+
+                InstallationResponse.Elements.Add(elementResponse);
+                InstallationResponse.TotalChores += elementResponse.TotalChores;
             }
 
-            InstallationResponse.Elements = ElementsList;
             return InstallationResponse;
         }
 
-        private int AddElementChores(Element element, int year)
+        private ElementResponse AddElementChores(Element element, int year)
         {
             var elementGenericChores = element.ElementGenericChores;
-            int totalChoresAdded;
+
+            ElementResponse ElementResponse = new ElementResponse();
+            ElementResponse.Chores = new List<ChoreResponse>();
+            ElementResponse.TotalChores = 0;
+
             List<Chore> AllChoresElement = new List<Chore>();
-            List<ChoreResponse> ChoreResponses = new List<ChoreResponse>();
+
 
             foreach (ElementGenericChore elemenGChore in elementGenericChores)
             {
@@ -141,19 +148,21 @@ namespace IKeep.Lib.Server.Services
                     continue;
 
                 List<Chore> choresAdded = AddingElements(newChoresGuideline);
+
                 AllChoresElement.AddRange(choresAdded);
 
                 ChoreResponse choreResponse = new ChoreResponse();
                 choreResponse.TotalChores = choresAdded.Count();
                 choreResponse.Period = newChoresGuideline.GenericChore.Period;
-                ChoreResponses.Add(choreResponse);
+
+                ElementResponse.Chores.Add(choreResponse);
+                ElementResponse.TotalChores += choreResponse.TotalChores;
             }
 
             InsertChoresToDatabase(AllChoresElement);
-            _formatService.AddFormatValuesToChores(AllChoresElement);
-            totalChoresAdded = AllChoresElement.Count();
+            _formatsService.AddFormatValuesToChores(AllChoresElement);
 
-            return totalChoresAdded;
+            return ElementResponse;
         }
 
         private bool IsTimeSpanIncomplete(Chore chore, int year)
@@ -219,7 +228,7 @@ namespace IKeep.Lib.Server.Services
         private Chore GetLastChore(Guid elementId, Guid gChoreId, int year)
         {
             Chore lastChore;
-            lastChore = _choresCrudService.GetAll()
+            lastChore = _choresService.GetAll()
                         .Where(c => c.GenericChoreId == gChoreId && c.ElementId == elementId && c.StartDate.Year == year)
                         .OrderByDescending(c => c.StartDate)
                         .FirstOrDefault();

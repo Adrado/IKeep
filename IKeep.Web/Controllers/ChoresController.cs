@@ -31,11 +31,7 @@ namespace IKeep.Web.Controllers
             return await _choresService.GetAll().ToListAsync();
         }
 
-        [HttpGet("currentReport/")]
-        public PartialReport GetCurrentReport()
-        {
-            return  _choresService.GetCurrentResponse();
-        }
+        
 
         // POST: api/Chores
         [HttpPost]
@@ -48,51 +44,5 @@ namespace IKeep.Web.Controllers
             });
         }
 
-        
-
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Task>>> GetTasks()
-        //{
-
-        //    return await _tasksService.GetAll().ToListAsync();
-        //}
-
-        //// GET: api/Tasks/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Task>> GetTask(Guid id)
-        //{
-        //    return await System.Threading.Tasks.Task.Run(() =>
-        //    {
-        //        var task = _tasksService.GetAll().FirstOrDefault(x => x.Id == id);
-        //        if (task == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return new ActionResult<Task>(task);
-        //    });
-        //}
-
-        //// PUT: api/Tasks/5
-        //[HttpPut]
-        //public async Task<ActionResult<Task>> PutTask(Task task)
-        //{
-        //    return await System.Threading.Tasks.Task.Run(() =>
-        //    {
-        //        var output = _tasksService.Update(task);
-        //        return new ActionResult<Task>(output);
-        //    });
-        //}
-
-
-
-        //// DELETE: api/Tasks/5
-        //[HttpDelete("{id}")]
-        //public async Task<bool> DeleteTask(Guid id)
-        //{
-        //    return await System.Threading.Tasks.Task.Run(() =>
-        //    {
-        //        return _tasksService.Delete(id);
-        //    });
-        //}
     }
 }

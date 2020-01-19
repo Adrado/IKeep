@@ -6,8 +6,7 @@ namespace IKeep.Lib.Services.Dtos
 {
     public class PartialReport
     {
-       public  List<ElementResponse> Elements { get; set; }
-       public DateTime StartRequest { get; set; }
-       public string Status { get; set; }
+       public int CurrentRequest { get; set; }
+       public int BeforeYear { get; set; }
     }
 }
