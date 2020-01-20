@@ -167,62 +167,8 @@ namespace IKeep.Lib.Server.Services
 
         private bool IsTimeSpanIncomplete(Chore chore, int year)
         {
-            bool isIncomplete = false;
-
-            Period period = chore.GenericChore.Period;
-
-            DateTime start;
-            DateTime end;
-
-            switch (period)
-            {
-                case Period.Daily:
-                    start = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false ;
-                    break;
-
-                case Period.Weekly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.Monthly:
-                    start = new DateTime(year, 12, 1);
-                    isIncomplete = DateTime.Compare(chore.StartDate, start) < 0 ? true : false;
-                    break;
-
-                case Period.Bimonthly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.Quarterly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.Semester:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.Yearly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.TwoYearly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-
-                case Period.FourYearly:
-                    end = new DateTime(year, 12, 31);
-                    isIncomplete = DateTime.Compare(chore.EndDate, end) < 0 ? true : false;
-                    break;
-            }
-
-            return isIncomplete;
+            DateTime LastDayOfYear = new DateTime(year, 12, 31);
+            return DateTime.Compare(chore.EndDate, LastDayOfYear) < 0 ? true : false;
         }
 
         private Chore GetLastChore(Guid elementId, Guid gChoreId, int year)
