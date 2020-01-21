@@ -20,6 +20,13 @@ namespace IKeep.Lib.Models
         public Guid AreaId { get; set; }
         [JsonIgnore]
         public virtual Area Area { get; set; }
+        public string Location
+        {
+            get
+            {
+                return Area == null ? "" : Area.Floor.Building.Name + Area.Floor.Name + Area.Name;
+            }
+        }
         public Guid? GenericElementId { get; set; }
         [JsonIgnore]
         public virtual GenericElement GenericElement { get; set; }
