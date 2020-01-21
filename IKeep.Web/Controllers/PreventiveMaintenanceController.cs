@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IKeep.Web.Controllers
 {
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PreventiveMaintenanceController : ControllerBase
     {

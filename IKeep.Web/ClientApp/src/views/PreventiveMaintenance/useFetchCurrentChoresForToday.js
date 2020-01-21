@@ -37,6 +37,7 @@ const useFetchCurrentChoresForToday = (id) =>
                 const response = await PrevMaintenanceServices.GetCurrentChores(request);
                 if(isSuscribed === true)
                 {
+                    console.log(response.data);
                     const dataUpdated = UpdateData(response.data)
                     dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0)); 
                     SetChores(dataUpdated);
@@ -44,6 +45,7 @@ const useFetchCurrentChoresForToday = (id) =>
             }
             catch (error){
                 setError(true)
+                console.log(error)
             } 
         }
 

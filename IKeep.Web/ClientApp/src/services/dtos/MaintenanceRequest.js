@@ -3,7 +3,7 @@ class MaintenanceRequest
     constructor(installationId)
     {
         this.InstallationId = installationId;
-        this.Date = Date.now();
+        this.Date = new Date();
     }
 }
 
