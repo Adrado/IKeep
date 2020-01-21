@@ -8,7 +8,7 @@ using System.Text;
 
 namespace IKeep.Lib.Services.Interfaces
 {
-    public interface IChoreService : IGenericService
+    public interface IGenerateChoresService : IGenericService
     {
         NewChoresResponse AddChores (NewChoresRequest newChoresRequest);
         IQueryable<Chore> GetAll();

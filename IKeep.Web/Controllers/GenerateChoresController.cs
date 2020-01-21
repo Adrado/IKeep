@@ -15,31 +15,31 @@ namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChoresController : ControllerBase
+    public class GenerateChoresController : ControllerBase
     {
-        private readonly IChoreService _choresService;
+        private readonly IGenerateChoresService _generateChoresService;
 
-        public ChoresController(IChoreService choresService)
+        public GenerateChoresController(IGenerateChoresService generateChoresService)
         {
-            _choresService = choresService;
+            _generateChoresService = generateChoresService;
         }
 
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chore>>> GetChores()
         {
-            return await _choresService.GetAll().ToListAsync();
+            return await _generateChoresService.GetAll().ToListAsync();
         }
 
         
 
         // POST: api/Chores
         [HttpPost]
-        public async Task<ActionResult<NewChoresResponse>> PostChore(NewChoresRequest newChoresRequest)
+        public async Task<ActionResult<NewChoresResponse>> CreateChores(NewChoresRequest newChoresRequest)
         {
             return await Task.Run(() =>
             {
-                var output = _choresService.AddChores(newChoresRequest);
+                var output = _generateChoresService.AddChores(newChoresRequest);
                 return new ActionResult<NewChoresResponse>(output);
             });
         }

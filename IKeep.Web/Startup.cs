@@ -161,7 +161,7 @@ namespace IKeep.Web
 
             // Other Services
             services.AddScoped<ITreeViewService, TreeViewService>();
-            services.AddScoped<IChoreService, ChoreService>();
+            services.AddScoped<IGenerateChoresService, GenerateChoresService>();
             services.AddScoped<IGetElementsService, GetElementsService>();
             services.AddScoped<IFormatService, FormatService>();
             services.AddScoped<IPartialReportService, PartialReportService>();

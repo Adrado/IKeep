@@ -12,7 +12,7 @@ using EFCore.BulkExtensions;
 
 namespace IKeep.Lib.Server.Services
 {
-    public class ChoreService : IChoreService
+    public class GenerateChoresService : IGenerateChoresService
     {
         
         private readonly ICrudService<Chore> _choresService;
@@ -21,7 +21,7 @@ namespace IKeep.Lib.Server.Services
         private readonly ICrudService<Installation> _installationsService;
         private readonly IKeepContext _context;
 
-        public ChoreService(IGetElementsService getElementsService,
+        public GenerateChoresService(IGetElementsService getElementsService,
                             ICrudService<Chore> choresService,
                             IFormatService formatsService,
                             ICrudService<Installation> installationsService,
