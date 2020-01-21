@@ -1,5 +1,6 @@
 ﻿using IKeep.Lib.Models;
 using IKeep.Lib.Services.Dtos;
+using IKeep.Lib.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,11 @@ namespace IKeep.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<IEnumerable<Chore>>> GetTodayChores(MaintenanceRequest request)
         {
-            return await _preventiveMaintenanceService.GetChores().ToListAsync();
+            return await Task.Run(() =>
+            {
+                var output = _preventiveMaintenanceService.GetCurrentChoresForToday(request);
+                return new ActionResult<IEnumerable<Chore>>(output);
+            });
         }
     }
 }

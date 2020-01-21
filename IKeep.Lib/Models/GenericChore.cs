@@ -85,7 +85,8 @@ namespace IKeep.Lib.Models
         Semester,
         Yearly,
         TwoYearly,
-        FourYearly
+        FourYearly,
+        DEFAULT
     }
 
 }

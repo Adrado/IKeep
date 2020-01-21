@@ -33,6 +33,13 @@ namespace IKeep.Lib.Models
                 return GenericChore == null ? "" : GenericChore.CategoryName;
             }
         }
+        public Period Period
+        {
+            get
+            {
+                return GenericChore == null ? Period.DEFAULT : GenericChore.Period;
+            }
+        }
         public ChoreStatus Status { get; set; }
         public virtual ICollection<FormatValue> FormatValues { get; set; }
 
