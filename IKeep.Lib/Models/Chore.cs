@@ -19,14 +19,30 @@ namespace IKeep.Lib.Models
         public Guid GenericChoreId { get; set; }
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
+        public string Priotity
+        {
+            get
+            {
+                return GenericChore == null ? "" : GenericChore.PriorityName;
+            }
+        }
+        public string Category
+        {
+            get
+            {
+                return GenericChore == null ? "" : GenericChore.CategoryName;
+            }
+        }
         public ChoreStatus Status { get; set; }
         public virtual ICollection<FormatValue> FormatValues { get; set; }
+
+
     }
     public enum ChoreStatus
     {
         Undone,
-        Done
-        //ProperlyDone,
-        //ImproperlyDone
+        Done,
+        ProperlyDone,
+        ImproperlyDone
     }
 }
