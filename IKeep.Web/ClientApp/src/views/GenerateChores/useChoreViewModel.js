@@ -1,12 +1,12 @@
 import { useContext, useEffect} from 'react';
-import { ChoreService } from '../../providers/Providers';
+import { GenerateChoreService } from '../../providers/Providers';
 //import Chore from '../../models/Chore';
 import NewChoresRequest from '../../services/dtos/NewChoresRequest';
 
 
 const useChoreViewModel = () =>
 {
-    const ChoresService = useContext(ChoreService);
+    const GenerateChoresService = useContext(GenerateChoreService);
 
     const SaveChore = (model, values) =>
     {
@@ -16,7 +16,7 @@ const useChoreViewModel = () =>
 
         if(model !== undefined && model !== null)
         {
-            return ChoresService.UpdateAsync(model);
+            return GenerateChoresService.UpdateAsync(model);
         }
     }
       
@@ -29,7 +29,7 @@ const useChoreViewModel = () =>
  
         if(newChoresRequest !== undefined && newChoresRequest!== null)
         {
-            return ChoresService.AddAsync(newChoresRequest);
+            return GenerateChoresService.AddAsync(newChoresRequest);
         }
     }
  
@@ -37,14 +37,14 @@ const useChoreViewModel = () =>
     {
         if(model !== undefined && model!== null)
         {
-            return ChoresService.DeleteAsync(model.Id);
+            return GenerateChoresService.DeleteAsync(model.Id);
         }
     }
 
-    const GetReport = () =>
+   /*  const GetReport = () =>
     {
         return ChoresService.GetCurretReport();
-    }
+    } */
 
     useEffect(() => {},[])
 
@@ -53,7 +53,7 @@ const useChoreViewModel = () =>
             AddNewChore,
             SaveChore,
             DeleteChore,
-            GetReport,
+           // GetReport,
         ]
     )
 }

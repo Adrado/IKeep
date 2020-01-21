@@ -13,7 +13,7 @@ import CategoriesService from '../services/CategoriesService';
 import FormatLabelsService from '../services/FormatLabelsService';
 import GenericChoresService from '../services/GenericChoresService';
 import PrioritiesService from '../services/PrioritiesService';
-import ChoresService from '../services/ChoresService';
+import GenerateChoresService from '../services/GenerateChoresService';
 import GenericElementGenericChoresService from '../services/GenericElementGenericChoresService';
 import ElementsService from '../services/ElementsService';
 import ElementGenericChoresService from '../services/ElementGenericChoresService';
@@ -36,7 +36,7 @@ export const CRUD =
     FormatLabel: new FormatLabelsService(),
     GenericChore: new GenericChoresService(),
     Priority: new PrioritiesService(),
-    Chore: new ChoresService(),
+    GenerateChores: new GenerateChoresService(),
     GElementGChore: new GenericElementGenericChoresService(),
     Element: new ElementsService(),
     ElementGChore: new ElementGenericChoresService(),
@@ -59,7 +59,7 @@ export const ElementService = React.createContext(CRUD.Element);
 export const ElementGChoreService = React.createContext(CRUD.ElementGChore);
 export const InstallationUserService = React.createContext(CRUD.InstallationUser);
 export const InstallationService = React.createContext(CRUD.Installation);
-export const ChoreService = React.createContext(CRUD.Chore);
+export const GenerateChoreService = React.createContext(CRUD.GenerateChores);
 export const GChoreFLabelService = React.createContext(CRUD.GChoreFLabel);
 export const PartialReportService = React.createContext(CRUD.PartialReport);
 

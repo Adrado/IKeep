@@ -36,16 +36,6 @@ namespace IKeep.Lib.Models
         }
 
         [JsonIgnore]
-        public virtual ICollection<Corrective> Correctives { get; set; }
-        public List<Guid> CorrectivesIds
-        {
-            get
-            {
-                return Correctives == null ? new List<Guid>() : Correctives.Select(x => x.Id).ToList();
-            }
-        }
-
-        [JsonIgnore]
         public virtual ICollection<UserCategory> UserCategories { get; set; }
         public List<Guid> UserCategoriesIds
         {

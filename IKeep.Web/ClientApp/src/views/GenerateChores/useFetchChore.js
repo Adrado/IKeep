@@ -1,17 +1,17 @@
 
 // React Hooks
-import  { useState, useEffect, useContext } from 'react';
+/* import  { useState, useEffect, useContext } from 'react'; */
 
 //CRUD Services
-import {ChoreService} from '../../providers/Providers';
+//import {ChoreService} from '../../providers/Providers';
 //import Chore from '../../models/Chore';
 
-const useFetchChores = (id) =>
+/* const useFetchChores = (id) =>
 {
-    const ChoresService = useContext(ChoreService);
+    //const ChoresService = useContext(ChoreService);
     const [Chores, setChores] = useState(null);
     const [error, setError] = useState(false);
-    const [change, setChange] = useState(false);
+    const [change, setChange] = useState(false); */
 
     /* const UpdateData = (data) =>
     {
@@ -26,7 +26,7 @@ const useFetchChores = (id) =>
         return data;
     } */
 
-    useEffect(() =>
+  /*   useEffect(() =>
     {
         let isSuscribed = true;
         const GetAllChores = async () =>
@@ -66,4 +66,4 @@ const useFetchChores = (id) =>
     }
 }
 
-export default useFetchChores;
+export default useFetchChores; */

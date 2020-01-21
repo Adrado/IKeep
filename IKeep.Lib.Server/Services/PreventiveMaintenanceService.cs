@@ -21,8 +21,8 @@ namespace IKeep.Lib.Server.Services
         {
             return _choresService.GetAll()
                 .Where(c => c.Element.Area.Floor.Building.Installation.Id == request.InstallationId 
-                && DateTime.Compare(c.StartDate, request.Date) <= 0 
-                && DateTime.Compare(c.EndDate, request.Date) >= 0)
+                && ( DateTime.Compare(c.StartDate, request.Date) <= 0 
+                && DateTime.Compare(c.EndDate, request.Date) >= 0))
                 .ToList();
         }
 

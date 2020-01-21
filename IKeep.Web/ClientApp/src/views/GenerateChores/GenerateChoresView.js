@@ -22,7 +22,7 @@ const GenerateChoresView = () =>
     const [current, setCurrent] = useState(null);
     const [lastYear, setLastYear] = useState(null);
 
-    const {Chores} = useFetchChores(id);
+   /*  const {Chores} = useFetchChores(id); */
     const [AddNewChores] = useChoreViewModel();
     const [GetReport] = usePartialReport();
     const classes = useStyles();
