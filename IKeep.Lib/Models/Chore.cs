@@ -19,6 +19,13 @@ namespace IKeep.Lib.Models
         public Guid GenericChoreId { get; set; }
         [JsonIgnore]
         public virtual GenericChore GenericChore { get; set; }
+        public string Description
+        {
+            get
+            {
+                return GenericChore == null ? "" : GenericChore.Description;
+            }
+        }
         public string Type
         {
             get
@@ -47,6 +54,14 @@ namespace IKeep.Lib.Models
             {
                 // Refactor Priority.DEFAULT
                 return GenericChore == null ? Priority.DEFAULT : GenericChore.Priority;
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                return GenericChore == null ? TimeSpan.Zero : GenericChore.Duration;
             }
         }
         public ChoreStatus Status { get; set; }
