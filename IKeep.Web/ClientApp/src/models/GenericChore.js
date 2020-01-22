@@ -15,12 +15,13 @@ class GenericChore extends Entity
             this.Description = json.description;
             this.Duration = json.duration;
             this.Period = json.period;
-            this.PriorityId = json.priorityId;
+            this.Priority = json.priority;
+            this.ChoreTypeId = json.choreTypeId;
             this.FormatLabelId = json.formatId;
             this.CategoryId = json.categoryId;
             this.ChoresIds = json.tasksIds;
 
-            this.PriorityName = json.priorityName;
+            this.ChoreTypeName = json.choreTypeName;
             this.FormatName = json.formatName;
             this.CategoryName = json.categoryName;
 
@@ -31,13 +32,14 @@ class GenericChore extends Entity
             this.Ref = "";
             this.Description = "";
             this.Duration = "";
-            this.Period = Periodicity;
-            this.PriorityId = "";
+            this.Period = Period;
+            this.Priority = Priority;
+            this.ChoreTypeId = "";
             this.FormatId = "";
             this.CategoryId = "";
             this.ChoresIds = "";
 
-            this.PriorityName = "";
+            this.ChoreTypeName = "";
             this.FormatName = "";
             this.CategoryName = "";
             
@@ -48,7 +50,7 @@ class GenericChore extends Entity
 }
 export default GenericChore;
 
-const Periodicity = Object.freeze({
+const Period = Object.freeze({
     Daily: 0,
     Weekly: 1,
     Monthly: 2,
@@ -57,6 +59,14 @@ const Periodicity = Object.freeze({
     Semester: 5,
     Yearly: 6,
     TwoYearly: 7,
-    FourYearly: 8
+    FourYearly: 8,
+    DEFAUL: 9
+})
+
+const Priority = Object.freeze({
+    Top: 0,
+    Average: 1,
+    Low: 2,
+    DEFAULT: 3
 })
 

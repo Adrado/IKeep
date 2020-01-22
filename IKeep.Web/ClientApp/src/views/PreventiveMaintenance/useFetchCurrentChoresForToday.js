@@ -39,7 +39,8 @@ const useFetchCurrentChoresForToday = (id) =>
                 {
                     console.log(response.data);
                     const dataUpdated = UpdateData(response.data)
-                    dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0)); 
+                    dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0));
+                    console.log(dataUpdated);
                     SetChores(dataUpdated);
                 }
             }

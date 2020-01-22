@@ -27,7 +27,8 @@ const useFetchGenericElement = () =>
     {
         const GetAllGenericElements = async () =>
         {
-            try{
+            try
+            {
                 const response = await GenericElementsService.GetAllAsync();
                 const dataUpdated = UpdateData(response.data)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 

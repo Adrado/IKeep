@@ -108,7 +108,7 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/chore",
+    path: "/generateChores",
     name: "Generar Ordenes",
     icon: "",
     component: GenerateChoresView,

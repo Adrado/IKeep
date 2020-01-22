@@ -33,7 +33,7 @@ const ChoreTypesTable = () =>
     { title: 'Nombre', field: 'Name' },
   ] 
 
-  const Title = "Prioridades";
+  const Title = "Tipos de tarea";
   
     return(
         <Fragment>

@@ -28,7 +28,8 @@ const useGenericChoreViewModel = () =>
 
         model.Description = values.Description;
         model.Duration = values.Duration; 
-        model.Period = values.Period; 
+        model.Period = values.Period;
+        model.Priority = values.Priority; 
         model.ChoreTypeId = values.ChoreTypeId; 
         model.FormatId = values.FormatId; 
         model.CategoryId = values.CategoryId; 

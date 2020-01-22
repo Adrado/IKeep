@@ -75,8 +75,16 @@ const GenericChoresTable = () =>
     5 : "Semestral",
     6 : "Anual",
     7 : "Bianual",
-    8 : "Cuatrianual"
+    8 : "Cuatrianual",
   })
+
+  const Priority = Object.freeze(
+    {
+      0 : "Alta",
+      1 : "Media",
+      2 : "Baja",
+    }
+  )
 
   const columns = [
     { title: 'Descripción', field: 'Description' },
@@ -84,8 +92,9 @@ const GenericChoresTable = () =>
     //Vigilar el formato para evitar errores en el servidor.
     { title: 'Duración estimada', field: 'Duration'},
     //{ title: 'Formato', field: 'FormatLabelId', lookup: LookupFormats},
-    { title: 'Prioridad', field: 'ChoreTypeId', lookup: LookupChoreTypes},
-    { title: 'Categoria', field: 'CategoryId', lookup: LookupCategories}
+    { title: 'Tipo de Tarea', field: 'ChoreTypeId', lookup: LookupChoreTypes},
+    { title: 'Categoria', field: 'CategoryId', lookup: LookupCategories},
+    { title: 'Prioridad', field: 'Priority', lookup: Priority}
   ] 
 
   const Title = "Tareas Genéricas";

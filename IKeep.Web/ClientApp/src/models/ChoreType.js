@@ -15,7 +15,6 @@ class ChoreType extends Entity
             this.Name = "";
             this.GenericChoresIds = [];
         }
-
     }
 }
 

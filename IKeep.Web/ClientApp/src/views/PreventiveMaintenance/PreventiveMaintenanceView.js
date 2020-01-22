@@ -1,12 +1,19 @@
 //Core
 import React, {Fragment, useState} from 'react';
 import useFetchCurrentChoresForToday from './useFetchCurrentChoresForToday';
+import useFetchInstallationElements from './useFetchInstallationElements';
+
 
 const PreventiveMaintenanceView = () =>
 {
-    //let id = "11ba91ae-7f8f-42c1-982e-07bf369036a7";
-    let id = "d24ab749-87e9-43a9-9c7f-70d7021e5c83"
-    const {Installations} = useFetchCurrentChoresForToday(id);
+    
+    /* //Casa IKA8
+    let id = "d24ab749-87e9-43a9-9c7f-70d7021e5c83" */
+
+    //Trabajo IKA9
+    let id = "1cbf9925-7005-49ac-856c-e4348256af21";
+    const {Chores} = useFetchCurrentChoresForToday(id);
+    const {Elements} = useFetchInstallationElements(id);
     
     return(
         <Fragment>

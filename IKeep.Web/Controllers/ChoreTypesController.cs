@@ -14,11 +14,11 @@ namespace IKeep.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PrioritiesController : ControllerBase
+    public class ChoreTypesController : ControllerBase
     {
         private readonly ICrudService<ChoreType> _choreTypesService;
 
-        public PrioritiesController(ICrudService<ChoreType> choreTypesService)
+        public ChoreTypesController(ICrudService<ChoreType> choreTypesService)
         {
             _choreTypesService = choreTypesService;
         }
