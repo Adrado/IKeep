@@ -63,7 +63,7 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<ElementObservation> ElementObservations { get; set; }
-        public ICollection<Observation> Observations
+        public List<Observation> Observations
         {
             get
             {
