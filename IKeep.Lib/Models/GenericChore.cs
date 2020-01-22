@@ -46,14 +46,7 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<Chore> Chores { get; set; }
-        [JsonIgnore]
-        public List<Guid> ChoresIds
-        {
-            get
-            {
-                return Chores == null ? new List<Guid>() : Chores.Select(x => x.Id).ToList();
-            }
-        }
+        
 
         [JsonIgnore]
         public virtual ICollection<GenericElementGenericChore> GenericElementGenericChores { get; set; }
@@ -67,13 +60,6 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<ElementGenericChore> ElementGenericChores { get; set; }
-        public List<Guid> ElementGenericTasksIds
-        {
-            get
-            {
-                return ElementGenericChores == null ? new List<Guid>() : ElementGenericChores.Select(x => x.Id).ToList();
-            }
-        }
     }
 
     public enum Period

@@ -14,13 +14,7 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<ElementObservation> ElementObservations { get; set; }
-        public List<Guid> ElementObservationsIds
-        {
-            get
-            {
-                return ElementObservations == null ? new List<Guid>() : ElementObservations.Select(x => x.Id).ToList();
-            }
-        }
+        
     }
 
     public enum Type

@@ -57,43 +57,23 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<Chore> Chores { get; set; }
-        public List<Guid> ChoresIds
-        {
-            get
-            {
-                return Chores == null ? new List<Guid>() : Chores.Select(x => x.Id).ToList();
-            }
-        }
 
-        [JsonIgnore]
+        //Vigilar si es la mejor opción (Será siempre necesario que se muestre el historial de los correctivos abiertos al elemento?)
         public virtual ICollection<Corrective> Correctives { get; set; }
-        public List<Guid> CorrectivesIds
-        {
-            get
-            {
-                return Correctives == null ? new List<Guid>() : Correctives.Select(x => x.Id).ToList();
-            }
-        }
 
         [JsonIgnore]
         public virtual ICollection<ElementObservation> ElementObservations { get; set; }
-        public List<Guid> ElementObservationsIds
+        public ICollection<Observation> Observations
         {
             get
             {
-                return ElementObservations == null ? new List<Guid>() : ElementObservations.Select(x => x.Id).ToList();
+                return ElementObservations == null ? new List<Observation>() : ElementObservations.Select(x => x.Observation).ToList();
             }
         }
 
         [JsonIgnore]
         public virtual ICollection<ElementImage> ElementImages { get; set; }
-        public List<Guid> ElementImagesIds
-        {
-            get
-            {
-                return ElementImages == null ? new List<Guid>() : ElementImages.Select(x => x.Id).ToList();
-            }
-        }
+        
     }
     public enum StatusElement
     {

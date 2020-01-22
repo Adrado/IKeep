@@ -19,6 +19,7 @@ class Chore extends Entity
             this.Priority = json.priority;
             this.Status = json.status;
             this.Duration = json.duration;
+            // Encontrar la manera de convertir formatValues en un array de objetos FormatValue
             this.FormatValues = json.formatValues;
         }
         else

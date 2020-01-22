@@ -7,45 +7,45 @@ class Element extends Entity
         super(json);
         if(json)
         {
+            this.Status = json.status;
+            this.RetirementDate = json.retirementDate;
             this.Ref = json.ref;
             this.Brand = json.brand;
             this.Model = json.model;
             this.Description = json.description;
             this.SafetyAndHealth = json.safetyAndHealth;
+            
+            this.AreaId = json.areaId;
+            this.Location = json.location;
+            this.GenericElementId = json.genericElementId;
 
             this.Name = json.name;
             this.TypeName = json.typeName;
 
-            this.AreaId = json.areaId;
             this.ElementGenericChoresIds = json.elementGenericChoresIds;
-            this.ChoresIds = json.tasksIds;
-            this.CorrectivesIds = json.correctivesIds;
-            this.ElementObservationsIds = json.elementObservationsIds;
-            this.GenericElementId = json.genericElementId;
-            this.ElementImagesIds = json.elementImagesIds;
-
-            this.Status = json.status;
+            this.Correctives = json.correctives;
+            this.Observations = json.Observations;
         }
         else
         {
+            this.Status = 1;
+            this.RetirementDate = "";
             this.Ref = "";
             this.Brand = "";
             this.Model = "";
             this.Description = "";
             this.SafetyAndHealth = "";
+            
             this.AreaId = "";
+            this.Location = "";
+            this.GenericElementId = "";
 
             this.Name = "";
             this.TypeName = "";
-            
-            this.ElementGenericChoresIds = [];
-            this.ChoresIds = [];
-            this.CorrectivesIds = [];
-            this.ElementObservationsIds = [];
-            this.ElementImagesIds = [];
-            this.GenericElementId = "00000000-0000-0000-0000-000000000000";
 
-            this.Status = 1;
+            this.ElementGenericChoresIds = [];
+            this.Correctives = [];
+            this.Observations = [];
         }
     }
 }
