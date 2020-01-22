@@ -5,12 +5,12 @@ using System.Text;
 
 namespace IKeep.Lib.DA.EFCore
 {
-    public class PrioritiesDbSet : IKeepDbSet<Priority>
+    public class ChoreTypesDbSet : IKeepDbSet<ChoreType>
     {
-        public PrioritiesDbSet(IKeepContext dbContext)
+        public ChoreTypesDbSet(IKeepContext dbContext)
         {
             DbContext = dbContext;
-            DbSet = dbContext.Priorities;
+            DbSet = dbContext.ChoreTypes;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace IKeep.Lib.Models
 {
-    public class Priority : Entity
+    public class ChoreType : Entity
     {
         public string Name { get; set; }
         [JsonIgnore]

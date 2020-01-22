@@ -107,6 +107,20 @@ namespace IKeep.Web.Migrations
                     b.ToTable("Chores");
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.ChoreType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChoreTypes");
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.Corrective", b =>
                 {
                     b.Property<Guid>("Id")
@@ -324,6 +338,8 @@ namespace IKeep.Web.Migrations
 
                     b.Property<Guid>("CategoryId");
 
+                    b.Property<Guid>("ChoreTypeId");
+
                     b.Property<string>("Description");
 
                     b.Property<TimeSpan>("Duration");
@@ -332,7 +348,7 @@ namespace IKeep.Web.Migrations
 
                     b.Property<int>("Period");
 
-                    b.Property<Guid>("PriorityId");
+                    b.Property<int>("Priority");
 
                     b.Property<string>("Ref");
 
@@ -342,7 +358,7 @@ namespace IKeep.Web.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("PriorityId");
+                    b.HasIndex("ChoreTypeId");
 
                     b.HasIndex("SupplierId");
 
@@ -527,20 +543,6 @@ namespace IKeep.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Observations");
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.Priority", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("EntityStatus");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.Report", b =>
@@ -777,9 +779,9 @@ namespace IKeep.Web.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IKeep.Lib.Models.Priority", "Priority")
+                    b.HasOne("IKeep.Lib.Models.ChoreType", "ChoreType")
                         .WithMany("GenericChores")
-                        .HasForeignKey("PriorityId")
+                        .HasForeignKey("ChoreTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IKeep.Lib.Models.Supplier", "Supplier")

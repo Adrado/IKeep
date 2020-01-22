@@ -35,7 +35,7 @@ namespace IKeep.Web.Controllers
                     Id = Guid.Parse("4d84fb9e-14f8-40a5-8ab8-2a62c172ab22"),
                     Description = "Limpiar filtros",
                     Duration = TimeSpan.Zero,
-                    PriorityId = Guid.Parse("137d2d2c-f24c-40fd-842e-e055ef9433d7"),
+                    ChoreTypeId = Guid.Parse("137d2d2c-f24c-40fd-842e-e055ef9433d7"),
                     
                     CategoryId = Guid.Parse("7bd26acc-8e68-45e6-bc9d-17ef00e69f4a"),
                 };
@@ -45,7 +45,7 @@ namespace IKeep.Web.Controllers
                     Id = Guid.Parse("19b0720a-aba5-4566-bd2e-53dcf08baa08"),
                     Description = "Limpieza general",
                     Duration = TimeSpan.Zero,
-                    PriorityId = Guid.Parse("d522d22b-641c-4d8c-bf36-b30343d9955d"),
+                    ChoreTypeId = Guid.Parse("d522d22b-641c-4d8c-bf36-b30343d9955d"),
                     
                     CategoryId = Guid.Parse("a1537944-006c-4144-974a-3aaf9719518e"),
                 };

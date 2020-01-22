@@ -9,11 +9,11 @@ import {localizationEsp} from '../../components/MaterialTableProps'
 import {Functions} from '../../providers/Providers';
 
 //CRUD Services
-import useFetchPriority from './useFetchPriority';
-import usePriorityViewModel from './usePriorityViewModel';
+import useFetchChoreType from './useFetchChoreType';
+import useChoreTypeViewModel from './useChoreTypeViewModel';
 
 
-const PrioritiesTable = () => 
+const ChoreTypesTable = () => 
 {
   const classes = useStyles();
   const {state, dispatch} = useContext(Functions);
@@ -23,11 +23,11 @@ const PrioritiesTable = () =>
     dispatch({ type: 'SELECT_ROW', data: rowData,});
   }
 
-  const {Priorities, change, setChange} = useFetchPriority();
-  const [Add, Save, Delete] = usePriorityViewModel();
+  const {ChoreTypes, change, setChange} = useFetchChoreType();
+  const [Add, Save, Delete] = useChoreTypeViewModel();
   const [row, setRow] = useState(state.selectedRow);
    
-  //Info to Priorities Table 
+  //Info to ChoreTypes Table 
 
   const columns = [
     { title: 'Nombre', field: 'Name' },
@@ -37,14 +37,14 @@ const PrioritiesTable = () =>
   
     return(
         <Fragment>
-          {Priorities === null &&
+          {ChoreTypes === null &&
               <CircularProgress className={classes.progress}/>
           }
-          { Priorities !== null &&
+          { ChoreTypes !== null &&
             <MaterialTable
               title = {Title}
               columns={columns}
-              data={Priorities}
+              data={ChoreTypes}
               //onRowClick={((evt, selectedRow) => setRow(selectedRow))}
 
               options={{
@@ -101,7 +101,7 @@ const PrioritiesTable = () =>
   )                
 }
 
-export default PrioritiesTable;
+export default ChoreTypesTable;
 
 const useStyles = makeStyles(theme => ({
   progress: {

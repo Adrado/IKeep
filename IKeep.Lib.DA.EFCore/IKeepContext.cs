@@ -51,7 +51,7 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<Installation> Installations { get; set; }
         public DbSet<Map> Maps { get; set; }
         public DbSet<Observation> Observations { get; set; }
-        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<ChoreType> ChoreTypes { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }

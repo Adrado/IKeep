@@ -11,7 +11,7 @@ const useGenericChoreViewModel = () =>
         model.Description = values.Description;
         model.Duration = values.Duration; 
         model.Period = values.Period; 
-        model.PriorityId = values.PriorityId; 
+        model.ChoreTypeId = values.ChoreTypeId; 
         model.FormatId = values.FormatId; 
         model.CategoryId = values.CategoryId; 
         model.ChoresIds = values.ChoresIds; 
@@ -29,7 +29,7 @@ const useGenericChoreViewModel = () =>
         model.Description = values.Description;
         model.Duration = values.Duration; 
         model.Period = values.Period; 
-        model.PriorityId = values.PriorityId; 
+        model.ChoreTypeId = values.ChoreTypeId; 
         model.FormatId = values.FormatId; 
         model.CategoryId = values.CategoryId; 
         model.ChoresIds = values.ChoresIds;  

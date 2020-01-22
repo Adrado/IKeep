@@ -63,7 +63,7 @@ const GenericChoresTable = ({displayTable}) =>
       { title: 'Tarea', field: 'Description'},
       { title: 'Periodicidad', field: 'Period', lookup: Periodicity},
       { title: 'Formato', field: 'FormatName'},
-      { title: 'Prioridad', field: 'PriorityName'},
+      { title: 'Prioridad', field: 'ChoreTypeName'},
       { title: 'Categoria', field: 'CategoryName'}
 
   ]

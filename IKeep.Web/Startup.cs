@@ -98,7 +98,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<InstallationUser>, InstallationUsersDbSet>();
             services.AddScoped<IDbSet<Map>, MapsDbSet>();
             services.AddScoped<IDbSet<Observation>, ObservationsDbSet>();
-            services.AddScoped<IDbSet<Priority>, PrioritiesDbSet>();
+            services.AddScoped<IDbSet<ChoreType>, ChoreTypesDbSet>();
             services.AddScoped<IDbSet<Report>, ReportsDbSet>();
             services.AddScoped<IDbSet<Role>, RolesDbSet>();
             services.AddScoped<IDbSet<Supplier>, SuppliersDbSet>();
@@ -125,7 +125,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<InstallationUser>, GenericRepository<InstallationUser>>();
             services.AddScoped<IRepository<Map>, GenericRepository<Map>>();
             services.AddScoped<IRepository<Observation>, GenericRepository<Observation>>();
-            services.AddScoped<IRepository<Priority>, GenericRepository<Priority>>();
+            services.AddScoped<IRepository<ChoreType>, GenericRepository<ChoreType>>();
             services.AddScoped<IRepository<Report>, GenericRepository<Report>>();
             services.AddScoped<IRepository<Role>, GenericRepository<Role>>();
             services.AddScoped<IRepository<Supplier>, GenericRepository<Supplier>>();
@@ -153,7 +153,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<InstallationUser>, GenericCrudService<InstallationUser>>();
             services.AddScoped<ICrudService<Map>, GenericCrudService<Map>>();
             services.AddScoped<ICrudService<Observation>, GenericCrudService<Observation>>();
-            services.AddScoped<ICrudService<Priority>, GenericCrudService<Priority>>();
+            services.AddScoped<ICrudService<ChoreType>, GenericCrudService<ChoreType>>();
             services.AddScoped<ICrudService<Report>, GenericCrudService<Report>>();
             services.AddScoped<ICrudService<Role>, GenericCrudService<Role>>();
             services.AddScoped<ICrudService<Supplier>, GenericCrudService<Supplier>>();

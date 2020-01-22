@@ -14,18 +14,19 @@ namespace IKeep.Lib.Models
         public string Description { get; set; }
         public TimeSpan Duration { get; set; }
         public Period Period { get; set; }
-        public Guid PriorityId { get; set; }
+        public Priority Priority { get; set; }
+        public Guid ChoreTypeId { get; set; }
         [JsonIgnore]
-        public virtual Priority Priority { get; set; }
+        public virtual ChoreType ChoreType { get; set; }
         public Guid? SupplierId { get; set; }
         [JsonIgnore]
         public virtual Supplier Supplier { get; set; }
-
-        public string PriorityName
+        
+        public string ChoreTypeName
         {
             get
             {
-                return Priority == null ? "" : Priority.Name;
+                return ChoreType == null ? "" : ChoreType.Name;
             }
         }
 
@@ -86,6 +87,14 @@ namespace IKeep.Lib.Models
         Yearly,
         TwoYearly,
         FourYearly,
+        DEFAULT
+    }
+
+    public enum Priority
+    {
+        Top,
+        Average,
+        Low,
         DEFAULT
     }
 

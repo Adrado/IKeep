@@ -12,7 +12,7 @@ import GenericElementsService from '../services/GenericElementsService';
 import CategoriesService from '../services/CategoriesService';
 import FormatLabelsService from '../services/FormatLabelsService';
 import GenericChoresService from '../services/GenericChoresService';
-import PrioritiesService from '../services/PrioritiesService';
+import ChoreTypesService from '../services/ChoreTypesService';
 import GenerateChoresService from '../services/GenerateChoresService';
 import GenericElementGenericChoresService from '../services/GenericElementGenericChoresService';
 import ElementsService from '../services/ElementsService';
@@ -35,7 +35,7 @@ export const CRUD =
     Category: new CategoriesService(),
     FormatLabel: new FormatLabelsService(),
     GenericChore: new GenericChoresService(),
-    Priority: new PrioritiesService(),
+    ChoreType: new ChoreTypesService(),
     GenerateChores: new GenerateChoresService(),
     GElementGChore: new GenericElementGenericChoresService(),
     Element: new ElementsService(),
@@ -51,7 +51,7 @@ export const GenericChoreService = React.createContext(CRUD.GenericChore);
 export const GenericElementService = React.createContext(CRUD.GenericElement);
 export const CategoryService = React.createContext(CRUD.Category);
 export const FormatLabelService = React.createContext(CRUD.FormatLabel);
-export const PriorityService = React.createContext(CRUD.Priority);
+export const ChoreTypeService = React.createContext(CRUD.ChoreType);
 export const GElementGChoreService = React.createContext(CRUD.GElementGChore);
 export const UserService = React.createContext(CRUD.User);
 export const RoleService = React.createContext(CRUD.Role);

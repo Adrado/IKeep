@@ -15,7 +15,7 @@ import {Functions} from '../../providers/Providers';
 import useFetchGenericChore from './useFetchGenericChore';
 import useGenericChoreViewModel from './useGenericChoreViewModel';
 import useFetchCategory from '../Category/useFetchCategory';
-import useFetchPriority from '../Priority/useFetchPriority';
+import useFetchChoreType from '../ChoreType/useFetchChoreType';
 
 
 import AddFormatLabelsDialog from './AddFormatLabelsDialog/AddFormatLabelsDialog';
@@ -44,7 +44,7 @@ const GenericChoresTable = () =>
 
   const {Categories} = useFetchCategory();
   //const {FormatLabels} = useFetchFormatLabels();
-  const {Priorities} = useFetchPriority();
+  const {ChoreTypes} = useFetchChoreType();
 
   const {GChores, change, setChange} = useFetchGenericChore();
   const [Add, Save, Delete] = useGenericChoreViewModel();
@@ -64,7 +64,7 @@ const GenericChoresTable = () =>
   //Info to GenericChores Table 
   //const LookupFormats = BuildField(FormatLabels);
   const LookupCategories = BuildField(Categories);
-  const LookupPriorities = BuildField(Priorities);
+  const LookupChoreTypes = BuildField(ChoreTypes);
 
   const Periodicity = Object.freeze({
     0 : "Diaria",
@@ -84,7 +84,7 @@ const GenericChoresTable = () =>
     //Vigilar el formato para evitar errores en el servidor.
     { title: 'Duración estimada', field: 'Duration'},
     //{ title: 'Formato', field: 'FormatLabelId', lookup: LookupFormats},
-    { title: 'Prioridad', field: 'PriorityId', lookup: LookupPriorities},
+    { title: 'Prioridad', field: 'ChoreTypeId', lookup: LookupChoreTypes},
     { title: 'Categoria', field: 'CategoryId', lookup: LookupCategories}
   ] 
 

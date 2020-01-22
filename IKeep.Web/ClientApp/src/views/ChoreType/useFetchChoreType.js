@@ -1,11 +1,11 @@
 import  { useState, useEffect, useContext } from 'react';
-import {PriorityService} from '../../providers/Providers';
-import Priority from '../../models/Priority';
+import {ChoreTypeService} from '../../providers/Providers';
+import ChoreType from '../../models/ChoreType';
 
-const useFetchPriority = () =>
+const useFetchChoreType = () =>
 {
-    const PrioritysService = useContext(PriorityService);
-    const [Priorities, setPriorities] = useState(null);
+    const ChoreTypesService = useContext(ChoreTypeService);
+    const [ChoreTypes, setChoreTypes] = useState(null);
     const [error, setError] = useState(false);
     const [change, setChange] = useState(false);
 
@@ -14,10 +14,10 @@ const useFetchPriority = () =>
         let priorities = []; 
         for (let i in data)
         {
-            let priority = new Priority(data[i]);
+            let choreType = new ChoreType(data[i]);
             
-            //if(priority.EntityStatus !== 0)  
-            priorities.push(priority);
+            //if(choreType.EntityStatus !== 0)  
+            priorities.push(choreType);
         }
         data = priorities;
         return data;
@@ -26,32 +26,32 @@ const useFetchPriority = () =>
     useEffect(() =>
     {
         let isSuscribed = true;
-        const GetAllPrioritys = async () =>
+        const GetAllChoreTypes = async () =>
         {
             try{
-                const response = await PrioritysService.GetAllAsync();
+                const response = await ChoreTypesService.GetAllAsync();
                 const dataUpdated = UpdateData(response.data)
                 dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0)); 
-                setPriorities(dataUpdated);
+                setChoreTypes(dataUpdated);
             }
             catch (error){
                 setError(true)
             } 
         }
 
-        GetAllPrioritys();
+        GetAllChoreTypes();
 
         return () => {
             isSuscribed = false;
         };
-    },[PrioritysService, change]);
+    },[ChoreTypesService, change]);
 
     return{
-        Priorities,
+        ChoreTypes,
         error,
         change,
         setChange
     }
 }
 
-export default useFetchPriority;
+export default useFetchChoreType;

@@ -16,82 +16,82 @@ namespace IKeep.Web.Controllers
     [ApiController]
     public class PrioritiesController : ControllerBase
     {
-        private readonly ICrudService<Priority> _prioritiesService;
+        private readonly ICrudService<ChoreType> _choreTypesService;
 
-        public PrioritiesController(ICrudService<Priority> prioritiesService)
+        public PrioritiesController(ICrudService<ChoreType> choreTypesService)
         {
-            _prioritiesService = prioritiesService;
+            _choreTypesService = choreTypesService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Priority>>> GetPriorities()
+        public async Task<ActionResult<IEnumerable<ChoreType>>> GetPriorities()
         {
-            var x = _prioritiesService.GetAll().ToList().Count();
+            var x = _choreTypesService.GetAll().ToList().Count();
 
             if (x == 0)
             {
-                var a = new Priority
+                var a = new ChoreType
                 {
                     Id = Guid.Parse("137d2d2c-f24c-40fd-842e-e055ef9433d7"),
                     Name = "RITE1",
                 };
 
-                var b = new Priority
+                var b = new ChoreType
                 {
                     Id = Guid.Parse("d522d22b-641c-4d8c-bf36-b30343d9955d"),
                     Name = "Ronda de apertura",
                 };
-                _prioritiesService.Add(a);
-                _prioritiesService.Add(b);
+                _choreTypesService.Add(a);
+                _choreTypesService.Add(b);
             }
 
-            return await _prioritiesService.GetAll().ToListAsync();
+            return await _choreTypesService.GetAll().ToListAsync();
         }
 
         // GET: api/Priorities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Priority>> GetPriority(Guid id)
+        public async Task<ActionResult<ChoreType>> GetChoreType(Guid id)
         {
             return await Task.Run(() =>
             {
-                var priority = _prioritiesService.GetAll().FirstOrDefault(x => x.Id == id);
-                if (priority == null)
+                var choreType = _choreTypesService.GetAll().FirstOrDefault(x => x.Id == id);
+                if (choreType == null)
                 {
                     return NotFound();
                 }
-                return new ActionResult<Priority>(priority);
+                return new ActionResult<ChoreType>(choreType);
             });
         }
 
         // PUT: api/Priorities/5
         [HttpPut]
-        public async Task<ActionResult<Priority>> PutPriority(Priority priority)
+        public async Task<ActionResult<ChoreType>> PutChoreType(ChoreType choreType)
         {
             return await Task.Run(() =>
             {
-                var output = _prioritiesService.Update(priority);
-                return new ActionResult<Priority>(output);
+                var output = _choreTypesService.Update(choreType);
+                return new ActionResult<ChoreType>(output);
             });
         }
 
         // POST: api/Priorities
         [HttpPost]
-        public async Task<ActionResult<Priority>> PostPriority(Priority priority)
+        public async Task<ActionResult<ChoreType>> PostChoreType(ChoreType choreType)
         {
             return await Task.Run(() =>
             {
-                var output = _prioritiesService.Add(priority);
-                return new ActionResult<Priority>(output);
+                var output = _choreTypesService.Add(choreType);
+                return new ActionResult<ChoreType>(output);
             });
         }
 
         // DELETE: api/Priorities/5
         [HttpDelete("{id}")]
-        public async Task<bool> DeletePriority(Guid id)
+        public async Task<bool> DeleteChoreType(Guid id)
         {
             return await Task.Run(() =>
             {
-                return _prioritiesService.Delete(id);
+                return _choreTypesService.Delete(id);
             });
         }
     }

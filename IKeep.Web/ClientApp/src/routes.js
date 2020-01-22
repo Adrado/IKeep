@@ -5,7 +5,7 @@ import InstallationManagerView from './views/InstallationManager/InstallationMan
 import ElementTypeView from './views/ElementType/ElementTypeView';
 import GenericElementView from './views/GenericElement/GenericElementView';
 import GenericChoreView from "./views/GenericChore/GenericChoreView.js";
-import PriorityView from "./views/Priority/PriorityView.js";
+import ChoreTypeView from "./views/ChoreType/ChoreTypeView.js";
 import FormatLabelView from "./views/FormatLabel/FormatLabelView.js";
 import CategoryView from "./views/Category/CategoryView.js";
 import UserView from "./views/User/UserView";
@@ -60,10 +60,10 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/priority",
-    name: "Prioridades",
+    path: "/choreType",
+    name: "Tipo de Tareas",
     icon: "",
-    component: PriorityView,
+    component: ChoreTypeView,
     layout: "/admin"
   },
 

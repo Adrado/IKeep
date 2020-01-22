@@ -1,7 +1,7 @@
 import React, {Fragment, useReducer} from 'react';
 import {Functions} from '../../providers/Providers';
-import Priority from '../../models/Priority';
-import PrioritiesTable from './PrioritiesTable';
+import ChoreType from '../../models/ChoreType';
+import ChoreTypesTable from './ChoreTypesTable';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -15,20 +15,20 @@ function reducer(state, action) {
 }
 
 const initialState = {
-  selectedRow: new Priority(),
+  selectedRow: new ChoreType(),
 };
 
-const PriorityView = () =>
+const ChoreTypeView = () =>
 {
   const [state, dispatch] = useReducer(reducer, initialState);
   return(
     <Fragment>
       <Functions.Provider value={{ state, dispatch }}>
-          <PrioritiesTable/>  
+          <ChoreTypesTable/>  
       </Functions.Provider>
     </Fragment>
   )
 }
 
-export default PriorityView;
+export default ChoreTypeView;
 

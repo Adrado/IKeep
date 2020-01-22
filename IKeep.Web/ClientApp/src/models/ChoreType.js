@@ -1,6 +1,6 @@
 import Entity from './Entity'
 
-class Priority extends Entity
+class ChoreType extends Entity
 {
     constructor(json)
     {
@@ -19,4 +19,4 @@ class Priority extends Entity
     }
 }
 
-export default Priority;
+export default ChoreType;
