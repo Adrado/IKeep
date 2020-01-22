@@ -29,10 +29,10 @@ const useFetchInstallationElements = (installationId) =>
             try
             {
                 const response = await ElementsService.GetAllElementsOfInstallation(installationId);
-                if( isSuscribed)
+                if(isSuscribed)
                 { 
                     const dataUpdated = UpdateData(response.data)
-                    console.log(response.data);
+                    console.log(response);
                     dataUpdated.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
                     console.log(dataUpdated);
                     setElements(dataUpdated);
@@ -40,6 +40,7 @@ const useFetchInstallationElements = (installationId) =>
             }
             catch (error){
                 setError(true)
+                console.log(error)
             } 
         }
 

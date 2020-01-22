@@ -56,7 +56,7 @@ const useFetchCurrentChoresForToday = (id) =>
             isSuscribed = false;
         };
 
-    },[PrevMaintenanceServices, change]);
+    },[PrevMaintenanceServices, change, id]);
 
     return{
         Chores,
