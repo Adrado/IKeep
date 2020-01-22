@@ -10,6 +10,11 @@ class ElementsService extends CRUDService
     {
         return this.GetByIdAsync("genericElement/" + gElementId);
     }
+
+    GetAllElementsOfInstallation(installationId)
+    {
+        return this.GetByIdAsync("installation/" + installationId);
+    }
 }
 
 export default ElementsService;
