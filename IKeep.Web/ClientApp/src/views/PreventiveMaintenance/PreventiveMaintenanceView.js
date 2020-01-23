@@ -2,6 +2,7 @@
 import React, {Fragment, useState} from 'react';
 import useFetchCurrentChoresForToday from './useFetchCurrentChoresForToday';
 import useFetchInstallationElements from './useFetchInstallationElements';
+import PreventiveMaintenanceTable from './PreventiveMaintenanceTable';
 
 
 const PreventiveMaintenanceView = () =>
@@ -17,7 +18,10 @@ const PreventiveMaintenanceView = () =>
     
     return(
         <Fragment>
-            <h1>Dentro</h1>
+            <PreventiveMaintenanceTable
+                chores = {Chores}
+                elements = {Elements}
+            />
         </Fragment>
     )
 }

@@ -63,13 +63,19 @@ namespace IKeep.Lib.Models
 
         [JsonIgnore]
         public virtual ICollection<ElementObservation> ElementObservations { get; set; }
-        public List<Observation> Observations
-        {
-            get
-            {
-                return ElementObservations == null ? new List<Observation>() : ElementObservations.Select(x => x.Observation).ToList();
-            }
-        }
+        //public List<Observation> Observations
+        //{
+        //    get
+        //    {
+        //        return ElementObservations == null ? new List<Observation>() : 
+        //            ElementObservations.Select(x => new Observation {
+        //                Id = x.Observation.Id,
+        //                Description = x.Observation.Description,
+        //                EntityStatus = x.Observation.EntityStatus,
+        //                Type = x.Observation.Type })
+        //            .ToList();
+        //    }
+        //}
 
         [JsonIgnore]
         public virtual ICollection<ElementImage> ElementImages { get; set; }

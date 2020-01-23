@@ -24,7 +24,9 @@ class Element extends Entity
 
             this.ElementGenericChoresIds = json.elementGenericChoresIds;
             this.Correctives = json.correctives;
-            this.Observations = json.Observations;
+            this.Observations = json.observations;
+
+            this.Chores = json.chores;
         }
         else
         {
@@ -46,6 +48,8 @@ class Element extends Entity
             this.ElementGenericChoresIds = [];
             this.Correctives = [];
             this.Observations = [];
+
+            this.Chores = [];
         }
     }
 }

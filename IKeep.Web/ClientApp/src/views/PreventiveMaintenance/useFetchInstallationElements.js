@@ -1,5 +1,6 @@
 import  { useState, useEffect, useContext } from 'react';
 import {ElementService} from '../../providers/Providers';
+import Element from '../../models/Element';
 
 const useFetchInstallationElements = (installationId) =>
 {
@@ -29,6 +30,7 @@ const useFetchInstallationElements = (installationId) =>
             try
             {
                 const response = await ElementsService.GetAllElementsOfInstallation(installationId);
+                console.log(response.data);
                 if(isSuscribed)
                 { 
                     const dataUpdated = UpdateData(response.data)
