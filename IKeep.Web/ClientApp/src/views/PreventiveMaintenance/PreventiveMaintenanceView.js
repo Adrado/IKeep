@@ -8,11 +8,8 @@ import PreventiveMaintenanceTable from './PreventiveMaintenanceTable';
 const PreventiveMaintenanceView = () =>
 {
     
-    /* //Casa IKA8
-    let id = "d24ab749-87e9-43a9-9c7f-70d7021e5c83" */
-
     //Trabajo IKA9
-    let id = "1cbf9925-7005-49ac-856c-e4348256af21";
+    let id = "d27f7e6f-964e-4e4f-8b46-730037c0104e";
     const {Chores} = useFetchCurrentChoresForToday(id);
     const {Elements} = useFetchInstallationElements(id);
     
