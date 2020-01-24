@@ -7,13 +7,21 @@ using System.Text;
 
 namespace IKeep.Lib.Services.Dtos
 {
-    public class NewChoresResponse
+    public class GenerateChoresResponse
     {
+        public GenerateChoresResponse()
+        {
+            StartRequest = DateTime.Now;
+            TotalChores = 0;
+            TotalElements = 0;
+            Installations = new List<InstallationResponse>();
+        }
         public IList<InstallationResponse> Installations { get; set; }
         public int TotalElements { get; set; }
         public int TotalChores { get; set; }
         public DateTime StartRequest { get; set; }
         public DateTime EndRequest { get; set; }
+        public int Year { get; set; }
     }
 
     public class InstallationResponse

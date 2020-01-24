@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IKeep.Lib.Services.Dtos
 {
-    public class NewChoresRequest
+    public class GenerateChoresRequest
     {
         public Guid? InstallationId { get; set; }
         public Guid? BuildingId { get; set; }
