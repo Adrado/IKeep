@@ -26,7 +26,7 @@ const PreventiveMaintenanceTable = ({chores, elements}) =>
 
     return(
         <Fragment>
-            
+
             <List>
                 {choreItems}
             </List>

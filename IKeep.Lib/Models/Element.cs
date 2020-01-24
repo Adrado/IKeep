@@ -11,7 +11,7 @@ namespace IKeep.Lib.Models
     {
         // Vigilar las posibilidades del campo Status
         public StatusElement Status { get; set; }
-        public DateTime RetirementDate { get; set; }
+        public DateTime? RetirementDate { get; set; }
         public string Ref { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
