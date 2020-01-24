@@ -35,12 +35,12 @@ namespace IKeep.Web.Controllers
 
         // POST: api/Chores
         [HttpPost]
-        public async Task<ActionResult<NewChoresResponse>> CreateChores(NewChoresRequest newChoresRequest)
+        public async Task<ActionResult<GenerateChoresResponse>> CreateChores(GenerateChoresRequest newChoresRequest)
         {
             return await Task.Run(() =>
             {
                 var output = _generateChoresService.AddChores(newChoresRequest);
-                return new ActionResult<NewChoresResponse>(output);
+                return new ActionResult<GenerateChoresResponse>(output);
             });
         }
 

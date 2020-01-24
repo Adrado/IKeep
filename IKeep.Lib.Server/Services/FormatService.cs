@@ -22,7 +22,6 @@ namespace IKeep.Lib.Server.Services
             _context = context;
         }
         
-     
         public void AddFormatValuesToChores(List<Chore> chores)
         {
             List<FormatValue> FormatValues = new List<FormatValue>();
@@ -52,9 +51,6 @@ namespace IKeep.Lib.Server.Services
 
         private List<Guid> GetFormatLabelId(Guid gChoreId)
         {
-            //List<GenericChoreFormatLabel> genericChoreFormatLabel = _genericChoreFormatLabelsService.GetAll().Where(g => g.GenericChoreId == gChoreId).ToList();
-            //List<Guid> formatLabelIds = genericChoreFormatLabel.Select(x => x.FormatLabelId).ToList();
-            //return formatLabelIds;
             return _genericChoreFormatLabelsService.GetAll().Where(g => g.GenericChoreId == gChoreId)
                     .Select(x => x.FormatLabelId).ToList();
         }

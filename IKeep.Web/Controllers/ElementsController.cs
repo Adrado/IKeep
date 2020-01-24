@@ -50,11 +50,6 @@ namespace IKeep.Web.Controllers
         public async Task<ActionResult<IEnumerable<Element>>> GetInstallationElements(Guid id)
         {
             return await _elementsService.GetAll().Where(x => x.Area.Floor.Building.Installation.Id == id).ToListAsync();
-            //return await Task.Run(() =>
-            //{
-            //    var output = _elementsService.GetAll().Where(x => x.Area.Floor.Building.Installation.Id == id).ToList();
-            //    return new ActionResult<IEnumerable<Element>>(output);
-            //});
         }
 
         // PUT: api/Elements/5
