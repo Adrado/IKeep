@@ -34,70 +34,65 @@ namespace IKeep.Lib.Server.Services
             _context = context;
         }
 
-        public NewChoresResponse ChoresResponse { get; set; }
+        public GenerateChoresResponse ChoresResponse { get; set; }
 
         public IQueryable<Chore> GetAll()
         {
             return _choresService.GetAll();
         }
         
-        public NewChoresResponse AddChores(NewChoresRequest newChoresRequest)
+        public GenerateChoresResponse AddChores(GenerateChoresRequest newChoresRequest)
         {
-            ChoresResponse = new NewChoresResponse();
+            ChoresResponse = new GenerateChoresResponse();
 
-            IEnumerable<Element> elements;
-
-            ChoresResponse.StartRequest = DateTime.Now;
-            ChoresResponse.TotalChores = 0;
-            List<InstallationResponse> InstallationsCompleted = new List<InstallationResponse>();
-
-            int AllElements = 0;
-
-            if(newChoresRequest.AllInstallations == true)
-            {
-                IEnumerable<Installation> installationsActive = _getElementsService.GetAllActiveInstallations();
-                foreach(Installation Installation in installationsActive)
-                {
-                    elements = _getElementsService.GetInstallationElements(Installation.Id);
-                    InstallationResponse installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
-                    installationResponse.InstallationName = Installation.Name;
-
-                    InstallationsCompleted.Add(installationResponse);
-                    AllElements = AllElements + installationResponse.ElementsNumber;
-                }
-            }
-            else
-            {
-                elements = GetElements(newChoresRequest);
-                InstallationResponse installationResponse = AddChoreToElements(elements, newChoresRequest.Year);
-                installationResponse.InstallationName = _installationsService.GetAll().FirstOrDefault(x => x.Id == newChoresRequest.InstallationId).Name;
-                InstallationsCompleted.Add(installationResponse);
-                AllElements = AllElements + installationResponse.ElementsNumber;
-                ChoresResponse.TotalChores += installationResponse.TotalChores;
-            }
+            IEnumerable<Installation> activeInstallations = GetActiveInstallations(newChoresRequest);
+            AddChoresToInstallations(activeInstallations, newChoresRequest.Year);
 
             ChoresResponse.EndRequest = DateTime.Now;
-            ChoresResponse.Installations = InstallationsCompleted;
-            ChoresResponse.TotalElements = AllElements;
-
             return ChoresResponse;
         }
 
-        private IEnumerable<Element> GetElements(NewChoresRequest newChoresRequest)
+        private List<Installation> GetActiveInstallations(GenerateChoresRequest request)
         {
-            IEnumerable<Element> elements = new List<Element>();
+            List<Installation> installationsActive;
 
-            if (newChoresRequest.InstallationId != null)
-                elements = _getElementsService.GetInstallationElements(newChoresRequest.InstallationId);
-            else if (newChoresRequest.BuildingId != null)
-                elements = _getElementsService.GetBuildingElements(newChoresRequest.BuildingId);
-            else if (newChoresRequest.FloorId != null)
-                elements = _getElementsService.GetFloorElements(newChoresRequest.FloorId);
-            else if (newChoresRequest.AreaId != null)
-                elements = _getElementsService.GetAreaElements(newChoresRequest.AreaId);
+            if (request.AllInstallations == true)
+                installationsActive = _installationsService.GetAll().Where(i => i.EntityStatus == EntityStatus.Active).ToList();
+            else
+                installationsActive = _installationsService.GetAll().Where(x => x.Id == request.InstallationId).ToList();
 
-            return elements;
+            return installationsActive;
         }
+
+        private void AddChoresToInstallations(IEnumerable<Installation> installations, int year)
+        {
+            foreach (Installation installation in installations)
+            {
+                IEnumerable<Element> elements = _getElementsService.GetInstallationElements(installation.Id);
+                InstallationResponse installationResponse = AddChoreToElements(elements, year);
+                installationResponse.InstallationName = installation.Name;
+
+                ChoresResponse.Installations.Add(installationResponse);
+                ChoresResponse.TotalElements += installationResponse.ElementsNumber;
+                ChoresResponse.TotalChores += installationResponse.TotalChores;
+            }
+        }
+
+        private IEnumerable<Element> GetElements(GenerateChoresRequest newChoresRequest)
+            {
+                IEnumerable<Element> elements = new List<Element>();
+
+                if (newChoresRequest.InstallationId != null)
+                    elements = _getElementsService.GetInstallationElements(newChoresRequest.InstallationId);
+                else if (newChoresRequest.BuildingId != null)
+                    elements = _getElementsService.GetBuildingElements(newChoresRequest.BuildingId);
+                else if (newChoresRequest.FloorId != null)
+                    elements = _getElementsService.GetFloorElements(newChoresRequest.FloorId);
+                else if (newChoresRequest.AreaId != null)
+                    elements = _getElementsService.GetAreaElements(newChoresRequest.AreaId);
+
+                return elements;
+            }
        
 
         private InstallationResponse AddChoreToElements(IEnumerable<Element> elements, int year)
