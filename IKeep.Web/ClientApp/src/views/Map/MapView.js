@@ -60,15 +60,16 @@ const MapState =
         AreaRef: "",
     }
 
-const MapView = ({MapData = Map}) => 
+const MapView = () => 
 {
+
     const [state, dispatch] = useReducer(reducer, initialState);
     
     const [Add, Save, Delete] = useMapViewModel();
 
     const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(MapState, MapData, Add, Save, Delete);
         
-    const { Ref, Name, CIF,} = values;
+    const { Name, Description} = values;
 
     const classes = useStyles();
     
@@ -93,14 +94,14 @@ const MapView = ({MapData = Map}) =>
 
                     <Grid item xs={6} sm = {3}>
                         <TextField
-                        name="MapName" type="text" onChange = {handleOnChange} value = {Ref}
+                        name="MapName" type="text" onChange = {handleOnChange} value = {Name}
                         label="Nombre del plano"
                         margin="normal"
                         variant="filled"/>
                     </Grid>
                     <Grid item xs={6} sm = {3}>
                         <TextField
-                        name="Description" type="text" onChange = {handleOnChange} value = {Name}
+                        name="Description" type="text" onChange = {handleOnChange} value = {Description}
                         label="Descripción"
                         margin="normal"
                         variant="filled"
