@@ -70,6 +70,12 @@ namespace IKeep.Web.Controllers
             });
         }
 
+        [HttpGet("installation/{id}")]
+        public async Task<ActionResult<IEnumerable<Building>>> GetBuildingsOfInstallation(Guid id)
+        {
+             return await _buildingsService.GetAll().Where(x => x.InstallationId == id).ToListAsync();
+        }
+
         // PUT: api/Buildings/5
         [HttpPut]
         public async Task<ActionResult<Building>> PutBuilding(Building building)
