@@ -166,6 +166,7 @@ namespace IKeep.Web
             services.AddScoped<IFormatService, FormatService>();
             services.AddScoped<IPartialReportService, PartialReportService>();
             services.AddScoped<IPreventiveMaintenanceService, PreventiveMaintenanceService>();
+            services.AddScoped<IImageService, ImageService>();
 
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
