@@ -4,7 +4,9 @@ import {
     Grid, 
     TextField, 
     MenuItem, 
-    MenuList } from '@material-ui/core';
+    MenuList,
+    Input,
+    FormControl } from '@material-ui/core';
 
 import useForm from '../../components/useForm'
 import PropTypes from 'prop-types';
@@ -60,6 +62,8 @@ const MapState =
         AreaRef: "",
     }
 
+const MapData = new Map();
+
 const MapView = () => 
 {
 
@@ -67,11 +71,28 @@ const MapView = () =>
     
     const [Add, Save, Delete] = useMapViewModel();
 
-    const {values, handleOnChange, onAdd, onSave, onDelete} = useForm(MapState, MapData, Add, Save, Delete);
+    const {values, handleOnChange} = useForm(MapState, MapData,);
         
     const { Name, Description} = values;
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+    const [image64, setImage64] = useState(null)
+
+    const fileChangedHandler = (event) =>
+    {
+        setSelectedFile(event.target.files[0])
+        let reader = new FileReader();
+        reader.onloadend = () => 
+        {
+            setImagePreviewUrl(reader.result)
+        }
+    
+        reader.readAsDataURL(event.target.files[0])
+    }
 
     const classes = useStyles();
+
+    let $imagePreview = (<div className="image-container" ><img src={imagePreviewUrl} alt="icon" width="300" /> </div>);
     
     return(
         <Fragment>
@@ -94,7 +115,7 @@ const MapView = () =>
 
                     <Grid item xs={6} sm = {3}>
                         <TextField
-                        name="MapName" type="text" onChange = {handleOnChange} value = {Name}
+                        name="Name" type="text" onChange = {handleOnChange} value = {Name}
                         label="Nombre del plano"
                         margin="normal"
                         variant="filled"/>
@@ -108,7 +129,15 @@ const MapView = () =>
                         required/>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <FormControl className={classes.margin} variant="filled">
+                        <Input type="file" name="Map" onChange={fileChangedHandler} accept="image/*" />
+                    </FormControl>
+
+                    {imagePreviewUrl !== null &&
+                        $imagePreview /*  */
+                    }
+
+                    {/* <Grid item xs={12}>
                         { MapData.Id === "00000000-0000-0000-0000-000000000000" &&
                         <Grid item xs={6} sm = {3}>
                             <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
@@ -123,7 +152,7 @@ const MapView = () =>
                         <Grid item xs={6} sm = {3}>
                             <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                         </Grid>}
-                    </Grid>
+                    </Grid> */}
                     
                 
             </Grid>
@@ -133,9 +162,9 @@ const MapView = () =>
 
 export default MapView;
 
-MapView.propTypes = {
+/* MapView.propTypes = {
 MapData: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Ref: PropTypes.string.isRequired,
 }).isRequired,
-};
+}; */

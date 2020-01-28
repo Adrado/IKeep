@@ -1,5 +1,5 @@
-import CRUDService from './CRUDService'
-class MapsService extends CRUDService
+import GenericService from './GenericService'
+class MapsService extends GenericService
 {
     constructor()
     {
