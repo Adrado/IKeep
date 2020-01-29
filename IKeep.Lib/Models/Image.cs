@@ -5,10 +5,10 @@ using System.Text;
 
 namespace IKeep.Lib.Models
 {
-    public class Image : Record
+    public class UserImage : Record
     {
-        public Guid ElementId { get; set; }
+        public Guid UserId { get; set; }
         [JsonIgnore]
-        public virtual Element Element { get; set; }
+        public virtual User User { get; set; }
     }
 }

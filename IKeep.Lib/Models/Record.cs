@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.Configuration;
 using IKeep.Lib.Core;
+using Newtonsoft.Json;
 
 namespace IKeep.Lib.Models
 {
     public class Record : Entity
     {
-
         public DateTime CreatedDate { get; set; }
         public string Name { get; set; }
-        public string Extension { get; set; }
         public int Downloads { get; set; }
         public string Description { get; set; }
-       
+        [JsonIgnore]
+        public string Extension { get; set; }
+        [JsonIgnore]
+        public string HashData { get; set; }
+
+
 
         //// PROPIEDADES PRIVADAS
         //public string PathRelativo

@@ -5,11 +5,10 @@ using System.Text;
 
 namespace IKeep.Lib.Models
 {
-    public class ElementImage : Entity
+    public class ElementImage : Record
     {
         public Guid ElementId { get; set; }
         public virtual Element Element { get; set; }
-        public string Description { get; set; }
-        public Byte[] Image { get; set; }
+
     }
 }
