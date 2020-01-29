@@ -65,6 +65,7 @@ namespace IKeep.Lib.DA.EFCore
         public DbSet<GenericElementGenericChore> GenericElementGenericChores { get; set; }
         public DbSet<ElementGenericChore> ElementGenericChores { get; set; }
         public DbSet<GenericChoreFormatLabel> GenericChoreFormatLabels { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
 
     }
 }

@@ -9,17 +9,16 @@ class Map extends Entity
         {
             this.Name = json.name;
             this.Description = json.description;
-            this.ImageId = json.imageId;
             this.FloorId = json.floorId;
-            this.AreaRef = json.areaRef;
+            this.ImageBase64 = json.imageBase64;
+
         }
         else
         {
             this.Name = "";
             this.Description = "";
-            this.ImageId = "";
             this.FloorId = "";
-            this.AreaRef = "";
+            this.ImageBase64 = "";
         } 
     }
 }

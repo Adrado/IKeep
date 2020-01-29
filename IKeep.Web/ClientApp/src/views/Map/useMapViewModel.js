@@ -1,18 +1,24 @@
 import { useContext, useEffect} from 'react';
-import { MapService } from '../../providers/Providers';
+import { MediaService } from '../../providers/Providers';
 import Map from '../../models/Map';
+import MultimediaDto from '../../services/dtos/MultimediaDto';
+
 
 const useMapViewModel = () =>
 {
-    const MapsService = useContext(MapService);
+    const MultimediaService = useContext(MediaService);
 
-    const AddNewMap = (values) =>
+    const AddNewMap = (values, floorId, imageBase64) =>
     {
-        var map = new Map();
+        var multimediaDto = new MultimediaDto;
+        multimediaDto.Name = values.Name;
+        multimediaDto.Description = values.Description;
+        multimediaDto.ParentId = floorId;
+        multimediaDto.Base64 = imageBase64;
 
-        if(map !== undefined && map!== null)
+        if(multimediaDto !== undefined && multimediaDto!== null)
         {
-            return MapsService.AddAsync(map);
+            return MultimediaService.AddAsync(multimediaDto);
         }
     }
 
@@ -22,7 +28,7 @@ const useMapViewModel = () =>
 
         if(map !== undefined && map !== null)
         {
-            return MapsService.UpdateAsync(map);
+            return MultimediaService.UpdateAsync(map);
         }
     }
       
@@ -31,7 +37,7 @@ const useMapViewModel = () =>
     {
         if(model !== undefined && model!== null)
         {
-            return MapsService.DeleteAsync(model.Id);
+            return MultimediaService.DeleteAsync(model.Id);
         }
     }
 

@@ -20,6 +20,7 @@ import InstallationSelect from './InstallationSelect';
 import { MapContext } from '../../providers/Providers';
 import BuildingSelect from './BuildingSelect';
 import FloorSelect from './FloorSelect';
+import FloorMaps from './FloorMaps';
 
 
 function reducer(state, action) {
@@ -76,7 +77,14 @@ const MapView = () =>
     const { Name, Description} = values;
     const [selectedFile, setSelectedFile] = useState(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-    const [image64, setImage64] = useState(null)
+    
+    const onAdd = () =>
+    {
+        Add(values, state.floor.Id, imagePreviewUrl)
+        .then((response) => {
+            console.log(response);
+            })
+    }
 
     const fileChangedHandler = (event) =>
     {
@@ -137,6 +145,10 @@ const MapView = () =>
                         $imagePreview /*  */
                     }
 
+                        { MapData.Id === "00000000-0000-0000-0000-000000000000" &&
+                        <Grid item xs={6} sm = {3}>
+                            <Button className={classes.button} size="small" onClick = {onAdd} variant="outlined">Añadir</Button>
+                        </Grid>}
                     {/* <Grid item xs={12}>
                         { MapData.Id === "00000000-0000-0000-0000-000000000000" &&
                         <Grid item xs={6} sm = {3}>
@@ -153,6 +165,12 @@ const MapView = () =>
                             <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                         </Grid>}
                     </Grid> */}
+                    {state.floor !== null &&
+                        <FloorMaps
+                            floorId = {state.floor.Id}
+                        />
+                    }
+                    
                     
                 
             </Grid>

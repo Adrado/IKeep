@@ -104,6 +104,7 @@ namespace IKeep.Web
             services.AddScoped<IDbSet<Supplier>, SuppliersDbSet>();
             services.AddScoped<IDbSet<Chore>, ChoresDbSet>();
             services.AddScoped<IDbSet<User>, UsersDbSet>();
+           // services.AddScoped<IDbSet<Image>, ImagesDbSet>();
 
             // Repositories
             services.AddScoped<IRepository<Area>, GenericRepository<Area>>();
@@ -131,6 +132,7 @@ namespace IKeep.Web
             services.AddScoped<IRepository<Supplier>, GenericRepository<Supplier>>();
             services.AddScoped<IRepository<Chore>, GenericRepository<Chore>>();
             services.AddScoped<IRepository<User>, GenericRepository<User>>();
+           // services.AddScoped<IRepository<Image>, GenericRepository<Image>>();
 
             // Crud Services
             services.AddScoped<ICrudService<Area>, GenericCrudService<Area>>();
@@ -158,6 +160,7 @@ namespace IKeep.Web
             services.AddScoped<ICrudService<Role>, GenericCrudService<Role>>();
             services.AddScoped<ICrudService<Supplier>, GenericCrudService<Supplier>>();
             services.AddScoped<ICrudService<Chore>, GenericCrudService<Chore>>();
+           // services.AddScoped<ICrudService<Image>, GenericCrudService<Image>>();
 
             // Other Services
             services.AddScoped<ITreeViewService, TreeViewService>();
@@ -166,7 +169,7 @@ namespace IKeep.Web
             services.AddScoped<IFormatService, FormatService>();
             services.AddScoped<IPartialReportService, PartialReportService>();
             services.AddScoped<IPreventiveMaintenanceService, PreventiveMaintenanceService>();
-            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IMultimediaService, MultimediaService>();
 
             //services.AddScoped<IRegisterService, RegisterService>();
             //services.AddScoped<ILoginService, JwtLoginService>();
