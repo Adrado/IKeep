@@ -20,12 +20,12 @@ namespace IKeep.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<Chore>>> GetTodayChores(MaintenanceRequest request)
+        public async Task<ActionResult<PreventiveMaintenanceData>> GetTodayChores(MaintenanceRequest request)
         {
             return await Task.Run(() =>
             {
-                var output = _preventiveMaintenanceService.GetCurrentChoresForToday(request);
-                return new ActionResult<IEnumerable<Chore>>(output);
+                var output = _preventiveMaintenanceService.GetDataToTable(request);
+                return new ActionResult<PreventiveMaintenanceData>(output);
             });
         }
     }

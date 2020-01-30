@@ -38,10 +38,9 @@ const useFetchCurrentChoresForToday = (id) =>
                 if(isSuscribed === true)
                 {
                     console.log(response.data);
-                    const dataUpdated = UpdateData(response.data)
-                    dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0));
-                    console.log(dataUpdated);
-                    SetChores(dataUpdated);
+                    //const dataUpdated = UpdateData(response.data)
+                    //dataUpdated.sort((a,b) => (a.Description > b.Description) ? 1 : ((b.Description > a.Description) ? -1 : 0));
+                    SetChores(response.data);
                 }
             }
             catch (error){

@@ -9,7 +9,7 @@ const PreventiveMaintenanceView = () =>
 {
     
     //Trabajo IKA9
-    let id = "d27f7e6f-964e-4e4f-8b46-730037c0104e";
+    let id = "d27f7e6f-964e-4e4f-8b46-730037c0104e"; //Asus
     const {Chores} = useFetchCurrentChoresForToday(id);
     const {Elements} = useFetchInstallationElements(id);
     

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+/* import React, { Fragment } from 'react';
 import useFetchFloorMaps from './useFetchFloorMaps';
 import {Image} from '@material-ui/core';
 
@@ -23,11 +23,11 @@ const FloorMaps = ({floorId}) =>
     }
     
 
-    /* let InstallationItems = Installations.map((installation) =>
+    let InstallationItems = Installations.map((installation) =>
         <MenuItem key={installation.Id} value = {installation}>
           {installation.Name}
         </MenuItem>
-      ); */
+      );
     return(
         <Fragment>
             {MultimediaDtos !== null &&
@@ -39,4 +39,4 @@ const FloorMaps = ({floorId}) =>
     )
 }
 
-export default FloorMaps;
+export default FloorMaps; */

@@ -165,11 +165,13 @@ const MapView = () =>
                             <Button className={classes.button} size="small" onClick = {onDelete} variant="outlined">Borrar</Button>
                         </Grid>}
                     </Grid> */}
-                    {state.floor !== null &&
+
+
+                    {/* {state.floor !== null &&
                         <FloorMaps
                             floorId = {state.floor.Id}
                         />
-                    }
+                    } */}
                     
                     
                 
