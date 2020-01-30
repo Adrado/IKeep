@@ -4,14 +4,16 @@ using IKeep.Lib.DA.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IKeep.Web.Migrations
 {
     [DbContext(typeof(IKeepContext))]
-    partial class IKeepContextModelSnapshot : ModelSnapshot
+    [Migration("20200129083558_AddsImageModel")]
+    partial class AddsImageModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,21 +228,13 @@ namespace IKeep.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate");
-
                     b.Property<string>("Description");
-
-                    b.Property<int>("Downloads");
 
                     b.Property<Guid>("ElementId");
 
                     b.Property<int>("EntityStatus");
 
-                    b.Property<string>("Extension");
-
-                    b.Property<string>("HashData");
-
-                    b.Property<string>("Name");
+                    b.Property<byte[]>("Image");
 
                     b.HasKey("Id");
 
@@ -437,6 +431,32 @@ namespace IKeep.Web.Migrations
                     b.ToTable("GenericElementGenericChores");
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("Downloads");
+
+                    b.Property<Guid>("ElementId");
+
+                    b.Property<int>("EntityStatus");
+
+                    b.Property<string>("Extension");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ElementId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.Inspection", b =>
                 {
                     b.Property<Guid>("Id")
@@ -530,8 +550,6 @@ namespace IKeep.Web.Migrations
 
                     b.Property<Guid>("FloorId");
 
-                    b.Property<string>("HashData");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -571,8 +589,6 @@ namespace IKeep.Web.Migrations
                     b.Property<int>("EntityStatus");
 
                     b.Property<string>("Extension");
-
-                    b.Property<string>("HashData");
 
                     b.Property<Guid>("InstallationId");
 
@@ -679,34 +695,6 @@ namespace IKeep.Web.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserCategories");
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.UserImage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("Downloads");
-
-                    b.Property<int>("EntityStatus");
-
-                    b.Property<string>("Extension");
-
-                    b.Property<string>("HashData");
-
-                    b.Property<string>("Name");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserImages");
                 });
 
             modelBuilder.Entity("IKeep.Lib.Models.Area", b =>
@@ -877,6 +865,14 @@ namespace IKeep.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("IKeep.Lib.Models.Image", b =>
+                {
+                    b.HasOne("IKeep.Lib.Models.Element", "Element")
+                        .WithMany()
+                        .HasForeignKey("ElementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("IKeep.Lib.Models.Inspection", b =>
                 {
                     b.HasOne("IKeep.Lib.Models.Installation", "Installation")
@@ -927,14 +923,6 @@ namespace IKeep.Web.Migrations
 
                     b.HasOne("IKeep.Lib.Models.User", "User")
                         .WithMany("UserCategories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IKeep.Lib.Models.UserImage", b =>
-                {
-                    b.HasOne("IKeep.Lib.Models.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

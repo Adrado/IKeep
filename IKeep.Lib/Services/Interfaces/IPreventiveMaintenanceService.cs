@@ -9,6 +9,7 @@ namespace IKeep.Lib.Services.Interfaces
 {
     public interface IPreventiveMaintenanceService : IGenericService
     {
-        List<Chore> GetCurrentChoresForToday(MaintenanceRequest request);
+        //List<Chore> GetCurrentChoresForToday(MaintenanceRequest request);
+        PreventiveMaintenanceData GetDataToTable(MaintenanceRequest request);
     }
 }

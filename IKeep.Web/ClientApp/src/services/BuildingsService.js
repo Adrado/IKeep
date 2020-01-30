@@ -5,6 +5,11 @@ class BuildingsService extends CRUDService
     {
         super("buildings");
     }
+
+    GetBuildingsOfInstallation(installationId)
+    {
+        return this.GetByIdAsync("installation/" + installationId);
+    }
 }
 
 export default BuildingsService;

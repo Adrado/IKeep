@@ -14,7 +14,7 @@ import PartialReportResponse from '../../services/dtos/PartialReportResponse';
 
 const GenerateChoresView = () =>
 {
-    let id = "a53c923d-6f84-4a41-8a3e-bfea15cdd271"
+
     const {Installations} = useFetchInstallations();
 
     const [selected, setSelected] = useState('');
@@ -22,7 +22,6 @@ const GenerateChoresView = () =>
     const [current, setCurrent] = useState(null);
     const [lastYear, setLastYear] = useState(null);
 
-   /*  const {Chores} = useFetchChores(id); */
     const [AddNewChores] = useChoreViewModel();
     const [GetReport] = usePartialReport();
     const classes = useStyles();
@@ -66,7 +65,6 @@ const GenerateChoresView = () =>
     if(Installations !== null)
     {
       var InstallationItems = Installations.map((installation) =>
-      // Only do this if items have no stable IDs
         <MenuItem key={installation.Id} value = {installation}>
           {installation.Name}
         </MenuItem>
@@ -93,9 +91,7 @@ const GenerateChoresView = () =>
             onChange={handleInstallationChange}
           >
             {InstallationItems}
-  
           </Select>
-          
         </FormControl>
 
         <FormControl variant="filled" className={classes.formControl}>
@@ -112,31 +108,6 @@ const GenerateChoresView = () =>
           
         </FormControl>
 
-            {/* <Grid item xs={6} sm = {4}>
-                <TextField
-                name="Ref" type="text" onChange={handleOnChange} value = {values.Ref}
-                label="Ref"
-                margin="normal"
-                variant="filled"/>
-            </Grid>
-            
-            <Grid item xs={6} sm = {4}>
-                <TextField
-                name="Name" type="text" onChange={handleOnChange} value = {values.Name}
-                label="Nombre"
-                margin="normal"
-                variant="filled"
-                />
-            </Grid>
-            
-            <Grid item xs={6} sm = {4}>
-              <TextField
-                  name="Description" type="text" onChange={handleOnChange} value = {values.Description}
-                  label="Descripción"
-                  margin="normal"
-                  variant="filled"
-                  />
-            </Grid> */}
           {(year !== '' && selected !== '') &&
             <Grid item xs={6} sm = {3}>
                   <Button onClick={onAdd}>Generar Ordenes</Button>
@@ -144,7 +115,7 @@ const GenerateChoresView = () =>
           }
 
             <Grid item xs={6} sm = {3}>
-                  <Button onClick={onGetReport}>Ver estado actual</Button>
+                  <Button onClick={onGetReport}>Ver estado</Button>
             </Grid>
 
           {(current !== null && lastYear !== null) &&
@@ -152,22 +123,6 @@ const GenerateChoresView = () =>
           }
                     
         </Grid>
-
-      {/* <CurrentChoreResponse/> */}
-
-
-      {/* {Chores === null &&
-        <h1>Cargando...</h1>
-      }
-
-      {Chores !== null &&
-        <MaterialTable
-          title = {"Tareas"}
-          columns={columns}
-          data={Chores}
-          />
-      } */}
-      
 
     </Fragment>
   )

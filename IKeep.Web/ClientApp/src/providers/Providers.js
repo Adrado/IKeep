@@ -20,6 +20,7 @@ import ElementGenericChoresService from '../services/ElementGenericChoresService
 import InstallationUsersService from '../services/InstallationUsersService';
 import GenericChoreFormatLabelService from '../services/GenericChoreFormatLabelService';
 import PartialReportsService from '../services/PartialReportsService';
+import MultimediaService from '../services/MultimediaService';
 
 export const CRUD =
 {
@@ -43,6 +44,7 @@ export const CRUD =
     InstallationUser: new InstallationUsersService(),
     GChoreFLabel : new GenericChoreFormatLabelService(),
     PartialReport : new PartialReportsService(),
+    Multimedia : new MultimediaService(),
 }
 
 //CRUD SERVICES
@@ -62,7 +64,11 @@ export const InstallationService = React.createContext(CRUD.Installation);
 export const GenerateChoreService = React.createContext(CRUD.GenerateChores);
 export const GChoreFLabelService = React.createContext(CRUD.GChoreFLabel);
 export const PartialReportService = React.createContext(CRUD.PartialReport);
+export const MediaService = React.createContext(CRUD.Multimedia);
+export const BuildingService = React.createContext(CRUD.Building);
+export const FloorService = React.createContext(CRUD.Floor);
 
 //Auxiliar Context
 export const Functions = React.createContext();
 export const Services = React.createContext();
+export const MapContext = React.createContext();

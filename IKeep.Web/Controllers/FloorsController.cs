@@ -69,6 +69,12 @@ namespace IKeep.Web.Controllers
             });
         }
 
+        [HttpGet("building/{id}")]
+        public async Task<ActionResult<IEnumerable<Floor>>> GetFloorsOfBuilding(Guid id)
+        {
+            return await _floorsService.GetAll().Where(x => x.BuildingId == id).ToListAsync();
+        }
+
         // PUT: api/Floors/5
         [HttpPut]
         public async Task<ActionResult<Floor>> PutFloor(Floor floor)

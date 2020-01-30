@@ -13,6 +13,7 @@ import RoleView from "./views/Role/RolesView.js";
 import InstallationUserView from './views/InstallationUser/InstallationUserView';
 import GenerateChoresView from './views/GenerateChores/GenerateChoresView';
 import PreventiveMaintenanceView from './views/PreventiveMaintenance/PreventiveMaintenanceView';
+import MapView from './views/Map/MapView';
 
 const dashboardRoutes = [
   /* {
@@ -121,10 +122,15 @@ const dashboardRoutes = [
     icon: "",
     component: PreventiveMaintenanceView,
     layout: "/admin"
-  }
+  },
 
-
-  
+  {
+    path: "/Map",
+    name: "Planos",
+    icon: "",
+    component: MapView,
+    layout: "/admin"
+  },
   
 ];
 

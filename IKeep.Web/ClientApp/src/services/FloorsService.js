@@ -5,6 +5,10 @@ class FloorsService extends CRUDService
     {
         super("floors");
     }
+    GetFloorsOfBuilding(buildingId)
+    {
+        return this.GetByIdAsync("building/" + buildingId);
+    }
 }
 
 export default FloorsService;

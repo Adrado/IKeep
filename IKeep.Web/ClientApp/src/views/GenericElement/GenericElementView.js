@@ -61,25 +61,25 @@ const GenericElementView = () =>
         <Grid container spacing={4}>
           <Functions.Provider value={{ state, dispatch }}>
             
-          {display &&
-            <Grid item sm={6} xs={12}>
-                <GenericElementsTable/>  
-            </Grid>
-          }
+            {display &&
+              <Grid item sm={6} xs={12}>
+                  <GenericElementsTable/>  
+              </Grid>
+            }
 
-          <Grid item sm={6} xs={12}>
-            <GElementGChoresTable
-              displayTable = {DisplayTable}
-            />
-          </Grid>
-
-          {!display &&
             <Grid item sm={6} xs={12}>
-                <GenericChoresTable
-                  displayTable = {DisplayTable}
-                />
+              <GElementGChoresTable
+                displayTable = {DisplayTable}
+              />
             </Grid>
-          } 
+
+            {!display &&
+              <Grid item sm={6} xs={12}>
+                  <GenericChoresTable
+                    displayTable = {DisplayTable}
+                  />
+              </Grid>
+            } 
 
           </Functions.Provider>
         </Grid>

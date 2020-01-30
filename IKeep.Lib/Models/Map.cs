@@ -1,20 +1,15 @@
 ﻿using IKeep.Lib.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace IKeep.Lib.Models
 {
-    public class Map : Entity
+    public class Map : Record
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-
-        //Vigilar la ubicación de la imágen
-        public string ImageId { get; set; }
         public Guid FloorId { get; set; }
-
-        //Vigilar que pueda coincidir con el campo Ref de la clase Area
-        public Guid? AreaId { get; set; }
+        [JsonIgnore]
+        public virtual Floor Floor { get; set; }
     }
 }
