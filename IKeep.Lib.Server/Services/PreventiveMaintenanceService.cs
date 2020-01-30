@@ -25,12 +25,5 @@ namespace IKeep.Lib.Server.Services
                 && DateTime.Compare(c.EndDate, request.Date) >= 0))
                 .ToList();
         }
-
-        //List<Chore> todayChores = GetCurrentChores(allChores, request.Date);
-
-        //private List<Chore> GetCurrentChores(List<Chore> chores, DateTime date)
-        //{
-        //    return chores.Where(c => DateTime.Compare(c.StartDate, date) <= 0 && DateTime.Compare(c.EndDate, date) >= 0 ).ToList();
-        //}
     }
 }
