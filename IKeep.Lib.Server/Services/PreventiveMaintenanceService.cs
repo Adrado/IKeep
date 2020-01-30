@@ -41,8 +41,7 @@ namespace IKeep.Lib.Server.Services
                 && DateTime.Compare(c.EndDate, request.Date) >= 0))
                 .ToList();
         }
-<<<<<<< HEAD
-=======
+
 
         public List<List<Chore>> TotalFiltered(List<Chore> totalChores)
         {
@@ -91,6 +90,5 @@ namespace IKeep.Lib.Server.Services
                 PreventiveMaintenanceData.TableData.Add(choresByTypeAndPeriod);
             }
         }
->>>>>>> b645a57713cd029f1bef7b86c07efcdbf2fe975b
     }
 }
