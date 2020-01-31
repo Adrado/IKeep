@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Chore from '../../models/Chore';
 import Element from '../../models/Element';
 import CheckboxList from './Components/CheckboxList';
+import SimpleDialogDemo from './Components/SelectElementsDialog';
 
 const PreventiveMaintenanceTable = ({chores, elements}) =>
 {
@@ -29,9 +30,12 @@ const PreventiveMaintenanceTable = ({chores, elements}) =>
 
     return(
         <Fragment>
-            <CheckboxList
+            {/* <CheckboxList
               elements = {elements}
-            />
+            /> */}
+            <SimpleDialogDemo
+              elements = {elements}
+            /> 
         </Fragment>
     )
 }
