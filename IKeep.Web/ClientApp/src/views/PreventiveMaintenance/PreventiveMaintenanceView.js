@@ -15,10 +15,12 @@ const PreventiveMaintenanceView = () =>
     
     return(
         <Fragment>
+            {(Chores !== null && Elements !== null) &&
             <PreventiveMaintenanceTable
                 chores = {Chores}
                 elements = {Elements}
             />
+            }
         </Fragment>
     )
 }

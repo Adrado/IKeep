@@ -5,12 +5,8 @@ import React from 'react';
 import { Button, Dialog, AppBar, Toolbar, Typography, Slide } from '@material-ui/core';
 import useStyles from '../../../components/useStyles';
 
-//MaterialTable
-import MaterialTable from 'material-table';
-import { localizationEsp } from '../../../../components/MaterialTableProps';
-
 //CRUD Services
-import useFetchGenericElement from '../../../GenericElement/useFetchGenericElement'
+import useFetchGenericElement from '../../../GenericElement/useFetchGenericElement';
 import useFetchElementType from '../../../ElementType/useFetchElementType';
 import useElementViewModel from './useElementViewModel';
 import useElementGChore from './useElementGChoreViewModel';
@@ -23,9 +19,10 @@ import Element from '../../../../models/Element';
 import GenericElementGenericChore from '../../../../models/GenericElementGenericChore';
 
 
-export default function SelectElementsDialog({open, handleClose, areaId, change, setChange}) {
+export default function SelectElementsDialog({open, handleClose, elements}) {
   const classes = useStyles();
 
+  
   return (
       <Dialog open={open} onClose={handleClose}>
         <AppBar className={classes.appBar}>
@@ -48,7 +45,5 @@ export default function SelectElementsDialog({open, handleClose, areaId, change,
 AddElementsDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired, 
-  areaId: PropTypes.string.isRequired,
-  change: PropTypes.bool.isRequired,
-  setChange: PropTypes.func.isRequired
+  areaId: PropTypes.array,
 };
