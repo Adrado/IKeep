@@ -9,9 +9,15 @@ namespace IKeep.Lib.Services.Dtos
     {
         public PreventiveMaintenanceData()
         {
-            TableData = new List<ChoresByTypeAndPeriod>();
+            TableData = new List<ChoresByType>();
         }
-        public List<ChoresByTypeAndPeriod> TableData { get; set; }
+        public List<ChoresByType> TableData { get; set; }
+    }
+
+    public class ChoresByType
+    {
+        public string ChoreTypeName { get; set; }
+        public List<ChoresByTypeAndPeriod> ChoresByTypeAndPeriod { get; set; }
     }
 
     public class ChoresByTypeAndPeriod
@@ -19,10 +25,10 @@ namespace IKeep.Lib.Services.Dtos
         public Period Period { get; set; }
         public string ChoreTypeName { get; set; }
         public int numChores { get; set; }
-        public List<ChoresByElement> TypeAndPeriodChores { get; set; }
+        public List<ChoresByTypePeriodAndElement> TotalFilteredList { get; set; }
     }
 
-    public class ChoresByElement
+    public class ChoresByTypePeriodAndElement
     {
         public Period Period { get; set; }
         public string ChoreTypeName { get; set; }

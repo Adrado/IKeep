@@ -27,9 +27,10 @@ namespace IKeep.Lib.Server.Services
         {
             PreventiveMaintenanceData = new PreventiveMaintenanceData();
             List<Chore> totalChores = GetCurrentChoresForToday(request);
-            var choresFiltered = TotalFiltered(totalChores);
-            var choresByElementList = GetChoresByElement(choresFiltered);
-            GetChoresByTypeAndPeriod(choresByElementList);
+            var totalFiltered = TotalFiltered(totalChores);
+            var typeAndPeriodFiltered = GetChoresByTypeAndPeriod(totalFiltered);
+            GetChoresByTypeAndPeriod(typeAndPeriodFiltered);
+
             return PreventiveMaintenanceData;
         }
 
@@ -42,53 +43,52 @@ namespace IKeep.Lib.Server.Services
                 .ToList();
         }
 
-
-        public List<List<Chore>> TotalFiltered(List<Chore> totalChores)
+        public List<ChoresByTypePeriodAndElement> TotalFiltered(List<Chore> totalChores)
         {
-            var filtered = totalChores
-                .GroupBy(x => new { x.Type, x.Period, x.Element.Name})
-                .Select(grp => grp.ToList())
+            var totalFiltered = totalChores
+                .GroupBy(x => new { x.Type, x.Period, x.Element.Name })
+                .Select(grp =>
+                new ChoresByTypePeriodAndElement
+                {
+                    Period = grp.First().Period,
+                    ChoreTypeName = grp.First().Type,
+                    ElementName = grp.First().Element.Name,
+                    NumChores = grp.Count(),
+                    Chores = grp.ToList()
+                })
                 .ToList();
 
-            return filtered;
+            return totalFiltered;
         }
 
-        private List<ChoresByElement> GetChoresByElement(List<List<Chore>> filtered)
+        private List<ChoresByTypeAndPeriod> GetChoresByTypeAndPeriod(List<ChoresByTypePeriodAndElement> totalFiltered)
         {
-            List<ChoresByElement> choresByElementList = new List<ChoresByElement>();
-            foreach (List<Chore> chores in filtered)
-            {
-                ChoresByElement choresByElement = new ChoresByElement()
-                {
-                    ElementName = chores.First().Element.Name,
-                    Period = chores.First().Period,
-                    ChoreTypeName = chores.First().Type,
-                    NumChores = chores.Count(),
-                    Chores = chores,
-                };
-                choresByElementList.Add(choresByElement);
-            }
-            return choresByElementList;
-        }
-        private void GetChoresByTypeAndPeriod(List<ChoresByElement> choresByElementsList)
-        {
-
-            var response = choresByElementsList
+            var filteredByTypeAndPeriod = totalFiltered
                 .GroupBy(x => new { x.Period, x.ChoreTypeName })
-                .Select(grp => grp.ToList())
+                .Select(grp => 
+                new ChoresByTypeAndPeriod
+                {
+                    Period = grp.First().Period,
+                    ChoreTypeName = grp.First().ChoreTypeName,
+                    numChores = grp.Sum(x => x.NumChores),
+                    TotalFilteredList = grp.ToList()
+                })
                 .ToList();
 
-            foreach(List<ChoresByElement> list in response)
-            {
-                ChoresByTypeAndPeriod choresByTypeAndPeriod = new ChoresByTypeAndPeriod()
+            return filteredByTypeAndPeriod;
+        }
+
+        private void GetChoresByTypeAndPeriod(List<ChoresByTypeAndPeriod> choresByTypeAndPeriod)
+        {
+            PreventiveMaintenanceData.TableData = choresByTypeAndPeriod
+                .GroupBy(x => new { x.ChoreTypeName })
+                .Select(grp =>
+                new ChoresByType
                 {
-                    Period = list.First().Period,
-                    ChoreTypeName = list.First().ChoreTypeName,
-                    numChores = list.Sum(x => x.NumChores),
-                    TypeAndPeriodChores = list,
-                };
-                PreventiveMaintenanceData.TableData.Add(choresByTypeAndPeriod);
-            }
+                    ChoreTypeName = grp.First().ChoreTypeName,
+                    ChoresByTypeAndPeriod = grp.ToList(),
+                })
+                .ToList();
         }
     }
 }
